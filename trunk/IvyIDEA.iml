@@ -13,19 +13,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/commons-configuration-1.5/commons-configuration-1.5.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/lib/commons-configuration-1.5/commons-configuration-1.5-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/commons-configuration-1.5/commons-configuration-1.5-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-beta2/ivy-2.0.0-beta2.jar!/" />
         </CLASSES>
         <JAVADOC />

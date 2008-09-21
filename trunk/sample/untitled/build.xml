@@ -1,0 +1,18 @@
+<project name="hello-ivy" default="run" xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+    <property name="ivy.cache.dir" value="ivycache"/>
+    <property name="ivy.lib.dir" value="lib"/>
+
+    <!-- ================================= 
+          target: resolve              
+         ================================= -->
+    <target name="resolve">
+        <ivy:configure file="ivy-conf.xml" />
+        <ivy:resolve conf="default,eclipse"/>
+    </target>
+
+   <target name="retrieve-eclipse" depends="resolve">
+        <ivy:retrieve pattern="lib/eclipse/[artifact]-[revision].[ext]" conf="eclipse" />
+    </target>
+  
+</project>

@@ -1,0 +1,28 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+  <name>IvyIDEA</name>
+  <description></description>
+  <version>0.1</version>
+  <vendor>Clarent</vendor>
+  <idea-version since-build="3000"/>
+  <!--
+    <project-components>
+        <component>
+            <implementation-class>org.clarent.ivyideatuff.TestProjectComponent</implementation-class>
+        </component>
+    </project-components>
+    <module-components>
+        <component>
+            <implementation-class>org.clarent.ivyideatuff.EclipseLibKeeperModuleComponent</implementation-class>
+        </component>
+    </module-components>
+    -->
+     <actions>
+        <action id="IvyIDEA.UpdateAllDependencies"
+                class="org.clarent.ivyidea.UpdateAllModuleDependenciesAction"
+                text="Update all Dependencies" description="Update the resolved libs for all modules">
+            <add-to-group group-id="ToolsMenu" relative-to-action="PostIvyPlugin.UpdateDependencies" anchor="after"/>
+        </action>
+    </actions>
+
+</idea-plugin>

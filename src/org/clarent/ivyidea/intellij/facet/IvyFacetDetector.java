@@ -12,6 +12,8 @@ import java.util.Collection;
 public class IvyFacetDetector extends FacetDetector<VirtualFile, IvyFacetConfiguration> {
 
     public IvyFacetConfiguration detectFacet(VirtualFile source, Collection<IvyFacetConfiguration> existentFacetConfigurations) {
+        final String path = source.getPath();
+        System.out.println("path = " + path);
         return null;
     }
 }

@@ -15,15 +15,25 @@ import org.clarent.ivyidea.intellij.facet.ui.IvyFacetEditorTab;
 
 public class IvyFacetConfiguration implements FacetConfiguration {
 
+    private String ivyFile;
+
+    public String getIvyFile() {
+        return ivyFile;
+    }
+
+    public void setIvyFile(String ivyFile) {
+        this.ivyFile = ivyFile;
+    }
+
     public FacetEditorTab[] createEditorTabs(FacetEditorContext editorContext, FacetValidatorsManager validatorsManager) {
-        return new FacetEditorTab[] { new IvyFacetEditorTab() };
+        return new FacetEditorTab[] { new IvyFacetEditorTab(editorContext) };
     }
 
     public void readExternal(Element element) throws InvalidDataException {
-        //To change body of implemented methods use File | Settings | File Templates.
+        setIvyFile(element.getAttributeValue("ivyFile"));
     }
 
     public void writeExternal(Element element) throws WriteExternalException {
-        //To change body of implemented methods use File | Settings | File Templates.
+        element.setAttribute("ivyFile", ivyFile);
     }
 }

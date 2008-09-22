@@ -221,6 +221,7 @@
         <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
       </item>
     </group>
+    <group name="Intellij components" />
   </component>
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">

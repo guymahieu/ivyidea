@@ -5,7 +5,12 @@
   <version>0.1</version>
   <vendor>Clarent</vendor>
   <idea-version since-build="3000"/>
-  <!--
+    <application-components>
+        <component>
+            <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>
+        </component>
+    </application-components>
+    <!--
     <project-components>
         <component>
             <implementation-class>org.clarent.ivyideatuff.TestProjectComponent</implementation-class>

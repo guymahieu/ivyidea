@@ -24,6 +24,7 @@ public class UpdateAllModuleDependenciesAction extends AnAction {
             * Source configurations -> add as sources
             * Allow setting the ivy configurations to resolve and add as a library [eclipse/ide/default]
             * Auto re-resolve on changed ivy.xml file
+            * Introduce Facet for ivy modules (and autodetect through FacetDetector)
 
 
      */

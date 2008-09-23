@@ -10,5 +10,7 @@ import javax.swing.*;
 
 public interface IvyIdeaIcons {
 
-    public static final Icon MAIN_ICON = IconLoader.findIcon("/ivyidea-small.png");
+    public static final Icon MAIN_ICON_SMALL = IconLoader.findIcon("/ivyidea-small.png");
+    public static final Icon MAIN_ICON = IconLoader.findIcon("/ivyidea.png");
+    
 }

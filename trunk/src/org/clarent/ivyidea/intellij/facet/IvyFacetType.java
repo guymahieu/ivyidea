@@ -38,7 +38,7 @@ public class IvyFacetType extends FacetType<IvyFacet, IvyFacetConfiguration> {
     }
 
     public javax.swing.Icon getIcon() {
-        return IvyIdeaIcons.MAIN_ICON;
+        return IvyIdeaIcons.MAIN_ICON_SMALL;
     }
 
     public void registerDetectors(FacetDetectorRegistry<IvyFacetConfiguration> ivyIdeaDetectorRegistry) {

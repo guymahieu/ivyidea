@@ -33,7 +33,7 @@ public class IvyFileType extends UserFileType {
     }
 
     public Icon getIcon() {
-        return IvyIdeaIcons.MAIN_ICON;
+        return IvyIdeaIcons.MAIN_ICON_SMALL;
     }
 
     @Nullable

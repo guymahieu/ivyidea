@@ -1,10 +1,9 @@
 package org.clarent.ivyidea.tempstuff;
 
-import com.intellij.openapi.vfs.*;
-import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
-import org.clarent.ivyidea.config.PostIvyPluginConfiguration;
-import org.clarent.ivyidea.DependencyUpdater;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileAdapter;
+import com.intellij.openapi.vfs.VirtualFileEvent;
 
 /**
  * @author Guy Mahieu
@@ -19,10 +18,7 @@ public class IvyFileMonitor extends VirtualFileAdapter {
     }
 
     public void contentsChanged(VirtualFileEvent event) {
-        final String ivyFile = PostIvyPluginConfiguration.getCurrent().getIvyModuleDescriptorFileName();
         final VirtualFile changedFile = event.getFile();
-        if (ivyFile.equals(changedFile)) {
-            DependencyUpdater.setupLibraries(ModuleUtil.findModuleForFile(changedFile, project));            
-        }
+        // TODO: link virtualfile to module, check if it is the ivy file from the facet config and refresh if so...
     }
 }

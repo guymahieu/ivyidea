@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
   <name>IvyIDEA</name>
-  <description></description>
+  <description>Resolves module dependencies through Ivy</description>
   <version>0.1</version>
   <vendor>Clarent</vendor>
   <idea-version since-build="3000"/>

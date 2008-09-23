@@ -3,11 +3,12 @@ package org.clarent.ivyidea.ivy;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
-import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.settings.IvySettings;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Guy Mahieu
@@ -19,10 +20,13 @@ public class IntellijProjectIvyInfo {
 
     public IntellijProjectIvyInfo(Project project) {
         final Module[] modules = ModuleManager.getInstance(project).getModules();
-        final IvyHelper ivyHelper = new IvyHelper();
         for (Module module : modules) {
-            final ModuleDescriptor ivyModuleDescriptor = ivyHelper.getIvyModuleDescriptor(module);
-            intellijModuleRevisionInfo.put(module, ivyModuleDescriptor.getModuleRevisionId());
+            // TODO: Keep ivy instances per settings file so we don't configure for every module!!!
+            final IvySettings ivySettings = new IvyWrapper(module).getIvy().getSettings();
+            final ModuleDescriptor ivyModuleDescriptor = IvyUtil.getIvyModuleDescriptor(module, ivySettings);
+            if (ivyModuleDescriptor != null) {
+                intellijModuleRevisionInfo.put(module, ivyModuleDescriptor.getModuleRevisionId());
+            }
         }
     }
 

@@ -1,18 +1,16 @@
 package org.clarent.ivyidea.ivy;
 
-import org.clarent.ivyidea.config.PostIvyPluginConfiguration;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import org.apache.ivy.Ivy;
-import org.apache.ivy.plugins.resolver.DependencyResolver;
-import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
-import org.apache.ivy.core.cache.RepositoryCacheManager;
 import org.apache.ivy.core.cache.DefaultRepositoryCacheManager;
+import org.apache.ivy.core.cache.RepositoryCacheManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
-import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.report.ResolveReport;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,11 +27,10 @@ public class IvyHelper {
 
     private static final Logger LOGGER = Logger.getLogger(IvyHelper.class.getName());
 
-
     private Ivy ivy;
 
-    public IvyHelper() {
-        ivy = IvyWrapper.getInstance().getIvy();
+    public IvyHelper(Module module) {
+        ivy = new IvyWrapper(module).getIvy();
     }
 
     @SuppressWarnings("unchecked")
@@ -44,13 +41,17 @@ public class IvyHelper {
 
     private ResolveReport resolveDependencies(Module module) {
         try {
-            return ivy.resolve(getIvyFile(module));
+            return ivy.resolve(IvyUtil.getIvyFile(module));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    // TODO: Remove dependencies first; or don't add existing dependencies
+
+    // TODO: Order of jars and module depenencies could be interlaced!
 
     public List<String> getJarFiles(Module module) {
         List<Artifact> artifacts = resolveArtifacts(module);
@@ -75,19 +76,22 @@ public class IvyHelper {
     public List<Module> findModuleDependencies(Module currentModule) {
         List<Module> result = new ArrayList<Module>();
         IntellijProjectIvyInfo ipi = new IntellijProjectIvyInfo(currentModule.getProject());
-        final ModuleDescriptor descriptor = parseIvyFile(getIvyFile(currentModule));
-        if (descriptor != null) {
-            final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
-            final Module[] modules = ModuleManager.getInstance(currentModule.getProject()).getModules();
-            for (Module dependencyModule : modules) {
-                if (!dependencyModule.equals(currentModule)) {
-                    for (DependencyDescriptor ivyDependency : ivyDependencies) {
-                        final ModuleRevisionId ivyDependencyId = ivyDependency.getDependencyRevisionId();
-                        final ModuleRevisionId dependencyModuleId = ipi.getRevisionId(dependencyModule);
-                        if (ivyDependencyId.equals(dependencyModuleId)) {
-                            LOGGER.info("Recognized dependency " + ivyDependency + " as intellij module '"+dependencyModule.getName()+"' in this project!");
-                            result.add(dependencyModule);
-                            break;
+        final File ivyFile = IvyUtil.getIvyFile(currentModule);
+        if (ivyFile != null) {
+            final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivy.getSettings());
+            if (descriptor != null) {
+                final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
+                final Module[] modules = ModuleManager.getInstance(currentModule.getProject()).getModules();
+                for (Module dependencyModule : modules) {
+                    if (!dependencyModule.equals(currentModule)) {
+                        for (DependencyDescriptor ivyDependency : ivyDependencies) {
+                            final ModuleRevisionId ivyDependencyId = ivyDependency.getDependencyRevisionId();
+                            final ModuleRevisionId dependencyModuleId = ipi.getRevisionId(dependencyModule);
+                            if (ivyDependencyId.equals(dependencyModuleId)) {
+                                LOGGER.info("Recognized dependency " + ivyDependency + " as intellij module '"+dependencyModule.getName()+"' in this project!");
+                                result.add(dependencyModule);
+                                break;
+                            }
                         }
                     }
                 }
@@ -96,29 +100,6 @@ public class IvyHelper {
         return result;
     }
 
-    public ModuleDescriptor getIvyModuleDescriptor(Module intellijModule) {
-        final File ivyFile = getIvyFile(intellijModule);
-        if (ivyFile.exists()) {
-            return parseIvyFile(ivyFile);
-        } else {
-            return null;
-        }
-    }
 
-    private ModuleDescriptor parseIvyFile(File ivyFile) {
-        try {
-            LOGGER.info("Parsing ivy file " + ivyFile.getAbsolutePath());
-            return ModuleDescriptorParserRegistry.getInstance().parseDescriptor(ivy.getSettings(), ivyFile.toURI().toURL(), false);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static File getIvyFile(Module module) {
-        // TODO: convert to strategy pattern with multiple ways to look for ivy.xml files in modules!
-        return new File(module.getModuleFile().getParent().getPath() + "/" + PostIvyPluginConfiguration.getCurrent().getIvyModuleDescriptorFileName());
-    }
 
 }

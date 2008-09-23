@@ -20,17 +20,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.form" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.form" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/IvyFileMonitor.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/IvyFileMonitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyWrapper.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyWrapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacet.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyFileType.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyFileType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/ivyidea-small.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/DependencyUpdater.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/DependencyUpdater.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IntellijProjectIvyInfo.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IntellijProjectIvyInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IvyIDEA.iws" afterPath="$PROJECT_DIR$/IvyIDEA.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/config/PostIvyPluginConfiguration.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/config/PostIvyPluginConfiguration.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/IvyIdeaPlugin.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/IvyIdeaPlugin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/ivyidea.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/UpdateDependenciesAction.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/UpdateDependenciesAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/EclipseLibKeeperModuleComponent.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/EclipseLibKeeperModuleComponent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetConfiguration.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IvyIDEA.iml" afterPath="$PROJECT_DIR$/IvyIDEA.iml" />
     </list>
     <ignored path="PostIvyPlugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,7 +57,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/IvyFileMonitor.java" line="21" class="org.clarent.ivyidea.tempstuff.IvyFileMonitor" package="org.clarent.ivyidea.tempstuff">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetDetector.java" line="14" class="org.clarent.ivyidea.intellij.facet.IvyFacetDetector" package="org.clarent.ivyidea.intellij.facet">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -63,7 +70,20 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetDetector.java" line="14" class="org.clarent.ivyidea.intellij.facet.IvyFacetDetector" package="org.clarent.ivyidea.intellij.facet">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java" line="56" class="org.clarent.ivyidea.ivy.IvyHelper" package="org.clarent.ivyidea.ivy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java" line="43" class="org.clarent.ivyidea.ivy.IvyHelper" package="org.clarent.ivyidea.ivy">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -121,82 +141,99 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IvyIdeaPlugin.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/IvyIdeaPlugin.java">
+      <file leaf-file-name="IvyHelper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="13" selection-start="652" selection-end="652" vertical-scroll-proportion="0.17280813">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UpdateAllModuleDependenciesAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/UpdateAllModuleDependenciesAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="340" selection-end="340" vertical-scroll-proportion="0.08640406">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyFacetType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="0" selection-start="1460" selection-end="1460" vertical-scroll-proportion="0.72409326">
+            <state line="43" column="0" selection-start="1321" selection-end="1321" vertical-scroll-proportion="0.3325359">
               <folding>
-                <element signature="imports" expanded="true" />
+                <marker date="1222369605900" expanded="true" signature="41:789" placeholder="..." />
               </folding>
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyIdeaIcons.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="88" selection-start="174" selection-end="174" vertical-scroll-proportion="0.23761117">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ivyidea.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/ivyidea.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ivyidea-small.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/ivyidea-small.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="PostIvyPluginConfiguration.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/config/PostIvyPluginConfiguration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="13" selection-start="124" selection-end="124" vertical-scroll-proportion="0.17280813">
+            <state line="10" column="0" selection-start="154" selection-end="154" vertical-scroll-proportion="0.3926097">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IvyFileType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyFileType.java">
+      <file leaf-file-name="plugin.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="0" selection-start="859" selection-end="898" vertical-scroll-proportion="0.58322746">
+            <state line="11" column="34" selection-start="470" selection-end="470" vertical-scroll-proportion="0.4538835">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FacetDetector.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/autodetecting/FacetDetector.java">
+      <file leaf-file-name="IvyFileMonitor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/IvyFileMonitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="22" selection-start="978" selection-end="978" vertical-scroll-proportion="0.19440915">
+            <state line="17" column="5" selection-start="426" selection-end="426" vertical-scroll-proportion="0.6674365">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IvyUtil.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="0" selection-start="1075" selection-end="1075" vertical-scroll-proportion="1.1963048">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IvyFacetConfiguration.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="0" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.47806004">
+              <folding>
+                <marker date="1222369605890" expanded="false" signature="52:515" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Facet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/Facet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="19" selection-start="1921" selection-end="1921" vertical-scroll-proportion="0.4832536">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IvyWrapper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyWrapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="41" selection-start="145" selection-end="145" vertical-scroll-proportion="0.15704387">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IvyFacetEditorTab.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="60" selection-start="521" selection-end="521" vertical-scroll-proportion="0.40669855">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ivy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-beta2/src/java/org/apache/ivy/Ivy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="478" column="0" selection-start="16693" selection-end="16693" vertical-scroll-proportion="0.47806004">
               <folding />
             </state>
           </provider>
@@ -322,6 +359,32 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\ivy" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="IvyIDEA" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="IvyIDEA" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
@@ -352,8 +415,46 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\ui" />
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\facet" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="IvyIDEA" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="IvyIDEA" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\facet" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\facet\ui" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="IvyFacetEditorTab" />
+          <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -379,24 +480,6 @@
         </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\config" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\resources" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -639,30 +722,30 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1025" extended-state="0" />
+    <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294621" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24816626" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19534598" order="1" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36824697" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07519641" order="3" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34619626" order="1" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46085998" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0684624" order="8" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30540243" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" order="7" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498469" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39950526" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329455" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24551639" order="0" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33557868" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24984539" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.58544654" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0546875" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12238148" order="2" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" order="8" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -678,7 +761,7 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added temporary icon" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed resolve logic to read from facet configuration." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -695,6 +778,7 @@
     <MESSAGE value="Implemented detectFacet method; still not working though..." />
     <MESSAGE value="Facet detection now seems to work; still testing and tweaking needed though" />
     <MESSAGE value="Added temporary icon" />
+    <MESSAGE value="Changed resolve logic to read from facet configuration." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -735,108 +819,121 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IntellijProjectIvyInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="78" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.46537843">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/ButtonModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="16" selection-start="3907" selection-end="3907" vertical-scroll-proportion="0.29307568">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/DependencyUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="0" selection-start="2597" selection-end="2597" vertical-scroll-proportion="0.9310345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-beta2/src/java/org/apache/ivy/core/report/ResolveReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="254" column="0" selection-start="9851" selection-end="9851" vertical-scroll-proportion="0.36062717">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="21" selection-start="1165" selection-end="1165" vertical-scroll-proportion="0.6369509">
-          <folding />
+        <state line="37" column="0" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.47806004">
+          <folding>
+            <marker date="1222369605890" expanded="false" signature="52:515" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetDetector.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="220" selection-end="220" vertical-scroll-proportion="0.17571059">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/FacetTypeId.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="19" selection-start="715" selection-end="715" vertical-scroll-proportion="0.19342604">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/messages/impl/MessageBusConnectionImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="0" selection-start="3141" selection-end="3141" vertical-scroll-proportion="0.54867256">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/autodetecting/DetectedFacetPresentation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="22" selection-start="854" selection-end="854" vertical-scroll-proportion="0.19342604">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/autodetecting/FacetDetectorRegistry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="60" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.2364096">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/IvyIdeaPlugin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="652" selection-end="652" vertical-scroll-proportion="0.17280813">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/UpdateAllModuleDependenciesAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="340" selection-end="340" vertical-scroll-proportion="0.08640406">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyFileType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="0" selection-start="859" selection-end="898" vertical-scroll-proportion="0.58322746">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/autodetecting/FacetDetector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="22" selection-start="978" selection-end="978" vertical-scroll-proportion="0.19440915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1460" selection-end="1460" vertical-scroll-proportion="0.72409326">
+        <state line="35" column="0" selection-start="1075" selection-end="1075" vertical-scroll-proportion="1.1963048">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/ivyidea.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-beta2/src/java/org/apache/ivy/Ivy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="478" column="0" selection-start="16693" selection-end="16693" vertical-scroll-proportion="0.47806004">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/ivyidea-small.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/AbstractButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="328" column="21" selection-start="11998" selection-end="11998" vertical-scroll-proportion="0.852194">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="0" selection-start="1321" selection-end="1321" vertical-scroll-proportion="0.3325359">
+          <folding>
+            <marker date="1222369605900" expanded="true" signature="41:789" placeholder="..." />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/config/PostIvyPluginConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="124" selection-end="124" vertical-scroll-proportion="0.17280813">
+        <state line="10" column="0" selection-start="154" selection-end="154" vertical-scroll-proportion="0.3926097">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java">
+    <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="88" selection-start="174" selection-end="174" vertical-scroll-proportion="0.23761117">
+        <state line="11" column="34" selection-start="470" selection-end="470" vertical-scroll-proportion="0.4538835">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/tempstuff/IvyFileMonitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="5" selection-start="426" selection-end="426" vertical-scroll-proportion="0.6674365">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/Facet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="19" selection-start="1921" selection-end="1921" vertical-scroll-proportion="0.4832536">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="41" selection-start="145" selection-end="145" vertical-scroll-proportion="0.15704387">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="60" selection-start="521" selection-end="521" vertical-scroll-proportion="0.40669855">
+          <folding />
         </state>
       </provider>
     </entry>

@@ -1,7 +1,5 @@
 package org.clarent.ivyidea;
 
-import org.clarent.ivyidea.config.PostIvyPluginConfiguration;
-import org.clarent.ivyidea.ivy.IvyHelper;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModifiableRootModel;
@@ -9,6 +7,8 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
+import org.clarent.ivyidea.config.PostIvyPluginConfiguration;
+import org.clarent.ivyidea.ivy.IvyHelper;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,7 +27,8 @@ public class DependencyUpdater {
                     // TODO: clear library or remove old modules that are no longer needed
 
                     // TODO: should there be interleaving of modules & jars??
-                    final List<Module> modules = new IvyHelper().findModuleDependencies(currentModule);
+                    final IvyHelper ivyHelper = new IvyHelper(currentModule);
+                    final List<Module> modules = ivyHelper.findModuleDependencies(currentModule);
                     for (Module module : modules) {
                         LOGGER.info("Registering module dependency: " + module);
                         modifiableModel.addModuleOrderEntry(module);
@@ -37,7 +38,7 @@ public class DependencyUpdater {
                     LibraryTable libraryTable = modifiableModel.getModuleLibraryTable();
                     Library library = getLibrary(libraryName, libraryTable, currentModule);
                     final Library.ModifiableModel libraryModifiableModel = library.getModifiableModel();
-                    final List<String> jarFiles = new IvyHelper().getJarFiles(currentModule);
+                    final List<String> jarFiles = ivyHelper.getJarFiles(currentModule);
                     for (String jarFile : jarFiles) {
                         LOGGER.info("Registering external file dependency: " + jarFile);
                         libraryModifiableModel.addRoot("jar://" + jarFile + "!/", OrderRootType.CLASSES);

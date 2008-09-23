@@ -34,6 +34,8 @@ public class IvyFacetConfiguration implements FacetConfiguration {
     }
 
     public void writeExternal(Element element) throws WriteExternalException {
-        element.setAttribute("ivyFile", ivyFile);
+        if (ivyFile != null) {
+            element.setAttribute("ivyFile", ivyFile);
+        }
     }
 }

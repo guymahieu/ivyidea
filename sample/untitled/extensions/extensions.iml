@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="IvyIDEA" name="IvyIDEA">
+      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\extensions\ivy.xml" useProjectSettings="false" ivySettingsFile="C:\projects\ivyidea\trunk\sample\untitled\ivy-settings.xml" />
+    </facet>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -8,13 +13,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="core" />
     <orderEntry type="module-library">
-      <library name="post-ivy-resolved">
+      <library name="IvyIDEA-resolved">
         <CLASSES />
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="core" />
     <orderEntryProperties />
   </component>
 </module>

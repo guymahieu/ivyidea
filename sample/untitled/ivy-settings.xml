@@ -1,5 +1,5 @@
 <ivysettings>
-        <properties file="C:/Users/guy/IdeaProjects/PostIvyPlugin/sample/untitled/ivysettings-file.properties" />
+        <properties file="C:/Projects/ivyidea/trunk/sample/untitled/ivysettings-file.properties" />
         <!--<properties file="${ivy.settings.dir}/ivysettings-file.properties" />-->
         <settings defaultCache="${cache.dir}" defaultResolver="internal" checkUpToDate="false" />
         <resolvers>

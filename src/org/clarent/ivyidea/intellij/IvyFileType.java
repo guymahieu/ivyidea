@@ -1,13 +1,13 @@
 package org.clarent.ivyidea.intellij;
 
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.UserFileType;
-import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.Nullable;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaIcons;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 

@@ -1,18 +1,18 @@
 package org.clarent.ivyidea;
 
 import com.intellij.facet.FacetTypeRegistry;
-import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.fileTypes.FileTypeManager;
-import com.intellij.openapi.fileTypes.FileNameMatcher;
+import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileTypes.ExcactFileNameMatcher;
-import org.clarent.ivyidea.intellij.facet.IvyFacetType;
+import com.intellij.openapi.fileTypes.FileNameMatcher;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import org.clarent.ivyidea.intellij.IvyFileType;
+import org.clarent.ivyidea.intellij.facet.IvyFacetType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Guy Mahieu
@@ -36,7 +36,6 @@ public class IvyIdeaPlugin implements ApplicationComponent {
                 FileTypeManager.getInstance().registerFileType(IvyFileType.IVY_FILE_TYPE, matchers);
             }
         });
-
 
     }
 

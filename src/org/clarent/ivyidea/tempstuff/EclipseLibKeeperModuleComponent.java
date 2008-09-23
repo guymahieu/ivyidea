@@ -1,7 +1,7 @@
 package org.clarent.ivyidea.tempstuff;
 
-import com.intellij.openapi.module.ModuleComponent;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleComponent;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 

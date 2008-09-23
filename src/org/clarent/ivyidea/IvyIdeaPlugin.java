@@ -28,6 +28,7 @@ public class IvyIdeaPlugin implements ApplicationComponent {
 
     public void initComponent() {
         FacetTypeRegistry.getInstance().registerFacetType(new IvyFacetType());
+
         ApplicationManager.getApplication().runWriteAction(new Runnable() {
             public void run() {
                 List<FileNameMatcher> matchers = new ArrayList<FileNameMatcher>();

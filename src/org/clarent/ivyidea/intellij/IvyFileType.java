@@ -7,6 +7,9 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.Nullable;
+import org.clarent.ivyidea.intellij.ui.IvyIdeaIcons;
+
+import javax.swing.*;
 
 /**
  * @author Guy Mahieu
@@ -27,6 +30,10 @@ public class IvyFileType extends UserFileType {
 
     public boolean isBinary() {
         return false;
+    }
+
+    public Icon getIcon() {
+        return IvyIdeaIcons.MAIN_ICON;
     }
 
     @Nullable

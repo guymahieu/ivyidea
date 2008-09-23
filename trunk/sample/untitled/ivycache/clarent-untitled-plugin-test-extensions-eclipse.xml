@@ -7,7 +7,7 @@
 		revision="0.1"
 		conf="eclipse"
 		confs="default, eclipse"
-		date="20080923155732"/>
+		date="20080925210255"/>
 	<dependencies>
 		<module organisation="clarent" name="untitled-plugin-test-core" >
 			<revision name="0.1" error="not found" downloaded="false" searched="false" conf="" position="-1">

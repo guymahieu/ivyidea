@@ -10,6 +10,11 @@
             <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>
         </component>
     </application-components>
+    <project-components>
+        <component>
+            <implementation-class>org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent</implementation-class>
+        </component>
+    </project-components>
     <!--
     <project-components>
         <component>

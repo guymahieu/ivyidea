@@ -24,17 +24,31 @@ public class DependencyUpdater {
                     String libraryName = new PostIvyPluginConfiguration().getCreatedLibraryName();
                     final ModifiableRootModel modifiableModel = ModuleRootManager.getInstance(currentModule).getModifiableModel();
 
-                    // TODO: clear library or remove old modules that are no longer needed
-
-                    // TODO: should there be interleaving of modules & jars??
+                    // TODO: Respect the order in the ivy file; this means module dependencies can be
+                    //          interleaved with jar files!
+                    //      --> wrap both types in the same kind of object from a resolver and just add them
+                    //              in sequence here...
                     final IvyHelper ivyHelper = new IvyHelper(currentModule);
                     final List<Module> modules = ivyHelper.findModuleDependencies(currentModule);
                     for (Module module : modules) {
-                        LOGGER.info("Registering module dependency: " + module);
-                        modifiableModel.addModuleOrderEntry(module);
+                        boolean alreadyInDependencies = false;
+                        final Module[] existingDependencies = modifiableModel.getModuleDependencies();
+                        for (Module existingDependency : existingDependencies) {
+                            if (existingDependency.getName().equals(module.getName())) {
+                                alreadyInDependencies = true;
+                                break;
+                            }
+                        }
+                        if (!alreadyInDependencies) {
+                            LOGGER.info("Registering module dependency on module " + module.getName() + " for module " + currentModule.getName());
+                            modifiableModel.addModuleOrderEntry(module);
+                        } else {
+                            LOGGER.info("Module dependency on " + module.getName() + " already existed in module " + currentModule.getName());
+                        }
                     }
 
                     // TODO: DO not include module dependencies!!!!!
+                    // TODO: clear library or remove old dependencies that are no longer needed
                     LibraryTable libraryTable = modifiableModel.getModuleLibraryTable();
                     Library library = getLibrary(libraryName, libraryTable, currentModule);
                     final Library.ModifiableModel libraryModifiableModel = library.getModifiableModel();

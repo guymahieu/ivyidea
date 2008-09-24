@@ -2,7 +2,9 @@ package org.clarent.ivyidea.ivy;
 
 import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
+import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.intellij.facet.IvyFacetConfiguration;
+import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -34,8 +36,18 @@ public class IvyWrapper {
 
     @Nullable
     protected File getIvySettingsFile(Module module) {
-        // TODO: check project settings if not overridden in module when project settings are implemented!
-        return new File(IvyFacetConfiguration.getInstance(module).getIvySettingsFile());
+        final IvyFacetConfiguration moduleConfiguration = IvyFacetConfiguration.getInstance(module);
+        if (moduleConfiguration.isUseProjectSettings()) {
+            IvyIdeaProjectSettingsComponent component = module.getProject().getComponent(IvyIdeaProjectSettingsComponent.class);
+            final IvyIdeaProjectSettings state = component.getState();
+            if (state != null && state.getIvySettingsFile() != null && state.getIvySettingsFile().trim().length() > 0) {
+                return new File(state.getIvySettingsFile());
+            } else {
+                throw new RuntimeException("No ivy settings file found in the project configuration.");
+            }
+        } else {
+            return new File(moduleConfiguration.getIvySettingsFile());
+        }
     }
 
 }

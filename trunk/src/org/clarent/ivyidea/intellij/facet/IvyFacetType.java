@@ -72,13 +72,15 @@ public class IvyFacetType extends FacetType<IvyFacet, IvyFacetConfiguration> {
 
     }
 
-    protected IvyFacetConfiguration configureDetectedFacet(VirtualFile ivyFile, Collection<IvyFacetConfiguration> existentFacetConfigurations) {
-        if (existentFacetConfigurations.isEmpty()) {
+    protected IvyFacetConfiguration configureDetectedFacet(VirtualFile ivyFile, Collection<IvyFacetConfiguration> existingFacetConfigurations) {
+        if (existingFacetConfigurations.isEmpty()) {
             final IvyFacetConfiguration defaultConfiguration = createDefaultConfiguration();
             defaultConfiguration.setIvyFile(ivyFile.getUrl());
             return defaultConfiguration;
         } else {
-            return existentFacetConfigurations.iterator().next();
+            // TODO: only use file that is the closest to the iml file!
+            //              http://code.google.com/p/ivyidea/issues/detail?id=1
+            return existingFacetConfigurations.iterator().next();
         }
     }
 }

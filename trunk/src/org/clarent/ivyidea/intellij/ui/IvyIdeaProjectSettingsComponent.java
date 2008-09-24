@@ -1,36 +1,38 @@
 package org.clarent.ivyidea.intellij.ui;
 
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.DataKeys;
+import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ProjectComponent;
-import com.intellij.openapi.components.ComponentConfig;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.actionSystem.DataKeys;
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.UserActivityWatcher;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
-import com.intellij.ide.DataManager;
-
-import javax.swing.*;
-
+import com.intellij.ui.UserActivityWatcher;
+import org.clarent.ivyidea.intellij.IvyFileType;
+import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
-import org.clarent.ivyidea.intellij.IvyFileType;
+
+import javax.swing.*;
 
 /**
  * @author Guy Mahieu
  */
 
-public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Configurable {
+public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Configurable, PersistentStateComponent<IvyIdeaProjectSettings> {
+
+    public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";
 
     private boolean modified;
-
     private TextFieldWithBrowseButton txtIvySettingsFile;
     private JPanel projectSettingsPanel;
+    private IvyIdeaProjectSettings internalState;
 
     public IvyIdeaProjectSettingsComponent() {
         UserActivityWatcher watcher = new UserActivityWatcher();
@@ -58,7 +60,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     @NonNls
     @NotNull
     public String getComponentName() {
-        return "IvyIDEA.ProjectSettings";
+        return COMPONENT_NAME;
     }
 
     public void initComponent() {
@@ -92,11 +94,28 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     }
 
     public void apply() throws ConfigurationException {
+        if (internalState == null) {
+            internalState = new IvyIdeaProjectSettings();
+        }
+        internalState.setIvySettingsFile(txtIvySettingsFile.getText());
     }
 
     public void reset() {
+        if (internalState != null) {
+            txtIvySettingsFile.setText(internalState.getIvySettingsFile());
+        } else {
+            txtIvySettingsFile.setText(null);
+        }
     }
 
     public void disposeUIResources() {
+    }
+
+    public IvyIdeaProjectSettings getState() {
+        return internalState;
+    }
+
+    public void loadState(IvyIdeaProjectSettings state) {
+        this.internalState = state;
     }
 }

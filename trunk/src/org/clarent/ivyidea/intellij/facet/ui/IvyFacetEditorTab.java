@@ -12,8 +12,8 @@ import org.clarent.ivyidea.intellij.facet.IvyFacetConfiguration;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * @author Guy Mahieu
@@ -48,8 +48,8 @@ public class IvyFacetEditorTab extends FacetEditorTab {
         descriptor.setNewFileType(IvyFileType.IVY_FILE_TYPE);
         txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", editorContext.getProject(), new FileChooserDescriptor(true, false, false, false, false, false));
 
-        chkUseProjectSettings.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        chkUseProjectSettings.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
                 lblIvySettingsFile.setEnabled(!chkUseProjectSettings.isSelected());
                 txtIvySettingsFile.setEnabled(!chkUseProjectSettings.isSelected());
             }

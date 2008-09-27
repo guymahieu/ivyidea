@@ -1,0 +1,10 @@
+<ivy-module version="1.0">
+    <info organisation="clarent" module="untitled-plugin-test-core" revision="0.1" status="integration" publication="20080923151134"/>
+    <configurations>
+        <conf name="default"/>
+        <conf name="eclipse"/>
+    </configurations>
+    <dependencies>
+        <dependency org="apache" name="commons-collections" rev="3.2.1" conf="eclipse,default->default"/>
+    </dependencies>
+</ivy-module>

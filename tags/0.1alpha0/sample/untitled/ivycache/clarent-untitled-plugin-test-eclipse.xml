@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="clarent"
+		module="untitled-plugin-test"
+		revision="working@xps420"
+		conf="eclipse"
+		confs="default, eclipse"
+		date="20080922130404"/>
+	<dependencies>
+		<module organisation="apache" name="commons-collections" >
+			<revision name="3.2.1" status="release" pubdate="20080919191510" resolver="internal" artresolver="internal" downloaded="false" searched="false" default="true" conf="default" position="0">
+				<metadata-artifact status="no" details="" size="500" time="0" location="C:\Users\guy\IdeaProjects\PostIvyPlugin\sample\untitled\ivycache\apache\commons-collections\ivy-3.2.1.xml" searched="false" origin-is-local="true" origin-location="C:\Users\guy\IdeaProjects\PostIvyPlugin\sample\untitled\repository\apache\commons-collections\ivy-3.2.1.xml"/>
+				<caller organisation="clarent" name="untitled-plugin-test" conf="eclipse" rev="3.2.1" callerrev="working@xps420"/>
+				<artifacts>
+					<artifact name="commons-collections" type="jar" ext="jar" status="no" details="" size="575389" time="0" location="C:\Users\guy\IdeaProjects\PostIvyPlugin\sample\untitled\ivycache\apache\commons-collections\jars\commons-collections-3.2.1.jar">
+						<origin-location is-local="true" location="C:\Users\guy\IdeaProjects\PostIvyPlugin\sample\untitled\repository\apache\jars\commons-collections-3.2.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

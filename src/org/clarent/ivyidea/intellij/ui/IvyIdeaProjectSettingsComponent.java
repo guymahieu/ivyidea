@@ -1,17 +1,14 @@
 package org.clarent.ivyidea.intellij.ui;
 
-import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.IvyFileType;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
 import org.jetbrains.annotations.Nls;
@@ -46,9 +43,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
 
         final FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
         descriptor.setNewFileType(IvyFileType.IVY_FILE_TYPE);
-        DataContext dataContext = DataManager.getInstance().getDataContext();
-        Project project = DataKeys.PROJECT.getData(dataContext);
-        txtIvySettingsFile.addBrowseFolderListener("Select ivy file", "", project, descriptor);
+        txtIvySettingsFile.addBrowseFolderListener("Select ivy file", "", IntellijUtils.getCurrentProject(), descriptor);
     }
 
     public void projectOpened() {

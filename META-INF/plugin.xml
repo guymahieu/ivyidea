@@ -1,10 +1,10 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
-  <name>IvyIDEA</name>
-  <description>Resolves module dependencies through Ivy</description>
-  <version>0.1</version>
-  <vendor>Clarent</vendor>
-  <idea-version since-build="3000"/>
+    <name>IvyIDEA</name>
+    <description>Resolves module dependencies through Ivy</description>
+    <version>0.1</version>
+    <vendor>Clarent</vendor>
+    <idea-version since-build="3000"/>
     <application-components>
         <component>
             <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>
@@ -15,23 +15,17 @@
             <implementation-class>org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent</implementation-class>
         </component>
     </project-components>
-    <!--
-    <project-components>
-        <component>
-            <implementation-class>org.clarent.ivyideatuff.TestProjectComponent</implementation-class>
-        </component>
-    </project-components>
-    <module-components>
-        <component>
-            <implementation-class>org.clarent.ivyideatuff.EclipseLibKeeperModuleComponent</implementation-class>
-        </component>
-    </module-components>
-    -->
-     <actions>
+    <actions>
+        <action id="IvyIDEA.UpdateSingleModuleDependencies"
+                class="org.clarent.ivyidea.UpdateSingleModuleDependenciesAction" text="Ivy Resolve (active module)"
+                description="Resolve dependencies for the active module">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
         <action id="IvyIDEA.UpdateAllDependencies"
                 class="org.clarent.ivyidea.UpdateAllModuleDependenciesAction"
-                text="Update all Dependencies" description="Update the resolved libs for all modules">
-            <add-to-group group-id="ToolsMenu" relative-to-action="PostIvyPlugin.UpdateDependencies" anchor="after"/>
+                text="Ivy Resolve (all modules)" description="Resolve dependencies for all modules">
+            <add-to-group group-id="ToolsMenu" relative-to-action="IvyIDEA.UpdateSingleModuleDependencies"
+                          anchor="after"/>
         </action>
     </actions>
 

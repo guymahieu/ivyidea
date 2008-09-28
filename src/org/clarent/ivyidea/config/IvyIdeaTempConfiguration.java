@@ -6,10 +6,10 @@ package org.clarent.ivyidea.config;
  * @author Guy Mahieu
  */
 
-public class PostIvyPluginConfiguration {
+public class IvyIdeaTempConfiguration {
 
-    public static PostIvyPluginConfiguration getCurrent() {
-        return new PostIvyPluginConfiguration();
+    public static IvyIdeaTempConfiguration getCurrent() {
+        return new IvyIdeaTempConfiguration();
     }
 
     public String getIvyConfiguration() {

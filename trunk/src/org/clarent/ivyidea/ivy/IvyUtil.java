@@ -24,14 +24,14 @@ public class IvyUtil {
     @Nullable
     public static ModuleDescriptor getIvyModuleDescriptor(Module intellijModule, ParserSettings settings) {
         final File ivyFile = getIvyFile(intellijModule);
-        if (ivyFile != null && ivyFile.exists()) {
+        if (ivyFile.exists()) {
             return parseIvyFile(ivyFile, settings);
         } else {
             return null;
         }
     }
 
-    @Nullable
+    @NotNull
     public static File getIvyFile(Module module) {
         return new File(IvyFacetConfiguration.getInstance(module).getIvyFile());
     }

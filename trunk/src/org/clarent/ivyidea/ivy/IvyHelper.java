@@ -30,7 +30,7 @@ public class IvyHelper {
     private Ivy ivy;
 
     public IvyHelper(Module module) {
-        ivy = new IvyWrapper(module).getIvy();
+        ivy = new IvyManager().getIvy(module);
     }
 
     @SuppressWarnings("unchecked")
@@ -77,21 +77,19 @@ public class IvyHelper {
         List<Module> result = new ArrayList<Module>();
         IntellijProjectIvyInfo ipi = new IntellijProjectIvyInfo(currentModule.getProject());
         final File ivyFile = IvyUtil.getIvyFile(currentModule);
-        if (ivyFile != null) {
-            final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivy.getSettings());
-            if (descriptor != null) {
-                final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
-                final Module[] modules = ModuleManager.getInstance(currentModule.getProject()).getModules();
-                for (Module dependencyModule : modules) {
-                    if (!dependencyModule.equals(currentModule)) {
-                        for (DependencyDescriptor ivyDependency : ivyDependencies) {
-                            final ModuleRevisionId ivyDependencyId = ivyDependency.getDependencyRevisionId();
-                            final ModuleRevisionId dependencyModuleId = ipi.getRevisionId(dependencyModule);
-                            if (ivyDependencyId.equals(dependencyModuleId)) {
-                                LOGGER.info("Recognized dependency " + ivyDependency + " as intellij module '"+dependencyModule.getName()+"' in this project!");
-                                result.add(dependencyModule);
-                                break;
-                            }
+        final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivy.getSettings());
+        if (descriptor != null) {
+            final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
+            final Module[] modules = ModuleManager.getInstance(currentModule.getProject()).getModules();
+            for (Module dependencyModule : modules) {
+                if (!dependencyModule.equals(currentModule)) {
+                    for (DependencyDescriptor ivyDependency : ivyDependencies) {
+                        final ModuleRevisionId ivyDependencyId = ivyDependency.getDependencyRevisionId();
+                        final ModuleRevisionId dependencyModuleId = ipi.getRevisionId(dependencyModule);
+                        if (ivyDependencyId.equals(dependencyModuleId)) {
+                            LOGGER.info("Recognized dependency " + ivyDependency + " as intellij module '" + dependencyModule.getName() + "' in this project!");
+                            result.add(dependencyModule);
+                            break;
                         }
                     }
                 }
@@ -99,7 +97,6 @@ public class IvyHelper {
         }
         return result;
     }
-
 
 
 }

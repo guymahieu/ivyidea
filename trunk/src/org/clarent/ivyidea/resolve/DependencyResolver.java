@@ -30,17 +30,6 @@ public class DependencyResolver {
 
     private static final Logger LOGGER = Logger.getLogger(DependencyResolver.class.getName());
 
-    /*
-        public List<ResolvedDependency> resolveAll() {
-            final List<ResolvedDependency> result = new ArrayList<ResolvedDependency>();
-            final Module[] modules = IntellijUtils.getAllModules();
-            final IvyManager ivyManager = new IvyManager();
-            for (Module module : modules) {
-                result.addAll(resolve(module, ivyManager));
-            }
-            return result;
-        }
-    */
     public List<ResolvedDependency> resolve(Module module) {
         return resolve(module, new IvyManager());
     }

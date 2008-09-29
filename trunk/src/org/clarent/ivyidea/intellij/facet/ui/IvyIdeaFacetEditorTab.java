@@ -8,7 +8,7 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.intellij.IvyFileType;
-import org.clarent.ivyidea.intellij.facet.IvyFacetConfiguration;
+import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ import javax.swing.event.ChangeListener;
  * @author Guy Mahieu
  */
 
-public class IvyFacetEditorTab extends FacetEditorTab {
+public class IvyIdeaFacetEditorTab extends FacetEditorTab {
 
     private com.intellij.openapi.ui.TextFieldWithBrowseButton txtIvyFile;
     private JPanel pnlRoot;
@@ -29,7 +29,7 @@ public class IvyFacetEditorTab extends FacetEditorTab {
     private FacetEditorContext editorContext;
     private boolean modified;
 
-    public IvyFacetEditorTab(FacetEditorContext editorContext) {
+    public IvyIdeaFacetEditorTab(FacetEditorContext editorContext) {
         this.editorContext = editorContext;
 
         UserActivityWatcher watcher = new UserActivityWatcher();
@@ -70,14 +70,14 @@ public class IvyFacetEditorTab extends FacetEditorTab {
     }
 
     public void apply() throws ConfigurationException {
-        IvyFacetConfiguration configuration = (IvyFacetConfiguration) editorContext.getFacet().getConfiguration();
+        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) editorContext.getFacet().getConfiguration();
         configuration.setIvyFile(txtIvyFile.getText());
         configuration.setUseProjectSettings(chkUseProjectSettings.isSelected());
         configuration.setIvySettingsFile(txtIvySettingsFile.getText());
     }
 
     public void reset() {
-        IvyFacetConfiguration configuration = (IvyFacetConfiguration) editorContext.getFacet().getConfiguration();
+        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) editorContext.getFacet().getConfiguration();
         txtIvyFile.setText(configuration.getIvyFile());
         chkUseProjectSettings.setSelected(configuration.isUseProjectSettings());
         txtIvySettingsFile.setText(configuration.getIvySettingsFile());

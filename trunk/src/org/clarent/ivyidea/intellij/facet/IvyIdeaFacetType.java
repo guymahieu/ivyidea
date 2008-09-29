@@ -21,34 +21,34 @@ import java.util.Collection;
  * @author Guy Mahieu
  */
 
-public class IvyFacetType extends FacetType<IvyFacet, IvyFacetConfiguration> {
+public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfiguration> {
 
-    public static final FacetTypeId<IvyFacet> ID = new FacetTypeId<IvyFacet>("IvyIDEA");
+    public static final FacetTypeId<IvyIdeaFacet> ID = new FacetTypeId<IvyIdeaFacet>("IvyIDEA");
 
-    public IvyFacetType() {
+    public IvyIdeaFacetType() {
         super(ID, "IvyIDEA", "IvyIDEA");
     }
 
-    public IvyFacetConfiguration createDefaultConfiguration() {
-        return new IvyFacetConfiguration();
+    public IvyIdeaFacetConfiguration createDefaultConfiguration() {
+        return new IvyIdeaFacetConfiguration();
     }
 
-    public IvyFacet createFacet(@NotNull Module module, String name, @NotNull IvyFacetConfiguration configuration, @Nullable Facet underlyingFacet) {
-        return new IvyFacet(this, module, name, configuration, underlyingFacet);
+    public IvyIdeaFacet createFacet(@NotNull Module module, String name, @NotNull IvyIdeaFacetConfiguration configuration, @Nullable Facet underlyingFacet) {
+        return new IvyIdeaFacet(this, module, name, configuration, underlyingFacet);
     }
 
     public javax.swing.Icon getIcon() {
         return IvyIdeaIcons.MAIN_ICON_SMALL;
     }
 
-    public void registerDetectors(FacetDetectorRegistry<IvyFacetConfiguration> ivyIdeaDetectorRegistry) {
+    public void registerDetectors(FacetDetectorRegistry<IvyIdeaFacetConfiguration> ivyIdeaDetectorRegistry) {
         VirtualFileFilter virtualFileFilter = new VirtualFileFilter() {
             public boolean accept(VirtualFile file) {
                 return "ivy.xml".equals(file.getName());
             }
         };
-        ivyIdeaDetectorRegistry.registerUniversalDetector(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new FacetDetector<VirtualFile, IvyFacetConfiguration>() {
-            public IvyFacetConfiguration detectFacet(VirtualFile source, Collection<IvyFacetConfiguration> existentFacetConfigurations) {
+        ivyIdeaDetectorRegistry.registerUniversalDetector(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new FacetDetector<VirtualFile, IvyIdeaFacetConfiguration>() {
+            public IvyIdeaFacetConfiguration detectFacet(VirtualFile source, Collection<IvyIdeaFacetConfiguration> existentFacetConfigurations) {
                 return configureDetectedFacet(source, existentFacetConfigurations);
             }
         });
@@ -57,24 +57,24 @@ public class IvyFacetType extends FacetType<IvyFacet, IvyFacetConfiguration> {
             public boolean value(PsiFile psiFile) {
                 return true;
             }
-        }, new FacetDetector<PsiFile, IvyFacetConfiguration>() {
-            public IvyFacetConfiguration detectFacet(PsiFile source, Collection<IvyFacetConfiguration> existentFacetConfigurations) {
+        }, new FacetDetector<PsiFile, IvyIdeaFacetConfiguration>() {
+            public IvyIdeaFacetConfiguration detectFacet(PsiFile source, Collection<IvyIdeaFacetConfiguration> existentFacetConfigurations) {
                 return configureDetectedFacet(source.getVirtualFile(), existentFacetConfigurations);
             }
         });
 
-        ivyIdeaDetectorRegistry.registerDetectorForWizard(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new FacetDetector<VirtualFile, IvyFacetConfiguration>() {
+        ivyIdeaDetectorRegistry.registerDetectorForWizard(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new FacetDetector<VirtualFile, IvyIdeaFacetConfiguration>() {
 
-            public IvyFacetConfiguration detectFacet(VirtualFile source, Collection<IvyFacetConfiguration> existentFacetConfigurations) {
+            public IvyIdeaFacetConfiguration detectFacet(VirtualFile source, Collection<IvyIdeaFacetConfiguration> existentFacetConfigurations) {
                 return configureDetectedFacet(source, existentFacetConfigurations);
             }
         });
 
     }
 
-    protected IvyFacetConfiguration configureDetectedFacet(VirtualFile ivyFile, Collection<IvyFacetConfiguration> existingFacetConfigurations) {
+    protected IvyIdeaFacetConfiguration configureDetectedFacet(VirtualFile ivyFile, Collection<IvyIdeaFacetConfiguration> existingFacetConfigurations) {
         if (existingFacetConfigurations.isEmpty()) {
-            final IvyFacetConfiguration defaultConfiguration = createDefaultConfiguration();
+            final IvyIdeaFacetConfiguration defaultConfiguration = createDefaultConfiguration();
             defaultConfiguration.setIvyFile(ivyFile.getUrl());
             return defaultConfiguration;
         } else {

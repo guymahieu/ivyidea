@@ -31,6 +31,9 @@ public class IntellijDependencyUpdater {
                 for (ResolvedDependency resolvedDependency : resolvedDependencies) {
                     resolvedDependency.addTo(modifiableModel, libraryModifiableModel);
                 }
+                if (libraryModifiableModel.isChanged()) {
+                    libraryModifiableModel.commit();
+                }
                 if (modifiableModel.isChanged()) {
                     modifiableModel.commit();
                 } else {

@@ -4,7 +4,7 @@ import com.intellij.openapi.module.Module;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
 import org.apache.ivy.plugins.parser.ParserSettings;
-import org.clarent.ivyidea.intellij.facet.IvyFacetConfiguration;
+import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +33,7 @@ public class IvyUtil {
 
     @NotNull
     public static File getIvyFile(Module module) {
-        return new File(IvyFacetConfiguration.getInstance(module).getIvyFile());
+        return new File(IvyIdeaFacetConfiguration.getInstance(module).getIvyFile());
     }
 
     public static ModuleDescriptor parseIvyFile(@NotNull File ivyFile, ParserSettings settings) {

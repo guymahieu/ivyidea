@@ -1,9 +1,15 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
+<idea-plugin url="http://www.ivyidea.org">
     <name>IvyIDEA</name>
     <description>Resolves module dependencies through Ivy</description>
+    <change-notes>
+        This release is part of a series of initial alpha releases.
+        The plugin should be functional but is not at all stable and using it
+        may require some advanced knowlegde since tweaking may be needed in
+        some cases.
+    </change-notes>
     <version>0.1</version>
-    <vendor>Clarent</vendor>
+    <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org">Guy Mahieu, Clarent BVBA</vendor>
     <idea-version since-build="3000"/>
     <application-components>
         <component>
@@ -36,5 +42,4 @@
             <separator/>
         </group>
     </actions>
-
 </idea-plugin>

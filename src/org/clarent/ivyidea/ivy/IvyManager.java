@@ -3,7 +3,7 @@ package org.clarent.ivyidea.ivy;
 import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
-import org.clarent.ivyidea.intellij.facet.IvyFacetConfiguration;
+import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +40,7 @@ public class IvyManager {
 
     @NotNull
     protected File getIvySettingsFile(Module module) {
-        final IvyFacetConfiguration moduleConfiguration = IvyFacetConfiguration.getInstance(module);
+        final IvyIdeaFacetConfiguration moduleConfiguration = IvyIdeaFacetConfiguration.getInstance(module);
         if (moduleConfiguration.isUseProjectSettings()) {
             IvyIdeaProjectSettingsComponent component = module.getProject().getComponent(IvyIdeaProjectSettingsComponent.class);
             final IvyIdeaProjectSettings state = component.getState();

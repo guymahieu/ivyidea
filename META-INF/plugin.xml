@@ -19,17 +19,22 @@
         </component>
     </project-components>
     <actions>
-        <action id="IvyIDEA.UpdateSingleModuleDependencies"
-                class="org.clarent.ivyidea.UpdateSingleModuleDependenciesAction" text="Ivy Resolve (active module)"
-                description="Resolve dependencies for the active module">
+        <group id="IvyIDEA.Menu" text="IvyIDEA Resolve" description="Resolve module depencencies using Ivy"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <add-to-group group-id="ToolsMenu" anchor="first"/>
-        </action>
-        <action id="IvyIDEA.UpdateAllDependencies"
-                class="org.clarent.ivyidea.UpdateAllModuleDependenciesAction"
-                text="Ivy Resolve (all modules)" description="Resolve dependencies for all modules">
-            <add-to-group group-id="ToolsMenu" relative-to-action="IvyIDEA.UpdateSingleModuleDependencies"
-                          anchor="after"/>
-        </action>
+            <separator/>
+            <action id="IvyIDEA.UpdateSingleModuleDependencies"
+                    class="org.clarent.ivyidea.UpdateSingleModuleDependenciesAction" text="For active module"
+                    description="Resolve dependencies for the active module">
+            </action>
+            <action id="IvyIDEA.UpdateAllDependencies"
+                    class="org.clarent.ivyidea.UpdateAllModuleDependenciesAction" text="For all modules"
+                    description="Resolve dependencies for all modules">
+            </action>
+            <separator/>
+        </group>
     </actions>
 
 </idea-plugin>

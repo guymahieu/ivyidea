@@ -7,7 +7,7 @@ import com.intellij.openapi.fileTypes.ExcactFileNameMatcher;
 import com.intellij.openapi.fileTypes.FileNameMatcher;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import org.clarent.ivyidea.intellij.IvyFileType;
-import org.clarent.ivyidea.intellij.facet.IvyFacetType;
+import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +27,7 @@ public class IvyIdeaPlugin implements ApplicationComponent {
     }
 
     public void initComponent() {
-        FacetTypeRegistry.getInstance().registerFacetType(new IvyFacetType());
+        FacetTypeRegistry.getInstance().registerFacetType(new IvyIdeaFacetType());
 
         ApplicationManager.getApplication().runWriteAction(new Runnable() {
             public void run() {

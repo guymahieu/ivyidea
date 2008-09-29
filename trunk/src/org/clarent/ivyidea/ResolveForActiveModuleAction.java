@@ -17,7 +17,7 @@ import org.clarent.ivyidea.resolve.ResolvedDependency;
 import java.text.MessageFormat;
 import java.util.List;
 
-public class UpdateSingleModuleDependenciesAction extends AnAction {
+public class ResolveForActiveModuleAction extends AnAction {
 
     private static final String MENU_TEXT = "For {0} module";
 

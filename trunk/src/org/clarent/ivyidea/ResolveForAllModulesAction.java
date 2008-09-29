@@ -14,7 +14,7 @@ import org.clarent.ivyidea.resolve.ResolvedDependency;
 
 import java.util.List;
 
-public class UpdateAllModuleDependenciesAction extends AnAction {
+public class ResolveForAllModulesAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {
         Project project = DataKeys.PROJECT.getData(e.getDataContext());

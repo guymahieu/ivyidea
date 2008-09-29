@@ -33,11 +33,11 @@
             <add-to-group group-id="ToolsMenu" anchor="first"/>
             <separator/>
             <action id="IvyIDEA.UpdateSingleModuleDependencies"
-                    class="org.clarent.ivyidea.UpdateSingleModuleDependenciesAction" text="For active module"
+                    class="org.clarent.ivyidea.ResolveForActiveModuleAction" text="For active module"
                     description="Resolve dependencies for the active module">
             </action>
             <action id="IvyIDEA.UpdateAllDependencies"
-                    class="org.clarent.ivyidea.UpdateAllModuleDependenciesAction" text="For all modules"
+                    class="org.clarent.ivyidea.ResolveForAllModulesAction" text="For all modules"
                     description="Resolve dependencies for all modules">
             </action>
             <separator/>

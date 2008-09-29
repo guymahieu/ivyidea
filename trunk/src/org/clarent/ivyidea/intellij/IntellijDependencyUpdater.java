@@ -20,6 +20,7 @@ public class IntellijDependencyUpdater {
     private static final Logger LOGGER = Logger.getLogger(IntellijDependencyUpdater.class.getName());
 
     public static void updateDependencies(Module module, List<ResolvedDependency> resolvedDependencies) {
+        // TODO: Remove dependencies that are no longer in the ivy config but are still in the library
         if (resolvedDependencies.size() > 0) {
             String libraryName = new IvyIdeaTempConfiguration().getCreatedLibraryName();
             final ModifiableRootModel modifiableModel = ModuleRootManager.getInstance(module).getModifiableModel();

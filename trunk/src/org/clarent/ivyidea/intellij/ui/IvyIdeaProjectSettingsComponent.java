@@ -2,6 +2,8 @@ package org.clarent.ivyidea.intellij.ui;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
@@ -22,6 +24,10 @@ import javax.swing.*;
  * @author Guy Mahieu
  */
 
+@State(
+        name = IvyIdeaProjectSettingsComponent.COMPONENT_NAME,
+        storages = {@Storage(id = "IvyIDEA", file = "$PROJECT_FILE$")}
+)
 public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Configurable, PersistentStateComponent<IvyIdeaProjectSettings> {
 
     public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";

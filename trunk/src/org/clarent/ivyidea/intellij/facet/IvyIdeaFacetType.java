@@ -75,7 +75,7 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
     protected IvyIdeaFacetConfiguration configureDetectedFacet(VirtualFile ivyFile, Collection<IvyIdeaFacetConfiguration> existingFacetConfigurations) {
         if (existingFacetConfigurations.isEmpty()) {
             final IvyIdeaFacetConfiguration defaultConfiguration = createDefaultConfiguration();
-            defaultConfiguration.setIvyFile(ivyFile.getUrl());
+            defaultConfiguration.setIvyFile(ivyFile.getPath());
             return defaultConfiguration;
         } else {
             // TODO: only use file that is the closest to the iml file!

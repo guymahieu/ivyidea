@@ -21,9 +21,11 @@
         <component>
             <implementation-class>org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent</implementation-class>
         </component>
-        <component>
-            <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
-        </component>
+        <!--
+                <component>
+                    <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
+                </component>
+        -->
     </project-components>
     <actions>
         <group id="IvyIDEA.Menu" text="IvyIDEA Resolve" description="Resolve module depencencies using Ivy"

@@ -47,6 +47,11 @@ public class DependencyResolver {
         }
     }
 
+    @SuppressWarnings({"unchecked"})
+    private List<String> getAllProblemMessages(ResolveReport resolveReport) {
+        return (List<String>) resolveReport.getAllProblemMessages();
+    }
+
     protected List<ResolvedDependency> extractDependencies(ResolveReport resolveReport, IvySettings ivySettings, ModuleDependencies moduleDependencies) {
         List<ResolvedDependency> result = new ArrayList<ResolvedDependency>();
         List<IvyNode> dependencies = getDependencies(resolveReport);

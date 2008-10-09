@@ -49,7 +49,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
 
         final FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
         descriptor.setNewFileType(IvyFileType.IVY_FILE_TYPE);
-        txtIvySettingsFile.addBrowseFolderListener("Select ivy file", "", IntellijUtils.getCurrentProject(), descriptor);
+        txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", IntellijUtils.getCurrentProject(), descriptor);
     }
 
     public void projectOpened() {

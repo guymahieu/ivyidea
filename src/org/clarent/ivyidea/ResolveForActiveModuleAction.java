@@ -24,7 +24,8 @@ public class ResolveForActiveModuleAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
-            final List<ResolvedDependency> list = new DependencyResolver().resolve(module, new IvyManager());
+            final DependencyResolver dependencyResolver = new DependencyResolver();
+            final List<ResolvedDependency> list = dependencyResolver.resolve(module, new IvyManager());
             ApplicationManager.getApplication().runWriteAction(new Runnable() {
                 public void run() {
                     IntellijDependencyUpdater.updateDependencies(module, list);

@@ -21,7 +21,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private static final Logger LOGGER = Logger.getLogger(IvyIdeaFacetConfiguration.class.getName());
 
     private String ivyFile;
-    private boolean useProjectSettings;
+    private boolean useProjectSettings = true;
     private String ivySettingsFile;
 
     public static IvyIdeaFacetConfiguration getInstance(Module module) {
@@ -64,8 +64,12 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
 
     public void readExternal(Element element) throws InvalidDataException {
         setIvyFile(element.getAttributeValue("ivyFile", ""));
-        setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", Boolean.FALSE.toString())));
         setIvySettingsFile(element.getAttributeValue("ivySettingsFile", ""));
+        Boolean useProjectSettingsDefault = Boolean.TRUE;
+        if (getIvySettingsFile() == null || getIvyFile().trim().length() == 0) {
+            useProjectSettingsDefault = Boolean.FALSE;
+        }
+        setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", useProjectSettingsDefault.toString())));
     }
 
     public void writeExternal(Element element) throws WriteExternalException {

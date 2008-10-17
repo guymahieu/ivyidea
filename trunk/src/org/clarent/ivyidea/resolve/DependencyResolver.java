@@ -67,7 +67,10 @@ public class DependencyResolver {
                 } else {
                     final Artifact[] artifacts = dependency.getAllArtifacts();
                     for (Artifact artifact : artifacts) {
-                        result.add(new ExternalDepencency(defaultRepositoryCacheManager.getArchiveFileInCache(artifact)));
+                        final ExternalDependency externalDependency = createExternalDependency(defaultRepositoryCacheManager, artifact);
+                        if (externalDependency != null) {
+                            result.add(externalDependency);
+                        }
                     }
                 }
             } else {
@@ -78,6 +81,23 @@ public class DependencyResolver {
 
         }
         return result;
+    }
+
+    @Nullable
+    private ExternalDependency createExternalDependency(DefaultRepositoryCacheManager defaultRepositoryCacheManager, Artifact artifact) {
+        final File file = defaultRepositoryCacheManager.getArchiveFileInCache(artifact);
+        ResolvedArtifact resolvedArtifact = new ResolvedArtifact(artifact);
+        if (resolvedArtifact.isSourceType()) {
+            return new ExternalSourceDependency(file);
+        }
+        if (resolvedArtifact.isJavaDocType()) {
+            return new ExternalJavaDocDependency(file);
+        }
+        if (resolvedArtifact.isClassesType()) {
+            return new ExternalJarDependency(file);
+        }
+        LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as an IDE dependency.");
+        return null;
     }
 
     @SuppressWarnings("unchecked")

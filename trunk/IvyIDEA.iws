@@ -20,14 +20,449 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyFileType.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyFileType.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyRetrieve.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/GlobPatternMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ivy-report-dot.xsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/AntCallTrigger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/deliver/DefaultPublishingDRResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/IvyPattern.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2/PomDependencyMgt.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/file" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ResourceHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/ModuleDescriptorProvider.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/URLResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/LatestRevisionStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings-main-chain.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/PropertiesFile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager/BuiltFileResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/AbstractModuleDescriptorParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/ArtifactInfo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/FilterHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/retrieve" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/Resource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/LatestCompatibleConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/download/PrepareDownloadEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/URLHandlerRegistry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/Repository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/download/StartArtifactDownloadEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/lock/FileBasedLockStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DefaultExcludeRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/BasicURLHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/ChecksumHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/IvyContext.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/FileSystemResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/repository.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/AbstractCircularDependencyStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalDependency.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/ResourceMDParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/ErrorCircularDependencyStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyConvertPom.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/typedef.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id/ModuleId.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ResolvedArtifact.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/XmlReportParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/RelativeUrlResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/trigger" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/LatestConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings-default-chain.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/CacheMetadataOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/IvyVariableContainerImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve/StartResolveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/ChainVersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/TransferEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh/AbstractSshBasedRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/WarnCircularDependencyStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/LogOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id/ArtifactId.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/VisitData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/NoConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/AbstractPatternsBasedResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/Matcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/OrFilter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyInstall.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/IvyListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/extendable" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/LatestLexicographicStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vsftp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/url" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id/package.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/cli/CommandLineParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve/ResolveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyArtifactReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh/SshCache.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/extendable/UnmodifiableExtendableItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/deliver/DeliverOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DependencyArtifactDescriptor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh/SshResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace/NameSpaceHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/cli/OptionBuilder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveProcessException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyConfigure.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager/PackagerResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/install/InstallEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/NotFilter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vfs/ivy_vfs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/FileUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/ModuleDescriptorWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/Checks.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/Configuration.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/check" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2/PomReader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/Validatable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/BasicResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DefaultIncludeRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalJavaDocDependency.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/VsftpResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/MapMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/SortEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report/DownloadStatus.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/MDResolvedResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/AbstractArtifact.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/BasicResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/status" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/lock/NoLockStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/ArtifactTypeFilter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ArtifactResourceResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/CircularDependencyStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/ResolverHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivy.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/search/SearchEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/ConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/deliver/PublishingDependencyRevisionResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/SortOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/AntMessageLogger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/IvyVariableContainer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/publish/StartArtifactPublishEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/HasLatestStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/ModuleDescriptorParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/UpdateOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/EncrytedProperties.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh/RemoteScpException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/XMLHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/XmlReportWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/Credentials.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/CacheDownloadOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vfs/VfsResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ivy-report-graph.xsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/search/RevisionEntry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/download" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools/analyser/JarModuleFinder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/download/NeedArtifactEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/publish/PublishEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings-1.4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/AbstractIncludeExcludeRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vfs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/retrieve/EndRetrieveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/ivy.xsd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/XmlSettingsParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/LazyResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/AnyMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/AbstractVersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/AbstractLogCircularDependencyStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/LatestStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyPublish.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/AbstractURLHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ivy-report-dot-all.xsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings-shared.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/search/OrganisationEntry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyCachePath.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/ExactOrRegexpPatternMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/StringUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/ExecutionRelativeUrlResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/retrieve/RetrieveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/status/StatusManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager/PackagerCacheEntry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/install/InstallEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/url/URLResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/AbstractRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/EventManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/ChainResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools/analyser/JarJarDependencyAnalyser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/MessageBasedNonMatchingVersionReporter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ReportOutputter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyAntVariableContainer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/FixedConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/Ivy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyListModules.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/RegexpPatternMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/ResolvedResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyArtifactDescriptor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyCacheFileset.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/SilentNonMatchingVersionReporter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/NoFilter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools/analyser" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vfs/VfsRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/FileResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/extendable/DefaultExtendableItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/SortEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/XmlReportOutputter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/VfsResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report/ArtifactDownloadReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyFindRevision.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh/Scp.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace/NamespaceTransformer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/Match.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/LogReportOutputter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace/Namespace.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/Ivy14.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vsftp/VsftpResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/download/DownloadEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/antlib.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/AbstractSshBasedResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyInfo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/ArtifactOrigin.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/License.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/deliver" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/cli/Option.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/AndFilter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyRepositoryReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/IvyEventFilter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/search/ModuleEntry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/NoMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/url/URLRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/StrictConflictException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/publish/PublishEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/deliver/DeliverEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/HostUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/check/CheckEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/Main.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/retrieve/RetrieveEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/FileURLLister.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/SimpleSortEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyBuildNumber.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/MemoryUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/DownloadOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/ModuleDescriptorParserRegistry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/DualResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/lock/ArtifactLockStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings-public.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/CredentialsUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/AddPathTask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/sftp/SFTPResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/install/InstallOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/AbstractPatternMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/MessageLogger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/publish" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/VersionRangeMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/URLLister.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/file/FileRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/ConfigurationAware.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyArtifactProperty.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/MatcherHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/IvySettingsAware.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/AbstractMessageLogger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/VersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve/EndResolveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/deliver/DeliverEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/ParserSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/retrieve" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/cli" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager/packager.xsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/SshResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/TransferListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/trigger/Trigger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DefaultArtifact.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/ApacheURLLister.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/NormalRelativeUrlResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/sftp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptorMediator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/NonMatchingVersionReporter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/LatestVersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNodeBlacklist.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/Configurator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolvedModuleRevision.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/URLHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ivy-report.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve/ResolveDependencyEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/IvyRepResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNodeCallers.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report/DownloadReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/AbstractConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/IvySettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalSourceDependency.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager/packager-1.0.xsd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/IvyThread.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/RegexpConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/IvyAuthenticator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/VisitNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace/MRIDRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyResolve.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve/EndResolveDependencyEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/extendable/ExtendableItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id/ModuleRules.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/MessageLoggerEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/ExactPatternMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/file/FileResource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/ContextualSAXHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/CopyProgressListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/ExcludeRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/AbstractLatestStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/lock/AbstractLockStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/ModuleDescriptorSorter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/cli/ParseException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/packager/build.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/URLHandlerDispatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/sftp/SFTPRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace/NamespaceRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/IncludeRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyDeliver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/trigger/AbstractTrigger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/conflict/StrictConflictManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/HttpClientHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyExtractFromSources.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/ModuleInSort.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/retrieve/StartRetrieveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/PackageMapping.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/CircularDependencyHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/WarningNonMatchingVersionReporter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/search" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools/analyser/JarModule.java" />
+      <change type="MOVED" beforePath="C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\resolve\ExternalDepencency.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalJarDependency.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/extendable/ExtendableItemHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/AntBuildTrigger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/CacheUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools/analyser/RepositoryAnalyser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/repository" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/DefaultMessageLogger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNodeUsage.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh/SshRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/DefaultResolutionCacheManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyVar.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/resolve/StartResolveDependencyEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IvyIDEA.iml" afterPath="$PROJECT_DIR$/IvyIDEA.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/Message.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/id/ArtifactRevisionId.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ivy-report.xsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyPostResolveTask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/IgnoreCircularDependencyStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyCleanCache.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/ResolverSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/retrieve/RetrieveOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter/Filter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/MDArtifact.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report/MetadataArtifactDownloadReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/SubVersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/publish" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/report/ivy-report-graph-all.xsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/ResolutionCacheManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/trigger/LogTrigger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/CacheResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/CopyProgressEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/repository/RepositoryManagementEngineSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyMakePom.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyBuildList.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/util/ApacheHttpURLLister.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ssh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/cli/CommandLine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/SFTPResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/settings/ivysettings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/publish/PublishOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/lock/LockStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/sort/CollectionOfModulesToSort.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/report/ResolveReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/MessageLoggerHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/ComparatorLatestStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/ParserSettingsMonitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/namespace/MRIDTransformationRule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/IvyEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyTask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/IvyPatternHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/url/CredentialsStore.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/DownloadListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/PatternVersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/FilteredIvyListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/latest/LatestTimeStrategy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/install" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyAntSettings.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/cache/ModuleDescriptorMemoryCache.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/download/EndArtifactDownloadEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/RepositoryCopyProgressListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/version/ExactVersionMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/check/CheckEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/tools/analyser/DependencyAnalyser.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/repository/ResourceDownloader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyCacheTask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/event/publish/EndArtifactPublishEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/ConfigurationUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/m2/DefaultPomDependencyMgt.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/OverrideDependencyDescriptorMediator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/ant/IvyCheck.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/filter" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/RestartResolveProcess.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/circular/CircularDependencyException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/publish/PublishEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/matcher/PatternMatcher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/status/Status.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/module/descriptor/Artifact.java" />
+    </list>
+    <list name="workspace settings" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IvyIDEA.iws" afterPath="$PROJECT_DIR$/IvyIDEA.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyIdeaProjectSettings.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.form" />
     </list>
     <ignored path="PostIvyPlugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,33 +482,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetDetector.java" line="14" class="org.clarent.ivyidea.intellij.facet.IvyFacetDetector" package="org.clarent.ivyidea.intellij.facet">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java" line="56" class="org.clarent.ivyidea.ivy.IvyHelper" package="org.clarent.ivyidea.ivy">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyHelper.java" line="43" class="org.clarent.ivyidea.ivy.IvyHelper" package="org.clarent.ivyidea.ivy">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ResolvedArtifact.java" line="44" class="org.clarent.ivyidea.resolve.ResolvedArtifact" package="org.clarent.ivyidea.resolve">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -120,7 +529,24 @@
       </breakpoint>
     </breakpoint_any>
     <breakpoint_rules />
-    <ui_properties />
+    <ui_properties>
+      <property name="line_breakpoints_groupByMethods" value="false" />
+      <property name="line_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_flattenPackages" value="true" />
+      <property name="method_breakpoints_flattenPackages" value="true" />
+      <property name="field_breakpoints_flattenPackages" value="true" />
+      <property name="exception_breakpoints_groupByMethods" value="false" />
+      <property name="line_breakpoints_groupByClasses" value="true" />
+      <property name="method_breakpoints_viewId" value="TABLE" />
+      <property name="field_breakpoints_groupByMethods" value="false" />
+      <property name="line_breakpoints_flattenPackages" value="true" />
+      <property name="field_breakpoints_groupByClasses" value="true" />
+      <property name="method_breakpoints_groupByClasses" value="true" />
+      <property name="exception_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="method_breakpoints_groupByMethods" value="false" />
+    </ui_properties>
   </component>
   <component name="ErrorTreeViewConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -131,10 +557,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IvyIdeaProjectSettingsComponent.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="IvyIdeaFacet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="13" selection-start="869" selection-end="869" vertical-scroll-proportion="0.5840868">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IvyIdeaProjectSettingsComponent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="0" selection-start="2652" selection-end="2652" vertical-scroll-proportion="1.5054054">
+            <state line="53" column="55" selection-start="2144" selection-end="2144" vertical-scroll-proportion="0.029929578">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InternalDependency.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/InternalDependency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="13" selection-start="268" selection-end="268" vertical-scroll-proportion="0.24593128">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExternalJarDependency.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalJarDependency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.23943663">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExternalSourceDependency.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalSourceDependency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="26" selection-start="308" selection-end="308" vertical-scroll-proportion="0.23943663">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResolvedDependency.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ResolvedDependency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="17" selection-start="195" selection-end="195" vertical-scroll-proportion="0.23943663">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExternalJavaDocDependency.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalJavaDocDependency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.23943663">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExternalDependency.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalDependency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="10" selection-start="1284" selection-end="1284" vertical-scroll-proportion="1.0759493">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -142,83 +631,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ComponentConfig.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/components/ComponentConfig.java">
+      <file leaf-file-name="DependencyResolver.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="988" selection-end="988" vertical-scroll-proportion="0.16081081">
+            <state line="94" column="26" selection-start="4731" selection-end="4731" vertical-scroll-proportion="0.60036165">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IvyFacetEditorTab.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.java">
+      <file leaf-file-name="ResolvedArtifact.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ResolvedArtifact.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="0" selection-start="1451" selection-end="1738" vertical-scroll-proportion="0.66068965">
+            <state line="35" column="26" selection-start="963" selection-end="963" vertical-scroll-proportion="0.7623239">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyFacetType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="13" selection-start="750" selection-end="750" vertical-scroll-proportion="0.1875862">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="plugin.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="61" selection-start="717" selection-end="717" vertical-scroll-proportion="0.4255911">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyIdeaProjectSettingsComponent.form" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.form">
-          <provider selected="true" editor-type-id="ui-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ivyidea.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conf/ivyidea.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyIdeaIcons.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="4" selection-start="347" selection-end="347" vertical-scroll-proportion="0.27567568">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyIdeaProjectSettings.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyIdeaProjectSettings.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="40" selection-start="186" selection-end="186" vertical-scroll-proportion="0.22972973">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JDOMExternalizable.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/util/JDOMExternalizable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="82" selection-start="728" selection-end="752" vertical-scroll-proportion="0.16081081">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -325,140 +753,8 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\resolve" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\ui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIdeaProjectSettingsComponent" />
-          <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\ui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\facet" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\facet" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\src\org\clarent\ivyidea\intellij\facet\ui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyFacetEditorTab" />
-          <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -545,6 +841,10 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.clarent.ivyidea.resolve" />
+      <recent name="org.clarent.ivyidea" />
+    </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="be.clarent.postivyplugin.DependencyUpdater" />
       <recent name="DependencyUpdater" />
@@ -564,6 +864,13 @@
       <option name="VM_PARAMETERS" value=" -Xms32m -Xmx256m -XX:MaxPermSize=120m -ea" />
       <option name="PROGRAM_PARAMETERS" />
     </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
@@ -576,47 +883,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-      <envs />
-      <method>
-        <option name="Make" value="true" />
-      </method>
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
       <module name="" />
@@ -646,6 +912,40 @@
       <method>
         <option name="Make" value="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <envs />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
     <configuration default="false" name="IvyIDEA" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="IvyIDEA" />
@@ -719,29 +1019,29 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294621" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12789416" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24816626" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19534598" order="1" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34619626" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46085998" order="3" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2712238" order="1" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40463066" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30540243" order="8" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491731" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" order="7" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498469" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39950526" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329455" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33557868" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31598285" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24984539" order="2" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.037354562" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.58544654" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12238148" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31201765" order="2" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" order="8" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -757,9 +1057,9 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added settings UI for project settings (not yet bound to config object)" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small label change in project settings filechooser" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
     <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
     <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
@@ -768,14 +1068,31 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Removed unneeded dependency" />
-    <MESSAGE value="First attempt at an ivy facet" />
     <MESSAGE value="Facet: implemented configuration saving/loading + editor tab&#10;(detection does not seem to work yet...)" />
     <MESSAGE value="Implemented detectFacet method; still not working though..." />
     <MESSAGE value="Facet detection now seems to work; still testing and tweaking needed though" />
     <MESSAGE value="Added temporary icon" />
     <MESSAGE value="Changed resolve logic to read from facet configuration." />
     <MESSAGE value="Added settings UI for project settings (not yet bound to config object)" />
+    <MESSAGE value="Fixed state bug in IvyFacetEditorTab" />
+    <MESSAGE value="Added functionality to read ivy settings file from project settings if the user checks that option in the module facet config" />
+    <MESSAGE value="Fixed issue where module dependencies are added every time a resolve is done, resulting in duplicate dependencies (http://code.google.com/p/ivyidea/issues/detail?id=4)" />
+    <MESSAGE value="Major refactoring of" />
+    <MESSAGE value="- Major refactoring of internal workings (finally removed proof of concept code); reworked dependency resolving.&#10;- Better management of Ivy instances; reuse between resolves of different modules &#10;- Added action to resolve for a single module" />
+    <MESSAGE value="Removed some classed that became reundant in the new design" />
+    <MESSAGE value="Fixed issue where project settings were not stored in the project file.&#10;http://code.google.com/p/ivyidea/issues/detail?id=5" />
+    <MESSAGE value="Added toolwindow for IvyIDEA output." />
+    <MESSAGE value="Added toolwindow for IvyIDEA output; nothing in it for now." />
+    <MESSAGE value="Fixed bug where library entries were not committed after resolve.&#10;Added context menus for resolving" />
+    <MESSAGE value="Improved metadata in the plugin.xml file" />
+    <MESSAGE value="Updated icons:&#10; - added transparency&#10; - used better quality images" />
+    <MESSAGE value="Renamed actions to be more consistent with their descriptions on screen" />
+    <MESSAGE value="Removed commented obsolete code section" />
+    <MESSAGE value="Removed toolwindow from config because it caused problems with closing projects" />
+    <MESSAGE value="Some small changes in toolwindow stuff" />
+    <MESSAGE value="Fix for issue http://code.google.com/p/ivyidea/issues/detail?id=6" />
+    <MESSAGE value="Fix for issue http://code.google.com/p/ivyidea/issues/detail?id=2 (ivy files added as url rather than path)" />
+    <MESSAGE value="Small label change in project settings filechooser" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -816,115 +1133,117 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ivy/IvyWrapper.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaToolWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="41" selection-start="145" selection-end="145" vertical-scroll-proportion="0.092517">
+        <state line="16" column="11" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/facet/ui/ProjectSettingsContext.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ResolveForAllModulesAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="6" selection-start="962" selection-end="963" vertical-scroll-proportion="0.25442177">
+        <state line="22" column="101" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/project/Project.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="6" selection-start="2517" selection-end="2517" vertical-scroll-proportion="0.7455782">
+        <state line="18" column="13" selection-start="565" selection-end="565" vertical-scroll-proportion="0.019813519">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/pom/PomModel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="17" selection-start="860" selection-end="860" vertical-scroll-proportion="0.11564626">
+        <state line="59" column="37" selection-start="2475" selection-end="2475" vertical-scroll-proportion="0.37841043">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/actionSystem/DataKeys.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IntellijDependencyUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="39" selection-start="1624" selection-end="1624" vertical-scroll-proportion="0.14475432">
+        <state line="21" column="27" selection-start="677" selection-end="677" vertical-scroll-proportion="0.13641755">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/util/JDOMExternalizable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="82" selection-start="728" selection-end="752" vertical-scroll-proportion="0.16081081">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyIdeaProjectSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="40" selection-start="186" selection-end="186" vertical-scroll-proportion="0.22972973">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/ivyidea.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaIcons.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="4" selection-start="347" selection-end="347" vertical-scroll-proportion="0.27567568">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="61" selection-start="717" selection-end="717" vertical-scroll-proportion="0.4255911">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.form">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaToolWindow.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyFacetEditorTab.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1451" selection-end="1738" vertical-scroll-proportion="0.66068965">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyFacetType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="13" selection-start="750" selection-end="750" vertical-scroll-proportion="0.1875862">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/components/ComponentConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="988" selection-end="988" vertical-scroll-proportion="0.16081081">
+        <state line="25" column="13" selection-start="869" selection-end="869" vertical-scroll-proportion="0.5840868">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="0" selection-start="2652" selection-end="2652" vertical-scroll-proportion="1.5054054">
+        <state line="53" column="55" selection-start="2144" selection-end="2144" vertical-scroll-proportion="0.029929578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/InternalDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="13" selection-start="268" selection-end="268" vertical-scroll-proportion="0.24593128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ResolvedDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="17" selection-start="195" selection-end="195" vertical-scroll-proportion="0.23943663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalJavaDocDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.23943663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalJarDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.23943663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="10" selection-start="1284" selection-end="1284" vertical-scroll-proportion="1.0759493">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalSourceDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="26" selection-start="308" selection-end="308" vertical-scroll-proportion="0.23943663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ResolvedArtifact.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="26" selection-start="963" selection-end="963" vertical-scroll-proportion="0.7623239">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="94" column="26" selection-start="4731" selection-end="4731" vertical-scroll-proportion="0.60036165">
+          <folding />
         </state>
       </provider>
     </entry>

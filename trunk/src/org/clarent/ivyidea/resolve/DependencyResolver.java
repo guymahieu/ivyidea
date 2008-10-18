@@ -47,10 +47,12 @@ public class DependencyResolver {
         }
     }
 
+/*
     @SuppressWarnings({"unchecked"})
     private List<String> getAllProblemMessages(ResolveReport resolveReport) {
         return (List<String>) resolveReport.getAllProblemMessages();
     }
+*/
 
     protected List<ResolvedDependency> extractDependencies(ResolveReport resolveReport, IvySettings ivySettings, ModuleDependencies moduleDependencies) {
         List<ResolvedDependency> result = new ArrayList<ResolvedDependency>();
@@ -96,7 +98,7 @@ public class DependencyResolver {
         if (resolvedArtifact.isClassesType()) {
             return new ExternalJarDependency(file);
         }
-        LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as an IDE dependency.");
+        LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as a dependency.");
         return null;
     }
 
@@ -104,6 +106,8 @@ public class DependencyResolver {
     private List<IvyNode> getDependencies(ResolveReport resolveReport) {
         // TODO: Check if this is even correct....
         List<IvyNode> result = new ArrayList<IvyNode>();
+        // Add unresolved dependencies as well so module dependencies for which no artifacts are in the repository
+        // will also be taken into account!
         result.addAll(Arrays.asList(resolveReport.getUnresolvedDependencies()));
         result.addAll(resolveReport.getDependencies());
         return result;

@@ -1,5 +1,6 @@
 package org.clarent.ivyidea.intellij.facet.ui;
 
+import com.intellij.facet.Facet;
 import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
@@ -70,17 +71,25 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
     }
 
     public void apply() throws ConfigurationException {
-        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) editorContext.getFacet().getConfiguration();
-        configuration.setIvyFile(txtIvyFile.getText());
-        configuration.setUseProjectSettings(chkUseProjectSettings.isSelected());
-        configuration.setIvySettingsFile(txtIvySettingsFile.getText());
+        final Facet facet = editorContext.getFacet();
+        IvyIdeaFacetConfiguration configuration;
+        if (facet != null) {
+            configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+            configuration.setIvyFile(txtIvyFile.getText());
+            configuration.setUseProjectSettings(chkUseProjectSettings.isSelected());
+            configuration.setIvySettingsFile(txtIvySettingsFile.getText());
+        }
     }
 
     public void reset() {
-        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) editorContext.getFacet().getConfiguration();
-        txtIvyFile.setText(configuration.getIvyFile());
-        chkUseProjectSettings.setSelected(configuration.isUseProjectSettings());
-        txtIvySettingsFile.setText(configuration.getIvySettingsFile());
+        final Facet facet = editorContext.getFacet();
+        IvyIdeaFacetConfiguration configuration;
+        if (facet != null) {
+            configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+            txtIvyFile.setText(configuration.getIvyFile());
+            chkUseProjectSettings.setSelected(configuration.isUseProjectSettings());
+            txtIvySettingsFile.setText(configuration.getIvySettingsFile());
+        }
     }
 
     public void disposeUIResources() {

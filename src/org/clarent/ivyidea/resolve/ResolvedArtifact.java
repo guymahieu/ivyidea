@@ -3,9 +3,8 @@ package org.clarent.ivyidea.resolve;
 import org.apache.ivy.core.module.descriptor.Artifact;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Collection;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author Guy Mahieu
@@ -49,6 +48,6 @@ public class ResolvedArtifact {
         }
         return false;
     }
-    
+
 }
 

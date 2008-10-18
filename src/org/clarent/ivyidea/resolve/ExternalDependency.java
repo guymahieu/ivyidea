@@ -34,7 +34,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
             return;
         }
         if (isAlreadyRegistered(libraryModel)) {
-            LOGGER.warning("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already part of the " + libraryModel.getName() + " library");
+            LOGGER.info("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already part of the " + libraryModel.getName() + " library");
             return;
         }
         LOGGER.info("Registering external " + getTypeName() + " file dependency: " + artifactPath);
@@ -57,6 +57,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
         for (VirtualFile file : files) {
             final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());
             // Compare the files not just the paths
+            // TODO: Are these paths always absolute??
             if (new File(existingDependencyPath).equals(new File(artifactPath))) {
                 return true;
             }

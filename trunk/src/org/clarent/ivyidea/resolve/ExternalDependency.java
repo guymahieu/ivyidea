@@ -56,7 +56,8 @@ public abstract class ExternalDependency implements ResolvedDependency {
         final VirtualFile[] files = libraryModel.getFiles(getType());
         for (VirtualFile file : files) {
             final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());
-            if (artifactPath.equals(existingDependencyPath)) {
+            // Compare the files not just the paths
+            if (new File(existingDependencyPath).equals(new File(artifactPath))) {
                 return true;
             }
         }

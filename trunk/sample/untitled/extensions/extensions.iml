@@ -12,6 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="core" />
     <orderEntry type="module-library">
       <library name="IvyIDEA-resolved">
         <CLASSES />
@@ -19,7 +20,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="core" />
     <orderEntryProperties />
   </component>
 </module>

@@ -1,3 +1,5 @@
+== Module Settings ==
+
 === Auto detection ===
 
 With a bit of luck, your ivy-enabled modules will be detected automatically by IvyIDEA. You'll see a popup stating that one or more new facets are detected on opening your project. 
@@ -12,4 +14,9 @@ If you click on the 'More...' link (or on the blinking gear icon), you'll get a 
 
 http://clarent.org/ivyidea/img/ivyidea-facetsdetected.png
 
-Click 'Edit Settings...' to make sure that the correct ivy.xml file is chosen for each module. _Note: there is a known issue that the ivy file displayed here may differ from the one that is configured in the module settings, so make sure to check this if your module contains multiple ivy.xml files!_
+Click 'Edit Settings...' to make sure that the correct ivy.xml file is chosen for each module. This will take you to the Module Settings screen, which is described in greater detail below.
+_Note: there is a known issue that the ivy file displayed here may differ from the one that is configured in the module settings, so make sure to check this if your module contains multiple ivy.xml files!_
+
+=== Manual setup ===
+
+If the autodetection did not work for some reason, or you want to changes the settings that were automatically chosen, you can 

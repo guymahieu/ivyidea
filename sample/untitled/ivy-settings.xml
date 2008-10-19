@@ -6,7 +6,7 @@
                 <ibiblio name="ibiblio" />
                 <filesystem name="internal">
                         <ivy pattern="${repository.dir}/[organisation]/[module]/ivy-[revision].xml" />
-                        <artifact pattern="${repository.dir}/[organisation]/[type]s/[artifact]-[revision].[ext]" />
+                        <artifact pattern="${repository.dir}/[organisation]/[type]s/[artifact]-[revision].[type]" />
                 </filesystem>
         </resolvers>
 </ivysettings>

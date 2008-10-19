@@ -29,4 +29,4 @@ Once the facet is added to the tree, you can change its configuration by clickin
 
 http://clarent.org/ivyidea/img/ivyidea-moduleconfig.png
 
-Here you need to specify the ivy file for your module. This is the file which holds the dependency information for your module. Its root node will be <ivy-module> 
+Here you need to specify the ivy file for your module. This is the file which holds the dependency information for your module. _More information about ivy files can be found in the [http://ant.apache.org/ivy/history/latest-milestone/tutorial/start.html apache ivy quick start guide]_

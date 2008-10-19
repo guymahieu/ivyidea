@@ -6,7 +6,7 @@ package org.clarent.ivyidea.intellij;
 
 public class IvyIdeaProjectSettings {
 
-    private String ivySettingsFile;
+    private String ivySettingsFile = "";
 
     public String getIvySettingsFile() {
         return ivySettingsFile;

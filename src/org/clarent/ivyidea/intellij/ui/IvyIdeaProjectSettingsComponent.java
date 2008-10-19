@@ -112,10 +112,16 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     }
 
     public IvyIdeaProjectSettings getState() {
+        if (internalState == null) {
+            internalState = new IvyIdeaProjectSettings();
+        }
         return internalState;
     }
 
     public void loadState(IvyIdeaProjectSettings state) {
+        if (state == null) {
+            state = new IvyIdeaProjectSettings();
+        }
         this.internalState = state;
     }
 }

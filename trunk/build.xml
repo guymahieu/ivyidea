@@ -1,0 +1,49 @@
+<project name="IvyIDEA" default="bundle" basedir=".">
+
+    <property name="ivyidea.sourcedir" value="src"/>
+    <property name="ivyidea.builddir" value="build/classes"/>
+    <property name="ivyidea.version" value="0.1-alpha"/>
+
+    <!--
+        <path id="ivyidea.libclasspath">
+            <fileset includes="lib/apache-ivy-2.0.0-rc1/ivy-2.0.0-rc1.jar"/>
+            <dirset includes=""/>
+        </path>
+
+        <target name="compile">
+            <javac srcdir="${ivyidea.sourcedir}" destdir="${ivyidea.builddir}" classpathref="ivyidea.libclasspath">
+
+            </javac>
+        </target>
+    -->
+
+    <target name="jar">
+        <mkdir dir="build"/>
+        <jar file="build/ivyidea-${ivyidea.version}.jar">
+            <fileset dir="out/production/IvyIDEA">
+                <include name="**/*"/>
+            </fileset>
+            <fileset dir=".">
+                <include name="META-INF/**/*"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="bundle" depends="jar">
+        <mkdir dir="build/dist"/>
+        <mkdir dir="build/dist/tmp"/>
+        <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
+        <copy todir="build/dist/tmp/IvyIDEA/lib">
+            <fileset dir="lib/apache-ivy-2.0.0-rc1" includes="ivy-2.0.0-rc1.jar"/>
+            <fileset dir="build" includes="ivyidea-${ivyidea.version}.jar"/>
+        </copy>
+        <zip file="build/dist/IvyIDEA-${ivyidea.version}.zip">
+            <fileset dir="build/dist/tmp">
+                <include name="IvyIDEA/**"/>
+            </fileset>
+        </zip>
+        <delete dir="build/dist/tmp"/>
+    </target>
+
+
+</project>

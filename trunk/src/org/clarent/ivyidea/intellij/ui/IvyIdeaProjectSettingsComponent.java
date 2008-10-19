@@ -11,7 +11,6 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.intellij.IntellijUtils;
-import org.clarent.ivyidea.intellij.IvyFileType;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -48,7 +47,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         watcher.register(projectSettingsPanel);
 
         final FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
-        descriptor.setNewFileType(IvyFileType.IVY_FILE_TYPE);
+        descriptor.setNewFileType(IntellijUtils.getXmlFileType());
         txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", IntellijUtils.getCurrentProject(), descriptor);
     }
 

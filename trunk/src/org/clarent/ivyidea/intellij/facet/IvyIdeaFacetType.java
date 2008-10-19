@@ -5,12 +5,13 @@ import com.intellij.facet.FacetType;
 import com.intellij.facet.FacetTypeId;
 import com.intellij.facet.autodetecting.FacetDetector;
 import com.intellij.facet.autodetecting.FacetDetectorRegistry;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileFilter;
 import com.intellij.psi.PsiFile;
-import org.clarent.ivyidea.intellij.IvyFileType;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,13 +48,16 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
                 return "ivy.xml".equals(file.getName());
             }
         };
-        ivyIdeaDetectorRegistry.registerUniversalDetector(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new FacetDetector<VirtualFile, IvyIdeaFacetConfiguration>() {
+
+        final FileType xmlFileType = FileTypeManager.getInstance().getFileTypeByExtension("xml");
+
+        ivyIdeaDetectorRegistry.registerUniversalDetector(xmlFileType, virtualFileFilter, new FacetDetector<VirtualFile, IvyIdeaFacetConfiguration>() {
             public IvyIdeaFacetConfiguration detectFacet(VirtualFile source, Collection<IvyIdeaFacetConfiguration> existentFacetConfigurations) {
                 return configureDetectedFacet(source, existentFacetConfigurations);
             }
         });
 
-        ivyIdeaDetectorRegistry.registerOnTheFlyDetector(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new Condition<PsiFile>() {
+        ivyIdeaDetectorRegistry.registerOnTheFlyDetector(xmlFileType, virtualFileFilter, new Condition<PsiFile>() {
             public boolean value(PsiFile psiFile) {
                 return true;
             }
@@ -63,7 +67,7 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
             }
         });
 
-        ivyIdeaDetectorRegistry.registerDetectorForWizard(IvyFileType.IVY_FILE_TYPE, virtualFileFilter, new FacetDetector<VirtualFile, IvyIdeaFacetConfiguration>() {
+        ivyIdeaDetectorRegistry.registerDetectorForWizard(xmlFileType, virtualFileFilter, new FacetDetector<VirtualFile, IvyIdeaFacetConfiguration>() {
 
             public IvyIdeaFacetConfiguration detectFacet(VirtualFile source, Collection<IvyIdeaFacetConfiguration> existentFacetConfigurations) {
                 return configureDetectedFacet(source, existentFacetConfigurations);

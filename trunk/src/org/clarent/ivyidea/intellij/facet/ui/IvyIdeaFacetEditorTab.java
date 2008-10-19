@@ -8,7 +8,7 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
-import org.clarent.ivyidea.intellij.IvyFileType;
+import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.Nls;
 
@@ -43,10 +43,8 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
         watcher.register(pnlRoot);
 
         final FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
-        descriptor.setNewFileType(IvyFileType.IVY_FILE_TYPE);
+        descriptor.setNewFileType(IntellijUtils.getXmlFileType());
         txtIvyFile.addBrowseFolderListener("Select ivy file", "", editorContext.getProject(), descriptor);
-
-        descriptor.setNewFileType(IvyFileType.IVY_FILE_TYPE);
         txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", editorContext.getProject(), new FileChooserDescriptor(true, false, false, false, false, false));
 
         chkUseProjectSettings.addChangeListener(new ChangeListener() {

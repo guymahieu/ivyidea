@@ -4,6 +4,10 @@ With a bit of luck, your ivy-enabled modules will be detected automatically by I
 
 http://clarent.org/ivyidea/img/ivyidea-facetpopup.png
 
+Note: it is possible that you missed the popup as it is only displayed briefly. In this case you can still see if a new facet was detected by the presence of a blinking gear icon in the statusbar:
+
+http://clarent.org/ivyidea/img/ivyidea-facetgear.png
+
 If you click on the 'More...' link, you'll get a screen that looks like this:
 
 http://clarent.org/ivyidea/img/ivyidea-facetsdetected.png

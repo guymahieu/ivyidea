@@ -19,4 +19,8 @@ _Note: there is a known issue that the ivy file displayed here may differ from t
 
 === Manual setup ===
 
-If the autodetection did not work for some reason, or you want to changes the settings that were automatically chosen, you can 
+If the autodetection did not work for some reason, or you want to changes the settings that were automatically chosen, you can manually setup an IvyIDEA facet for each module that needs it. This can be done by opening the project settings and clicking on the 'Modules' item.
+
+You can add a facet to a module simply by clicking the [+] icon above the module list, or by right clicking on the module name as shown here:
+
+http://clarent.org/ivyidea/img/ivyidea-manualfacetsetup.png

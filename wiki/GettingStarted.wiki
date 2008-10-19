@@ -1,0 +1,11 @@
+=== Auto detection ===
+
+With a bit of luck, your ivy-enabled modules will be detected automatically by IvyIDEA. You'll see a popup stating that one or more new facets are detected on opening your project. 
+
+http://clarent.org/ivyidea/img/ivyidea-facetpopup.png
+
+If you click on the 'More...' link, you'll get a screen that looks like this:
+
+http://clarent.org/ivyidea/img/ivyidea-facetsdetected.png
+
+-work in progress-

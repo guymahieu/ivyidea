@@ -24,3 +24,9 @@ If the autodetection did not work for some reason, or you want to changes the se
 You can add a facet to a module simply by clicking the [+] icon above the module list, or by right clicking on the module name as shown here:
 
 http://clarent.org/ivyidea/img/ivyidea-manualfacetsetup.png
+
+Once the facet is added to the tree, you can change its configuration by clicking on it, you will get the following screen:
+
+http://clarent.org/ivyidea/img/ivyidea-moduleconfig.png
+
+Here you need to specify the ivy file for your module. This is the file which holds the dependency information for your module. Its root node will be <ivy-module> 

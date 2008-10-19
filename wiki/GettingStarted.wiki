@@ -8,8 +8,8 @@ Note: it is possible that you missed the popup as it is only displayed briefly. 
 
 http://clarent.org/ivyidea/img/ivyidea-facetgear.png
 
-If you click on the 'More...' link, you'll get a screen that looks like this:
+If you click on the 'More...' link (or on the blinking gear icon), you'll get a screen that looks like this:
 
 http://clarent.org/ivyidea/img/ivyidea-facetsdetected.png
 
--work in progress-
+Click 'Edit Settings...' to make sure that the correct ivy.xml file is chosen for each module. _Note: there is a known issue that the ivy file displayed here may differ from the one that is configured in the module settings, so make sure to check this if your module contains multiple ivy.xml files!_

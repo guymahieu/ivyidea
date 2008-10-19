@@ -3,6 +3,8 @@ package org.clarent.ivyidea.intellij;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.DataKeys;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -24,5 +26,9 @@ public class IntellijUtils {
 
     public static Module[] getAllModules(Project project) {
         return ModuleManager.getInstance(project).getModules();
+    }
+
+    public static FileType getXmlFileType() {
+        return FileTypeManager.getInstance().getFileTypeByExtension("xml");
     }
 }

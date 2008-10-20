@@ -13,6 +13,11 @@
         process yet, so if for some reason an artifact does not show up in the IDEA dependencies
         there is no way to find the reason from IntelliJ (it is logged though).
         <br/>
+        <br/>
+        <strong>0.4-alpha</strong>
+        <ul>
+            <li>???</li>
+        </ul>
         <strong>0.3-alpha</strong>
         <ul>
             <li>Fixed issues with non-ivy modules mixed with ivy modules in one project</li>
@@ -24,7 +29,7 @@
         </ul>
      ]]>
     </change-notes>
-    <version>0.3-alpha</version>
+    <version>0.4-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

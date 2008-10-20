@@ -12,10 +12,6 @@ public class IvyIdeaTempConfiguration {
         return new IvyIdeaTempConfiguration();
     }
 
-    public String getIvyConfiguration() {
-        return "eclipse";
-    }
-
     public String getCreatedLibraryName() {
         return "IvyIDEA-resolved";
     }

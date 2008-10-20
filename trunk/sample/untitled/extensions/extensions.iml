@@ -16,10 +16,14 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA-resolved">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.2.1.jar!/" />
         </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/javadocs/commons-collections-3.2.1.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/sources/commons-collections-3.2.1.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntryProperties />

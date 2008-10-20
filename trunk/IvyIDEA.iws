@@ -20,9 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IvyIDEA.iws" afterPath="$PROJECT_DIR$/IvyIDEA.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/config/IvyIdeaTempConfiguration.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/config/IvyIdeaTempConfiguration.java" />
     </list>
     <list name="workspace settings" comment="" />
     <ignored path="PostIvyPlugin.iws" />
@@ -42,21 +42,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalDependency.java" line="57" class="org.clarent.ivyidea.resolve.ExternalDependency" package="org.clarent.ivyidea.resolve">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -118,29 +103,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plugin.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
+      <file leaf-file-name="DependencyResolver.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="28" selection-start="1182" selection-end="1182" vertical-scroll-proportion="0.86520374">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IvyIdeaTempConfiguration.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/config/IvyIdeaTempConfiguration.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="0" selection-start="427" selection-end="427" vertical-scroll-proportion="1.15">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="21" selection-start="407" selection-end="407" vertical-scroll-proportion="0.69279">
-              <folding />
+            <state line="61" column="47" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.7403685">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -148,61 +117,79 @@
       <file leaf-file-name="ResolveForActiveModuleAction.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ResolveForActiveModuleAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="13" selection-start="788" selection-end="788" vertical-scroll-proportion="0.2">
+            <state line="26" column="18" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.30555555">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IvyIdeaPlugin.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/IvyIdeaPlugin.java">
+      <file leaf-file-name="IvyNode.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="13" selection-start="324" selection-end="324" vertical-scroll-proportion="0.4">
+            <state line="1127" column="19" selection-start="45324" selection-end="45324" vertical-scroll-proportion="0.41830066">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IvyIdeaProjectSettings.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyIdeaProjectSettings.java">
+      <file leaf-file-name="StringUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/StringUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="39" selection-start="148" selection-end="148" vertical-scroll-proportion="0.4">
+            <state line="53" column="25" selection-start="2023" selection-end="2023" vertical-scroll-proportion="0.41830066">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IvyIdeaProjectSettingsComponent.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.java">
+      <file leaf-file-name="IvyNodeEviction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="122" column="49" selection-start="3608" selection-end="3608" vertical-scroll-proportion="2.1876924">
+            <state line="286" column="19" selection-start="10261" selection-end="10261" vertical-scroll-proportion="0.08986928">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XmlFile.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/psi/xml/XmlFile.java">
+      <file leaf-file-name="Ivy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/Ivy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.75">
+            <state line="472" column="35" selection-start="16455" selection-end="16455" vertical-scroll-proportion="0.4738562">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserFileType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/UserFileType.java">
+      <file leaf-file-name="ResolveEngine.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="75" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.05">
+            <state line="133" column="19" selection-start="5500" selection-end="5500" vertical-scroll-proportion="0.41830066">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/FileType.java">
+      <file leaf-file-name="ModuleDescriptorParser.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/ModuleDescriptorParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="36" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.05230769">
+            <state line="31" column="28" selection-start="1284" selection-end="1284" vertical-scroll-proportion="0.16666667">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XmlModuleDescriptorParser.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="94" column="36" selection-start="4110" selection-end="4110" vertical-scroll-proportion="0.39052287">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractModuleDescriptorParser.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/AbstractModuleDescriptorParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="24" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.22222222">
               <folding />
             </state>
           </provider>
@@ -636,14 +623,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294621" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12789416" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24816626" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.107164726" order="1" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24366042" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.64718854" order="3" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0893054" order="1" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26350605" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.57442117" order="8" />
@@ -659,7 +646,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.031230863" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6515987" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5633958" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41345093" order="2" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" order="8" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -759,117 +746,117 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/ui/DialogBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="13" selection-start="1007" selection-end="1007" vertical-scroll-proportion="0.027642276">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalDependency.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="53" selection-start="1571" selection-end="1571" vertical-scroll-proportion="0.46880907">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="69" selection-start="2972" selection-end="2972" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IntellijUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="46" selection-start="656" selection-end="656" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="1976" selection-end="1976" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1224412165185" expanded="false" signature="55:704" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="565" selection-end="565" vertical-scroll-proportion="0.020166073">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ResolveForActiveModuleAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="13" selection-start="788" selection-end="788" vertical-scroll-proportion="0.2">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/IvyIdeaPlugin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="324" selection-end="324" vertical-scroll-proportion="0.4">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/IvyIdeaProjectSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="39" selection-start="148" selection-end="148" vertical-scroll-proportion="0.4">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/ui/IvyIdeaProjectSettingsComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="49" selection-start="3608" selection-end="3608" vertical-scroll-proportion="2.1876924">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/psi/xml/XmlFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/UserFileType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="75" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.05">
+        <state line="26" column="75" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.023709903">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/FileType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="36" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.05230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/config/IvyIdeaTempConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="427" selection-end="427" vertical-scroll-proportion="1.15">
+        <state line="33" column="36" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.024216523">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="21" selection-start="407" selection-end="407" vertical-scroll-proportion="0.69279">
+        <state line="13" column="21" selection-start="407" selection-end="407" vertical-scroll-proportion="0.31752872">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="28" selection-start="1182" selection-end="1182" vertical-scroll-proportion="0.86520374">
+        <state line="19" column="28" selection-start="1182" selection-end="1182" vertical-scroll-proportion="0.39655173">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/config/IvyIdeaTempConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="352" selection-end="352" vertical-scroll-proportion="0.55308217">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/ExternalDependency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="0" selection-start="2176" selection-end="2176" vertical-scroll-proportion="0.6662252">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="286" column="19" selection-start="10261" selection-end="10261" vertical-scroll-proportion="0.08986928">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="94" column="36" selection-start="4110" selection-end="4110" vertical-scroll-proportion="0.39052287">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/AbstractModuleDescriptorParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="24" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.22222222">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/plugins/parser/ModuleDescriptorParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="28" selection-start="1284" selection-end="1284" vertical-scroll-proportion="0.16666667">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/ResolveEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="19" selection-start="5500" selection-end="5500" vertical-scroll-proportion="0.41830066">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/Ivy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="472" column="35" selection-start="16455" selection-end="16455" vertical-scroll-proportion="0.4738562">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/ResolveForActiveModuleAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="18" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.30555555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/util/StringUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="25" selection-start="2023" selection-end="2023" vertical-scroll-proportion="0.41830066">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/apache-ivy-2.0.0-rc1/src/java/org/apache/ivy/core/resolve/IvyNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1127" column="19" selection-start="45324" selection-end="45324" vertical-scroll-proportion="0.41830066">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/resolve/DependencyResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="47" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.7403685">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

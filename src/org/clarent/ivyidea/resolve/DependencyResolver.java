@@ -30,6 +30,16 @@ public class DependencyResolver {
 
     private static final Logger LOGGER = Logger.getLogger(DependencyResolver.class.getName());
 
+    private final Map<IvyNode, String> problems;
+
+    public DependencyResolver() {
+        problems = new HashMap<IvyNode, String>();
+    }
+
+    public Map<IvyNode, String> getProblems() {
+        return Collections.unmodifiableMap(problems);
+    }
+
     public List<ResolvedDependency> resolve(Module module) {
         return resolve(module, new IvyManager());
     }
@@ -47,13 +57,6 @@ public class DependencyResolver {
         }
     }
 
-/*
-    @SuppressWarnings({"unchecked"})
-    private List<String> getAllProblemMessages(ResolveReport resolveReport) {
-        return (List<String>) resolveReport.getAllProblemMessages();
-    }
-*/
-
     protected List<ResolvedDependency> extractDependencies(ResolveReport resolveReport, IvySettings ivySettings, ModuleDependencies moduleDependencies) {
         List<ResolvedDependency> result = new ArrayList<ResolvedDependency>();
         List<IvyNode> dependencies = getDependencies(resolveReport);
@@ -67,11 +70,25 @@ public class DependencyResolver {
                 if (moduleDependencies.isModuleDependency(dependencyRevisionId)) {
                     result.add(new InternalDependency(moduleDependencies.getModuleDependency(dependencyRevisionId)));
                 } else {
-                    final Artifact[] artifacts = dependency.getAllArtifacts();
-                    for (Artifact artifact : artifacts) {
-                        final ExternalDependency externalDependency = createExternalDependency(defaultRepositoryCacheManager, artifact);
-                        if (externalDependency != null) {
-                            result.add(externalDependency);
+                    if (dependency.hasProblem()) {
+                        problems.put(dependency, dependency.getProblemMessage());
+                        LOGGER.info("DEPENDENCY PROBLEM: " + dependency.getId() + ": " + dependency.getProblemMessage());
+                    } else {
+                        if (dependency.isCompletelyEvicted()) {                            
+                            LOGGER.info("Not adding evicted dependency " + dependency);
+                        } else if (dependency.isCompletelyBlacklisted()) {
+                            // From quickly looking at the ivy sources, i think this means that there was a conflict,
+                            // and this dependency lost in the conflict resolution - don't know how this is different
+                            // from evicted modules, but it is probably not something we want to add
+                            LOGGER.info("Not adding blacklisted dependency " + dependency);
+                        } else {
+                            final Artifact[] artifacts = dependency.getAllArtifacts();
+                            for (Artifact artifact : artifacts) {
+                                final ExternalDependency externalDependency = createExternalDependency(defaultRepositoryCacheManager, artifact);
+                                if (externalDependency != null) {
+                                    result.add(externalDependency);
+                                }
+                            }
                         }
                     }
                 }

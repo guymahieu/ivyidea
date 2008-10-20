@@ -74,7 +74,7 @@ public class DependencyResolver {
                         problems.put(dependency, dependency.getProblemMessage());
                         LOGGER.info("DEPENDENCY PROBLEM: " + dependency.getId() + ": " + dependency.getProblemMessage());
                     } else {
-                        if (dependency.isCompletelyEvicted()) {                            
+                        if (dependency.isCompletelyEvicted()) {
                             LOGGER.info("Not adding evicted dependency " + dependency);
                         } else if (dependency.isCompletelyBlacklisted()) {
                             // From quickly looking at the ivy sources, i think this means that there was a conflict,
@@ -160,7 +160,7 @@ public class DependencyResolver {
             final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivyManager.getIvy(module).getSettings());
             if (descriptor != null) {
                 final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
-                for (Module dependencyModule : IntellijUtils.getAllModules()) {
+                for (Module dependencyModule : IntellijUtils.getAllModulesWithIvyIdeaFacet()) {
                     if (!module.equals(dependencyModule)) {
                         for (DependencyDescriptor ivyDependency : ivyDependencies) {
                             final ModuleRevisionId ivyDependencyId = ivyDependency.getDependencyRevisionId();

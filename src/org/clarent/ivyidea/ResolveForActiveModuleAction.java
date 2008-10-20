@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ResolveForActiveModuleAction extends AnAction {
 
-    private static final String MENU_TEXT = "For {0} module";
+    private static final String MENU_TEXT = "Resolve for {0} module";
 
     public void actionPerformed(AnActionEvent e) {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());

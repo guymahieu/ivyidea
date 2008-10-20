@@ -2,7 +2,7 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
-      <configuration ivyFile="$MODULE_DIR$/ivy.xml" useProjectSettings="true" ivySettingsFile="" />
+      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\extensions\ivy.xml" useProjectSettings="true" ivySettingsFile="" />
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
@@ -12,19 +12,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="IvyIDEA-resolved">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.2.1.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/javadocs/commons-collections-3.2.1.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/sources/commons-collections-3.2.1.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="core" />
     <orderEntryProperties />
   </component>

@@ -3,7 +3,7 @@
     <name>IvyIDEA</name>
     <description>Resolves module dependencies through Ivy</description>
     <change-notes>
-        This release is part of a series of initial alpha releases.
+        <![CDATA[This release is part of a series of initial alpha releases.
         The plugin should be functional but is not at all stable and using it
         may require some advanced knowlegde since tweaking may be needed in
         some cases.
@@ -11,7 +11,12 @@
         so if you did not configure the ivy file locations and/or ivy settings file
         locations correctly you may get IDEA exceptions. Also there is no output from the resolve
         process yet, so if for some reason an artifact does not show up in the IDEA dependencies
-        there is no way to find the reason from IntellJ (it is logged though).
+        there is no way to find the reason from IntelliJ (it is logged though).
+        <br/>
+        <ul>
+            <li>Fixed an annoying bug causing exceptions when dependencies were evicted</li>
+        </ul>
+     ]]>
     </change-notes>
     <version>0.2-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>

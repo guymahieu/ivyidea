@@ -1,8 +1,10 @@
 <project name="IvyIDEA" default="bundle" basedir=".">
 
+    <property name="ivyidea.version" value="0.2-alpha"/>
+
+
     <property name="ivyidea.sourcedir" value="src"/>
     <property name="ivyidea.builddir" value="build/classes"/>
-    <property name="ivyidea.version" value="0.1-alpha"/>
 
     <!--
         <path id="ivyidea.libclasspath">
@@ -30,8 +32,6 @@
     </target>
 
     <target name="bundle" depends="jar">
-        <mkdir dir="build/dist"/>
-        <mkdir dir="build/dist/tmp"/>
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
         <copy todir="build/dist/tmp/IvyIDEA/lib">
             <fileset dir="lib/apache-ivy-2.0.0-rc1" includes="ivy-2.0.0-rc1.jar"/>

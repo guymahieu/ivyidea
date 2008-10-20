@@ -19,7 +19,7 @@ public class ResolveForAllModulesAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         Project project = DataKeys.PROJECT.getData(e.getDataContext());
         IvyManager ivyManager = new IvyManager();
-        for (final Module module : IntellijUtils.getAllModules(project)) {
+        for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
             final List<ResolvedDependency> list = new DependencyResolver().resolve(module, ivyManager);
             ApplicationManager.getApplication().runWriteAction(new Runnable() {
                 public void run() {

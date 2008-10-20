@@ -1,6 +1,6 @@
 <project name="IvyIDEA" default="bundle" basedir=".">
 
-    <property name="ivyidea.version" value="0.3-alpha"/>
+    <property name="ivyidea.version" value="0.4-alpha"/>
 
 
     <property name="ivyidea.sourcedir" value="src"/>

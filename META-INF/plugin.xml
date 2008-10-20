@@ -7,15 +7,14 @@
         The plugin should be functional but is not at all stable and using it
         may require some advanced knowlegde since tweaking may be needed in
         some cases.
-        Specifically execption handling and user friendly error reporting are missing,
+        Specifically exception handling and user friendly error reporting are missing,
         so if you did not configure the ivy file locations and/or ivy settings file
         locations correctly you may get IDEA exceptions. Also there is no output from the resolve
         process yet, so if for some reason an artifact does not show up in the IDEA dependencies
         there is no way to find the reason from IntellJ (it is logged though).
     </change-notes>
-    <version>0.1-alpha</version>
-    <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu, Clarent BVBA
-    </vendor>
+    <version>0.2-alpha</version>
+    <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>
         <component>

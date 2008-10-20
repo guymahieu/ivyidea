@@ -17,6 +17,7 @@
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/extensions.iml" afterPath="$PROJECT_DIR$/extensions/extensions.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/ivy.xml" afterPath="$PROJECT_DIR$/extensions/ivy.xml" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,16 +83,16 @@
       <file leaf-file-name="untitled.ipr" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/untitled.ipr">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="46" selection-start="1770" selection-end="1770" vertical-scroll-proportion="0.019744484">
+            <state line="4" column="2" selection-start="160" selection-end="160" vertical-scroll-proportion="0.019744484">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="core.iml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="core.iml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="14" selection-start="1251" selection-end="1251" vertical-scroll-proportion="0.52397263">
+            <state line="18" column="17" selection-start="904" selection-end="904" vertical-scroll-proportion="0.34931508">
               <folding />
             </state>
           </provider>
@@ -100,7 +101,34 @@
       <file leaf-file-name="ivy.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ivy.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="376" selection-end="376" vertical-scroll-proportion="0.19406393">
+            <state line="8" column="0" selection-start="236" selection-end="342" vertical-scroll-proportion="0.15906432">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ivy-conf.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ivy-conf.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="0" selection-start="323" selection-end="515" vertical-scroll-proportion="0.19883041">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ivysettings-file.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ivysettings-file.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.019406393">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ivyconf.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ivyconf.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="84" selection-start="113" selection-end="113" vertical-scroll-proportion="0.05821918">
               <folding />
             </state>
           </provider>
@@ -115,10 +143,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="ivy.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/extensions/ivy.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="0" selection-start="697" selection-end="697" vertical-scroll-proportion="0.27836257">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ivy-settings.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ivy-settings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="110" selection-start="618" selection-end="618" vertical-scroll-proportion="0.16190477">
+            <state line="8" column="110" selection-start="618" selection-end="618" vertical-scroll-proportion="0.15906432">
               <folding />
             </state>
           </provider>
@@ -127,7 +164,7 @@
       <file leaf-file-name="Test.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/be/clarent/plugintest/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="59" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.019744484">
+            <state line="50" column="59" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.019406393">
               <folding />
             </state>
           </provider>
@@ -176,6 +213,14 @@
           <option name="myItemId" value="Libraries" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="IvyIDEA-resolved" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\sample\untitled\ivycache\apache\commons-collections\jars\commons-collections-3.1.jar" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -186,6 +231,10 @@
           <option name="myItemId" value="extensions" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -193,19 +242,11 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="core" />
+          <option name="myItemId" value="extensions" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="IvyIDEA-resolved" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\sample\untitled\ivycache\apache\commons-collections\jars\commons-collections-3.2.1.jar" />
+          <option name="myItemId" value="PsiDirectory:C:\projects\ivyidea\trunk\sample\untitled\extensions" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -297,6 +338,28 @@
       <module name="" />
       <envs />
     </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <envs />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -322,28 +385,6 @@
       <envs />
       <properties />
       <listeners />
-      <method>
-        <option name="Make" value="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-      <envs />
       <method>
         <option name="Make" value="true" />
       </method>
@@ -407,7 +448,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11879975" order="1" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" order="1" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" order="1" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
@@ -418,7 +459,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329455" order="3" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23821189" order="3" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
@@ -488,17 +529,6 @@
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
-    <buildFile url="file://$PROJECT_DIR$/build.xml">
-      <antCommandLine value="" />
-      <runInBackground value="true" />
-      <targetFilters>
-        <filter targetName="resolve" isVisible="true" />
-        <filter targetName="retrieve-eclipse" isVisible="false" />
-      </targetFilters>
-      <treeView value="false" />
-      <verbose value="true" />
-      <viewClosedWhenNoErrors value="false" />
-    </buildFile>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/extensions2/ivy.xml">
@@ -508,37 +538,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ivyconf.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="84" selection-start="113" selection-end="113" vertical-scroll-proportion="0.06122449">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ivy-conf.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="323" selection-end="515" vertical-scroll-proportion="0.21329987">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ivy-1.4.1/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ivysettings-file.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.019406393">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/ivy.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="27" selection-start="269" selection-end="269" vertical-scroll-proportion="0.13584475">
           <folding />
         </state>
       </provider>
@@ -564,9 +566,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/untitled.ipr">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="2" selection-start="160" selection-end="160" vertical-scroll-proportion="0.019744484">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="17" selection-start="904" selection-end="904" vertical-scroll-proportion="0.34931508">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="376" selection-end="376" vertical-scroll-proportion="0.19406393">
+        <state line="8" column="0" selection-start="236" selection-end="342" vertical-scroll-proportion="0.15906432">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ivy-conf.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="323" selection-end="515" vertical-scroll-proportion="0.19883041">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ivysettings-file.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.019406393">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ivyconf.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="84" selection-start="113" selection-end="113" vertical-scroll-proportion="0.05821918">
           <folding />
         </state>
       </provider>
@@ -580,28 +617,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ivy-settings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="110" selection-start="618" selection-end="618" vertical-scroll-proportion="0.16190477">
+        <state line="8" column="110" selection-start="618" selection-end="618" vertical-scroll-proportion="0.15906432">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/be/clarent/plugintest/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="59" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.019744484">
+        <state line="50" column="59" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.019406393">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/untitled.ipr">
+    <entry file="file://$PROJECT_DIR$/extensions/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="46" selection-start="1770" selection-end="1770" vertical-scroll-proportion="0.019744484">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="14" selection-start="1251" selection-end="1251" vertical-scroll-proportion="0.52397263">
+        <state line="14" column="0" selection-start="697" selection-end="697" vertical-scroll-proportion="0.27836257">
           <folding />
         </state>
       </provider>

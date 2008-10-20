@@ -15,7 +15,9 @@
     <orderEntry type="module" module-name="core" />
     <orderEntry type="module-library">
       <library name="IvyIDEA-resolved">
-        <CLASSES />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.1.jar!/" />
+        </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>

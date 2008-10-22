@@ -13,20 +13,21 @@
         process yet, so if for some reason an artifact does not show up in the IDEA dependencies
         there is no way to find the reason from IntelliJ (it is logged though).
         </p>
-        <br/>
-        <strong>0.4-alpha</strong>
-        <ul>
-            <li>Added option in project settings to allow resolving without validating ivy.xml files</li>
-        </ul>
-        <strong>0.3-alpha</strong>
-        <ul>
-            <li>Fixed issues with non-ivy modules mixed with ivy modules in one project</li>
-            <li>Added menu item to allow removing all resolved libraries in the project</li>
-        </ul>
-        <strong>0.2-alpha</strong>
-        <ul>
-            <li>Fixed an annoying bug causing exceptions when dependencies were evicted</li>
-        </ul>
+        <p>
+            <strong>0.4-alpha</strong>
+            <ul>
+                <li>Added option in project settings to allow resolving without validating ivy.xml files</li>
+            </ul>
+            <strong>0.3-alpha</strong>
+            <ul>
+                <li>Fixed issues with non-ivy modules mixed with ivy modules in one project</li>
+                <li>Added menu item to allow removing all resolved libraries in the project</li>
+            </ul>
+            <strong>0.2-alpha</strong>
+            <ul>
+                <li>Fixed an annoying bug causing exceptions when dependencies were evicted</li>
+            </ul>
+        </p>
      ]]>
     </change-notes>
     <version>0.4-alpha</version>

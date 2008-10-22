@@ -34,6 +34,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     private boolean modified;
     private TextFieldWithBrowseButton txtIvySettingsFile;
     private JPanel projectSettingsPanel;
+    private JCheckBox chkValidateIvyFiles;
     private IvyIdeaProjectSettings internalState;
 
     public IvyIdeaProjectSettingsComponent() {
@@ -98,13 +99,16 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
             internalState = new IvyIdeaProjectSettings();
         }
         internalState.setIvySettingsFile(txtIvySettingsFile.getText());
+        internalState.setValidateIvyFiles(chkValidateIvyFiles.isSelected());
     }
 
     public void reset() {
         if (internalState != null) {
             txtIvySettingsFile.setText(internalState.getIvySettingsFile());
+            chkValidateIvyFiles.setSelected(internalState.isValidateIvyFiles());
         } else {
-            txtIvySettingsFile.setText(null);
+            txtIvySettingsFile.setText("");
+            chkValidateIvyFiles.setSelected(false);
         }
     }
 

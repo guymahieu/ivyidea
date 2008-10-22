@@ -7,6 +7,7 @@ package org.clarent.ivyidea.intellij;
 public class IvyIdeaProjectSettings {
 
     private String ivySettingsFile = "";
+    private boolean validateIvyFiles = false;
 
     public String getIvySettingsFile() {
         return ivySettingsFile;
@@ -14,5 +15,13 @@ public class IvyIdeaProjectSettings {
 
     public void setIvySettingsFile(String ivySettingsFile) {
         this.ivySettingsFile = ivySettingsFile;
+    }
+
+    public boolean isValidateIvyFiles() {
+        return validateIvyFiles;
+    }
+
+    public void setValidateIvyFiles(boolean validateIvyFiles) {
+        this.validateIvyFiles = validateIvyFiles;
     }
 }

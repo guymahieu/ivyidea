@@ -1,6 +1,7 @@
 package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
 import org.apache.ivy.core.cache.DefaultRepositoryCacheManager;
 import org.apache.ivy.core.cache.RepositoryCacheManager;
@@ -10,8 +11,10 @@ import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
+import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.intellij.IntellijUtils;
+import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
 import org.jetbrains.annotations.Nullable;
@@ -48,13 +51,26 @@ public class DependencyResolver {
         final Ivy ivy = ivyManager.getIvy(module);
         final File ivyFile = IvyUtil.getIvyFile(module);
         try {
-            final ResolveReport resolveReport = ivy.resolve(ivyFile);
+            ResolveOptions options = new ResolveOptions();
+            options.setValidate(isValidationEnabled(module.getProject()));
+            LOGGER.info("Doing a resolve for module " + module.getName() + ", " + (options.isValidate() ? "with" : "without") + " ivy file validation.");
+            final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), options);
             return extractDependencies(resolveReport, ivy.getSettings(), new ModuleDependencies(module, ivyManager));
         } catch (ParseException e) {
-            throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be parsed!", e);
+            throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be parsed correctly!", e);
         } catch (IOException e) {
             throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be accessed!", e);
         }
+    }
+
+    private boolean isValidationEnabled(Project project) {
+        // TODO Guy: extract all config lookups to single class; makes it easier to move options between
+        //  project and modules and allow user-defined selection between the two!
+        IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
+        if (component != null && component.getState() != null) {
+            return component.getState().isValidateIvyFiles();
+        }
+        return false;
     }
 
     protected List<ResolvedDependency> extractDependencies(ResolveReport resolveReport, IvySettings ivySettings, ModuleDependencies moduleDependencies) {
@@ -137,6 +153,7 @@ public class DependencyResolver {
     private static class ModuleDependencies {
 
         private IvyManager ivyManager;
+
         private Module module;
 
         private Map<ModuleRevisionId, Module> moduleDependencies = new HashMap<ModuleRevisionId, Module>();

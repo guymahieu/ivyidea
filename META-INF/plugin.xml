@@ -3,20 +3,20 @@
     <name>IvyIDEA</name>
     <description>Resolves module dependencies through Ivy</description>
     <change-notes>
-        <![CDATA[This release is part of a series of initial alpha releases.
+        <![CDATA[<p>This release is part of a series of initial alpha releases.
         The plugin should be functional but is not at all stable and using it
         may require some advanced knowlegde since tweaking may be needed in
-        some cases.<br/>
-        Specifically exception handling and user friendly error reporting are missing,
+        some cases.</p>
+        <p>Specifically exception handling and user friendly error reporting are missing,
         so if you did not configure the ivy file locations and/or ivy settings file
         locations correctly you may get IDEA exceptions. Also there is no output from the resolve
         process yet, so if for some reason an artifact does not show up in the IDEA dependencies
         there is no way to find the reason from IntelliJ (it is logged though).
-        <br/>
+        </p>
         <br/>
         <strong>0.4-alpha</strong>
         <ul>
-            <li>???</li>
+            <li>Added option in project settings to allow resolving without validating ivy.xml files</li>
         </ul>
         <strong>0.3-alpha</strong>
         <ul>

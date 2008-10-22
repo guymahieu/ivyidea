@@ -84,6 +84,7 @@
   </component>
   <component name="IvyIDEA.ProjectSettings">
     <option name="ivySettingsFile" value="C:\projects\ivyidea\trunk\sample\untitled\ivy-settings.xml" />
+    <option name="validateIvyFiles" value="true" />
   </component>
   <component name="JavacSettings">
     <option name="DEBUGGING_INFO" value="true" />

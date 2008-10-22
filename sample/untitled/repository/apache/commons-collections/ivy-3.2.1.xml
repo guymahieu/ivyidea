@@ -5,8 +5,10 @@
 		status="release"
 		publication="20080919191510"
 		default="true"
-	/>
-	<configurations>
+	>
+        <description>aaa<p>bbb</p>aaa</description>
+    </info>
+    <configurations>
 		<conf name="default" visibility="public"/>
 	</configurations>
 	<publications>

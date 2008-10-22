@@ -14,6 +14,10 @@
         there is no way to find the reason from IntelliJ (it is logged though).
         </p>
         <p>
+            <strong>0.5-alpha</strong>
+            <ul>
+                <li>???</li>
+            </ul>
             <strong>0.4-alpha</strong>
             <ul>
                 <li>Added option in project settings to allow resolving without validating ivy.xml files</li>
@@ -30,7 +34,7 @@
         </p>
      ]]>
     </change-notes>
-    <version>0.4-alpha</version>
+    <version>0.5-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

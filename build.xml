@@ -37,6 +37,10 @@
             <fileset dir="lib/apache-ivy-2.0.0-rc1" includes="ivy-2.0.0-rc1.jar"/>
             <fileset dir="build" includes="ivyidea-${ivyidea.version}.jar"/>
         </copy>
+        <mkdir dir="build/dist/tmp/IvyIDEA/license"/>
+        <copy todir="build/dist/tmp/IvyIDEA/license">
+            <fileset dir="license" includes="*/**"/>
+        </copy>
         <zip file="build/dist/IvyIDEA-${ivyidea.version}.zip">
             <fileset dir="build/dist/tmp">
                 <include name="IvyIDEA/**"/>

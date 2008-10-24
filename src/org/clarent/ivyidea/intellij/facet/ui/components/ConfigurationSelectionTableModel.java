@@ -38,6 +38,10 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
         return result;
     }
 
+    public Configuration getConfigurationAt(int rowIndex) {
+        return data.get(rowIndex);
+    }
+
     public int getRowCount() {
         return data.size();
     }

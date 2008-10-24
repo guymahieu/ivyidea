@@ -96,6 +96,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         final Element configsToResolveElement = element.getChild("configsToResolve");
         if (configsToResolveElement != null) {
             Set<String> configsToResolve = new TreeSet<String>();
+            @SuppressWarnings("unchecked")
             final List<Element> configElements = (List<Element>) configsToResolveElement.getChildren("config");
             for (Element configElement : configElements) {
                 configsToResolve.add(configElement.getTextTrim());

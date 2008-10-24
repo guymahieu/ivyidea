@@ -39,6 +39,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
     private JLabel lblIvySettingsFile;
     private JCheckBox chkOnlyResolveSpecificConfigs;
     private ConfigurationSelectionTable tblConfigurationSelection;
+    private JScrollPane scrTableScrollPane;
     private FacetEditorContext editorContext;
     private boolean modified;
 

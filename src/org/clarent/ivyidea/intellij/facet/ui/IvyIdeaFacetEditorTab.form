@@ -92,7 +92,7 @@
           <text value="Only resolve specific ivy configurations"/>
         </properties>
       </component>
-      <scrollpane id="9c5c6">
+      <scrollpane id="9c5c6" binding="scrTableScrollPane">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -103,6 +103,7 @@
             <constraints/>
             <properties>
               <autoCreateRowSorter value="true"/>
+              <opaque value="false"/>
             </properties>
             <clientProperties>
               <JTable.autoStartsEdit class="java.lang.Boolean" value="true"/>

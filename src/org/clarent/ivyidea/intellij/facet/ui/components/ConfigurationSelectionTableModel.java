@@ -37,17 +37,36 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     }
 
     public int getColumnCount() {
-        return 2;
+        return 3;
+    }
+
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == 0;
+    }
+
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        if (columnIndex == 0 && aValue instanceof Boolean) {
+            boolean checked = (Boolean) aValue;
+            if (checked) {
+                selectedIndexes.add(rowIndex);
+            } else {
+                selectedIndexes.remove(rowIndex);
+            }
+        }
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         final Configuration configuration = data.get(rowIndex);
         if (columnIndex == 0) {
-            return configuration.getName();
+            return selectedIndexes.contains(rowIndex);
         }
         if (columnIndex == 1) {
+            return configuration.getName();
+        }
+        if (columnIndex == 2) {
             return configuration.getDescription();
         }
         return "<n/a>";
     }
+
 }

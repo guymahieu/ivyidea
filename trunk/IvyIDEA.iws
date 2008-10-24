@@ -20,9 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.form" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTable.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.form" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTableModel.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTableModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IvyIDEA.iws" afterPath="$PROJECT_DIR$/IvyIDEA.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java" afterPath="$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java" />
     </list>
@@ -44,6 +45,34 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java" line="143" class="org.clarent.ivyidea.intellij.facet.ui.IvyIdeaFacetEditorTab" package="org.clarent.ivyidea.intellij.facet.ui">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java" line="96" class="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration" package="org.clarent.ivyidea.intellij.facet">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -115,7 +144,7 @@
       <file leaf-file-name="IvyIdeaFacetEditorTab.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="60" selection-start="3810" selection-end="3810" vertical-scroll-proportion="0.3327869">
+            <state line="156" column="0" selection-start="6704" selection-end="6704" vertical-scroll-proportion="1.4060721">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,13 +152,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConfigurationSelectionTable.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TableModelEvent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/event/TableModelEvent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="103" column="44" selection-start="4218" selection-end="4218" vertical-scroll-proportion="0.7509225">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IvyIdeaFacetConfiguration.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="90" column="20" selection-start="3009" selection-end="3009" vertical-scroll-proportion="0.9372694">
+              <folding>
+                <marker date="1224869991873" expanded="false" signature="52:620" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigurationSelectionTable.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="57" selection-start="746" selection-end="746" vertical-scroll-proportion="0.7072">
+            <state line="29" column="30" selection-start="709" selection-end="709" vertical-scroll-proportion="0.9095941">
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1224867270683" expanded="true" signature="66:80" placeholder="..." />
+                <marker date="1224868053343" expanded="true" signature="66:80" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -138,7 +187,7 @@
       <file leaf-file-name="BooleanTableCellEditor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/ui/BooleanTableCellEditor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="23" selection-start="780" selection-end="780" vertical-scroll-proportion="0.2992">
+            <state line="25" column="23" selection-start="780" selection-end="780" vertical-scroll-proportion="0.34501845">
               <folding />
             </state>
           </provider>
@@ -147,19 +196,8 @@
       <file leaf-file-name="BooleanTableCellRenderer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/ui/BooleanTableCellRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="30" selection-start="794" selection-end="794" vertical-scroll-proportion="0.136">
+            <state line="26" column="30" selection-start="794" selection-end="794" vertical-scroll-proportion="0.15682657">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ComboBoxTableCellRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/ui/ComboBoxTableCellRenderer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="13" selection-start="926" selection-end="2930" vertical-scroll-proportion="0.22295082">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -167,7 +205,7 @@
       <file leaf-file-name="ComboBoxTableCellEditor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/ui/ComboBoxTableCellEditor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.1557377">
+            <state line="27" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.20295203">
               <folding />
             </state>
           </provider>
@@ -176,7 +214,7 @@
       <file leaf-file-name="ConfigurationSelectionTableModel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTableModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="26" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.544">
+            <state line="27" column="35" selection-start="802" selection-end="802" vertical-scroll-proportion="0.27703986">
               <folding />
             </state>
           </provider>
@@ -185,16 +223,7 @@
       <file leaf-file-name="AbstractTableModel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/table/AbstractTableModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="16" selection-start="3837" selection-end="3837" vertical-scroll-proportion="0.2912">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractDocument.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/text/AbstractDocument.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="636" column="16" selection-start="23556" selection-end="23556" vertical-scroll-proportion="0.027868852">
+            <state line="119" column="16" selection-start="3837" selection-end="3837" vertical-scroll-proportion="0.33579335">
               <folding />
             </state>
           </provider>
@@ -930,13 +959,13 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12789416" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20476772" order="3" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.119412124" order="1" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.035517454" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32414553" order="1" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32414553" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.57442117" order="8" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2491731" order="8" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491731" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" order="7" />
       <window_info id="Code Consultant" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329455" order="3" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498469" order="1" />
@@ -948,7 +977,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13472137" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6515987" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13340683" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34068358" order="2" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" order="8" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -1048,13 +1077,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/QueryFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="13" selection-start="823" selection-end="823" vertical-scroll-proportion="0.16132858">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/ui/Table.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="39" column="13" selection-start="1378" selection-end="1378" vertical-scroll-proportion="0.030852994">
@@ -1066,15 +1088,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="17" selection-start="1475" selection-end="1475" vertical-scroll-proportion="0.030035336">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="29" selection-start="993" selection-end="993" vertical-scroll-proportion="0.030852994">
-          <folding>
-            <marker date="1224865566844" expanded="false" signature="52:590" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1094,14 +1107,14 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/text/AbstractDocument.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="636" column="16" selection-start="23556" selection-end="23556" vertical-scroll-proportion="0.027868852">
+        <state line="636" column="16" selection-start="23556" selection-end="23556" vertical-scroll-proportion="0.023776224">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/ui/ComboBoxTableCellRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="926" selection-end="2930" vertical-scroll-proportion="0.22295082">
+        <state line="27" column="13" selection-start="926" selection-end="2930" vertical-scroll-proportion="0.19512194">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1110,45 +1123,46 @@
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/ui/ComboBoxTableCellEditor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.1557377">
+        <state line="27" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.20295203">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/ui/BooleanTableCellRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="30" selection-start="794" selection-end="794" vertical-scroll-proportion="0.136">
+        <state line="26" column="30" selection-start="794" selection-end="794" vertical-scroll-proportion="0.15682657">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/table/AbstractTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="16" selection-start="3837" selection-end="3837" vertical-scroll-proportion="0.2912">
+        <state line="119" column="16" selection-start="3837" selection-end="3837" vertical-scroll-proportion="0.33579335">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/ui/BooleanTableCellEditor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="23" selection-start="780" selection-end="780" vertical-scroll-proportion="0.2992">
+        <state line="25" column="23" selection-start="780" selection-end="780" vertical-scroll-proportion="0.34501845">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTableModel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="26" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.544">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="60" selection-start="3810" selection-end="3810" vertical-scroll-proportion="0.3327869">
+        <state line="29" column="30" selection-start="709" selection-end="709" vertical-scroll-proportion="0.9095941">
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1224868053343" expanded="true" signature="66:80" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/javax/swing/event/TableModelEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="44" selection-start="4218" selection-end="4218" vertical-scroll-proportion="0.7509225">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1157,12 +1171,27 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTable.java">
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/components/ConfigurationSelectionTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="57" selection-start="746" selection-end="746" vertical-scroll-proportion="0.7072">
+        <state line="27" column="35" selection-start="802" selection-end="802" vertical-scroll-proportion="0.27703986">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/ui/IvyIdeaFacetEditorTab.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="156" column="0" selection-start="6704" selection-end="6704" vertical-scroll-proportion="1.4060721">
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1224867270683" expanded="true" signature="66:80" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/clarent/ivyidea/intellij/facet/IvyIdeaFacetConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="20" selection-start="3009" selection-end="3009" vertical-scroll-proportion="0.9372694">
+          <folding>
+            <marker date="1224869991873" expanded="false" signature="52:620" placeholder="..." />
           </folding>
         </state>
       </provider>

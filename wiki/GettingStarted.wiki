@@ -1,4 +1,6 @@
 #labels Featured
+_Note that the screenshots are from an older release and may differ from the current ones in some datails_
+
 == Module Settings ==
 
 === Auto detection ===

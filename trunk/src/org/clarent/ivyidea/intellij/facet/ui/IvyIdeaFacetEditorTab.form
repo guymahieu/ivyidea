@@ -104,6 +104,7 @@
             <properties>
               <autoCreateRowSorter value="true"/>
               <opaque value="false"/>
+              <updateSelectionOnSort value="true"/>
             </properties>
             <clientProperties>
               <JTable.autoStartsEdit class="java.lang.Boolean" value="true"/>

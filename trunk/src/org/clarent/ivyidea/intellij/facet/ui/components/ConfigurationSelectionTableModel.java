@@ -76,7 +76,7 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
         if (columnIndex == 2) {
             return configuration.getDescription();
         }
-        return "<n/a>";
+        return null;
     }
 
     private static Set<Integer> buildSelectedIndexes(@NotNull List<Configuration> configurations, @NotNull Collection<String> selectedConfigNames) {

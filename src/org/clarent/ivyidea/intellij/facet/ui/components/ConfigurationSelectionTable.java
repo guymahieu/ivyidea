@@ -34,6 +34,18 @@ public class ConfigurationSelectionTable extends Table {
     }
 
     private void initComponents() {
+        setRowSelectionAllowed(false);
+        setColumnSelectionAllowed(false);
+
+        setAutoResizeMode(AUTO_RESIZE_OFF);
+        getColumnModel().getColumn(0).setPreferredWidth(30);
+        getColumnModel().getColumn(1).setPreferredWidth(120);
+        getColumnModel().getColumn(2).setPreferredWidth(400);
+
+        getColumnModel().getColumn(0).setHeaderValue("");
+        getColumnModel().getColumn(1).setHeaderValue("Name");
+        getColumnModel().getColumn(2).setHeaderValue("Description");
+
         getColumnModel().getColumn(0).setCellRenderer(new BooleanTableCellRenderer());
         getColumnModel().getColumn(0).setCellEditor(new BooleanTableCellEditor());
 
@@ -50,14 +62,18 @@ public class ConfigurationSelectionTable extends Table {
                 if (regularFont == null) {
                     regularFont = rendererComponent.getFont();
                 }
-                if (tableModel.getConfigurationAt(row).getDeprecated() != null) {
+                final int modelIndex = table.convertRowIndexToModel(row);
+                final Configuration configuration = tableModel.getConfigurationAt(modelIndex);
+                if (configuration.getDeprecated() != null) {
                     if (strikethroughFont == null) {
                         final HashMap<TextAttribute, Object> attribs = new HashMap<TextAttribute, Object>();
                         attribs.put(TextAttribute.STRIKETHROUGH, Boolean.TRUE);
                         strikethroughFont = regularFont.deriveFont(attribs);
                     }
+                    setToolTipText("Depracated: " + configuration.getDeprecated());
                     rendererComponent.setFont(strikethroughFont);
                 } else {
+                    setToolTipText(null);
                     rendererComponent.setFont(regularFont);
                 }
                 return rendererComponent;

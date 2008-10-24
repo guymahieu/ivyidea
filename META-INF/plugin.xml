@@ -48,7 +48,7 @@
     </change-notes>
     <version>0.5-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
-    <idea-version since-build="3000"/>
+    <idea-version since-build="7757"/>
     <application-components>
         <component>
             <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>
@@ -60,7 +60,7 @@
         </component>
     </project-components>
     <actions>
-        <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module depencencies using Ivy"
+        <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module dependencies using Ivy"
                popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>

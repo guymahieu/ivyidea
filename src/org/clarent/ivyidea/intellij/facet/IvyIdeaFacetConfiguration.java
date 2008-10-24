@@ -10,6 +10,9 @@ import com.intellij.openapi.util.WriteExternalException;
 import org.clarent.ivyidea.intellij.facet.ui.IvyIdeaFacetEditorTab;
 import org.jdom.Element;
 
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +26,8 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private String ivyFile;
     private boolean useProjectSettings = true;
     private String ivySettingsFile;
+    private boolean onlyResolveSelectedConfigs = true;
+    private Set<String> configsToResolve;
 
     public static IvyIdeaFacetConfiguration getInstance(Module module) {
         final IvyIdeaFacet ivyIdeaFacet = IvyIdeaFacet.getInstance(module);
@@ -58,6 +63,22 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         this.ivySettingsFile = ivySettingsFile;
     }
 
+    public boolean isOnlyResolveSelectedConfigs() {
+        return onlyResolveSelectedConfigs;
+    }
+
+    public void setOnlyResolveSelectedConfigs(boolean onlyResolveSelectedConfigs) {
+        this.onlyResolveSelectedConfigs = onlyResolveSelectedConfigs;
+    }
+
+    public Set<String> getConfigsToResolve() {
+        return configsToResolve;
+    }
+
+    public void setConfigsToResolve(Set<String> configsToResolve) {
+        this.configsToResolve = configsToResolve;
+    }
+
     public FacetEditorTab[] createEditorTabs(FacetEditorContext editorContext, FacetValidatorsManager validatorsManager) {
         return new FacetEditorTab[]{new IvyIdeaFacetEditorTab(editorContext)};
     }
@@ -70,11 +91,29 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
             useProjectSettingsDefault = Boolean.FALSE;
         }
         setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", useProjectSettingsDefault.toString())));
+        setOnlyResolveSelectedConfigs(Boolean.valueOf(element.getAttributeValue("onlyResolveSelectedConfigs")));
+        final Element configsToResolveElement = element.getChild("configsToResolve");
+        if (configsToResolveElement != null) {
+            Set<String> configsToResolve = new TreeSet<String>();
+            final List<Element> configElements = (List<Element>) configsToResolveElement.getChildren("config");
+            for (Element configElement : configElements) {
+                configsToResolve.add(configElement.getTextTrim());
+            }
+            setConfigsToResolve(configsToResolve);
+        }
     }
 
     public void writeExternal(Element element) throws WriteExternalException {
         element.setAttribute("ivyFile", ivyFile == null ? "" : ivyFile);
         element.setAttribute("useProjectSettings", Boolean.toString(useProjectSettings));
         element.setAttribute("ivySettingsFile", ivySettingsFile == null ? "" : ivySettingsFile);
+        element.setAttribute("onlyResolveSelectedConfigs", Boolean.toString(onlyResolveSelectedConfigs));
+        if (configsToResolve != null && !configsToResolve.isEmpty()) {
+            final Element configsElement = new Element("configs");
+            for (String configToResolve : configsToResolve) {
+                configsElement.addContent(new Element("config").setText(configToResolve));
+            }
+            element.addContent(configsElement);
+        }
     }
 }

@@ -232,6 +232,17 @@
       <item class="com.intellij.openapi.ui.TextFieldWithBrowseButton" icon="/com/intellij/uiDesigner/icons/panel.png" removable="true" auto-create-binding="false" can-attach-label="false">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
+      <item class="com.intellij.util.ui.Table" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
+      <item class="com.intellij.ui.table.TableView" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
+    </group>
+    <group name="IvyIDEA Components">
+      <item class="org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
     </group>
   </component>
   <component name="ProjectFileVersion" converted="true" />

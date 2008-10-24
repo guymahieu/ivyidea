@@ -2,22 +2,8 @@
 
     <property name="ivyidea.version" value="0.5-alpha"/>
 
-
     <property name="ivyidea.sourcedir" value="src"/>
     <property name="ivyidea.builddir" value="build/classes"/>
-
-    <!--
-        <path id="ivyidea.libclasspath">
-            <fileset includes="lib/apache-ivy-2.0.0-rc1/ivy-2.0.0-rc1.jar"/>
-            <dirset includes=""/>
-        </path>
-
-        <target name="compile">
-            <javac srcdir="${ivyidea.sourcedir}" destdir="${ivyidea.builddir}" classpathref="ivyidea.libclasspath">
-
-            </javac>
-        </target>
-    -->
 
     <target name="jar">
         <mkdir dir="build"/>
@@ -32,6 +18,7 @@
     </target>
 
     <target name="bundle" depends="jar">
+        <delete dir="build/dist/tmp"/>
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
         <copy todir="build/dist/tmp/IvyIDEA/lib">
             <fileset dir="lib/apache-ivy-2.0.0-rc1" includes="ivy-2.0.0-rc1.jar"/>
@@ -39,7 +26,7 @@
         </copy>
         <mkdir dir="build/dist/tmp/IvyIDEA/license"/>
         <copy todir="build/dist/tmp/IvyIDEA/license">
-            <fileset dir="license" includes="*/**"/>
+            <fileset dir="license" includes="**/*"/>
         </copy>
         <zip file="build/dist/IvyIDEA-${ivyidea.version}.zip">
             <fileset dir="build/dist/tmp">

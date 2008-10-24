@@ -1,7 +1,9 @@
 package org.clarent.ivyidea.ivy;
 
 import com.intellij.openapi.module.Module;
+import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.settings.IvySettings;
 import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
 import org.apache.ivy.plugins.parser.ParserSettings;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
@@ -11,6 +13,10 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 /**
@@ -45,5 +51,32 @@ public class IvyUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Gives a set of configurations defined in the given ivyFileName.
+     * Will never throw an exception, if something goes wrong, null is returned
+     *
+     * @param ivyFileName the name of the ivy file to parse
+     * @return a set of configurations, null if anything went wrong parsing the ivy file
+     */
+    @Nullable
+    public static Set<Configuration> loadConfigurations(String ivyFileName) {
+        try {
+            final File file = new File(ivyFileName);
+            if (file.exists() && !file.isDirectory()) {
+                final ModuleDescriptor md = parseIvyFile(file, new IvySettings());
+                Set<Configuration> result = new TreeSet<Configuration>(new Comparator<Configuration>() {
+                    public int compare(Configuration o1, Configuration o2) {
+                        return o1.getName().compareToIgnoreCase(o2.getName());
+                    }
+                });
+                result.addAll(Arrays.asList(md.getConfigurations()));
+                return result;
+            }
+        } catch (RuntimeException e) {
+            // Not able to parse module descriptor; no problem here...
+        }
+        return null;
     }
 }

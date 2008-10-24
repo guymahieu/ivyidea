@@ -10,6 +10,7 @@ import com.intellij.openapi.util.WriteExternalException;
 import org.clarent.ivyidea.intellij.facet.ui.IvyIdeaFacetEditorTab;
 import org.jdom.Element;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,7 +28,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private boolean useProjectSettings = true;
     private String ivySettingsFile;
     private boolean onlyResolveSelectedConfigs = true;
-    private Set<String> configsToResolve;
+    private Set<String> configsToResolve = Collections.emptySet();
 
     public static IvyIdeaFacetConfiguration getInstance(Module module) {
         final IvyIdeaFacet ivyIdeaFacet = IvyIdeaFacet.getInstance(module);
@@ -109,7 +110,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         element.setAttribute("ivySettingsFile", ivySettingsFile == null ? "" : ivySettingsFile);
         element.setAttribute("onlyResolveSelectedConfigs", Boolean.toString(onlyResolveSelectedConfigs));
         if (configsToResolve != null && !configsToResolve.isEmpty()) {
-            final Element configsElement = new Element("configs");
+            final Element configsElement = new Element("configsToResolve");
             for (String configToResolve : configsToResolve) {
                 configsElement.addContent(new Element("config").setText(configToResolve));
             }

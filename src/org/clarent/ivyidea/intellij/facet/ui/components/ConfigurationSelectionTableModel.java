@@ -1,6 +1,7 @@
 package org.clarent.ivyidea.intellij.facet.ui.components;
 
 import org.apache.ivy.core.module.descriptor.Configuration;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
@@ -22,6 +23,11 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     public ConfigurationSelectionTableModel(Collection<Configuration> data) {
         this.data = new ArrayList<Configuration>(data);
         this.selectedIndexes = new HashSet<Integer>();
+    }
+
+    public ConfigurationSelectionTableModel(Collection<Configuration> data, Collection<String> selectedConfigNames) {
+        this.data = new ArrayList<Configuration>(data);
+        this.selectedIndexes = buildSelectedIndexes(this.data, selectedConfigNames);
     }
 
     public Set<Configuration> getSelectedConfigurations() {
@@ -67,6 +73,16 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
             return configuration.getDescription();
         }
         return "<n/a>";
+    }
+
+    private static Set<Integer> buildSelectedIndexes(@NotNull List<Configuration> configurations, @NotNull Collection<String> selectedConfigNames) {
+        final HashSet<Integer> result = new HashSet<Integer>();
+        for (Configuration configuration : configurations) {
+            if (selectedConfigNames.contains(configuration.getName())) {
+                result.add(configurations.indexOf(configuration));
+            }
+        }
+        return result;
     }
 
 }

@@ -4,8 +4,7 @@
     <facet type="IvyIDEA" name="IvyIDEA">
       <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\ivy.xml" useProjectSettings="true" ivySettingsFile="" onlyResolveSelectedConfigs="true">
         <configsToResolve>
-          <config>default</config>
-          <config>test</config>
+          <config>eclipse</config>
         </configsToResolve>
       </configuration>
     </facet>

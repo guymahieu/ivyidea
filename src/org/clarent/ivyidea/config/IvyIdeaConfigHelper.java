@@ -19,6 +19,9 @@ import java.util.Set;
  */
 public class IvyIdeaConfigHelper {
 
+    public static String getCreatedLibraryName() {
+        return "IvyIDEA-resolved";
+    }
 
     public static ResolveOptions createResolveOptions(Module module) {
         ResolveOptions options = new ResolveOptions();

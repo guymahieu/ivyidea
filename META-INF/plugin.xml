@@ -29,7 +29,8 @@
         <p>
             <strong>0.5-alpha</strong>
             <ul>
-                <li>Made the ivy configurations to be resolved configurable. They can be selected in the module configuration.</li>
+                <li>The ivy configurations that need to be resolved are now configurable. They can be selected in the module configuration.</li>
+                <li>Dependencies that are in the module library from a previous resolve, but that are no longer valid are now removed during the resolve process.</li>
             </ul>
             <strong>0.4-alpha</strong>
             <ul>

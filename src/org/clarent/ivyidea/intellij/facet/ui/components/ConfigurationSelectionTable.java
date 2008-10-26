@@ -46,7 +46,14 @@ public class ConfigurationSelectionTable extends Table {
         getColumnModel().getColumn(1).setHeaderValue("Name");
         getColumnModel().getColumn(2).setHeaderValue("Description");
 
-        getColumnModel().getColumn(0).setCellRenderer(new BooleanTableCellRenderer());
+        // Render checkbox disabled if table is disabled
+        getColumnModel().getColumn(0).setCellRenderer(new BooleanTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                rendererComponent.setEnabled(table.isEnabled());
+                return rendererComponent;
+            }
+        });
         getColumnModel().getColumn(0).setCellEditor(new BooleanTableCellEditor());
 
         // Register custom renderer to draw deprecated configs in 'strikethrough'
@@ -55,7 +62,6 @@ public class ConfigurationSelectionTable extends Table {
             private Font regularFont;
             private Font strikethroughFont;
 
-            // implements javax.swing.table.TableCellRenderer
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 final ConfigurationSelectionTableModel tableModel = (ConfigurationSelectionTableModel) table.getModel();
                 final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -76,9 +82,20 @@ public class ConfigurationSelectionTable extends Table {
                     setToolTipText(null);
                     rendererComponent.setFont(regularFont);
                 }
+                rendererComponent.setEnabled(table.isEnabled());
                 return rendererComponent;
             }
         });
+
+        // Render description disabled if table is disabled
+        getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                rendererComponent.setEnabled(table.isEnabled());
+                return rendererComponent;
+            }
+        });
+
     }
 
 }

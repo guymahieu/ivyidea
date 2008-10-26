@@ -10,6 +10,7 @@
                 <li>Detection of dependencies that are really other intellij modules in the same project; these are added as module references</li>
                 <li>Detect source/document/jar type ivy artifacts in dependencies and add them as such to the module</li>
                 <li>Creation of a module library with all resolved ivy dependencies</li>
+                <li>Ivy configurations that need to be resolved can be chosen for each module</li>
             </ul>
         </p>
          ]]>
@@ -28,7 +29,7 @@
         <p>
             <strong>0.5-alpha</strong>
             <ul>
-                <li>???</li>
+                <li>Made the ivy configurations to be resolved configurable. They can be selected in the module configuration.</li>
             </ul>
             <strong>0.4-alpha</strong>
             <ul>

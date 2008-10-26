@@ -9,6 +9,7 @@ import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.WriteExternalException;
 import org.clarent.ivyidea.intellij.facet.ui.IvyIdeaFacetEditorTab;
 import org.jdom.Element;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +31,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private boolean onlyResolveSelectedConfigs = true;
     private Set<String> configsToResolve = Collections.emptySet();
 
+    @Nullable
     public static IvyIdeaFacetConfiguration getInstance(Module module) {
         final IvyIdeaFacet ivyIdeaFacet = IvyIdeaFacet.getInstance(module);
         if (ivyIdeaFacet != null) {

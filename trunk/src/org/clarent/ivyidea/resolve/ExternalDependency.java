@@ -51,18 +51,21 @@ public abstract class ExternalDependency implements ResolvedDependency {
     }
 
     protected boolean isAlreadyRegistered(Library.ModifiableModel libraryModel) {
-        // TODO: check if this naive check is good enough - is there a better way to do this?
-        final String artifactPath = externalArtifact.getAbsolutePath();
-        final VirtualFile[] files = libraryModel.getFiles(getType());
-        for (VirtualFile file : files) {
-            final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());
-            // Compare the files not just the paths
-            // TODO: Are these paths always absolute??
-            if (new File(existingDependencyPath).equals(new File(artifactPath))) {
+        for (VirtualFile file : libraryModel.getFiles(getType())) {
+            if (isSameDependency(file)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isSameDependency(VirtualFile file) {
+        // TODO: see if this naive check is good enough - is there a better way to do this?
+        final String artifactPath = externalArtifact.getAbsolutePath();
+        final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());
+        // Compare the files not just the paths
+        // TODO: Are these paths always absolute??
+        return new File(existingDependencyPath).equals(new File(artifactPath));
     }
 
     protected abstract String getTypeName();

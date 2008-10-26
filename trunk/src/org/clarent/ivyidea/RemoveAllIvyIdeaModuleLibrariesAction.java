@@ -10,7 +10,7 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
-import org.clarent.ivyidea.config.IvyIdeaTempConfiguration;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 
 /**
@@ -27,7 +27,7 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
                 for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
                     final ModifiableRootModel model = ModuleRootManager.getInstance(module).getModifiableModel();
                     final LibraryTable moduleLibraryTable = model.getModuleLibraryTable();
-                    final Library library = moduleLibraryTable.getLibraryByName(IvyIdeaTempConfiguration.getCurrent().getCreatedLibraryName());
+                    final Library library = moduleLibraryTable.getLibraryByName(IvyIdeaConfigHelper.getCreatedLibraryName());
                     if (library != null) {
                         moduleLibraryTable.removeLibrary(library);
                         count++;

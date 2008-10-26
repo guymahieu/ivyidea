@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class ToolWindowRegistrationComponent implements ProjectComponent {
+
     private Project project;
 
     public ToolWindowRegistrationComponent(Project project) {
@@ -38,13 +39,19 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
     }
 
     public void projectClosed() {
+        unregisterToolWindow();
+    }
+
+    private void unregisterToolWindow() {
+        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+        toolWindowManager.unregisterToolWindow(IvyIdeaToolWindow.ID);
     }
 
     private void registerToolWindow() {
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
-        ToolWindow toolWindow = toolWindowManager.registerToolWindow("IvyIDEA", false, ToolWindowAnchor.BOTTOM);
+        ToolWindow toolWindow = toolWindowManager.registerToolWindow(IvyIdeaToolWindow.ID, false, ToolWindowAnchor.BOTTOM);
         PeerFactory peerFactory = PeerFactory.getInstance();
-        Content content = peerFactory.getContentFactory().createContent(new IvyIdeaToolWindow().getRoot(), "IvyIDEA Console", true);
+        Content content = peerFactory.getContentFactory().createContent(new IvyIdeaToolWindow().getRoot(), "Console", true);
         toolWindow.setIcon(IvyIdeaIcons.MAIN_ICON_SMALL);
         toolWindow.getContentManager().addContent(content);
     }

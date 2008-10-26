@@ -70,22 +70,22 @@ public class IvyIdeaConfigHelper {
             if (state != null && state.getIvySettingsFile() != null && state.getIvySettingsFile().trim().length() > 0) {
                 File result = new File(state.getIvySettingsFile());
                 if (!result.exists()) {
-                    throw new RuntimeException("The ivy settings file configured for this project does not exist (" + result.getAbsolutePath() + ")");
+                    throw new RuntimeException("The ivy settings file given in the project settings does not exist:" + result.getAbsolutePath());
                 }
                 return result;
             } else {
-                throw new RuntimeException("No ivy settings file found in the project configuration.");
+                throw new RuntimeException("No ivy settings file specified in the project settings.");
             }
         } else {
             final String ivySettingsFile = moduleConfiguration.getIvySettingsFile();
             if (ivySettingsFile != null) {
                 File result = new File(ivySettingsFile);
                 if (!result.exists()) {
-                    throw new RuntimeException("The ivy settings file configured for module " + module.getName() + " does not exist (" + result.getAbsolutePath() + ")");
+                    throw new RuntimeException("The ivy settings file given in the module settings for module " + module.getName() + " does not exist:" + result.getAbsolutePath());
                 }
                 return result;
             } else {
-                throw new RuntimeException("No ivy settings file found in the configuration of module " + module.getName());
+                throw new RuntimeException("No ivy settings file given in the settings of module " + module.getName());
             }
         }
     }

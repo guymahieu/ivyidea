@@ -113,9 +113,8 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
 
     public void apply() throws ConfigurationException {
         final Facet facet = editorContext.getFacet();
-        IvyIdeaFacetConfiguration configuration;
         if (facet != null) {
-            configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
             configuration.setIvyFile(txtIvyFile.getText());
             configuration.setUseProjectSettings(chkUseProjectSettings.isSelected());
             configuration.setIvySettingsFile(txtIvySettingsFile.getText());
@@ -145,6 +144,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
             final Set<Configuration> allConfigurations = IvyUtil.loadConfigurations(configuration.getIvyFile());
             tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, configuration.getConfigsToResolve()));
             selectedConfigurations = tblConfigurationSelection.getSelectedConfigurations();
+            tblConfigurationSelection.setEnabled(chkOnlyResolveSpecificConfigs.isSelected());
         }
     }
 

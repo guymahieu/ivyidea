@@ -8,25 +8,11 @@
     <properties/>
     <border type="none"/>
     <children>
-      <scrollpane id="5d377">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="2ec50" class="javax.swing.JTextPane" binding="txtConsole">
-            <constraints/>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-        </children>
-      </scrollpane>
       <toolbar id="b6c89">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="2" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
+            <preferred-size width="32" height="20"/>
+            <maximum-size width="32" height="-1"/>
           </grid>
         </constraints>
         <properties>
@@ -39,14 +25,52 @@
         </clientProperties>
         <border type="none"/>
         <children>
-          <component id="a360e" class="javax.swing.JButton" binding="clearButton" default-binding="true">
+          <component id="eb96c" class="javax.swing.JButton" binding="btnAboutIvyIDEA">
             <constraints/>
             <properties>
-              <text value="Clear"/>
+              <icon value="/ivyidea16.png"/>
+              <text value=""/>
             </properties>
           </component>
         </children>
       </toolbar>
+      <tabbedpane id="36e36" binding="tabbedPane1" default-binding="true">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="3e7c4" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Raw Output"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <scrollpane id="5d377">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="2ec50" class="javax.swing.JTextPane" binding="txtConsole">
+                    <constraints/>
+                    <properties>
+                      <editable value="false"/>
+                      <text value="Nothing here yet; still to be implemented!"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
     </children>
   </grid>
 </form>

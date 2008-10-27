@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  * @author Guy Mahieu
  */
 
-public class DependencyResolver {
+class DependencyResolver {
 
     private static final Logger LOGGER = Logger.getLogger(DependencyResolver.class.getName());
 

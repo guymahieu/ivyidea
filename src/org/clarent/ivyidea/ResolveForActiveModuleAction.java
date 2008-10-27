@@ -11,8 +11,8 @@ import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.resolve.DependencyResolver;
 import org.clarent.ivyidea.resolve.ResolvedDependency;
+import org.clarent.ivyidea.resolve.Resolver;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -21,17 +21,28 @@ public class ResolveForActiveModuleAction extends AnAction {
 
     private static final String MENU_TEXT = "Resolve for {0} module";
 
-    public void actionPerformed(AnActionEvent e) {
+    public void actionPerformed(final AnActionEvent e) {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
-            final DependencyResolver dependencyResolver = new DependencyResolver();
-            final List<ResolvedDependency> list = dependencyResolver.resolve(module, new IvyManager());
-            ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
                 public void run() {
-                    IntellijDependencyUpdater.updateDependencies(module, list);
+                    final List<ResolvedDependency> list = new Resolver(new IvyManager()).resolve(module);
+                    updateIntellijModel(module, list);
                 }
             });
         }
+    }
+
+    private void updateIntellijModel(final Module module, final List<ResolvedDependency> list) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        IntellijDependencyUpdater.updateDependencies(module, list);
+                    }
+                });
+            }
+        });
     }
 
     public void update(AnActionEvent e) {

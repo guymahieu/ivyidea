@@ -9,8 +9,8 @@ import com.intellij.openapi.project.Project;
 import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.resolve.DependencyResolver;
 import org.clarent.ivyidea.resolve.ResolvedDependency;
+import org.clarent.ivyidea.resolve.Resolver;
 
 import java.util.List;
 
@@ -41,22 +41,4 @@ public class ResolveForAllModulesAction extends AnAction {
         });
     }
 
-    private static class Resolver {
-
-        private List<ResolvedDependency> dependencies;
-        private IvyManager ivyManager;
-
-        private Resolver(IvyManager ivyManager) {
-            this.ivyManager = ivyManager;
-        }
-
-        public List<ResolvedDependency> resolve(final Module module) {
-            ApplicationManager.getApplication().runReadAction(new Runnable() {
-                public void run() {
-                    dependencies = new DependencyResolver().resolve(module, ivyManager);
-                }
-            });
-            return dependencies;
-        }
-    }
 }

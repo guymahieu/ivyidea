@@ -31,6 +31,7 @@
             <ul>
                 <li>The ivy configurations that need to be resolved are now configurable. They can be selected in the module configuration.</li>
                 <li>Dependencies that are in the module library from a previous resolve, but that are no longer valid are now removed during the resolve process.</li>
+                <li>Resolve process is now don in a separate thread to avoid blocking the UI.</li>
             </ul>
             <strong>0.4-alpha</strong>
             <ul>

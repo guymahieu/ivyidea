@@ -94,7 +94,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
             useProjectSettingsDefault = Boolean.FALSE;
         }
         setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", useProjectSettingsDefault.toString())));
-        setOnlyResolveSelectedConfigs(Boolean.valueOf(element.getAttributeValue("onlyResolveSelectedConfigs")));
+        setOnlyResolveSelectedConfigs(Boolean.valueOf(element.getAttributeValue("onlyResolveSelectedConfigs", Boolean.FALSE.toString())));
         final Element configsToResolveElement = element.getChild("configsToResolve");
         if (configsToResolveElement != null) {
             Set<String> configsToResolve = new TreeSet<String>();

@@ -17,16 +17,46 @@ import java.util.List;
 public class ResolveForAllModulesAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {
-        Project project = DataKeys.PROJECT.getData(e.getDataContext());
-        IvyManager ivyManager = new IvyManager();
-        for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
-            final List<ResolvedDependency> list = new DependencyResolver().resolve(module, ivyManager);
-            ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                public void run() {
-                    IntellijDependencyUpdater.updateDependencies(module, list);
+        final Project project = DataKeys.PROJECT.getData(e.getDataContext());
+        ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
+            public void run() {
+                final IvyManager ivyManager = new IvyManager();
+                for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
+                    final List<ResolvedDependency> list = new Resolver(ivyManager).resolve(module);
+                    updateIntellijModel(module, list);
                 }
-            });
-        }
+            }
+        });
     }
 
+    private void updateIntellijModel(final Module module, final List<ResolvedDependency> list) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        IntellijDependencyUpdater.updateDependencies(module, list);
+                    }
+                });
+            }
+        });
+    }
+
+    private static class Resolver {
+
+        private List<ResolvedDependency> dependencies;
+        private IvyManager ivyManager;
+
+        private Resolver(IvyManager ivyManager) {
+            this.ivyManager = ivyManager;
+        }
+
+        public List<ResolvedDependency> resolve(final Module module) {
+            ApplicationManager.getApplication().runReadAction(new Runnable() {
+                public void run() {
+                    dependencies = new DependencyResolver().resolve(module, ivyManager);
+                }
+            });
+            return dependencies;
+        }
+    }
 }

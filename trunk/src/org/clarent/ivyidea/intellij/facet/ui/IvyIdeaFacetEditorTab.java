@@ -142,7 +142,11 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
             txtIvySettingsFile.setText(configuration.getIvySettingsFile());
             chkOnlyResolveSpecificConfigs.setSelected(configuration.isOnlyResolveSelectedConfigs());
             final Set<Configuration> allConfigurations = IvyUtil.loadConfigurations(configuration.getIvyFile());
-            tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, configuration.getConfigsToResolve()));
+            if (allConfigurations != null) {
+                tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, configuration.getConfigsToResolve()));
+            } else {
+                tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel());
+            }
             selectedConfigurations = tblConfigurationSelection.getSelectedConfigurations();
             tblConfigurationSelection.setEnabled(chkOnlyResolveSpecificConfigs.isSelected());
         }

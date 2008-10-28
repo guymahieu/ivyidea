@@ -65,7 +65,9 @@ public class IvyUtil {
         try {
             final File file = new File(ivyFileName);
             if (file.exists() && !file.isDirectory()) {
-                final ModuleDescriptor md = parseIvyFile(file, new IvySettings());
+                IvySettings ivySettings = new IvySettings();
+                ivySettings.setValidate(false);
+                final ModuleDescriptor md = parseIvyFile(file, ivySettings);
                 Set<Configuration> result = new TreeSet<Configuration>(new Comparator<Configuration>() {
                     public int compare(Configuration o1, Configuration o2) {
                         return o1.getName().compareToIgnoreCase(o2.getName());
@@ -76,6 +78,7 @@ public class IvyUtil {
             }
         } catch (RuntimeException e) {
             // Not able to parse module descriptor; no problem here...
+            LOGGER.info("Error while parsing ivy file during attempt to load configurations from it: " + e);
         }
         return null;
     }

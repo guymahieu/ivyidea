@@ -31,6 +31,7 @@ Once the facet is added to the tree, you can change its configuration by clickin
 http://clarent.org/ivyidea/img/ivyidea-moduleconfig.png
 
 Here you need to specify the ivy file for your module. This is the file which holds the dependency information for your module. _More information about ivy files can be found in the [http://ant.apache.org/ivy/history/latest-milestone/tutorial/start.html apache ivy quick start guide]_
+
 You can also select the configuration(s) that you want to resolve in IntelliJ; the configurations table will be filled automatically when you have selected a valid ivy.xml file. _Note that if you use an include file for your configurations in your ivy.xml and you use a ${} style property inside the filename, the ivy settings file needs to be set as well (here or in the project settings) in order to correctly lookup the available configurations. The current version of the plugin will not report this, it will simply not show any data in the table._
 
 

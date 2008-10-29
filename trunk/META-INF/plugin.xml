@@ -1,8 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://www.ivyidea.org">
     <name>IvyIDEA</name>
-    <description>
-        <![CDATA[<p>Resolves module dependencies through Ivy</p>
+    <description><![CDATA[<p>Resolves module dependencies through Ivy</p>
         <p>Features:
             <ul>
                 <li>Ivy integration (up to v2.0.0rc1); no need for external ant build scripts to be called</li>
@@ -12,11 +11,9 @@
                 <li>Creation of a module library with all resolved ivy dependencies</li>
                 <li>Ivy configurations that need to be resolved can be chosen for each module</li>
             </ul>
-        </p>
-         ]]>
+        </p>]]>
     </description>
-    <change-notes>
-        <![CDATA[<p>This release is part of a series of initial alpha releases.
+    <change-notes><![CDATA[<p>This release is part of a series of initial alpha releases.
         The plugin should be functional but is not at all stable and using it
         may require some advanced knowlegde since tweaking may be needed in
         some cases.</p>
@@ -25,6 +22,10 @@
         locations correctly you may get IDEA exceptions.
         </p>
         <p>
+            <strong>0.6-alpha</strong>
+            <ul>
+                <li>???</li>
+            </ul>
             <strong>0.5-alpha</strong>
             <ul>
                 <li>The ivy configurations that need to be resolved are now configurable. They can be selected in the module configuration.</li>
@@ -45,10 +46,9 @@
             <ul>
                 <li>Fixed an annoying bug causing exceptions when dependencies were evicted</li>
             </ul>
-        </p>
-     ]]>
+        </p>]]>
     </change-notes>
-    <version>0.5-alpha</version>
+    <version>0.6-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="7757"/>
     <application-components>

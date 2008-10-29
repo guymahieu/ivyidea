@@ -41,3 +41,17 @@ If you do not specify an ivy settings file with your module (meaning that you le
 http://clarent.org/ivyidea/img/ivyidea-projectsettings.png
 
 You can also choose to enable or disable the validation of ivy.xml files; this can be useful if you have minor errors in ivy.xml files that you do not control but which do not cause the resolve process to fail. Disabling this will also probably be a bit faster.
+
+== Resolving Dependencies ==
+
+This can be done through the Tools menu
+
+http://clarent.org/ivyidea/img/ivyidea-toolsmenu.png
+
+but also through the right-click menu in the project view or in the editor
+
+http://clarent.org/ivyidea/img/ivyidea-projectrightclick.png
+
+It is possible to do a resolve for the current module (if you are inside the context of a module) or for all modules.
+
+There is also an option to remove all IntelliJ module libraries that were a result of the ivy resolve process. This will not remove module to module dependencies that were made by IvyIDEA!

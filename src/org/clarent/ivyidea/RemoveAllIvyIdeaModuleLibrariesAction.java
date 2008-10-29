@@ -8,7 +8,6 @@ import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -16,6 +15,7 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
+import org.clarent.ivyidea.intellij.task.IvyIdeaBackgroundTask;
 
 /**
  * @author Guy Mahieu
@@ -25,7 +25,7 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {
         final Project project = DataKeys.PROJECT.getData(e.getDataContext());
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "IvyIDEA " + this.getTemplatePresentation().getText()) {
+        ProgressManager.getInstance().run(new IvyIdeaBackgroundTask(e) {
             public void run(final ProgressIndicator indicator) {
                 final Module[] facet = IntellijUtils.getAllModulesWithIvyIdeaFacet(project);
                 indicator.setIndeterminate(false);

@@ -23,6 +23,7 @@ public class IvyIdeaToolWindow extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(BorderLayout.CENTER, root);
         txtConsole.setText(DEFAULT_CONSOLE_TXT);
+        txtConsole.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
         btnAboutIvyIDEA.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

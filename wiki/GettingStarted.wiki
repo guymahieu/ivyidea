@@ -54,4 +54,5 @@ http://clarent.org/ivyidea/img/ivyidea-projectrightclick.png
 
 It is possible to do a resolve for the current module (if you are inside the context of a module) or for all modules.
 
-There is also an option to remove all IntelliJ module libraries that were a result of the ivy resolve process. This will not remove module to module dependencies that were made by IvyIDEA!
+There is also an option to remove all IntelliJ module libraries that were a result of the ivy resolve process. This does not remove any files from the filesystem, it will simply remove the IvyIDEA-resolved module library from all modules that have an IvyIDEA facet
+configured. It will also not remove module to module dependencies that were made by IvyIDEA!

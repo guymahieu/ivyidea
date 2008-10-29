@@ -1,6 +1,4 @@
 #labels Featured
-_Note that the screenshots are from an older release and may differ from the current ones in some datails_
-
 == Module Settings ==
 
 === Auto detection ===
@@ -33,8 +31,8 @@ Once the facet is added to the tree, you can change its configuration by clickin
 http://clarent.org/ivyidea/img/ivyidea-moduleconfig.png
 
 Here you need to specify the ivy file for your module. This is the file which holds the dependency information for your module. _More information about ivy files can be found in the [http://ant.apache.org/ivy/history/latest-milestone/tutorial/start.html apache ivy quick start guide]_
+You can also select the configuration(s) that you want to resolve in IntelliJ; the configurations table will be filled automatically when you have selected a valid ivy.xml file. _Note that if you use an include file for your configurations in your ivy.xml and you use a ${} style property inside the filename, the ivy settings file needs to be set as well (here or in the project settings) in order to correctly lookup the available configurations. The current version of the plugin will not report this, it will simply not show any data in the table._
 
--- More to come in the next few days --
 
 == Project Settings ==
 
@@ -42,4 +40,4 @@ If you do not specify an ivy settings file with your module (meaning that you le
 
 http://clarent.org/ivyidea/img/ivyidea-projectsettings.png
 
--- More to come in the next few days --
+You can also choose to enable or disable the validation of ivy.xml files; this can be useful if you have minor errors in ivy.xml files that you do not control but which do not cause the resolve process to fail. Disabling this will also probably be a bit faster.

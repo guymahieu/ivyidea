@@ -2,8 +2,9 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
-      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\ivy.xml" useProjectSettings="true" ivySettingsFile="" onlyResolveSelectedConfigs="true">
+      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\ivy.xml" useProjectSettings="true" ivySettingsFile="lkjkljkljk" onlyResolveSelectedConfigs="true">
         <configsToResolve>
+          <config>default</config>
           <config>eclipse</config>
         </configsToResolve>
       </configuration>

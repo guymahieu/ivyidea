@@ -22,16 +22,15 @@
         some cases.</p>
         <p>Specifically exception handling and user friendly error reporting are missing,
         so if you did not configure the ivy file locations and/or ivy settings file
-        locations correctly you may get IDEA exceptions. Also there is no output from the resolve
-        process yet, so if for some reason an artifact does not show up in the IDEA dependencies
-        there is no way to find the reason from IntelliJ (it is logged though).
+        locations correctly you may get IDEA exceptions.
         </p>
         <p>
             <strong>0.5-alpha</strong>
             <ul>
                 <li>The ivy configurations that need to be resolved are now configurable. They can be selected in the module configuration.</li>
                 <li>Dependencies that are in the module library from a previous resolve, but that are no longer valid are now removed during the resolve process.</li>
-                <li>Resolve process is now don in a separate thread to avoid blocking the UI.</li>
+                <li>Resolve process is now done in a background task to avoid blocking the UI.</li>
+                <li>Added a first simple toolwindow with the logging from the ivy resolve process.</li>
             </ul>
             <strong>0.4-alpha</strong>
             <ul>

@@ -61,11 +61,13 @@ public class IvyUtil {
      * @return a set of configurations, null if anything went wrong parsing the ivy file
      */
     @Nullable
-    public static Set<Configuration> loadConfigurations(String ivyFileName) {
+    public static Set<Configuration> loadConfigurations(String ivyFileName, IvySettings ivySettings) {
         try {
             final File file = new File(ivyFileName);
             if (file.exists() && !file.isDirectory()) {
-                IvySettings ivySettings = new IvySettings();
+                if (ivySettings == null) {
+                    ivySettings = new IvySettings();
+                }
                 ivySettings.setValidate(false);
                 final ModuleDescriptor md = parseIvyFile(file, ivySettings);
                 Set<Configuration> result = new TreeSet<Configuration>(new Comparator<Configuration>() {

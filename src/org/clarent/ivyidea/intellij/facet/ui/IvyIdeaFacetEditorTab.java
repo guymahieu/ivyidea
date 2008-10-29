@@ -10,6 +10,8 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.apache.ivy.core.module.descriptor.Configuration;
+import org.apache.ivy.core.settings.IvySettings;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable;
@@ -67,7 +69,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
             private boolean foundConfigsBefore = false;
 
             protected void textChanged(DocumentEvent e) {
-                final Set<Configuration> allConfigurations = IvyUtil.loadConfigurations(txtIvyFile.getText());
+                final Set<Configuration> allConfigurations = IvyUtil.loadConfigurations(txtIvyFile.getText(), getIvySettings());
                 chkOnlyResolveSpecificConfigs.setEnabled(allConfigurations != null);
                 if (allConfigurations != null) {
                     LOGGER.info("Detected configs in file " + txtIvyFile.getText() + ": " + allConfigurations.toString());
@@ -96,6 +98,17 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
             }
         });
 
+    }
+
+    @NotNull
+    private IvySettings getIvySettings() {
+        try {
+            IvySettings s = new IvySettings();
+            s.load(IvyIdeaConfigHelper.getIvySettingsFile(this.editorContext.getModule()));
+            return s;
+        } catch (Exception e) {
+            return new IvySettings();
+        }
     }
 
     @Nls
@@ -141,7 +154,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
             chkUseProjectSettings.setSelected(configuration.isUseProjectSettings());
             txtIvySettingsFile.setText(configuration.getIvySettingsFile());
             chkOnlyResolveSpecificConfigs.setSelected(configuration.isOnlyResolveSelectedConfigs());
-            final Set<Configuration> allConfigurations = IvyUtil.loadConfigurations(configuration.getIvyFile());
+            final Set<Configuration> allConfigurations = IvyUtil.loadConfigurations(configuration.getIvyFile(), getIvySettings());
             if (allConfigurations != null) {
                 tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, configuration.getConfigsToResolve()));
             } else {

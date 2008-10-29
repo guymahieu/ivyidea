@@ -25,6 +25,7 @@ public class ResolveForAllModulesAction extends AnAction {
             public void run(ProgressIndicator indicator) {
                 final IvyManager ivyManager = new IvyManager();
                 for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
+                    indicator.setText2("Resolving for module " + module.getName());
                     final List<ResolvedDependency> list = new Resolver(ivyManager).resolve(module);
                     updateIntellijModel(module, list);
                 }

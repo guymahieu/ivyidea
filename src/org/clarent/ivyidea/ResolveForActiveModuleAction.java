@@ -7,6 +7,9 @@ import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
@@ -24,8 +27,8 @@ public class ResolveForActiveModuleAction extends AnAction {
     public void actionPerformed(final AnActionEvent e) {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
-            ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
-                public void run() {
+            ProgressManager.getInstance().run(new Task.Backgroundable(module.getProject(), "IvyIDEA " + e.getPresentation().getText()) {
+                public void run(ProgressIndicator indicator) {
                     final List<ResolvedDependency> list = new Resolver(new IvyManager()).resolve(module);
                     updateIntellijModel(module, list);
                 }

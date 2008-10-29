@@ -1,14 +1,16 @@
-<ivy-module version="1.0">
+<ivy-module version="1.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info organisation="clarent" module="untitled-plugin-test-extensions" revision="0.1"/>
     <configurations>
         <conf name="default"/>
-        <conf name="eclipse"/>
+        <conf name="ide"/>
     </configurations>
     <dependencies>
-        <dependency org="clarent" name="untitled-plugin-test-core" rev="0.1" conf="eclipse,default->default"/>
+        <dependency org="clarent" name="untitled-plugin-test-core" rev="0.1" conf="ide,default->default"/>
 
         <!-- having these two here is used to test support for evicted modules -->
-        <dependency org="apache" name="commons-collections" rev="3.1" conf="eclipse,default->default"/>        
-        <dependency org="apache" name="commons-collections" rev="3.2.1" conf="eclipse,default->default"/>        
+        <dependency org="apache" name="commons-collections" rev="3.1" conf="default->default"/>        
+        <dependency org="apache" name="commons-collections" rev="3.2.1" conf="ide->default"/>
     </dependencies>
 </ivy-module>

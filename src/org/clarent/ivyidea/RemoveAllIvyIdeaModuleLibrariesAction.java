@@ -4,7 +4,11 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -21,22 +25,29 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {
         final Project project = DataKeys.PROJECT.getData(e.getDataContext());
-        ApplicationManager.getApplication().runWriteAction(new Runnable() {
-            public void run() {
-                int count = 0;
-                for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
-                    final ModifiableRootModel model = ModuleRootManager.getInstance(module).getModifiableModel();
-                    final LibraryTable moduleLibraryTable = model.getModuleLibraryTable();
-                    final Library library = moduleLibraryTable.getLibraryByName(IvyIdeaConfigHelper.getCreatedLibraryName());
-                    if (library != null) {
-                        moduleLibraryTable.removeLibrary(library);
-                        count++;
-                        model.commit();
-                    }
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "IvyIDEA " + this.getTemplatePresentation().getText()) {
+            public void run(final ProgressIndicator indicator) {
+                final Module[] facet = IntellijUtils.getAllModulesWithIvyIdeaFacet(project);
+                indicator.setIndeterminate(false);
+                for (final Module module : facet) {
+                    indicator.setText2("Removing for module " + module.getName());
+                    ApplicationManager.getApplication().invokeAndWait(new Runnable() {
+                        public void run() {
+                            ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                                public void run() {
+                                    final ModifiableRootModel model = ModuleRootManager.getInstance(module).getModifiableModel();
+                                    final LibraryTable moduleLibraryTable = model.getModuleLibraryTable();
+                                    final Library library = moduleLibraryTable.getLibraryByName(IvyIdeaConfigHelper.getCreatedLibraryName());
+                                    if (library != null) {
+                                        moduleLibraryTable.removeLibrary(library);
+                                        model.commit();
+                                    }
+                                }
+                            });
+                        }
+                    }, ModalityState.NON_MODAL);
                 }
-                // TODO: Show dialog: "{0} libraries removed."                 
             }
         });
     }
-
 }

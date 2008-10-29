@@ -4,7 +4,6 @@ import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
 import org.apache.ivy.core.cache.DefaultRepositoryCacheManager;
 import org.apache.ivy.core.cache.RepositoryCacheManager;
-import org.apache.ivy.core.event.IvyListener;
 import org.apache.ivy.core.module.descriptor.Artifact;
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
@@ -12,6 +11,7 @@ import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
 import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.util.MessageLogger;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
@@ -42,20 +42,12 @@ class DependencyResolver {
         return Collections.unmodifiableMap(problems);
     }
 
-    public List<ResolvedDependency> resolve(Module module) {
-        return resolve(module, new IvyManager());
-    }
-
-    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager) {
-        return resolve(module, ivyManager, null);
-    }
-
-    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager, IvyListener ivyListener) {
+    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager, MessageLogger messageLogger) {
         final Ivy ivy = ivyManager.getIvy(module);
         final File ivyFile = IvyUtil.getIvyFile(module);
         try {
-            if (ivyListener != null) {
-                ivy.getResolveEngine().getEventManager().addIvyListener(ivyListener);
+            if (messageLogger != null) {
+                ivy.getLoggerEngine().setDefaultLogger(messageLogger);
             }
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             return extractDependencies(resolveReport, ivy.getSettings(), new ModuleDependencies(module, ivyManager));
@@ -63,10 +55,12 @@ class DependencyResolver {
             throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be parsed correctly!", e);
         } catch (IOException e) {
             throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be accessed!", e);
-        } finally {
+/*
             if (ivyListener != null) {
                 ivy.getResolveEngine().getEventManager().removeIvyListener(ivyListener);
             }
+        } finally {
+*/
         }
     }
 

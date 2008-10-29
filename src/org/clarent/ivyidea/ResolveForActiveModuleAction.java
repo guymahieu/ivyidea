@@ -26,7 +26,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         if (module != null) {
             ProgressManager.getInstance().run(new IvyIdeaBackgroundTask(e) {
                 public void run(ProgressIndicator indicator) {
-                    final List<ResolvedDependency> list = new Resolver(new IvyManager()).resolve(module);
+                    final List<ResolvedDependency> list = new Resolver(new IvyManager()).resolve(module, buildIvyListener(module.getProject()));
                     updateIntellijModel(module, list);
                 }
             });

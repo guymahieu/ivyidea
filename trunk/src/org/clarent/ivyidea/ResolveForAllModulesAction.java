@@ -23,7 +23,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
                 final IvyManager ivyManager = new IvyManager();
                 for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
                     indicator.setText2("Resolving for module " + module.getName());
-                    final List<ResolvedDependency> list = new Resolver(ivyManager).resolve(module);
+                    final List<ResolvedDependency> list = new Resolver(ivyManager).resolve(module, buildIvyListener(project));
                     updateIntellijModel(module, list);
                 }
             }

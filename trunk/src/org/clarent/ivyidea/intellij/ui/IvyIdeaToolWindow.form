@@ -62,7 +62,7 @@
                     <constraints/>
                     <properties>
                       <editable value="false"/>
-                      <text value="Nothing here yet; still to be implemented!"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>

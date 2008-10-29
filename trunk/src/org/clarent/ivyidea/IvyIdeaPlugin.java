@@ -24,4 +24,5 @@ public class IvyIdeaPlugin implements ApplicationComponent {
 
     public void disposeComponent() {
     }
+
 }

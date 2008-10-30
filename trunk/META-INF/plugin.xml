@@ -22,6 +22,10 @@
         locations correctly you may get IDEA exceptions.
         </p>
         <p>
+            <strong>0.7-alpha</strong>
+            <ul>
+                <li>Changed used JDK from 1.6 to 1.5 so the plugin will run on mac os</li>
+            </ul>
             <strong>0.6-alpha</strong>
             <ul>
                 <li>Removed toolwindow logging again as a quickfix - it blocked UI on larger projects.</li>
@@ -48,9 +52,9 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>0.6-alpha</version>
+    <version>0.7-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
-    <idea-version since-build="7757"/>
+    <idea-version since-build="7361" until-build="7999"/>
     <application-components>
         <component>
             <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>

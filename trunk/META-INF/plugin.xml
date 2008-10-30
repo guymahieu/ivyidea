@@ -24,7 +24,7 @@
         <p>
             <strong>0.6-alpha</strong>
             <ul>
-                <li>???</li>
+                <li>Removed toolwindow logging again as a quickfix - it blocked UI on larger projects.</li>
             </ul>
             <strong>0.5-alpha</strong>
             <ul>

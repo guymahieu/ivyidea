@@ -1,5 +1,7 @@
 package org.clarent.ivyidea.intellij;
 
+import com.intellij.execution.filters.TextConsoleBuilderFactory;
+import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -50,8 +52,8 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
     private void registerToolWindow() {
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
         ToolWindow toolWindow = toolWindowManager.registerToolWindow(IvyIdeaToolWindow.ID, false, ToolWindowAnchor.BOTTOM);
-        PeerFactory peerFactory = PeerFactory.getInstance();
-        Content content = peerFactory.getContentFactory().createContent(new IvyIdeaToolWindow().getRoot(), "Console", true);
+        final ConsoleView consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
+        Content content = PeerFactory.getInstance().getContentFactory().createContent(consoleView.getComponent(), "Console", true);
         toolWindow.setIcon(IvyIdeaIcons.MAIN_ICON_SMALL);
         toolWindow.getContentManager().addContent(content);
     }

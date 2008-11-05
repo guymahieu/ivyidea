@@ -25,6 +25,8 @@
             <strong>0.7-alpha</strong>
             <ul>
                 <li>Changed used JDK from 1.6 to 1.5 so the plugin will run on mac os</li>
+                <li>Made looking up intellij module dependencies more lenient; now the revision is ignored when
+                    identifying dependencies as existing intellij modules rather than jars</li>
             </ul>
             <strong>0.6-alpha</strong>
             <ul>

@@ -7,6 +7,7 @@ import org.apache.ivy.core.cache.RepositoryCacheManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.id.ModuleId;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
@@ -74,8 +75,8 @@ class DependencyResolver {
             if (repositoryCacheManager instanceof DefaultRepositoryCacheManager) {
                 DefaultRepositoryCacheManager defaultRepositoryCacheManager = (DefaultRepositoryCacheManager) repositoryCacheManager;
                 final ModuleRevisionId dependencyRevisionId = dependency.getResolvedId();
-                if (moduleDependencies.isModuleDependency(dependencyRevisionId)) {
-                    result.add(new InternalDependency(moduleDependencies.getModuleDependency(dependencyRevisionId)));
+                if (moduleDependencies.isModuleDependency(dependencyRevisionId.getModuleId())) {
+                    result.add(new InternalDependency(moduleDependencies.getModuleDependency(dependencyRevisionId.getModuleId())));
                 } else {
                     if (dependency.hasProblem()) {
                         problems.put(dependency, dependency.getProblemMessage());
@@ -147,7 +148,7 @@ class DependencyResolver {
 
         private Module module;
 
-        private Map<ModuleRevisionId, Module> moduleDependencies = new HashMap<ModuleRevisionId, Module>();
+        private Map<ModuleId, Module> moduleDependencies = new HashMap<ModuleId, Module>();
 
         public ModuleDependencies(Module module, IvyManager ivyManager) {
             this.module = module;
@@ -155,12 +156,12 @@ class DependencyResolver {
             fillModuleDependencies();
         }
 
-        public boolean isModuleDependency(ModuleRevisionId moduleRevisionId) {
-            return moduleDependencies.containsKey(moduleRevisionId);
+        public boolean isModuleDependency(ModuleId moduleId) {
+            return moduleDependencies.containsKey(moduleId);
         }
 
-        public Module getModuleDependency(ModuleRevisionId moduleRevisionId) {
-            return moduleDependencies.get(moduleRevisionId);
+        public Module getModuleDependency(ModuleId moduleId) {
+            return moduleDependencies.get(moduleId);
         }
 
         private void fillModuleDependencies() {
@@ -171,8 +172,8 @@ class DependencyResolver {
                 for (Module dependencyModule : IntellijUtils.getAllModulesWithIvyIdeaFacet()) {
                     if (!module.equals(dependencyModule)) {
                         for (DependencyDescriptor ivyDependency : ivyDependencies) {
-                            final ModuleRevisionId ivyDependencyId = ivyDependency.getDependencyRevisionId();
-                            final ModuleRevisionId dependencyModuleId = getModuleRevision(dependencyModule);
+                            final ModuleId ivyDependencyId = ivyDependency.getDependencyId();
+                            final ModuleId dependencyModuleId = getModuleId(dependencyModule);
                             if (ivyDependencyId.equals(dependencyModuleId)) {
                                 LOGGER.info("Recognized dependency " + ivyDependency + " as intellij module '" + dependencyModule.getName() + "' in this project!");
                                 moduleDependencies.put(dependencyModuleId, dependencyModule);
@@ -185,17 +186,18 @@ class DependencyResolver {
         }
 
         @Nullable
-        private ModuleRevisionId getModuleRevision(Module module) {
+        private ModuleId getModuleId(Module module) {
             final IvySettings ivySettings = ivyManager.getIvy(module).getSettings();
             if (!moduleDependencies.values().contains(module)) {
                 final ModuleDescriptor ivyModuleDescriptor = IvyUtil.getIvyModuleDescriptor(module, ivySettings);
                 if (ivyModuleDescriptor != null) {
-                    moduleDependencies.put(ivyModuleDescriptor.getModuleRevisionId(), module);
+                    moduleDependencies.put(ivyModuleDescriptor.getModuleRevisionId().getModuleId(), module);
                 }
+
             }
-            for (ModuleRevisionId moduleRevisionId : moduleDependencies.keySet()) {
-                if (module.equals(moduleDependencies.get(moduleRevisionId))) {
-                    return moduleRevisionId;
+            for (ModuleId moduleId : moduleDependencies.keySet()) {
+                if (module.equals(moduleDependencies.get(moduleId))) {
+                    return moduleId;
                 }
             }
             return null;

@@ -24,6 +24,7 @@
         <p>
             <strong>0.7-alpha</strong>
             <ul>
+                <li>Plugin is now compatible with IntelliJ 8</li>
                 <li>Changed used JDK from 1.6 to 1.5 so the plugin will run on mac os</li>
                 <li>Made looking up intellij module dependencies more lenient; now the revision is ignored when
                     identifying dependencies as existing intellij modules rather than jars</li>
@@ -56,7 +57,7 @@
     </change-notes>
     <version>0.7-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
-    <idea-version since-build="7361" until-build="7999"/>
+    <idea-version since-build="3000"/>
     <application-components>
         <component>
             <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>

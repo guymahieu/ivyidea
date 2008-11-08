@@ -12,7 +12,6 @@ import com.intellij.ui.UserActivityWatcher;
 import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
-import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable;
 import org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTableModel;
@@ -59,9 +58,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
         });
         watcher.register(pnlRoot);
 
-        final FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
-        descriptor.setNewFileType(IntellijUtils.getXmlFileType());
-        txtIvyFile.addBrowseFolderListener("Select ivy file", "", editorContext.getProject(), descriptor);
+        txtIvyFile.addBrowseFolderListener("Select ivy file", "", editorContext.getProject(), new FileChooserDescriptor(true, false, false, false, false, false));
         txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", editorContext.getProject(), new FileChooserDescriptor(true, false, false, false, false, false));
 
         txtIvyFile.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {

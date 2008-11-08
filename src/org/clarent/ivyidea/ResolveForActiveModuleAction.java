@@ -13,6 +13,7 @@ import org.clarent.ivyidea.intellij.task.IvyIdeaBackgroundTask;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.ResolvedDependency;
 import org.clarent.ivyidea.resolve.Resolver;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
             ProgressManager.getInstance().run(new IvyIdeaBackgroundTask(e) {
-                public void run(ProgressIndicator indicator) {
+                public void run(@NotNull ProgressIndicator indicator) {
                     final List<ResolvedDependency> list = new Resolver(new IvyManager()).resolve(module, buildIvyListener(module.getProject()));
                     updateIntellijModel(module, list);
                 }

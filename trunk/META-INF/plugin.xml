@@ -24,8 +24,8 @@
         <p>
             <strong>0.7-alpha</strong>
             <ul>
-                <li>Plugin is now compatible with IntelliJ 8</li>
-                <li>Changed used JDK from 1.6 to 1.5 so the plugin will run on mac os</li>
+                <li>IvyIDEA is now compatible with IntelliJ 8.0 (and will run on previous versions as well)</li>
+                <li>Switched to JDK from 1.5 so the plugin will also run on mac os</li>
                 <li>Made looking up intellij module dependencies more lenient; now the revision is ignored when
                     identifying dependencies as existing intellij modules rather than jars</li>
             </ul>
@@ -67,9 +67,11 @@
         <component>
             <implementation-class>org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent</implementation-class>
         </component>
-        <component>
-            <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
-        </component>
+        <!--
+                <component>
+                    <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
+                </component>
+        -->
     </project-components>
     <actions>
         <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module dependencies using Ivy"

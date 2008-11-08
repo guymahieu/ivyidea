@@ -4,6 +4,8 @@ import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.roots.OrderRootType;
 
+import java.util.logging.Logger;
+
 /**
  * Abstracts changed api's between intellij 7 and 8 to allow the plugin
  * to be used in both versions.
@@ -12,6 +14,7 @@ import com.intellij.openapi.roots.OrderRootType;
  */
 public class IntellijCompatibilityHelper implements IntellijCompatibilityFunctions {
 
+    private static Logger LOGGER = Logger.getLogger("IvyIDEA-Compatibility");
     private static IntellijCompatibilityHelper instance = new IntellijCompatibilityHelper();
 
     private IntellijCompatibilityFunctions delegate;
@@ -21,9 +24,13 @@ public class IntellijCompatibilityHelper implements IntellijCompatibilityFunctio
     }
 
     private IntellijCompatibilityHelper() {
-        if ("8".equals(ApplicationInfo.getInstance().getMajorVersion())) {
+        final String majorVersion = ApplicationInfo.getInstance().getMajorVersion();
+        LOGGER.info("Detected intellij major version " + majorVersion + "; activating the appropriate compatibility mode.");
+        if ("8".equals(majorVersion)) {
+            LOGGER.info("Compatibility mode set to IntelliJ 8.0");
             this.delegate = new Intellij8Helper();
         } else {
+            LOGGER.info("Compatibility mode set to IntelliJ 7.0");
             this.delegate = new Intellij7Helper();
         }
     }

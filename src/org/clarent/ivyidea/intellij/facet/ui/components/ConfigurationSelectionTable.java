@@ -68,8 +68,8 @@ public class ConfigurationSelectionTable extends Table {
                 if (regularFont == null) {
                     regularFont = rendererComponent.getFont();
                 }
-                final int modelIndex = table.convertRowIndexToModel(row);
-                final Configuration configuration = tableModel.getConfigurationAt(modelIndex);
+//                final int modelIndex = table.convertRowIndexToModel(row); // JDK 1.6 - if table sorting is enabled
+                final Configuration configuration = tableModel.getConfigurationAt(row);
                 if (configuration.getDeprecated() != null) {
                     if (strikethroughFont == null) {
                         final HashMap<TextAttribute, Object> attribs = new HashMap<TextAttribute, Object>();

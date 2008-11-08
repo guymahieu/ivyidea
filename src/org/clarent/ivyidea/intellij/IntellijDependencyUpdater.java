@@ -8,6 +8,7 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityHelper;
 import org.clarent.ivyidea.resolve.ExternalDependency;
 import org.clarent.ivyidea.resolve.ResolvedDependency;
 
@@ -50,7 +51,7 @@ public class IntellijDependencyUpdater {
     }
 
     private static void removeOldDependencies(Library.ModifiableModel libraryModifiableModel, List<ResolvedDependency> resolvedDependencies) {
-        for (OrderRootType type : OrderRootType.ALL_TYPES) {
+        for (OrderRootType type : IntellijCompatibilityHelper.getInstance().getAllOrderRootTypes()) {
             final VirtualFile[] intellijDependencies = libraryModifiableModel.getFiles(type);
             List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(Arrays.asList(intellijDependencies)); // add all dependencies initially
             for (VirtualFile intellijDependency : intellijDependencies) {

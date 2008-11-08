@@ -8,10 +8,12 @@ import com.intellij.facet.autodetecting.FacetDetectorRegistry;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileFilter;
 import com.intellij.psi.PsiFile;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityHelper;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +38,10 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
 
     public IvyIdeaFacet createFacet(@NotNull Module module, String name, @NotNull IvyIdeaFacetConfiguration configuration, @Nullable Facet underlyingFacet) {
         return new IvyIdeaFacet(this, module, name, configuration, underlyingFacet);
+    }
+
+    public boolean isSuitableModuleType(ModuleType moduleType) {
+        return IntellijCompatibilityHelper.getInstance().getJavaModuleType().equals(moduleType);
     }
 
     public javax.swing.Icon getIcon() {

@@ -16,6 +16,7 @@ import com.intellij.openapi.roots.libraries.LibraryTable;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.task.IvyIdeaBackgroundTask;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Guy Mahieu
@@ -26,7 +27,7 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         final Project project = DataKeys.PROJECT.getData(e.getDataContext());
         ProgressManager.getInstance().run(new IvyIdeaBackgroundTask(e) {
-            public void run(final ProgressIndicator indicator) {
+            public void run(@NotNull final ProgressIndicator indicator) {
                 final Module[] facet = IntellijUtils.getAllModulesWithIvyIdeaFacet(project);
                 indicator.setIndeterminate(false);
                 for (final Module module : facet) {
@@ -41,6 +42,8 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
                                     if (library != null) {
                                         moduleLibraryTable.removeLibrary(library);
                                         model.commit();
+                                    } else {
+                                        model.dispose();
                                     }
                                 }
                             });

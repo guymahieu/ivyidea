@@ -102,9 +102,7 @@
           <component id="78ede" class="org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable" binding="tblConfigurationSelection">
             <constraints/>
             <properties>
-              <autoCreateRowSorter value="true"/>
               <opaque value="false"/>
-              <updateSelectionOnSort value="true"/>
             </properties>
             <clientProperties>
               <JTable.autoStartsEdit class="java.lang.Boolean" value="true"/>

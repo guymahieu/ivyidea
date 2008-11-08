@@ -3,7 +3,9 @@ package org.clarent.ivyidea.resolve;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
+import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -43,7 +45,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     @NotNull
     protected String getUrlForLibrary() {
-        return "jar://" + externalArtifact.getAbsolutePath() + "!/";
+        return VirtualFileManager.constructUrl(JarFileSystem.PROTOCOL, externalArtifact.getAbsolutePath()) + JarFileSystem.JAR_SEPARATOR;
     }
 
     protected boolean isMissing() {

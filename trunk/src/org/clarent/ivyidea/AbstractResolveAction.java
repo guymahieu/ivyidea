@@ -46,7 +46,7 @@ public abstract class AbstractResolveAction extends AnAction {
             public void run() {
                 final ConsoleView consoleView = getConsoleView(module.getProject());
                 if (problems.isEmpty()) {
-                    consoleView.print("No problems detected during resolve for module '" + module.getName() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                    consoleView.print("No problems detected during resolve for module '" + module.getName() + "'\n", ConsoleViewContentType.NORMAL_OUTPUT);
                 } else {
                     consoleView.print("Problems for module '" + module.getName() + "':" + '\n', ConsoleViewContentType.NORMAL_OUTPUT);
                     for (ResolveProblem resolveProblem : problems) {

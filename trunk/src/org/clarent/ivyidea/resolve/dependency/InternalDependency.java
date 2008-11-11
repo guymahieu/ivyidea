@@ -1,4 +1,4 @@
-package org.clarent.ivyidea.resolve;
+package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModifiableRootModel;

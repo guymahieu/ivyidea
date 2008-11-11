@@ -11,8 +11,8 @@ import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.clarent.ivyidea.intellij.task.IvyIdeaBackgroundTask;
 import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.resolve.ResolvedDependency;
-import org.clarent.ivyidea.resolve.Resolver;
+import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
+import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
@@ -27,8 +27,11 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         if (module != null) {
             ProgressManager.getInstance().run(new IvyIdeaBackgroundTask(e) {
                 public void run(@NotNull ProgressIndicator indicator) {
-                    final List<ResolvedDependency> list = new Resolver(new IvyManager()).resolve(module, buildIvyListener(module.getProject()));
+                    clearConsole(myProject);
+                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(new IvyManager());
+                    final List<ResolvedDependency> list = resolver.resolve(module);
                     updateIntellijModel(module, list);
+                    reportProblems(module, resolver.getProblems());
                 }
             });
         }

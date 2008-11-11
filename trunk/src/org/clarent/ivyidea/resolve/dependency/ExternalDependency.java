@@ -1,4 +1,4 @@
-package org.clarent.ivyidea.resolve;
+package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.OrderRootType;
@@ -48,7 +48,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return VirtualFileManager.constructUrl(JarFileSystem.PROTOCOL, externalArtifact.getAbsolutePath()) + JarFileSystem.JAR_SEPARATOR;
     }
 
-    protected boolean isMissing() {
+    public boolean isMissing() {
         return !new File(externalArtifact.getAbsolutePath()).exists();
     }
 

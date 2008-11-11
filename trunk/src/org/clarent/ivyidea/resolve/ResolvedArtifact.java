@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
+ * Wraps an ivy artifact and provides utility methods to check the type of artifact it is.
+ *
  * @author Guy Mahieu
  */
 
@@ -14,8 +16,8 @@ public class ResolvedArtifact {
 
     // TODO: make these types configurable
     private static final String[] SOURCE_TYPES = {"source", "src", "sources", "srcs"};
-    private static final String[] CLASSES_TYPES = {"jar", "sar", "war", "ear"};
     private static final String[] JAVADOC_TYPES = {"javadoc", "doc", "docs", "apidoc", "apidocs", "documentation", "documents"};
+    private static final String[] CLASSES_TYPES = {"jar", "sar", "war", "ear"};
 
     private Artifact artifact;
 
@@ -23,24 +25,19 @@ public class ResolvedArtifact {
         this.artifact = artifact;
     }
 
-    @NotNull
-    public Artifact getArtifact() {
-        return artifact;
-    }
-
     public boolean isSourceType() {
-        return isOfType(artifact, Arrays.asList(SOURCE_TYPES));
+        return isOfType(Arrays.asList(SOURCE_TYPES));
     }
 
     public boolean isClassesType() {
-        return isOfType(artifact, Arrays.asList(CLASSES_TYPES));
+        return isOfType(Arrays.asList(CLASSES_TYPES));
     }
 
     public boolean isJavaDocType() {
-        return isOfType(artifact, Arrays.asList(JAVADOC_TYPES));
+        return isOfType(Arrays.asList(JAVADOC_TYPES));
     }
 
-    protected boolean isOfType(@NotNull Artifact artifact, @NotNull Collection<String> types) {
+    protected boolean isOfType(@NotNull Collection<String> types) {
         for (String type : types) {
             if (type.equals(artifact.getType())) {
                 return true;

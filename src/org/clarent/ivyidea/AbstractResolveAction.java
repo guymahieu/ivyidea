@@ -9,7 +9,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
 import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
-import org.clarent.ivyidea.intellij.ui.IvyIdeaToolWindow;
+import org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
@@ -60,13 +60,11 @@ public abstract class AbstractResolveAction extends AnAction {
     }
 
     private ConsoleView getConsoleView(Project project) {
-        ToolWindow toolWindow = getToolWindow(project);
-        return (ConsoleView) toolWindow.getContentManager().findContent("Console").getComponent();
+        return (ConsoleView) getToolWindow(project).getContentManager().findContent("Console").getComponent();
     }
 
     private ToolWindow getToolWindow(Project project) {
-        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
-        return toolWindowManager.getToolWindow(IvyIdeaToolWindow.ID);
+        return ToolWindowManager.getInstance(project).getToolWindow(ToolWindowRegistrationComponent.TOOLWINDOW_ID);
     }
 }
 

@@ -52,15 +52,21 @@ public abstract class AbstractResolveAction extends AnAction {
                     for (ResolveProblem resolveProblem : problems) {
                         consoleView.print("\t" + resolveProblem.toString() + '\n', ConsoleViewContentType.ERROR_OUTPUT);
                     }
+                    // Make sure the toolwindow becomes visible if there were problems
+                    getToolWindow(module.getProject()).show(null);
                 }
             }
         });
     }
 
     private ConsoleView getConsoleView(Project project) {
-        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
-        ToolWindow toolWindow = toolWindowManager.getToolWindow(IvyIdeaToolWindow.ID);
+        ToolWindow toolWindow = getToolWindow(project);
         return (ConsoleView) toolWindow.getContentManager().findContent("Console").getComponent();
+    }
+
+    private ToolWindow getToolWindow(Project project) {
+        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+        return toolWindowManager.getToolWindow(IvyIdeaToolWindow.ID);
     }
 }
 

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ToolWindowRegistrationComponent implements ProjectComponent {
 
-    public static final String TOOLWINDOW_ID = "IvyIDEA.ToolWindow";
+    public static final String TOOLWINDOW_ID = "IvyIDEA";
 
     private Project project;
 

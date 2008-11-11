@@ -56,6 +56,18 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
         Content content = PeerFactory.getInstance().getContentFactory().createContent(consoleView.getComponent(), "Console", true);
         toolWindow.setIcon(IvyIdeaIcons.MAIN_ICON_SMALL);
         toolWindow.getContentManager().addContent(content);
+/*
+        Content content = PeerFactory.getInstance().getContentFactory().createContent(consoleView.getComponent(), "Console", true);
+        toolWindow.getContentManager().addContent(content);
+*/
     }
+    /*Hi Igor,
 
+    I've solved it by using module.getModuleType().equals(com.intellij.openapi.module.StdModuleTypes.JAVA).
+
+    Don't know if this is the 'preferred' way, but it seems to do the trick.
+
+    Cheers,
+
+    Guy*/
 }

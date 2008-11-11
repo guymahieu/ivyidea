@@ -17,6 +17,8 @@ import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
+import org.clarent.ivyidea.resolve.dependency.*;
+import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -33,14 +35,14 @@ class DependencyResolver {
 
     private static final Logger LOGGER = Logger.getLogger(DependencyResolver.class.getName());
 
-    private final Map<IvyNode, String> problems;
+    private final List<ResolveProblem> problems;
 
     public DependencyResolver() {
-        problems = new HashMap<IvyNode, String>();
+        problems = new ArrayList<ResolveProblem>();
     }
 
-    public Map<IvyNode, String> getProblems() {
-        return Collections.unmodifiableMap(problems);
+    public List<ResolveProblem> getProblems() {
+        return Collections.unmodifiableList(problems);
     }
 
     public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager, MessageLogger messageLogger) {
@@ -79,7 +81,11 @@ class DependencyResolver {
                     result.add(new InternalDependency(moduleDependencies.getModuleDependency(dependencyRevisionId.getModuleId())));
                 } else {
                     if (dependency.hasProblem()) {
-                        problems.put(dependency, dependency.getProblemMessage());
+                        //noinspection ThrowableResultOfMethodCallIgnored
+                        problems.add(new ResolveProblem(
+                                dependency.getId().toString(),
+                                dependency.getProblemMessage(),
+                                dependency.getProblem()));
                         LOGGER.info("DEPENDENCY PROBLEM: " + dependency.getId() + ": " + dependency.getProblemMessage());
                     } else {
                         if (dependency.isCompletelyEvicted()) {
@@ -94,7 +100,14 @@ class DependencyResolver {
                             for (Artifact artifact : artifacts) {
                                 final ExternalDependency externalDependency = createExternalDependency(defaultRepositoryCacheManager, artifact);
                                 if (externalDependency != null) {
-                                    result.add(externalDependency);
+                                    if (externalDependency.isMissing()) {
+                                        problems.add(new ResolveProblem(
+                                                artifact.getModuleRevisionId().toString(),
+                                                "file not found: " + externalDependency.getExternalArtifact().getAbsolutePath())
+                                        );
+                                    } else {
+                                        result.add(externalDependency);
+                                    }
                                 }
                             }
                         }
@@ -123,19 +136,17 @@ class DependencyResolver {
         if (resolvedArtifact.isClassesType()) {
             return new ExternalJarDependency(file);
         }
+        problems.add(new ResolveProblem(
+                artifact.getModuleRevisionId().toString(),
+                "Unrecognized artifact type: " + artifact.getType() + ", will not add this as a dependency in IntelliJ.",
+                null));
         LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as a dependency.");
         return null;
     }
 
     @SuppressWarnings("unchecked")
     private List<IvyNode> getDependencies(ResolveReport resolveReport) {
-        // TODO: Check if this is even correct....
-        List<IvyNode> result = new ArrayList<IvyNode>();
-        // Add unresolved dependencies as well so module dependencies for which no artifacts are in the repository
-        // will also be taken into account!
-        result.addAll(Arrays.asList(resolveReport.getUnresolvedDependencies()));
-        result.addAll(resolveReport.getDependencies());
-        return result;
+        return resolveReport.getDependencies();
     }
 
     /**

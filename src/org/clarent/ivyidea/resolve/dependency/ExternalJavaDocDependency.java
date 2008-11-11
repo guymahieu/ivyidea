@@ -1,4 +1,4 @@
-package org.clarent.ivyidea.resolve;
+package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
 import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityHelper;

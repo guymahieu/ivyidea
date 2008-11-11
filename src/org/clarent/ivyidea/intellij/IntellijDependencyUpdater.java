@@ -9,8 +9,8 @@ import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityHelper;
-import org.clarent.ivyidea.resolve.ExternalDependency;
-import org.clarent.ivyidea.resolve.ResolvedDependency;
+import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
+import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
 import java.util.ArrayList;
 import java.util.Arrays;

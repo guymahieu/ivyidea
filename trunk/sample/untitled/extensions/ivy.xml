@@ -10,7 +10,7 @@
         <dependency org="clarent" name="untitled-plugin-test-core" rev="latest.integration" conf="ide,default->default"/>
 
         <!-- having these two here is used to test support for evicted modules -->
-        <dependency org="apache" name="commons-collections" rev="3.1" conf="default->default"/>        
+        <dependency org="apache" name="commons-collections" rev="3.1" conf="default"/>
         <dependency org="apache" name="commons-collections" rev="3.2.1" conf="ide->default"/>
     </dependencies>
 </ivy-module>

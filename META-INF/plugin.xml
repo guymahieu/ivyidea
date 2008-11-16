@@ -22,10 +22,14 @@
         locations correctly you may get IDEA exceptions.
         </p>
         <p>
+            <strong>0.8-alpha</strong>
+            <ul>
+                <li>Upgraded internal ivy to 2.0.0rc2</li>
+            </ul>
             <strong>0.7-alpha</strong>
             <ul>
                 <li>IvyIDEA is now compatible with IntelliJ 8.0 (and will run on previous versions as well)</li>
-                <li>Switched to JDK from 1.5 so the plugin will also run on mac os</li>
+                <li>Switched to JDK 1.5 so the plugin will also run on mac os</li>
                 <li>Made looking up intellij module dependencies more lenient; now the revision is ignored when
                     identifying dependencies as existing intellij modules rather than jars</li>
             </ul>
@@ -55,7 +59,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>0.7-alpha</version>
+    <version>0.8-alpha</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

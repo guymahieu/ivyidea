@@ -7,7 +7,7 @@ import com.intellij.openapi.roots.OrderRootType;
  * @author Guy Mahieu
  */
 
-interface IntellijCompatibilityFunctions {
+public interface IntellijCompatibilityMethods {
 
     OrderRootType[] getAllOrderRootTypes();
 

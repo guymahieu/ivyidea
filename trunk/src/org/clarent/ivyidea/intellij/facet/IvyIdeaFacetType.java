@@ -13,7 +13,7 @@ import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileFilter;
 import com.intellij.psi.PsiFile;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityHelper;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,7 +41,7 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
     }
 
     public boolean isSuitableModuleType(ModuleType moduleType) {
-        return IntellijCompatibilityHelper.getInstance().getJavaModuleType().equals(moduleType);
+        return IntellijCompatibilityService.getCompatibilityMethods().getJavaModuleType().equals(moduleType);
     }
 
     public javax.swing.Icon getIcon() {

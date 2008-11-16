@@ -7,7 +7,7 @@ import com.intellij.openapi.roots.OrderRootType;
  * @author Guy Mahieu
  */
 
-class Intellij7Helper implements IntellijCompatibilityFunctions {
+class Intellij7Methods implements IntellijCompatibilityMethods {
 
     private static final String COMPAT_ERROR_MSG = "Compatibility problem: this plugin is only meant to be used in IntelliJ version 7 and up.";
 

@@ -9,16 +9,16 @@
       <excludeFolder url="file://$MODULE_DIR$/lib" />
       <excludeFolder url="file://$MODULE_DIR$/sample" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="IDEA 9013 (JDK15)" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc1/ivy-2.0.0-rc1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/ivy-2.0.0-rc2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc1/src/java" />
+          <root url="file://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/src/java" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -1,6 +1,6 @@
 <project name="IvyIDEA" default="bundle" basedir=".">
 
-    <property name="ivyidea.version" value="0.7-alpha"/>
+    <property name="ivyidea.version" value="0.8-alpha"/>
 
     <property name="ivyidea.sourcedir" value="src"/>
     <property name="ivyidea.builddir" value="build/classes"/>
@@ -21,7 +21,7 @@
         <delete dir="build/dist/tmp"/>
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
         <copy todir="build/dist/tmp/IvyIDEA/lib">
-            <fileset dir="lib/apache-ivy-2.0.0-rc1" includes="ivy-2.0.0-rc1.jar"/>
+            <fileset dir="lib/apache-ivy-2.0.0-rc2" includes="ivy-2.0.0-rc2.jar"/>
             <fileset dir="build" includes="ivyidea-${ivyidea.version}.jar"/>
         </copy>
         <mkdir dir="build/dist/tmp/IvyIDEA/license"/>

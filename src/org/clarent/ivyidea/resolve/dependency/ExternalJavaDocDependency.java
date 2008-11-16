@@ -1,7 +1,7 @@
 package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityHelper;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 
 import java.io.File;
 
@@ -20,7 +20,7 @@ public class ExternalJavaDocDependency extends ExternalDependency {
     }
 
     protected OrderRootType getType() {
-        return IntellijCompatibilityHelper.getInstance().getJavadocOrderRootType();
+        return IntellijCompatibilityService.getCompatibilityMethods().getJavadocOrderRootType();
     }
 
 }

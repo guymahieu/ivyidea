@@ -2,7 +2,6 @@ package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
-import org.apache.ivy.util.MessageLogger;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
@@ -32,14 +31,10 @@ public class IntellijDependencyResolver {
     }
 
     public List<ResolvedDependency> resolve(final Module module) {
-        return resolve(module, null);
-    }
-
-    public List<ResolvedDependency> resolve(final Module module, final MessageLogger messageLogger) {
         ApplicationManager.getApplication().runReadAction(new Runnable() {
             public void run() {
                 final DependencyResolver dependencyResolver = new DependencyResolver();
-                dependencies = dependencyResolver.resolve(module, ivyManager, messageLogger);
+                dependencies = dependencyResolver.resolve(module, ivyManager);
                 problems = dependencyResolver.getProblems();
             }
         });

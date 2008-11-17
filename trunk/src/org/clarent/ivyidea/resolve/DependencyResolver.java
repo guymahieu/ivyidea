@@ -12,7 +12,6 @@ import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
 import org.apache.ivy.core.settings.IvySettings;
-import org.apache.ivy.util.MessageLogger;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
@@ -45,25 +44,16 @@ class DependencyResolver {
         return Collections.unmodifiableList(problems);
     }
 
-    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager, MessageLogger messageLogger) {
+    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager) {
         final Ivy ivy = ivyManager.getIvy(module);
         final File ivyFile = IvyUtil.getIvyFile(module);
         try {
-            if (messageLogger != null) {
-                ivy.getLoggerEngine().setDefaultLogger(messageLogger);
-            }
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             return extractDependencies(resolveReport, ivy.getSettings(), new ModuleDependencies(module, ivyManager));
         } catch (ParseException e) {
             throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be parsed correctly!", e);
         } catch (IOException e) {
             throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be accessed!", e);
-/*
-            if (ivyListener != null) {
-                ivy.getResolveEngine().getEventManager().removeIvyListener(ivyListener);
-            }
-        } finally {
-*/
         }
     }
 

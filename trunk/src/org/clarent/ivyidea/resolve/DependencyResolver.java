@@ -13,12 +13,14 @@ import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
 import org.clarent.ivyidea.resolve.dependency.*;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +46,7 @@ class DependencyResolver {
         return Collections.unmodifiableList(problems);
     }
 
-    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager) {
+    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException {
         final Ivy ivy = ivyManager.getIvy(module);
         final File ivyFile = IvyUtil.getIvyFile(module);
         try {
@@ -57,6 +59,7 @@ class DependencyResolver {
         }
     }
 
+    @NotNull
     protected List<ResolvedDependency> extractDependencies(ResolveReport resolveReport, IvySettings ivySettings, ModuleDependencies moduleDependencies) {
         List<ResolvedDependency> result = new ArrayList<ResolvedDependency>();
         List<IvyNode> dependencies = getDependencies(resolveReport);
@@ -151,7 +154,7 @@ class DependencyResolver {
 
         private Map<ModuleId, Module> moduleDependencies = new HashMap<ModuleId, Module>();
 
-        public ModuleDependencies(Module module, IvyManager ivyManager) {
+        public ModuleDependencies(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException {
             this.module = module;
             this.ivyManager = ivyManager;
             fillModuleDependencies();
@@ -165,7 +168,7 @@ class DependencyResolver {
             return moduleDependencies.get(moduleId);
         }
 
-        private void fillModuleDependencies() {
+        private void fillModuleDependencies() throws IvySettingsNotFoundException {
             final File ivyFile = IvyUtil.getIvyFile(module);
             final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivyManager.getIvy(module).getSettings());
             if (descriptor != null) {
@@ -187,7 +190,7 @@ class DependencyResolver {
         }
 
         @Nullable
-        private ModuleId getModuleId(Module module) {
+        private ModuleId getModuleId(Module module) throws IvySettingsNotFoundException {
             final IvySettings ivySettings = ivyManager.getIvy(module).getSettings();
             if (!moduleDependencies.values().contains(module)) {
                 final ModuleDescriptor ivyModuleDescriptor = IvyUtil.getIvyModuleDescriptor(module, ivySettings);

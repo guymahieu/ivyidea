@@ -5,6 +5,7 @@ import com.intellij.openapi.module.Module;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
+import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,14 +31,22 @@ public class IntellijDependencyResolver {
         return problems;
     }
 
-    public List<ResolvedDependency> resolve(final Module module) {
+    public List<ResolvedDependency> resolve(final Module module) throws IvySettingsNotFoundException {
+        final IvySettingsNotFoundException[] exception = new IvySettingsNotFoundException[1];
         ApplicationManager.getApplication().runReadAction(new Runnable() {
             public void run() {
                 final DependencyResolver dependencyResolver = new DependencyResolver();
-                dependencies = dependencyResolver.resolve(module, ivyManager);
-                problems = dependencyResolver.getProblems();
+                try {
+                    dependencies = dependencyResolver.resolve(module, ivyManager);
+                    problems = dependencyResolver.getProblems();
+                } catch (IvySettingsNotFoundException e) {
+                    exception[0] = e;
+                }
             }
         });
+        if (exception.length == 1 && exception[0] != null) {
+            throw exception[0];
+        }
         return dependencies;
     }
 

@@ -8,8 +8,10 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
+import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent;
+import org.clarent.ivyidea.intellij.ui.IvySettingsNotFoundDialog;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
@@ -26,7 +28,6 @@ public abstract class AbstractResolveAction extends AnAction {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
                         IntellijDependencyUpdater.updateDependencies(module, dependencies);
-
                     }
                 });
             }
@@ -57,6 +58,14 @@ public abstract class AbstractResolveAction extends AnAction {
                 }
             }
         });
+    }
+
+    protected void showIvySettingsDialog(Module module, String configName, IvySettingsNotFoundException.ConfigLocation configLocation, String message) {
+        IvySettingsNotFoundDialog dlg = new IvySettingsNotFoundDialog();
+        dlg.setLinkData(configLocation, configName);
+        dlg.setMessage(message);
+        dlg.pack();
+        dlg.setVisible(true);
     }
 
     private ConsoleView getConsoleView(Project project) {

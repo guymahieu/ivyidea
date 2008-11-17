@@ -240,6 +240,9 @@
       <item class="com.intellij.ui.table.TableView" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
+      <item class="com.intellij.ui.components.labels.LinkLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
     </group>
     <group name="IvyIDEA Components">
       <item class="org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
@@ -256,7 +259,7 @@
       <module fileurl="file://$PROJECT_DIR$/IvyIDEA.iml" filepath="$PROJECT_DIR$/IvyIDEA.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA 9013 (JDK15)" project-jdk-type="IDEA JDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA 7361 (JDK15)" project-jdk-type="IDEA JDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ResourceManagerContainer">

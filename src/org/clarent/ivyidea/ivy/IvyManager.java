@@ -3,6 +3,7 @@ package org.clarent.ivyidea.ivy;
 import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class IvyManager {
 
     private Map<String, Ivy> configuredIvyInstances = new HashMap<String, Ivy>();
 
-    public Ivy getIvy(Module module) {
+    public Ivy getIvy(Module module) throws IvySettingsNotFoundException {
         final File ivySettingsFile = IvyIdeaConfigHelper.getIvySettingsFile(module);
         final String ivySettingsPath = ivySettingsFile.getAbsolutePath();
         if (!configuredIvyInstances.containsKey(ivySettingsPath)) {

@@ -120,4 +120,5 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
             element.addContent(configsElement);
         }
     }
+
 }

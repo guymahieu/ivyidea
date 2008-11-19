@@ -1,15 +1,17 @@
 package org.clarent.ivyidea.intellij.task;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.DialogBuilder;
 import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.intellij.ui.IvySettingsNotFoundDialog;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.intellij.ui.IvySettingsErrorDialog;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Base class for background tasks that trigger an ivy resolve process.
+ *
  * @author Guy Mahieu
  */
 
@@ -19,6 +21,10 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
 
     /**
      * Implementations should perform the resolve process inside this method.
+     *
+     * @param progressIndicator the progress indicator for this backgroundtask
+     *
+     * @throws IvySettingsNotFoundException if there was a problem opening the ivy settings file
      */
     public abstract void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException;
 
@@ -33,6 +39,15 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         } catch (IvySettingsNotFoundException e) {
             exception = e;
             progressIndicator.cancel();
+            // In InteliJ 7 cancelling the progressIndicator does not trigger the
+            // onCancel() method, but in IntelliJ 8 it does
+            if (!IntellijCompatibilityService.isTaskCancelledOnProgressIndicatorCancel()) {
+                ApplicationManager.getApplication().invokeLater(new Runnable() {
+                    public void run() {
+                        onCancel();
+                    }
+                });
+            }
         }
     }
 

@@ -32,4 +32,8 @@ public class IntellijCompatibilityService {
         return compatibilityMethods;
     }
 
+    public static boolean isTaskCancelledOnProgressIndicatorCancel() {
+        return compatibilityMethods instanceof Intellij8Methods;
+    }
+
 }

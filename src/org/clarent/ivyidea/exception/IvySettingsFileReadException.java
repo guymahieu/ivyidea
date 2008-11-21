@@ -1,9 +1,11 @@
 package org.clarent.ivyidea.exception;
 
 /**
+ * Thrown when there was a problem while reading (accessing/parsing/...)
+ * the ivy settings file for a module. 
+ *
  * @author Guy Mahieu
  */
-
 public class IvySettingsFileReadException extends IvyIdeaException {
 
     private String fileName;

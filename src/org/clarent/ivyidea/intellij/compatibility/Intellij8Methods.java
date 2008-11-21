@@ -6,9 +6,10 @@ import com.intellij.openapi.roots.OrderRootType;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * Compatibility implementation for Intellij IDEA 8.0 (and possibly later versions).
+ *
  * @author Guy Mahieu
  */
-
 class Intellij8Methods implements IntellijCompatibilityMethods {
 
     private static final String COMPAT_ERROR_MSG = "Compatibility problem: this plugin is only meant to be used in IntelliJ version 7 and up.";
@@ -52,5 +53,9 @@ class Intellij8Methods implements IntellijCompatibilityMethods {
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(COMPAT_ERROR_MSG, e);
         }
+    }
+
+    public boolean isTaskCancelledOnProgressIndicatorCancel() {
+        return true;
     }
 }

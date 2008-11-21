@@ -50,7 +50,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
             progressIndicator.cancel();
             // In InteliJ 7 cancelling the progressIndicator does not trigger the
             // onCancel() method, but in IntelliJ 8 it does
-            if (!IntellijCompatibilityService.isTaskCancelledOnProgressIndicatorCancel()) {
+            if (!IntellijCompatibilityService.getCompatibilityMethods().isTaskCancelledOnProgressIndicatorCancel()) {
                 ApplicationManager.getApplication().invokeLater(new Runnable() {
                     public void run() {
                         onCancel();

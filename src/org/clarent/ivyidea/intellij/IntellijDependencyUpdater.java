@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
+ * Updates the module dependencies in IntelliJ according to the results of the resolve process.
+ *
  * @author Guy Mahieu
  */
 
@@ -25,7 +27,20 @@ public class IntellijDependencyUpdater {
 
     private static final Logger LOGGER = Logger.getLogger(IntellijDependencyUpdater.class.getName());
 
-    public static void updateDependencies(Module module, List<ResolvedDependency> resolvedDependencies) {
+    private static IntellijDependencyUpdater instance = new IntellijDependencyUpdater();
+
+    public static IntellijDependencyUpdater getInstance() {
+        return instance;
+    }
+
+    /**
+     * Update the dependencies of the given intellij module to reflect the situation that resulted from the
+     * resolve process.
+     *
+     * @param module                the module for which to update the dependencies
+     * @param resolvedDependencies  the dependencies that were resolved                                                   
+     */
+    public void updateDependencies(Module module, List<ResolvedDependency> resolvedDependencies) {
         String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName();
         final ModifiableRootModel modifiableModel = ModuleRootManager.getInstance(module).getModifiableModel();
         try {
@@ -50,7 +65,7 @@ public class IntellijDependencyUpdater {
         }
     }
 
-    private static void removeOldDependencies(Library.ModifiableModel libraryModifiableModel, List<ResolvedDependency> resolvedDependencies) {
+    private void removeOldDependencies(Library.ModifiableModel libraryModifiableModel, List<ResolvedDependency> resolvedDependencies) {
         for (OrderRootType type : IntellijCompatibilityService.getCompatibilityMethods().getAllOrderRootTypes()) {
             final VirtualFile[] intellijDependencies = libraryModifiableModel.getFiles(type);
             List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(Arrays.asList(intellijDependencies)); // add all dependencies initially
@@ -72,7 +87,7 @@ public class IntellijDependencyUpdater {
         }
     }
 
-    public static Library getLibrary(String libraryName, LibraryTable libraryTable, Module currentModule) {
+    public Library getLibrary(String libraryName, LibraryTable libraryTable, Module currentModule) {
         Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {
             LOGGER.info("Internal library not found for module " + currentModule.getModuleFilePath() + ", creating with name " + libraryName + "...");

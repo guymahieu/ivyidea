@@ -9,7 +9,6 @@ import java.util.*;
 /**
  * @author Guy Mahieu
  */
-
 public class ConfigurationSelectionTableModel extends AbstractTableModel {
 
     private List<Configuration> data;

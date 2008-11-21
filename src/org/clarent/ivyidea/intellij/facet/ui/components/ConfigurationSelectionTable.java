@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * Table to allow the user to configure the configurations that need to be resolved
+ * from within IntelliJ IDEA.
+ *
  * @author Guy Mahieu
  */
 

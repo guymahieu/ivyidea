@@ -19,9 +19,11 @@ import org.clarent.ivyidea.intellij.task.IvyIdeaBackgroundTask;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Action to remove all module libraries that match the name of the
+ * IvyIDEA-resolved module.
+ *
  * @author Guy Mahieu
  */
-
 public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {

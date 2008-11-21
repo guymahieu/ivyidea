@@ -4,6 +4,8 @@ import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.roots.OrderRootType;
 
 /**
+ * Compatibility implementation for Intellij IDEA 7.0 and earlier.
+ *
  * @author Guy Mahieu
  */
 
@@ -42,5 +44,9 @@ class Intellij7Methods implements IntellijCompatibilityMethods {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(COMPAT_ERROR_MSG, e);
         }
+    }
+
+    public boolean isTaskCancelledOnProgressIndicatorCancel() {
+        return false;
     }
 }

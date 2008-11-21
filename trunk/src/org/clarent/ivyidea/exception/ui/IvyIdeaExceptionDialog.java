@@ -1,16 +1,17 @@
 package org.clarent.ivyidea.exception.ui;
 
-import com.intellij.openapi.ui.DialogBuilder;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.components.labels.LinkLabel;
 
 import javax.swing.*;
 
 /**
+ * TODO: get rid of the cancel button here...
+ *
  * @author Guy Mahieu
  */
-
-public class IvyIdeaExceptionDialog {
+public class IvyIdeaExceptionDialog extends DialogWrapper {
 
     private JPanel rootPanel;
     private JTextArea txtMessage;
@@ -21,21 +22,23 @@ public class IvyIdeaExceptionDialog {
     }
 
     public static void showModalDialog(String title, Throwable exception, Project project, LinkBehavior linkBehavior) {
-        final DialogBuilder builder = new DialogBuilder(project);
-        final IvyIdeaExceptionDialog dlg = new IvyIdeaExceptionDialog();
+        final IvyIdeaExceptionDialog dlg = new IvyIdeaExceptionDialog(project);
+        dlg.setTitle(title);
         dlg.buildMessageFromThrowable(exception);
         dlg.setLinkBehavior(linkBehavior);
-        builder.setCenterPanel(dlg.getRootPanel());
-        builder.setOkActionEnabled(true);
-        builder.setOkOperation(null);
-        builder.setTitle(title);
-        builder.showModal(false);
+        dlg.show();
     }
 
-    public IvyIdeaExceptionDialog() {
-        // by default do not show a link
+    public IvyIdeaExceptionDialog(Project project) {
+        super(project, false);
+
+        // You have to call this or nothing is shown!
+        init();
+
+        // By default we do not show a link
         lblLink.setVisible(false);
     }
+
 
     public JPanel getRootPanel() {
         return rootPanel;
@@ -73,6 +76,11 @@ public class IvyIdeaExceptionDialog {
             lblLink.setListener(linkBehavior.getLinkListener(), linkBehavior.getData());
             lblLink.setVisible(true);
         }
-    }       
+    }
+
+    protected JComponent createCenterPanel() {
+        return rootPanel;
+    }
+
 
 }

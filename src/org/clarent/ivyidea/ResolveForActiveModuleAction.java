@@ -7,7 +7,8 @@ import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
-import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
@@ -28,7 +29,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         if (module != null) {
             ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(e) {
 
-                public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException {
+                public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException {
                     clearConsole(myProject);
                     final IntellijDependencyResolver resolver = new IntellijDependencyResolver(new IvyManager());
                     final List<ResolvedDependency> list = resolver.resolve(module);

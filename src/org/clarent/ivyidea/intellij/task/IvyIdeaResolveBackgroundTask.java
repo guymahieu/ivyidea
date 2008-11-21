@@ -10,6 +10,7 @@ import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.ui.components.labels.LinkListener;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvyIdeaException;
+import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.exception.ui.IvyIdeaExceptionDialog;
 import org.clarent.ivyidea.exception.ui.LinkBehavior;
@@ -31,10 +32,11 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
      * Implementations should perform the resolve process inside this method.
      *
      * @param progressIndicator the progress indicator for this backgroundtask
-     * @throws IvySettingsNotFoundException if there was a problem opening the ivy settings file
-     * @throws IvyFileReadException         if there was a problem opening the ivy file
+     * @throws IvySettingsNotFoundException if no settings file was configured or the configured file was not found 
+     * @throws IvySettingsFileReadException if there was a problem opening or parsing the ivy settings file
+     * @throws IvyFileReadException         if there was a problem opening or parsing the ivy file
      */
-    public abstract void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException;
+    public abstract void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException;
 
     protected IvyIdeaResolveBackgroundTask(AnActionEvent event) {
         super(event);
@@ -68,17 +70,19 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
 
     private void handle(IvyIdeaException exception) {
         if (exception instanceof IvyFileReadException) {
-            showIvyFileErrorDialog(exception);
+            showSimpleErrorDialog("Ivy File Error", exception);
+        } else if (exception instanceof IvySettingsFileReadException) {
+            showSimpleErrorDialog("Ivy Settings File Error", exception);
         } else if (exception instanceof IvySettingsNotFoundException) {
-            showIvySettingsErrorDialog((IvySettingsNotFoundException) exception);
+            showIvySettingsNotFoundErrorDialog((IvySettingsNotFoundException) exception);
         }
     }
 
-    private void showIvyFileErrorDialog(IvyIdeaException exception) {
-        IvyIdeaExceptionDialog.showModalDialog("Ivy File Error", exception, myProject);
+    private void showSimpleErrorDialog(String title, IvyIdeaException exception) {
+        IvyIdeaExceptionDialog.showModalDialog(title, exception, myProject);
     }
 
-    private void showIvySettingsErrorDialog(IvySettingsNotFoundException exception) {
+    private void showIvySettingsNotFoundErrorDialog(IvySettingsNotFoundException exception) {
         LinkBehavior linkBehavior = null;
         // TODO: For no I can only activate the link on project settings errors...
         //       Currently I don't know how to open the facet setting from the code...

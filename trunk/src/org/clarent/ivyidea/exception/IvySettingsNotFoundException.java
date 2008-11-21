@@ -1,4 +1,4 @@
-package org.clarent.ivyidea.config.exception;
+package org.clarent.ivyidea.exception;
 
 /**
  * Typically thrown when no ivy settings file can be found during the resolve process.
@@ -6,7 +6,7 @@ package org.clarent.ivyidea.config.exception;
  * @author Guy Mahieu
  */
 
-public class IvySettingsNotFoundException extends Exception {
+public class IvySettingsNotFoundException extends IvyIdeaException {
 
     public enum ConfigLocation {
         Project,

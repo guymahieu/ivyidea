@@ -13,7 +13,8 @@ import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
-import org.clarent.ivyidea.config.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
@@ -46,16 +47,16 @@ class DependencyResolver {
         return Collections.unmodifiableList(problems);
     }
 
-    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException {
+    public List<ResolvedDependency> resolve(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvyFileReadException {
         final Ivy ivy = ivyManager.getIvy(module);
         final File ivyFile = IvyUtil.getIvyFile(module);
         try {
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             return extractDependencies(resolveReport, ivy.getSettings(), new ModuleDependencies(module, ivyManager));
         } catch (ParseException e) {
-            throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be parsed correctly!", e);
+            throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
         } catch (IOException e) {
-            throw new RuntimeException("The ivy file " + ivyFile.getAbsolutePath() + " could not be accessed!", e);
+            throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
         }
     }
 

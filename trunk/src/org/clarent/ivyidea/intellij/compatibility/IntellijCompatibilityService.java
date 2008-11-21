@@ -19,12 +19,23 @@ public class IntellijCompatibilityService {
     static {
         final String majorVersion = ApplicationInfo.getInstance().getMajorVersion();
         LOGGER.info("Detected intellij major version " + majorVersion + "; activating the appropriate compatibility mode.");
-        if ("8".equals(majorVersion)) {
-            LOGGER.info("Compatibility mode set to IntelliJ 8.0");
-            compatibilityMethods = new Intellij8Methods();
+        int numericMajorVersion = getNumericMajorVersion();
+        if (numericMajorVersion > 0) {
+            // Numeric comparison...
+            if (numericMajorVersion >= 8) {
+                compatibilityMethods = new Intellij8Methods();
+            } else if (numericMajorVersion > 0) {
+                compatibilityMethods = new Intellij7Methods();
+            }
         } else {
-            LOGGER.info("Compatibility mode set to IntelliJ 7.0");
-            compatibilityMethods = new Intellij7Methods();
+            // literal string comparison...
+            if ("8".equals(majorVersion)) {
+                LOGGER.info("Compatibility mode set to IntelliJ 8.0");
+                compatibilityMethods = new Intellij8Methods();
+            } else {
+                LOGGER.info("Compatibility mode set to IntelliJ 7.0");
+                compatibilityMethods = new Intellij7Methods();
+            }
         }
     }
 
@@ -32,8 +43,14 @@ public class IntellijCompatibilityService {
         return compatibilityMethods;
     }
 
-    public static boolean isTaskCancelledOnProgressIndicatorCancel() {
-        return compatibilityMethods instanceof Intellij8Methods;
+    private static int getNumericMajorVersion() {
+        final String version = ApplicationInfo.getInstance().getMajorVersion();
+        try {
+            return Integer.parseInt(version);
+        } catch (NumberFormatException e) {
+            LOGGER.info("Non-numeric major version encountered:" + version);
+            return -1;
+        }
     }
 
 }

@@ -21,6 +21,11 @@ import org.jetbrains.annotations.NotNull;
 import java.text.MessageFormat;
 import java.util.List;
 
+/**
+ * Action to resolve the dependencies for the active module.
+ *
+ * @author Guy Mahieu
+ */
 public class ResolveForActiveModuleAction extends AbstractResolveAction {
 
     private static final String MENU_TEXT = "Resolve for {0} module";

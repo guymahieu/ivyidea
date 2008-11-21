@@ -25,7 +25,7 @@ public abstract class AbstractResolveAction extends AnAction {
             public void run() {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
-                        IntellijDependencyUpdater.updateDependencies(module, dependencies);
+                        IntellijDependencyUpdater.getInstance().updateDependencies(module, dependencies);
                     }
                 });
             }

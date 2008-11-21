@@ -18,6 +18,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Action to resolve the dependencies for all modules that have an IvyIDEA facet configured.
+ *
+ * @author Guy Mahieu
+ */
 public class ResolveForAllModulesAction extends AbstractResolveAction {
 
     public void actionPerformed(AnActionEvent e) {

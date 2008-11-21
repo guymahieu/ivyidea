@@ -5,6 +5,8 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 /**
+ * Helper interface for easy access to icons used in IvyIDEA.
+ *
  * @author Guy Mahieu
  */
 

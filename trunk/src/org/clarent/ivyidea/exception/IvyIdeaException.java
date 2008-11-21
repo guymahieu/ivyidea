@@ -1,6 +1,8 @@
 package org.clarent.ivyidea.exception;
 
 /**
+ * Abstract base class for all checked exceptions thrown by IvyIDEA.
+ *
  * @author Guy Mahieu
  */
 

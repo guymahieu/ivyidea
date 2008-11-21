@@ -13,6 +13,7 @@ import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.exception.IvyFileReadException;
+import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
     public void actionPerformed(AnActionEvent e) {
         final Project project = DataKeys.PROJECT.getData(e.getDataContext());
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(e) {
-            public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException {
+            public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
                 final IvyManager ivyManager = new IvyManager();
                 for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {

@@ -4,6 +4,7 @@ import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class IvyManager {
 
     private Map<String, Ivy> configuredIvyInstances = new HashMap<String, Ivy>();
 
-    public Ivy getIvy(Module module) throws IvySettingsNotFoundException {
+    public Ivy getIvy(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final File ivySettingsFile = IvyIdeaConfigHelper.getIvySettingsFile(module);
         final String ivySettingsPath = ivySettingsFile.getAbsolutePath();
         if (!configuredIvyInstances.containsKey(ivySettingsPath)) {
@@ -28,9 +29,9 @@ public class IvyManager {
                 ivy.configure(ivySettingsFile);
                 configuredIvyInstances.put(ivySettingsPath, ivy);
             } catch (ParseException e) {
-                throw new RuntimeException("An error occured while parsing ivy settings file " + ivySettingsPath, e);
+                throw new IvySettingsFileReadException(ivySettingsPath, module.getName(), e);
             } catch (IOException e) {
-                throw new RuntimeException("An error occured while accessing ivy settings file " + ivySettingsPath, e);
+                throw new IvySettingsFileReadException(ivySettingsPath, module.getName(), e);
             }
         }
         return configuredIvyInstances.get(ivySettingsPath);

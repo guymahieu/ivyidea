@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Guy Mahieu
  */
-
 public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask {
 
     IvySettingsNotFoundException exception;

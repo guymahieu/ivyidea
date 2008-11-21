@@ -37,11 +37,29 @@ public class IvyUtil {
         }
     }
 
+    /**
+     * Returnes the ivy file for the given module.
+     *
+     * @param module the IntelliJ module for which you want to lookup the ivy file
+     * @return the File representing the ivy xml file for the given module
+     * @throws RuntimeException if the given module does not have an IvyIDEA facet configured.
+     */
     @NotNull
     public static File getIvyFile(Module module) {
-        return new File(IvyIdeaFacetConfiguration.getInstance(module).getIvyFile());
+        final IvyIdeaFacetConfiguration configuration = IvyIdeaFacetConfiguration.getInstance(module);
+        if (configuration == null) {
+            throw new RuntimeException("Internal error: No IvyIDEA facet configured for module " + module.getName() + ", but an attempt was made to use it as such.");
+        }
+        return new File(configuration.getIvyFile());
     }
 
+    /**
+     * Parses the given ivyFile into a ModuleDescriptor using the given settings.
+     *
+     * @param ivyFile  the ivy file to parse
+     * @param settings the settings for the parser
+     * @return the ModuleDescriptor object representing the ivy file.
+     */
     public static ModuleDescriptor parseIvyFile(@NotNull File ivyFile, ParserSettings settings) {
         try {
             LOGGER.info("Parsing ivy file " + ivyFile.getAbsolutePath());
@@ -58,10 +76,11 @@ public class IvyUtil {
      * Will never throw an exception, if something goes wrong, null is returned
      *
      * @param ivyFileName the name of the ivy file to parse
+     * @param ivySettings the settings to use; defaults will be used if this is null
      * @return a set of configurations, null if anything went wrong parsing the ivy file
      */
     @Nullable
-    public static Set<Configuration> loadConfigurations(String ivyFileName, IvySettings ivySettings) {
+    public static Set<Configuration> loadConfigurations(@NotNull String ivyFileName, @Nullable IvySettings ivySettings) {
         try {
             final File file = new File(ivyFileName);
             if (file.exists() && !file.isDirectory()) {

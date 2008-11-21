@@ -149,9 +149,7 @@ class DependencyResolver {
     private static class ModuleDependencies {
 
         private IvyManager ivyManager;
-
         private Module module;
-
         private Map<ModuleId, Module> moduleDependencies = new HashMap<ModuleId, Module>();
 
         public ModuleDependencies(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException {

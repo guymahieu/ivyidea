@@ -13,16 +13,9 @@
             </ul>
         </p>]]>
     </description>
-    <change-notes><![CDATA[<p>This release is part of a series of initial alpha releases.
-        The plugin should be functional but is not at all stable and using it
-        may require some advanced knowlegde since tweaking may be needed in
-        some cases.</p>
-        <p>Specifically exception handling and user friendly error reporting are missing,
-        so if you did not configure the ivy file locations and/or ivy settings file
-        locations correctly you may get IDEA exceptions.
-        </p>
+    <change-notes><![CDATA[
         <p>
-            <strong>0.8-alpha</strong>
+            <strong>0.8</strong>
             <ul>
                 <li>Upgraded internal ivy to 2.0.0rc2</li>
                 <li>Improved exception handling</li>
@@ -60,7 +53,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>0.8-alpha</version>
+    <version>0.8</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>
@@ -79,8 +72,8 @@
     <actions>
         <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module dependencies using Ivy"
                popup="true">
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
             <add-to-group group-id="ToolsMenu" anchor="first"/>
             <separator/>
             <action id="IvyIDEA.UpdateSingleModuleDependencies"

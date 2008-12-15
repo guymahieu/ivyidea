@@ -2,12 +2,12 @@ package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
+import org.clarent.ivyidea.exception.IvyFileReadException;
+import org.clarent.ivyidea.exception.IvySettingsFileReadException;
+import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
-import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.exception.IvyFileReadException;
-import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,8 +41,9 @@ public class IntellijDependencyResolver {
             public void run() {
                 final DependencyResolver dependencyResolver = new DependencyResolver();
                 try {
-                    dependencies = dependencyResolver.resolve(module, ivyManager);
-                    problems = dependencyResolver.getProblems();
+                    dependencyResolver.resolve(module, ivyManager);
+                    dependencies = dependencyResolver.getResolvedDependencies();
+                    problems = dependencyResolver.getResolveProblems();
                 } catch (IvySettingsNotFoundException e) {
                     settingsNotFoundException[0] = e;
                 } catch (IvyFileReadException e) {

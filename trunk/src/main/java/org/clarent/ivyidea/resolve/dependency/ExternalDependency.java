@@ -6,6 +6,7 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
+import org.apache.ivy.core.module.descriptor.Artifact;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -19,18 +20,28 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     private static final Logger LOGGER = Logger.getLogger(ExternalJarDependency.class.getName());
 
-    protected File externalArtifact;
+    private final Artifact artifact;
+    private final File localFile;
 
-    public ExternalDependency(File externalArtifact) {
-        this.externalArtifact = externalArtifact;
+    public ExternalDependency(Artifact artifact, File localFile) {
+        this.artifact = artifact;
+        this.localFile = localFile;
     }
 
-    public File getExternalArtifact() {
-        return externalArtifact;
+    public File getLocalFile() {
+        return localFile;
+    }
+
+    public Artifact getArtifact() {
+        return artifact;
     }
 
     public void addTo(ModifiableRootModel moduleModel, Library.ModifiableModel libraryModel) {
-        final String artifactPath = externalArtifact.getAbsolutePath();
+        if (localFile == null) {
+            LOGGER.warning("Not registering external " + getTypeName() + " dependency for module " + artifact.getModuleRevisionId() +  " as the file does not seem to exist.");
+            return;
+        }
+        final String artifactPath = localFile.getAbsolutePath();
         if (isMissing()) {
             LOGGER.warning("Not registering external " + getTypeName() + " file dependency as the file does not seem to exist: " + artifactPath);
             return;
@@ -45,11 +56,11 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     @NotNull
     protected String getUrlForLibrary() {
-        return VirtualFileManager.constructUrl(JarFileSystem.PROTOCOL, externalArtifact.getAbsolutePath()) + JarFileSystem.JAR_SEPARATOR;
+        return VirtualFileManager.constructUrl(JarFileSystem.PROTOCOL, localFile.getAbsolutePath()) + JarFileSystem.JAR_SEPARATOR;
     }
 
     public boolean isMissing() {
-        return !new File(externalArtifact.getAbsolutePath()).exists();
+        return localFile != null && !new File(localFile.getAbsolutePath()).exists();
     }
 
     protected boolean isAlreadyRegistered(Library.ModifiableModel libraryModel) {
@@ -63,7 +74,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     public boolean isSameDependency(VirtualFile file) {
         // TODO: see if this naive check is good enough - is there a better way to do this?
-        final String artifactPath = externalArtifact.getAbsolutePath();
+        final String artifactPath = localFile.getAbsolutePath();
         final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());
         // Compare the files not just the paths
         // TODO: Are these paths always absolute??

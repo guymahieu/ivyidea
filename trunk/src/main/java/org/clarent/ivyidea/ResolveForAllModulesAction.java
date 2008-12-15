@@ -6,14 +6,14 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
+import org.clarent.ivyidea.exception.IvyFileReadException;
+import org.clarent.ivyidea.exception.IvySettingsFileReadException;
+import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
-import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.exception.IvyFileReadException;
-import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

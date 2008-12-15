@@ -3,8 +3,8 @@ package org.clarent.ivyidea.ivy;
 import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
-import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
+import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 
 import java.io.File;
 import java.io.IOException;

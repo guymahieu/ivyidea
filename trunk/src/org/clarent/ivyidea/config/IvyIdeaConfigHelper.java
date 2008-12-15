@@ -3,10 +3,10 @@ package org.clarent.ivyidea.config;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.core.resolve.ResolveOptions;
+import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
-import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -26,7 +26,7 @@ public class IvyIdeaConfigHelper {
 
     public static ResolveOptions createResolveOptions(Module module) {
         ResolveOptions options = new ResolveOptions();
-        options.setValidate(isValidationEnabled(module.getProject()));
+        options.setValidate(isValidationEnabled(module.getProject()));        
         final Set<String> configsToResolve = getConfigurationsToResolve(module);
         if (!configsToResolve.isEmpty()) {
             options.setConfs(configsToResolve.toArray(new String[configsToResolve.size()]));

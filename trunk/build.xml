@@ -3,7 +3,7 @@
     <property name="ivyidea.version" value="0.9"/>
 
     <property name="ivyidea.sourcedir" value="src/main/java"/>
-    <property name="ivyidea.builddir" value="build/classes"/>
+    <property name="ivyidea.builddir" value="target/main/java"/>
 
     <target name="jar">
         <mkdir dir="build"/>
@@ -11,8 +11,8 @@
             <fileset dir="out/production/IvyIDEA">
                 <include name="**/*"/>
             </fileset>
-            <fileset dir=".">
-                <include name="${ivyidea.sourcedir}/META-INF/**/*"/>
+            <fileset dir="${ivyidea.sourcedir}">
+                <include name="/META-INF/**/*"/>
             </fileset>
         </jar>
     </target>

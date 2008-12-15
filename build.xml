@@ -2,7 +2,7 @@
 
     <property name="ivyidea.version" value="0.9"/>
 
-    <property name="ivyidea.sourcedir" value="src"/>
+    <property name="ivyidea.sourcedir" value="src/main/java"/>
     <property name="ivyidea.builddir" value="build/classes"/>
 
     <target name="jar">
@@ -12,7 +12,7 @@
                 <include name="**/*"/>
             </fileset>
             <fileset dir=".">
-                <include name="META-INF/**/*"/>
+                <include name="${ivyidea.sourcedir}/META-INF/**/*"/>
             </fileset>
         </jar>
     </target>
@@ -26,7 +26,7 @@
         </copy>
         <mkdir dir="build/dist/tmp/IvyIDEA/license"/>
         <copy todir="build/dist/tmp/IvyIDEA/license">
-            <fileset dir="license" includes="**/*"/>
+            <fileset dir="src/main/license" includes="**/*"/>
         </copy>
         <zip file="build/dist/IvyIDEA-${ivyidea.version}.zip">
             <fileset dir="build/dist/tmp">

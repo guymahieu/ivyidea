@@ -1,1 +1,1 @@
-Note: This page is no longer maintained here, please check out the [http://www.jetbrains.net/confluence/display/CONTEST/IvyIDEA IvyIDEA confluence pages at JetBrains]
+This page is no longer maintained here, please check out the [http://www.jetbrains.net/confluence/display/CONTEST/IvyIDEA IvyIDEA confluence pages at JetBrains]

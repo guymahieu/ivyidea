@@ -1,6 +1,7 @@
 package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
+import org.apache.ivy.core.module.descriptor.Artifact;
 
 import java.io.File;
 
@@ -10,8 +11,8 @@ import java.io.File;
 
 public class ExternalJarDependency extends ExternalDependency {
 
-    public ExternalJarDependency(File externalArtifact) {
-        super(externalArtifact);
+    public ExternalJarDependency(Artifact artifact, File externalArtifact) {
+        super(artifact, externalArtifact);
     }
 
     protected String getTypeName() {

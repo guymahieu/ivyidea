@@ -16,6 +16,7 @@ import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
 import org.clarent.ivyidea.resolve.dependency.*;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -87,7 +88,7 @@ class DependencyResolver {
                             if (externalDependency.isMissing()) {
                                 resolveProblems.add(new ResolveProblem(
                                         artifact.getModuleRevisionId().toString(),
-                                        "file not found: " + externalDependency.getExternalArtifact().getAbsolutePath())
+                                        "file not found: " + externalDependency.getLocalFile().getAbsolutePath())
                                 );
                             } else {
                                 resolvedDependencies.add(externalDependency);
@@ -117,16 +118,16 @@ class DependencyResolver {
     }
 
     @Nullable
-    private ExternalDependency createExternalDependencyImpl(Artifact artifact, File file) {
+    private ExternalDependency createExternalDependencyImpl(@NotNull Artifact artifact, @Nullable File file) {
         ResolvedArtifact resolvedArtifact = new ResolvedArtifact(artifact);
         if (resolvedArtifact.isSourceType()) {
-            return new ExternalSourceDependency(file);
+            return new ExternalSourceDependency(artifact, file);
         }
         if (resolvedArtifact.isJavaDocType()) {
-            return new ExternalJavaDocDependency(file);
+            return new ExternalJavaDocDependency(artifact, file);
         }
         if (resolvedArtifact.isClassesType()) {
-            return new ExternalJarDependency(file);
+            return new ExternalJarDependency(artifact, file);
         }
         resolveProblems.add(new ResolveProblem(
                 artifact.getModuleRevisionId().toString(),

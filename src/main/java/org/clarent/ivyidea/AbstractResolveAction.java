@@ -10,10 +10,12 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
 import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent;
+import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Guy Mahieu
@@ -43,11 +45,26 @@ public abstract class AbstractResolveAction extends AnAction {
     protected void reportProblems(final Module module, final List<ResolveProblem> problems) {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             public void run() {
+                final IvyIdeaFacetConfiguration ivyIdeaFacetConfiguration = IvyIdeaFacetConfiguration.getInstance(module);
+                if (ivyIdeaFacetConfiguration == null) {
+                    throw new RuntimeException("Internal error: module " + module.getName() + " does not seem to be have an IvyIDEA facet, but was included in the resolve process anyway.");
+                }
                 final ConsoleView consoleView = getConsoleView(module.getProject());
-                if (problems.isEmpty()) {
-                    consoleView.print("No problems detected during resolve for module '" + module.getName() + "'\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                String configsForModule;
+                if (ivyIdeaFacetConfiguration.isOnlyResolveSelectedConfigs()) {
+                    final Set<String> configs = ivyIdeaFacetConfiguration.getConfigsToResolve();
+                    if (configs == null || configs.size() == 0) {
+                        configsForModule = "[No configurations selected!]";
+                    } else {
+                        configsForModule = configs.toString();
+                    }
                 } else {
-                    consoleView.print("Problems for module '" + module.getName() + "':" + '\n', ConsoleViewContentType.NORMAL_OUTPUT);
+                    configsForModule = "[All configurations]";
+                }
+                if (problems.isEmpty()) {
+                    consoleView.print("No problems detected during resolve for module '" + module.getName() + "' " + configsForModule + ".\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                } else {
+                    consoleView.print("Problems for module '" + module.getName() + " " + configsForModule + "':" + '\n', ConsoleViewContentType.NORMAL_OUTPUT);
                     for (ResolveProblem resolveProblem : problems) {
                         consoleView.print("\t" + resolveProblem.toString() + '\n', ConsoleViewContentType.ERROR_OUTPUT);
                     }

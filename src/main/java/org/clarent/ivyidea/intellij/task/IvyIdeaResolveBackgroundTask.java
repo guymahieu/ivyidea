@@ -17,6 +17,7 @@ import org.clarent.ivyidea.exception.ui.LinkBehavior;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
+import org.clarent.ivyidea.resolve.http.IntellijProxyURLHandler;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -44,6 +45,9 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
 
     public final void run(@NotNull ProgressIndicator progressIndicator) {
         try {
+            // Intercept URL requests and force the intellij proxy to be used
+            IntellijProxyURLHandler.setupHttpProxy();
+            // Start the actual resolve process
             doResolve(progressIndicator);
         } catch (IvyIdeaException e) {
             exception = e;

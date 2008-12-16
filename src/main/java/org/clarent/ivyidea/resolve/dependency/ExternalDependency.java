@@ -13,9 +13,10 @@ import java.io.File;
 import java.util.logging.Logger;
 
 /**
+ * Represents a dependency to an external artifact somewhere on the filesystem.
+ *
  * @author Guy Mahieu
  */
-
 public abstract class ExternalDependency implements ResolvedDependency {
 
     private static final Logger LOGGER = Logger.getLogger(ExternalJarDependency.class.getName());
@@ -73,6 +74,9 @@ public abstract class ExternalDependency implements ResolvedDependency {
     }
 
     public boolean isSameDependency(VirtualFile file) {
+        if (localFile == null) {
+            return false;
+        }
         // TODO: see if this naive check is good enough - is there a better way to do this?
         final String artifactPath = localFile.getAbsolutePath();
         final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());

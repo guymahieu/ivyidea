@@ -17,7 +17,8 @@
         <p>
             <strong>0.9</strong>
             <ul>
-                <li></li>
+                <li>Improved lookup method for artifacts; now useOrigin="true" will also be supported.</li>
+                <li>Resolved config names are now listed in the IvyIDEA console.</li>
             </ul>
             <strong>0.8</strong>
             <ul>

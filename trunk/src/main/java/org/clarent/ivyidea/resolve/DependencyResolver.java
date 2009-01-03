@@ -83,7 +83,7 @@ class DependencyResolver {
                     for (ArtifactDownloadReport artifactDownloadReport : artifactDownloadReports) {
                         final Artifact artifact = artifactDownloadReport.getArtifact();
                         final File actifactFile = artifactDownloadReport.getLocalFile();
-                        final ExternalDependency externalDependency = createExternalDependencyImpl(artifact, actifactFile);
+                        final ExternalDependency externalDependency = createExternalDependency(artifact, actifactFile);
                         if (externalDependency != null) {
                             if (externalDependency.isMissing()) {
                                 resolveProblems.add(new ResolveProblem(
@@ -118,7 +118,7 @@ class DependencyResolver {
     }
 
     @Nullable
-    private ExternalDependency createExternalDependencyImpl(@NotNull Artifact artifact, @Nullable File file) {
+    private ExternalDependency createExternalDependency(@NotNull Artifact artifact, @Nullable File file) {
         ResolvedArtifact resolvedArtifact = new ResolvedArtifact(artifact);
         if (resolvedArtifact.isSourceType()) {
             return new ExternalSourceDependency(artifact, file);

@@ -31,9 +31,9 @@ import java.util.logging.Logger;
  * @author Guy Mahieu
  */
 
-public class IvyIdeaFacetEditorTab extends FacetEditorTab {
+public class BasicSettingsTab extends FacetEditorTab {
 
-    private static final Logger LOGGER = Logger.getLogger(IvyIdeaFacetEditorTab.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BasicSettingsTab.class.getName());
 
     private com.intellij.openapi.ui.TextFieldWithBrowseButton txtIvyFile;
     private JPanel pnlRoot;
@@ -47,7 +47,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
 
     private Set<Configuration> selectedConfigurations = new HashSet<Configuration>();
 
-    public IvyIdeaFacetEditorTab(FacetEditorContext editorContext) {
+    public BasicSettingsTab(FacetEditorContext editorContext) {
         this.editorContext = editorContext;
 
         UserActivityWatcher watcher = new UserActivityWatcher();
@@ -110,7 +110,7 @@ public class IvyIdeaFacetEditorTab extends FacetEditorTab {
 
     @Nls
     public String getDisplayName() {
-        return "IvyIDEA";
+        return "General";
     }
 
     public JComponent createComponent() {

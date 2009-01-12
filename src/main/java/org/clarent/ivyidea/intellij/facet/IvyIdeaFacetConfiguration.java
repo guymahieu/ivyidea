@@ -7,7 +7,8 @@ import com.intellij.facet.ui.FacetValidatorsManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.WriteExternalException;
-import org.clarent.ivyidea.intellij.facet.ui.IvyIdeaFacetEditorTab;
+import org.clarent.ivyidea.intellij.facet.ui.BasicSettingsTab;
+import org.clarent.ivyidea.intellij.facet.ui.PropertiesSettingsTab;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
@@ -83,7 +84,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     }
 
     public FacetEditorTab[] createEditorTabs(FacetEditorContext editorContext, FacetValidatorsManager validatorsManager) {
-        return new FacetEditorTab[]{new IvyIdeaFacetEditorTab(editorContext)};
+        return new FacetEditorTab[]{new BasicSettingsTab(editorContext), new PropertiesSettingsTab(editorContext)};
     }
 
     public void readExternal(Element element) throws InvalidDataException {

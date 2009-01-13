@@ -10,7 +10,7 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
 import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent;
-import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
+import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 

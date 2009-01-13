@@ -5,7 +5,7 @@ import com.intellij.openapi.project.Project;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
-import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
+import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.NotNull;
 

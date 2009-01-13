@@ -6,7 +6,7 @@ import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.settings.IvySettings;
 import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
 import org.apache.ivy.plugins.parser.ParserSettings;
-import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetConfiguration;
+import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://www.ivyidea.org">
     <name>IvyIDEA</name>
-    <description><![CDATA[<p>Resolves module dependencies through Ivy</p>
+    <description><![CDATA[Resolves module dependencies through Ivy
         <p>Features:
             <ul>
                 <li>Ivy integration (up to v2.0.0rc2); no need for external ant build scripts to be called</li>
@@ -10,6 +10,7 @@
                 <li>Detect source/document/jar type ivy artifacts in dependencies and add them as such to the module</li>
                 <li>Creation of a module library with all resolved ivy dependencies</li>
                 <li>Ivy configurations that need to be resolved can be chosen for each module</li>
+                <li>Properties can be injected into the ivy resolve process</li>
             </ul>
         </p>]]>
     </description>
@@ -17,6 +18,7 @@
         <p>
             <strong>0.9</strong>
             <ul>
+                <li>Support for using ${} style properties in ivy and ivysettings files</li>
                 <li>Improved lookup method for artifacts; now useOrigin="true" will also be supported.</li>
                 <li>Resolved config names are now listed in the IvyIDEA console.</li>
             </ul>

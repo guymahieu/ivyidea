@@ -1,9 +1,11 @@
 package org.clarent.ivyidea.intellij.facet.ui;
 
+import com.intellij.facet.Facet;
 import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.options.ConfigurationException;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
+import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;
@@ -39,13 +41,23 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
     }
 
     public boolean isModified() {
-        return false;
+        return orderedFileList.isModified();
     }
 
     public void apply() throws ConfigurationException {
+        final Facet facet = editorContext.getFacet();
+        if (facet != null) {
+            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+            configuration.getPropertiesSettings().setPropertyFiles(orderedFileList.getFileNames());
+        }        
     }
 
     public void reset() {
+        final Facet facet = editorContext.getFacet();
+        if (facet != null) {
+            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+            orderedFileList.setFileNames(configuration.getPropertiesSettings().getPropertyFiles());
+        }        
     }
 
     public void disposeUIResources() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.clarent.ivyidea.intellij.facet.ui.components.orderedfilelist.OrderedFileList">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList">
   <grid id="27dc6" binding="pnlRoot" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="a5d62" class="com.intellij.openapi.ui.TextFieldWithBrowseButton">
+      <component id="a5d62" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="txtFileNameToAdd">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -55,19 +55,6 @@
           </vspacer>
         </children>
       </grid>
-      <scrollpane id="5a056">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="80aad" class="javax.swing.JTable" binding="table1" default-binding="true">
-            <constraints/>
-            <properties/>
-          </component>
-        </children>
-      </scrollpane>
       <component id="7a9ee" class="javax.swing.JButton" binding="btnAdd">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -76,6 +63,19 @@
           <text value="&amp;Add"/>
         </properties>
       </component>
+      <scrollpane id="2c665">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="2f9ed" class="javax.swing.JList" binding="lstFileNames">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

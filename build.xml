@@ -21,7 +21,12 @@
         <delete dir="build/dist/tmp"/>
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
         <copy todir="build/dist/tmp/IvyIDEA/lib">
-            <fileset dir="lib/apache-ivy-2.0.0-rc2" includes="ivy-2.0.0-rc2.jar"/>
+            <fileset dir="lib/apache-ivy-2.0.0-rc2" includes="*.jar"/>
+
+            <!--Third party ivy runtime dependencies-->
+<!--
+            <fileset dir="lib/apache-ivy-2.0.0-rc2/lib" includes="*.jar"/>
+-->
             <fileset dir="build" includes="ivyidea-${ivyidea.version}.jar"/>
         </copy>
         <mkdir dir="build/dist/tmp/IvyIDEA/license"/>

@@ -144,9 +144,8 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     public void reset() {
         final Facet facet = editorContext.getFacet();
-        IvyIdeaFacetConfiguration configuration;
         if (facet != null) {
-            configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
             txtIvyFile.setText(configuration.getIvyFile());
             chkUseProjectSettings.setSelected(configuration.isUseProjectSettings());
             txtIvySettingsFile.setText(configuration.getIvySettingsFile());

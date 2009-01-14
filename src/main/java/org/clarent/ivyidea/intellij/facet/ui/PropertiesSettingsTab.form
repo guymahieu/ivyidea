@@ -44,7 +44,7 @@
         </constraints>
         <properties>
           <font style="1"/>
-          <text value="Additinal Properties"/>
+          <text value="Additinal Properties (coming soon)"/>
         </properties>
       </component>
       <component id="4a999" class="javax.swing.JLabel">

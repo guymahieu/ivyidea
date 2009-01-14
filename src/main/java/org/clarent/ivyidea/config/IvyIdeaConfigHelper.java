@@ -13,10 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Handles retrieval of settings from the configuration.
@@ -96,7 +93,10 @@ public class IvyIdeaConfigHelper {
     @NotNull
     public static Properties getIvyProperties(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
-        final List<String> propertiesFiles = moduleConfiguration.getPropertiesSettings().getPropertyFiles();
+        final List<String> propertiesFiles = new ArrayList<String>(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
+        // Go over the files in reverse order --> files listed first should have priority and loading properties
+        // overwrited previously loaded ones.
+        Collections.reverse(propertiesFiles);
         final Properties properties = new Properties();
         for (String propertiesFile : propertiesFiles) {
             if (propertiesFile != null) {

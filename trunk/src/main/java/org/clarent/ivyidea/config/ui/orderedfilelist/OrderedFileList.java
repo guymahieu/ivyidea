@@ -6,6 +6,7 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,6 +14,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 
@@ -52,8 +55,10 @@ public class OrderedFileList {
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String fileName = txtFileNameToAdd.getTextField().getText();
-                ((OrderedFileListModel) lstFileNames.getModel()).add(fileName);
-                txtFileNameToAdd.getTextField().setText("");
+                if (StringUtils.isNotBlank(fileName)) {
+                    ((OrderedFileListModel) lstFileNames.getModel()).add(fileName);
+                    txtFileNameToAdd.getTextField().setText("");
+                }
             }
         });
 
@@ -75,6 +80,17 @@ public class OrderedFileList {
                 btnAdd.setEnabled(file.exists() && !file.isDirectory());
             }
         });
+        txtFileNameToAdd.getTextField().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnAdd.doClick();
+                    e.consume();
+                }
+            }
+        });
+
+
 
         UserActivityWatcher watcher = new UserActivityWatcher();
         watcher.addUserActivityListener(new UserActivityListener() {

@@ -21,14 +21,10 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
 
     private final FacetEditorContext editorContext;
     private OrderedFileList orderedFileList;
+    private boolean alreadyOpenedBefore;
 
     public PropertiesSettingsTab(FacetEditorContext editorContext) {
-
         this.editorContext = editorContext;
-    }
-
-    public OrderedFileList getOrderedFileList() {
-        return orderedFileList;
     }
 
     @Nls
@@ -44,12 +40,26 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
         return orderedFileList.isModified();
     }
 
+    public boolean isAlreadyOpenedBefore() {
+        return alreadyOpenedBefore;
+    }
+
+    public java.util.List<String> getFileNames() {
+        return orderedFileList.getFileNames();
+    }
+
     public void apply() throws ConfigurationException {
         final Facet facet = editorContext.getFacet();
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
             configuration.getPropertiesSettings().setPropertyFiles(orderedFileList.getFileNames());
         }        
+    }
+
+    @Override
+    public void onTabEntering() {
+        super.onTabEntering();
+        alreadyOpenedBefore = true;
     }
 
     public void reset() {

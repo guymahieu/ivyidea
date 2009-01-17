@@ -3,6 +3,7 @@ package org.clarent.ivyidea.config;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.core.resolve.ResolveOptions;
+import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -94,6 +96,11 @@ public class IvyIdeaConfigHelper {
     public static Properties getIvyProperties(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
         final List<String> propertiesFiles = new ArrayList<String>(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
+        return loadProperties(module, propertiesFiles);
+    }
+
+    @NotNull
+    public static Properties loadProperties(Module module, List<String> propertiesFiles) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         // Go over the files in reverse order --> files listed first should have priority and loading properties
         // overwrited previously loaded ones.
         Collections.reverse(propertiesFiles);
@@ -112,6 +119,38 @@ public class IvyIdeaConfigHelper {
             }
         }
         return properties;
+    }
+
+    public static IvySettings createConfiguredIvySettings(Module module) throws IOException, ParseException, IvySettingsNotFoundException, IvySettingsFileReadException {
+        IvySettings s = new IvySettings();
+        injectProperties(s, module);
+        return s;        
+    }
+
+    public static IvySettings createCustomConfiguredIvySettings(Module module, Properties properties) throws IOException, ParseException, IvySettingsNotFoundException, IvySettingsFileReadException {
+        IvySettings s = new IvySettings();
+        injectProperties(s, properties, module);
+        return s;
+    }
+
+    private static void injectProperties(IvySettings ivySettings, Module module) throws IvySettingsFileReadException, IvySettingsNotFoundException {
+        // Inject properties from settings
+        final Properties properties = IvyIdeaConfigHelper.getIvyProperties(module);
+        injectProperties(ivySettings, properties, module);
+    }
+
+    private static void injectProperties(IvySettings ivySettings, Properties properties, Module module) {
+        // By default, we use the module root as basedir (can be overridden by properties injected below)
+        final File moduleFileFolder = new File(module.getModuleFilePath()).getParentFile();
+        if (moduleFileFolder != null) {
+            ivySettings.setBaseDir(moduleFileFolder.getAbsoluteFile());
+        }
+        @SuppressWarnings("unchecked")
+        final Enumeration<String> propertyNames = (Enumeration<String>) properties.propertyNames();
+        while (propertyNames.hasMoreElements()) {
+            String propertyName = propertyNames.nextElement();
+            ivySettings.setVariable(propertyName, properties.getProperty(propertyName));
+        }
     }
 
     private static IvyIdeaFacetConfiguration getModuleConfiguration(Module module) {

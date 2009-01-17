@@ -78,9 +78,12 @@ public class IvyUtil {
      * @param ivyFileName the name of the ivy file to parse
      * @param ivySettings the settings to use; defaults will be used if this is null
      * @return a set of configurations, null if anything went wrong parsing the ivy file
+     *
+     * @throws java.text.ParseException if there was an error parsing the ivy file; if the file
+     *          does not exist or is a directory, no exception will be thrown
      */
     @Nullable
-    public static Set<Configuration> loadConfigurations(@NotNull String ivyFileName, @Nullable IvySettings ivySettings) {
+    public static Set<Configuration> loadConfigurations(@NotNull String ivyFileName, @Nullable IvySettings ivySettings) throws ParseException {
         try {
             final File file = new File(ivyFileName);
             if (file.exists() && !file.isDirectory()) {
@@ -96,11 +99,16 @@ public class IvyUtil {
                 });
                 result.addAll(Arrays.asList(md.getConfigurations()));
                 return result;
+            } else {
+                return null;
             }
         } catch (RuntimeException e) {
             // Not able to parse module descriptor; no problem here...
             LOGGER.info("Error while parsing ivy file during attempt to load configurations from it: " + e);
+            if (e.getCause() instanceof ParseException) {
+                throw (ParseException) e.getCause();
+            }
+            return null;
         }
-        return null;
     }
 }

@@ -27,7 +27,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private String ivyFile;
     private boolean useProjectSettings = true;
     private String ivySettingsFile;
-    private boolean onlyResolveSelectedConfigs = true;
+    private boolean onlyResolveSelectedConfigs = false;
     private Set<String> configsToResolve = Collections.emptySet();
     private PropertiesSettings propertiesSettings = new PropertiesSettings();
 
@@ -87,7 +87,9 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     }
 
     public FacetEditorTab[] createEditorTabs(FacetEditorContext editorContext, FacetValidatorsManager validatorsManager) {
-        return new FacetEditorTab[]{new BasicSettingsTab(editorContext), new PropertiesSettingsTab(editorContext)};
+        final PropertiesSettingsTab propertiesSettingsTab = new PropertiesSettingsTab(editorContext);
+        final BasicSettingsTab basicSettingsTab = new BasicSettingsTab(editorContext, propertiesSettingsTab);
+        return new FacetEditorTab[]{basicSettingsTab, propertiesSettingsTab};
     }
 
     public void readExternal(Element element) throws InvalidDataException {

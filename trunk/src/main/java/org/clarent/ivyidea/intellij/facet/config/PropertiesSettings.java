@@ -16,6 +16,7 @@ public class PropertiesSettings implements JDOMExternalizable {
 
     private boolean includeProjectLevelPropertiesFiles = true;
     private List<String> propertyFiles = Collections.emptyList();
+    private boolean includeProjectLevelAdditionalProperties = true;
     private IvyIdeaFacetConfiguration.SortedProperties additionalProperties = new IvyIdeaFacetConfiguration.SortedProperties();
 
     public boolean isIncludeProjectLevelPropertiesFiles() {
@@ -24,6 +25,14 @@ public class PropertiesSettings implements JDOMExternalizable {
 
     public void setIncludeProjectLevelPropertiesFiles(boolean includeProjectLevelPropertiesFiles) {
         this.includeProjectLevelPropertiesFiles = includeProjectLevelPropertiesFiles;
+    }
+
+    public boolean isIncludeProjectLevelAdditionalProperties() {
+        return includeProjectLevelAdditionalProperties;
+    }
+
+    public void setIncludeProjectLevelAdditionalProperties(boolean includeProjectLevelAdditionalProperties) {
+        this.includeProjectLevelAdditionalProperties = includeProjectLevelAdditionalProperties;
     }
 
     public List<String> getPropertyFiles() {
@@ -58,6 +67,7 @@ public class PropertiesSettings implements JDOMExternalizable {
         final Element additionalPropertiesElement = propertiesSettingsElement.getChild("additionalProperties");
         IvyIdeaFacetConfiguration.SortedProperties additionalProperties = new IvyIdeaFacetConfiguration.SortedProperties();
         if (additionalPropertiesElement != null) {
+            setIncludeProjectLevelAdditionalProperties(Boolean.valueOf(propertiesFilesElement.getAttributeValue("includeProjectLevelAdditionalProperties", Boolean.TRUE.toString())));
             @SuppressWarnings("unchecked")
             final List<Element> additionalProperty = (List<Element>) additionalPropertiesElement.getChildren("property");
             for (Element element : additionalProperty) {
@@ -78,6 +88,7 @@ public class PropertiesSettings implements JDOMExternalizable {
         }
 
         final Element additionalPropertiesElement = new Element("additionalProperties");
+        additionalPropertiesElement.setAttribute("includeProjectLevelAdditionalProperties", Boolean.toString(isIncludeProjectLevelAdditionalProperties()));
         propertiesSettingsElement.addContent(additionalPropertiesElement);
         final IvyIdeaFacetConfiguration.SortedProperties additionalProperties = getAdditionalProperties();
         for (String propertyName : additionalProperties) {

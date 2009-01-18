@@ -5,6 +5,7 @@ import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.options.ConfigurationException;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
+import org.clarent.ivyidea.config.ui.propertieseditor.PropertiesEditor;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.Nls;
 
@@ -21,6 +22,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
 
     private final FacetEditorContext editorContext;
     private OrderedFileList orderedFileList;
+    private PropertiesEditor additionalPropertiesEditor;
     private boolean alreadyOpenedBefore;
 
     public PropertiesSettingsTab(FacetEditorContext editorContext) {
@@ -77,5 +79,9 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
         pnlPropertiesFiles = new JPanel(new BorderLayout());
         orderedFileList = new OrderedFileList(editorContext.getProject());
         pnlPropertiesFiles.add(orderedFileList.getRootPanel(), BorderLayout.CENTER);
+
+        pnlAdditionalProperties = new JPanel(new BorderLayout());
+        additionalPropertiesEditor = new PropertiesEditor();
+        pnlAdditionalProperties.add(additionalPropertiesEditor.getRootPanel(), BorderLayout.CENTER);
     }
 }

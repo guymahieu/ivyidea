@@ -248,6 +248,12 @@
       <item class="org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
+      <item class="org.clarent.ivyidea.config.ui.propertieseditor.PropertiesTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
+      <item class="org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList" icon="" removable="true" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
     </group>
   </component>
   <component name="ProjectDetails">

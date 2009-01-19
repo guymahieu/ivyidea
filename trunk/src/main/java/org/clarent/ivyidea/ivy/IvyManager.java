@@ -25,8 +25,7 @@ public class IvyManager {
         final String ivySettingsPath = ivySettingsFile.getAbsolutePath();
         if (!configuredIvyInstances.containsKey(ivySettingsPath)) {
             try {
-                Ivy ivy = Ivy.newInstance();
-                ivy.setSettings(IvyIdeaConfigHelper.createConfiguredIvySettings(module));
+                Ivy ivy = Ivy.newInstance(IvyIdeaConfigHelper.createConfiguredIvySettings(module));
                 configuredIvyInstances.put(ivySettingsPath, ivy);
             } catch (ParseException e) {
                 throw new IvySettingsFileReadException(ivySettingsPath, module.getName(), e);

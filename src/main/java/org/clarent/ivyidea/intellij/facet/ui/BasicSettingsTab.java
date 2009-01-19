@@ -133,7 +133,11 @@ public class BasicSettingsTab extends FacetEditorTab {
             } else {
                 properties = IvyIdeaConfigHelper.getIvyProperties(editorContext.getModule());
             }
-            return IvyIdeaConfigHelper.createCustomConfiguredIvySettings(editorContext.getModule(), properties);
+            String ivySettingsFile = txtIvySettingsFile.getTextField().getText();
+            if (chkUseProjectSettings.isSelected()) {
+                ivySettingsFile = IvyIdeaConfigHelper.getProjectIvySettingsFile(editorContext.getProject()).getAbsolutePath();
+            }
+            return IvyIdeaConfigHelper.createCustomConfiguredIvySettings(editorContext.getModule(), ivySettingsFile, properties);
         } catch (Exception e) {
             return new IvySettings();
         }

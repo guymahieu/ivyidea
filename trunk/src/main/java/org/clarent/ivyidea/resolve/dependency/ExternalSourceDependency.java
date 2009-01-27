@@ -19,7 +19,7 @@ public class ExternalSourceDependency extends ExternalDependency {
         return "sources";
     }
 
-    protected OrderRootType getType() {
+    public OrderRootType getType() {
         return OrderRootType.SOURCES;
     }
 }

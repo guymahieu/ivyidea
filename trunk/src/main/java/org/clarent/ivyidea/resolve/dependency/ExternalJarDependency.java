@@ -19,7 +19,7 @@ public class ExternalJarDependency extends ExternalDependency {
         return "jar";
     }
 
-    protected OrderRootType getType() {
+    public OrderRootType getType() {
         return OrderRootType.CLASSES;
     }
 

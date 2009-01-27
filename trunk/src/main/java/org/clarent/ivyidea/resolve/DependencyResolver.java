@@ -14,9 +14,11 @@ import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
-import org.clarent.ivyidea.resolve.dependency.*;
+import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
+import org.clarent.ivyidea.resolve.dependency.ExternalDependencyFactory;
+import org.clarent.ivyidea.resolve.dependency.InternalDependency;
+import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -65,6 +67,7 @@ class DependencyResolver {
         }
     }
 
+    // TODO: This method performs way too much tasks -- refactor it!
     protected void extractDependencies(ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) {
         final String[] resolvedConfigurations = resolveReport.getConfigurations();
         for (String resolvedConfiguration : resolvedConfigurations) {
@@ -101,6 +104,19 @@ class DependencyResolver {
         }
     }
 
+    @Nullable
+    private ExternalDependency createExternalDependency(Artifact artifact, File actifactFile) {
+        ExternalDependency externalDependency = ExternalDependencyFactory.getInstance().createExternalDependency(artifact, actifactFile);
+        if (externalDependency == null) {
+            resolveProblems.add(new ResolveProblem(
+                    artifact.getModuleRevisionId().toString(),
+                    "Unrecognized artifact type: " + artifact.getType() + ", will not add this as a dependency in IntelliJ.",
+                    null));
+            LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as a dependency.");
+        }
+        return externalDependency;
+    }
+
     private void registerProblems(ConfigurationResolveReport configurationReport, IntellijModuleDependencies moduleDependencies) {
         for (IvyNode unresolvedDependency : configurationReport.getUnresolvedDependencies()) {
             if (moduleDependencies.isInternalIntellijModuleDependency(unresolvedDependency.getModuleId())) {
@@ -117,25 +133,6 @@ class DependencyResolver {
         }
     }
 
-    @Nullable
-    private ExternalDependency createExternalDependency(@NotNull Artifact artifact, @Nullable File file) {
-        ResolvedArtifact resolvedArtifact = new ResolvedArtifact(artifact);
-        if (resolvedArtifact.isSourceType()) {
-            return new ExternalSourceDependency(artifact, file);
-        }
-        if (resolvedArtifact.isJavaDocType()) {
-            return new ExternalJavaDocDependency(artifact, file);
-        }
-        if (resolvedArtifact.isClassesType()) {
-            return new ExternalJarDependency(artifact, file);
-        }
-        resolveProblems.add(new ResolveProblem(
-                artifact.getModuleRevisionId().toString(),
-                "Unrecognized artifact type: " + artifact.getType() + ", will not add this as a dependency in IntelliJ.",
-                null));
-        LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as a dependency.");
-        return null;
-    }
 
 
 }

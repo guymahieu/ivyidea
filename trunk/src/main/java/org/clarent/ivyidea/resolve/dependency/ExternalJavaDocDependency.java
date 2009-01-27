@@ -20,7 +20,7 @@ public class ExternalJavaDocDependency extends ExternalDependency {
         return "javadoc";
     }
 
-    protected OrderRootType getType() {
+    public OrderRootType getType() {
         return IntellijCompatibilityService.getCompatibilityMethods().getJavadocOrderRootType();
     }
 

@@ -1,12 +1,12 @@
 package org.clarent.ivyidea.resolve.dependency;
 
-import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
+import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return artifact;
     }
 
-    public void addTo(ModifiableRootModel moduleModel, Library.ModifiableModel libraryModel) {
+    public void addTo(IntellijModuleWrapper intellijModuleWrapper) {
         if (localFile == null) {
             LOGGER.warning("Not registering external " + getTypeName() + " dependency for module " + artifact.getModuleRevisionId() +  " as the file does not seem to exist.");
             return;
@@ -47,16 +47,16 @@ public abstract class ExternalDependency implements ResolvedDependency {
             LOGGER.warning("Not registering external " + getTypeName() + " file dependency as the file does not seem to exist: " + artifactPath);
             return;
         }
-        if (isAlreadyRegistered(libraryModel)) {
-            LOGGER.info("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already part of the " + libraryModel.getName() + " library");
+        if (intellijModuleWrapper.alreadyHasDependencyOnLibrary(this)) {
+            LOGGER.info("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already present.");
             return;
         }
         LOGGER.info("Registering external " + getTypeName() + " file dependency: " + artifactPath);
-        libraryModel.addRoot(getUrlForLibrary(), getType());
+        intellijModuleWrapper.addExternalDependency(this);
     }
 
     @NotNull
-    protected String getUrlForLibrary() {
+    public String getUrlForLibrary() {
         return VirtualFileManager.constructUrl(JarFileSystem.PROTOCOL, localFile.getAbsolutePath()) + JarFileSystem.JAR_SEPARATOR;
     }
 
@@ -85,7 +85,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return new File(existingDependencyPath).equals(new File(artifactPath));
     }
 
-    protected abstract String getTypeName();
+    public abstract OrderRootType getType();
 
-    protected abstract OrderRootType getType();
+    protected abstract String getTypeName();
 }

@@ -1,7 +1,6 @@
 package org.clarent.ivyidea.resolve.dependency;
 
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.libraries.Library;
+import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 
 /**
  * @author Guy Mahieu
@@ -9,6 +8,6 @@ import com.intellij.openapi.roots.libraries.Library;
 
 public interface ResolvedDependency {
 
-    void addTo(ModifiableRootModel intellijModule, Library.ModifiableModel libraryModel);
+    void addTo(IntellijModuleWrapper intellijModuleWrapper);
 
 }

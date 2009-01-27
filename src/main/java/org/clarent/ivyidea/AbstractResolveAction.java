@@ -8,9 +8,9 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
-import org.clarent.ivyidea.intellij.IntellijDependencyUpdater;
 import org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
+import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
@@ -27,7 +27,12 @@ public abstract class AbstractResolveAction extends AnAction {
             public void run() {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
-                        IntellijDependencyUpdater.getInstance().updateDependencies(module, dependencies);
+                        final IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(module);
+                        try {
+                            moduleWrapper.updateDependencies(dependencies);
+                        } finally {
+                            moduleWrapper.close();
+                        }
                     }
                 });
             }

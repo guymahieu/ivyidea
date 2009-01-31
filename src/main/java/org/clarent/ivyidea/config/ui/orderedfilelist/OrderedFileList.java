@@ -1,22 +1,18 @@
 package org.clarent.ivyidea.config.ui.orderedfilelist;
 
+import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.ui.DocumentAdapter;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
-import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -32,7 +28,6 @@ public class OrderedFileList {
     private JButton btnDown;
     private JButton btnAdd;
     private JList lstFileNames;
-    private TextFieldWithBrowseButton txtFileNameToAdd;
     private boolean modified;
 
     public OrderedFileList(Project project) {
@@ -42,6 +37,24 @@ public class OrderedFileList {
         btnUp.setVisible(false);
         btnDown.setVisible(false);
 
+        wireFileList();
+        wireAddButton();
+        wireRemoveButton();
+
+        installActivityListener();
+    }
+
+    private void installActivityListener() {
+        UserActivityWatcher watcher = new UserActivityWatcher();
+        watcher.addUserActivityListener(new UserActivityListener() {
+            public void stateChanged() {
+                modified = true;
+            }
+        });
+        watcher.register(pnlRoot);
+    }
+
+    private void wireFileList() {
         lstFileNames.setModel(new OrderedFileListModel());
         // TODO: implement multi select
         lstFileNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -50,56 +63,36 @@ public class OrderedFileList {
                 btnRemove.setEnabled(lstFileNames.getSelectedIndex() > -1);
             }
         });
+    }
 
-        btnAdd.setEnabled(false);
+    private void wireAddButton() {
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String fileName = txtFileNameToAdd.getTextField().getText();
-                if (StringUtils.isNotBlank(fileName)) {
-                    ((OrderedFileListModel) lstFileNames.getModel()).add(fileName);
-                    txtFileNameToAdd.getTextField().setText("");
+                final FileChooserDescriptor fcDescriptor = FileChooserDescriptorFactory.createMultipleFilesNoJarsDescriptor();
+                fcDescriptor.setTitle("Select properties file(s)");
+                final VirtualFile[] files = FileChooser.chooseFiles(project, fcDescriptor);
+                for (VirtualFile file : files) {
+                    addFilenameToList(file.getPresentableUrl());
                 }
             }
         });
 
+    }
+
+    private void addFilenameToList(String fileName) {
+        ((OrderedFileListModel) lstFileNames.getModel()).add(fileName);
+    }
+
+    private void wireRemoveButton() {
         btnRemove.setEnabled(false);
         btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final int selectedIndex = lstFileNames.getSelectedIndex();
                 if (selectedIndex != -1) {
                     ((OrderedFileListModel) lstFileNames.getModel()).removeItemAt(selectedIndex);
-                }                
-            }
-        });
-
-        txtFileNameToAdd.addBrowseFolderListener("Select properties file", "", this.project, new FileChooserDescriptor(true, false, false, false, false, false));
-        txtFileNameToAdd.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-
-            protected void textChanged(DocumentEvent e) {
-                final File file = new File(txtFileNameToAdd.getTextField().getText());
-                btnAdd.setEnabled(file.exists() && !file.isDirectory());
-            }
-        });
-        txtFileNameToAdd.getTextField().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    btnAdd.doClick();
-                    e.consume();
                 }
             }
         });
-
-
-
-        UserActivityWatcher watcher = new UserActivityWatcher();
-        watcher.addUserActivityListener(new UserActivityListener() {
-            public void stateChanged() {
-                modified = true;
-            }
-        });
-        watcher.register(pnlRoot);
-        
     }
 
     public boolean isModified() {

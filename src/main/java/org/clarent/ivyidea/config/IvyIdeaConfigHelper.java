@@ -115,6 +115,7 @@ public class IvyIdeaConfigHelper {
     public static Properties loadProperties(Module module, List<String> propertiesFiles) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         // Go over the files in reverse order --> files listed first should have priority and loading properties
         // overwrited previously loaded ones.
+        propertiesFiles = new ArrayList<String>(propertiesFiles); // avoid errors on unmodifiable lists
         Collections.reverse(propertiesFiles);
         final Properties properties = new Properties();
         for (String propertiesFile : propertiesFiles) {

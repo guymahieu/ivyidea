@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.clarent.ivyidea.intellij.facet.ui.PropertiesSettingsTab">
-  <grid id="27dc6" binding="pnlRoot" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="pnlRoot" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="5" left="5" bottom="5" right="5"/>
     <constraints>
       <xy x="20" y="20" width="709" height="400"/>
@@ -10,7 +10,7 @@
     <children>
       <component id="df827" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="4" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="4" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Here you can specify one or more properties files. These will be loaded and passed to the ivy resolve process."/>
@@ -19,7 +19,7 @@
       <grid id="b412c" binding="pnlPropertiesFiles" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none">
@@ -27,26 +27,34 @@
         </border>
         <children/>
       </grid>
-      <grid id="d4f94" binding="pnlAdditionalProperties" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <component id="580a0" class="javax.swing.JLabel" binding="lblAdditionalProperties">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none">
-          <color color="-16777216"/>
-        </border>
-        <children/>
-      </grid>
-      <component id="580a0" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font style="1"/>
           <text value="Additional Properties"/>
         </properties>
       </component>
+      <component id="e9f4" class="javax.swing.JLabel" binding="lblAdditionalPropertiesDescription">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="The properties specified here will take precedence over the ones in the files chosen above."/>
+        </properties>
+      </component>
+      <grid id="d4f94" binding="pnlAdditionalProperties" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none">
+          <color color="-16777216"/>
+        </border>
+        <children/>
+      </grid>
       <component id="4a999" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -58,19 +66,13 @@
       </component>
       <hspacer id="6e8a4">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <minimum-size width="20" height="-1"/>
+            <preferred-size width="20" height="-1"/>
+            <maximum-size width="20" height="-1"/>
           </grid>
         </constraints>
       </hspacer>
-      <component id="e9f4" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="These additional properties will be loaded into the ivy resolve process and take precedence over properties used in the files selected above."/>
-        </properties>
-      </component>
     </children>
   </grid>
 </form>

@@ -4,6 +4,8 @@ import com.intellij.facet.Facet;
 import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.ui.UserActivityListener;
+import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.config.ui.propertieseditor.PropertiesEditor;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
@@ -19,14 +21,35 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
     private JPanel pnlRoot;
     private JPanel pnlPropertiesFiles;
     private JPanel pnlAdditionalProperties;
+    private JLabel lblAdditionalPropertiesDescription;
+    private JLabel lblAdditionalProperties;
 
     private final FacetEditorContext editorContext;
     private OrderedFileList orderedFileList;
     private PropertiesEditor additionalPropertiesEditor;
     private boolean alreadyOpenedBefore;
+    private boolean modified;
 
     public PropertiesSettingsTab(FacetEditorContext editorContext) {
         this.editorContext = editorContext;
+
+        /* No additional properties support yet in this release */
+        pnlAdditionalProperties.setVisible(false);
+        lblAdditionalProperties.setVisible(false);
+        lblAdditionalPropertiesDescription.setVisible(false);        
+        /* -- */
+
+        wireActivityWatcher();        
+    }
+
+    private void wireActivityWatcher() {
+        UserActivityWatcher watcher = new UserActivityWatcher();
+        watcher.addUserActivityListener(new UserActivityListener() {
+            public void stateChanged() {
+                modified = true;
+            }
+        });
+        watcher.register(pnlRoot);
     }
 
     @Nls
@@ -39,7 +62,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
     }
 
     public boolean isModified() {
-        return orderedFileList.isModified();
+        return modified;
     }
 
     public boolean isAlreadyOpenedBefore() {

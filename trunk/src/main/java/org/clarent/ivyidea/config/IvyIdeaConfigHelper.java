@@ -10,13 +10,14 @@ import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
+import org.clarent.ivyidea.util.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.*;                                                                                    
 
 /**
  * Handles retrieval of settings from the configuration.
@@ -115,10 +116,8 @@ public class IvyIdeaConfigHelper {
     public static Properties loadProperties(Module module, List<String> propertiesFiles) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         // Go over the files in reverse order --> files listed first should have priority and loading properties
         // overwrited previously loaded ones.
-        propertiesFiles = new ArrayList<String>(propertiesFiles); // avoid errors on unmodifiable lists
-        Collections.reverse(propertiesFiles);
         final Properties properties = new Properties();
-        for (String propertiesFile : propertiesFiles) {
+        for (String propertiesFile : CollectionUtils.createReversedList(propertiesFiles)) {
             if (propertiesFile != null) {
                 File result = new File(propertiesFile);
                 if (!result.exists()) {

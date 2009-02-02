@@ -40,12 +40,14 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     private com.intellij.openapi.ui.TextFieldWithBrowseButton txtIvyFile;
     private JPanel pnlRoot;
-    private JCheckBox chkUseProjectSettings;
+    private JCheckBox chkOverrideProjectIvySettings;
     private TextFieldWithBrowseButton txtIvySettingsFile;
-    private JLabel lblIvySettingsFile;
     private JCheckBox chkOnlyResolveSpecificConfigs;
     private ConfigurationSelectionTable tblConfigurationSelection;
     private JLabel lblIvyFileMessage;
+    private JRadioButton useIvyDefaultRadioButton;
+    private JRadioButton useYourOwnRadioButton;
+    private JPanel pnlOverriddenIvySettings;
     private FacetEditorContext editorContext;
     private final PropertiesSettingsTab propertiesSettingsTab;
     private boolean modified;
@@ -74,10 +76,12 @@ public class BasicSettingsTab extends FacetEditorTab {
                 reloadIvyFile();
             }
         });
-        chkUseProjectSettings.addChangeListener(new ChangeListener() {
+        chkOverrideProjectIvySettings.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                lblIvySettingsFile.setEnabled(!chkUseProjectSettings.isSelected());
-                txtIvySettingsFile.setEnabled(!chkUseProjectSettings.isSelected());
+                pnlOverriddenIvySettings.setEnabled(chkOverrideProjectIvySettings.isSelected());
+                useYourOwnRadioButton.setEnabled(chkOverrideProjectIvySettings.isSelected());
+                useIvyDefaultRadioButton.setEnabled(chkOverrideProjectIvySettings.isSelected());
+                txtIvySettingsFile.setEnabled(chkOverrideProjectIvySettings.isSelected() && useYourOwnRadioButton.isSelected());
             }
         });
 
@@ -86,7 +90,11 @@ public class BasicSettingsTab extends FacetEditorTab {
                 tblConfigurationSelection.setEnabled(chkOnlyResolveSpecificConfigs.isSelected());
             }
         });
-
+        useYourOwnRadioButton.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                txtIvySettingsFile.setEnabled(chkOverrideProjectIvySettings.isSelected() && useYourOwnRadioButton.isSelected());
+            }
+        });
     }
 
     @Override
@@ -134,7 +142,7 @@ public class BasicSettingsTab extends FacetEditorTab {
                 properties = IvyIdeaConfigHelper.getIvyProperties(editorContext.getModule());
             }
             String ivySettingsFile = txtIvySettingsFile.getTextField().getText();
-            if (chkUseProjectSettings.isSelected()) {
+            if (chkOverrideProjectIvySettings.isSelected()) {
                 ivySettingsFile = IvyIdeaConfigHelper.getProjectIvySettingsFile(editorContext.getProject()).getAbsolutePath();
             }
             return IvyIdeaConfigHelper.createCustomConfiguredIvySettings(editorContext.getModule(), ivySettingsFile, properties);
@@ -161,7 +169,7 @@ public class BasicSettingsTab extends FacetEditorTab {
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
             configuration.setIvyFile(txtIvyFile.getText());
-            configuration.setUseProjectSettings(chkUseProjectSettings.isSelected());
+            configuration.setUseProjectSettings(chkOverrideProjectIvySettings.isSelected());
             configuration.setIvySettingsFile(txtIvySettingsFile.getText());
             configuration.setOnlyResolveSelectedConfigs(chkOnlyResolveSpecificConfigs.isSelected());
             configuration.setConfigsToResolve(getNames(tblConfigurationSelection.getSelectedConfigurations()));
@@ -182,7 +190,7 @@ public class BasicSettingsTab extends FacetEditorTab {
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
             txtIvyFile.setText(configuration.getIvyFile());
-            chkUseProjectSettings.setSelected(configuration.isUseProjectSettings());
+            chkOverrideProjectIvySettings.setSelected(configuration.isUseProjectSettings());
             txtIvySettingsFile.setText(configuration.getIvySettingsFile());
             chkOnlyResolveSpecificConfigs.setSelected(configuration.isOnlyResolveSelectedConfigs());
             Set<Configuration> allConfigurations;

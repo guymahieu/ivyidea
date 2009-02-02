@@ -13,7 +13,10 @@ import org.clarent.ivyidea.intellij.facet.ui.PropertiesSettingsTab;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 /**
@@ -29,7 +32,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private String ivySettingsFile;
     private boolean onlyResolveSelectedConfigs = false;
     private Set<String> configsToResolve = Collections.emptySet();
-    private PropertiesSettings propertiesSettings = new PropertiesSettings();
+    private FacetPropertiesSettings facetPropertiesSettings = new FacetPropertiesSettings();
 
     @Nullable
     public static IvyIdeaFacetConfiguration getInstance(Module module) {
@@ -82,8 +85,8 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         this.configsToResolve = configsToResolve;
     }
 
-    public PropertiesSettings getPropertiesSettings() {
-        return propertiesSettings;
+    public FacetPropertiesSettings getPropertiesSettings() {
+        return facetPropertiesSettings;
     }
 
     public FacetEditorTab[] createEditorTabs(FacetEditorContext editorContext, FacetValidatorsManager validatorsManager) {
@@ -96,7 +99,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         readBasicSettings(element);
         final Element propertiesSettingsElement = element.getChild("propertiesSettings");
         if (propertiesSettingsElement != null) {
-            propertiesSettings.readExternal(propertiesSettingsElement);
+            facetPropertiesSettings.readExternal(propertiesSettingsElement);
         }
     }
 
@@ -124,8 +127,8 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     public void writeExternal(Element element) throws WriteExternalException {
         writeBasicSettings(element);
         final Element propertiesSettingsElement = new Element("propertiesSettings");
-        if (propertiesSettings != null) {
-            propertiesSettings.writeExternal(propertiesSettingsElement);
+        if (facetPropertiesSettings != null) {
+            facetPropertiesSettings.writeExternal(propertiesSettingsElement);
         }
         element.addContent(propertiesSettingsElement);
     }
@@ -141,37 +144,6 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
                 configsElement.addContent(new Element("config").setText(configToResolve));
             }
             element.addContent(configsElement);
-        }
-    }
-
-    protected static class SortedProperties implements Iterable<String> {
-
-        private List<String> sortedKeys = new ArrayList<String>();
-        private Map<String, String> data = new HashMap<String, String>();
-
-        public void add(String key, String value) {
-            if (sortedKeys.contains(key)) {
-                sortedKeys.remove(key);
-            }
-            sortedKeys.add(key);
-            data.put(key, value);
-        }
-
-        public void remove(String key) {
-            sortedKeys.remove(key);
-            data.remove(key);
-        }
-
-        public Iterator<String> keySet() {
-            return sortedKeys.iterator();
-        }
-
-        public String getValue(String key) {
-            return data.get(key);
-        }
-
-        public Iterator<String> iterator() {
-            return keySet();
         }
     }
 

@@ -104,7 +104,9 @@ public class OrderedFileList {
     }
 
     public void setFileNames(List<String> items) {
-        ((OrderedFileListModel) lstFileNames.getModel()).add(items);
+        final OrderedFileListModel model = new OrderedFileListModel();
+        lstFileNames.setModel(model);
+        model.add(items);
     }
 
     public JPanel getRootPanel() {

@@ -10,14 +10,20 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
+import org.clarent.ivyidea.config.model.PropertiesSettings;
+import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.intellij.IntellijUtils;
-import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.util.List;
 
 /**
  * @author Guy Mahieu
@@ -35,19 +41,41 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     private TextFieldWithBrowseButton txtIvySettingsFile;
     private JPanel projectSettingsPanel;
     private JCheckBox chkValidateIvyFiles;
+    private JTabbedPane tabbedPane1;
+    private JLabel lblIvySettingsErrorMessage;
+    private JRadioButton useIvyDefaultRadioButton;
+    private JRadioButton useYourOwnIvySettingsRadioButton;
+    private JPanel pnlPropertiesFiles;
     private IvyIdeaProjectSettings internalState;
+    private OrderedFileList orderedFileList;
 
     public IvyIdeaProjectSettingsComponent() {
+        wireActivityWatcher();
+        wireIvySettingsTextbox();
+        wireIvySettingsRadioButtons();
+    }
+
+    private void wireIvySettingsRadioButtons() {
+        useYourOwnIvySettingsRadioButton.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
+            }
+        });
+    }
+
+    private void wireIvySettingsTextbox() {
+        txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", IntellijUtils.getCurrentProject(), new FileChooserDescriptor(true, false, false, false, false, false));
+        txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
+    }
+
+    private void wireActivityWatcher() {
         UserActivityWatcher watcher = new UserActivityWatcher();
         watcher.addUserActivityListener(new UserActivityListener() {
-
             public void stateChanged() {
                 modified = true;
             }
         });
         watcher.register(projectSettingsPanel);
-
-        txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", IntellijUtils.getCurrentProject(), new FileChooserDescriptor(true, false, false, false, false, false));
     }
 
     public void projectOpened() {
@@ -92,27 +120,37 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         return modified;
     }
 
+    public List<String> getPropertiesFiles() {
+        return orderedFileList.getFileNames();
+    }
+
     public void apply() throws ConfigurationException {
         if (internalState == null) {
             internalState = new IvyIdeaProjectSettings();
         }
         internalState.setIvySettingsFile(txtIvySettingsFile.getText());
         internalState.setValidateIvyFiles(chkValidateIvyFiles.isSelected());
+        internalState.setUseCustomIvySettings(useYourOwnIvySettingsRadioButton.isSelected());
+        final PropertiesSettings propertiesSettings = new PropertiesSettings();
+        propertiesSettings.setPropertyFiles(getPropertiesFiles());
+        internalState.setPropertiesSettings(propertiesSettings);
     }
 
     public void reset() {
-        if (internalState != null) {
-            txtIvySettingsFile.setText(internalState.getIvySettingsFile());
-            chkValidateIvyFiles.setSelected(internalState.isValidateIvyFiles());
-        } else {
-            txtIvySettingsFile.setText("");
-            chkValidateIvyFiles.setSelected(false);
+        IvyIdeaProjectSettings config = internalState;       
+        if (config == null) {
+            config = new IvyIdeaProjectSettings();
         }
+        txtIvySettingsFile.setText(config.getIvySettingsFile());
+        chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
+        useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
+        orderedFileList.setFileNames(config.getPropertiesSettings().getPropertyFiles());
     }
 
     public void disposeUIResources() {
     }
 
+    @NotNull
     public IvyIdeaProjectSettings getState() {
         if (internalState == null) {
             internalState = new IvyIdeaProjectSettings();
@@ -125,5 +163,11 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
             state = new IvyIdeaProjectSettings();
         }
         this.internalState = state;
+    }
+
+    private void createUIComponents() {
+        pnlPropertiesFiles = new JPanel(new BorderLayout());
+        orderedFileList = new OrderedFileList(IntellijUtils.getCurrentProject());
+        pnlPropertiesFiles.add(orderedFileList.getRootPanel(), BorderLayout.CENTER);
     }
 }

@@ -33,7 +33,7 @@ class OrderedFileListModel extends AbstractListModel {
 
     public int getSize() {
         return items.size();
-    }
+    }       
 
     public String getItemAt(int index) {
         return items.get(index);

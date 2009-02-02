@@ -17,18 +17,18 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/ivy-2.0.0-rc2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0/ivy-2.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/src/java" />
+          <root url="file://$MODULE_DIR$/lib/apache-ivy-2.0.0/src/java" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/lib/jsch-0.1.31.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0/lib/oro-2.0.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/lib/oro-2.0.8.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0/lib/commons-vfs-1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -46,25 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/lib/commons-vfs-1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/lib/commons-httpclient-3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0-rc2/lib/commons-logging-1.0.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apache-ivy-2.0.0/lib/jsch-0.1.31.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -30,9 +30,7 @@ public class IntellijModuleWrapper implements Closeable {
         ModifiableRootModel modifiableModel = null;
         try {
             modifiableModel = ModuleRootManager.getInstance(module).getModifiableModel();
-            Library library = getIvyIdeaLibrary(modifiableModel.getModuleLibraryTable(), module);
-            Library.ModifiableModel libraryModifiableModel = library.getModifiableModel();           
-            return new IntellijModuleWrapper(modifiableModel, libraryModifiableModel);
+            return new IntellijModuleWrapper(modifiableModel);
         } catch (RuntimeException e) {
             if (modifiableModel != null) {
                 modifiableModel.dispose();
@@ -41,18 +39,19 @@ public class IntellijModuleWrapper implements Closeable {
         }
     }
 
-    private IntellijModuleWrapper(ModifiableRootModel intellijModule, Library.ModifiableModel libraryModel) {
+    private IntellijModuleWrapper(ModifiableRootModel intellijModule) {
         this.intellijModule = intellijModule;
-        this.libraryModel = libraryModel;
+        this.libraryModel = getIvyIdeaLibrary(intellijModule).getModifiableModel();
     }
 
-    private static Library getIvyIdeaLibrary(LibraryTable libraryTable, Module currentModule) {
-        String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName();
-        Library library = libraryTable.getLibraryByName(libraryName);
+    private static Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel) {
+        final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName();
+        final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
+        final Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {
-            LOGGER.info("Internal library not found for module " + currentModule.getModuleFilePath() + ", creating with name " + libraryName + "...");
-            library = libraryTable.createLibrary(libraryName);
-        }
+            LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getModuleFilePath() + ", creating with name " + libraryName + "...");
+            return libraryTable.createLibrary(libraryName);
+        }        
         return library;
     }
 
@@ -84,6 +83,7 @@ public class IntellijModuleWrapper implements Closeable {
 
     public void addExternalDependency(ExternalDependency externalDependency) {
         libraryModel.addRoot(externalDependency.getUrlForLibrary(), externalDependency.getType());
+//        libraryModel.
     }
 
     public boolean alreadyHasDependencyOnModule(Module module) {

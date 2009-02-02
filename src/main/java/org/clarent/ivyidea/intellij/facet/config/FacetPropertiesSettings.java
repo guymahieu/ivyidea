@@ -3,21 +3,19 @@ package org.clarent.ivyidea.intellij.facet.config;
 import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.JDOMExternalizable;
 import com.intellij.openapi.util.WriteExternalException;
+import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.jdom.Element;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Guy Mahieu
 */
-public class PropertiesSettings implements JDOMExternalizable {
+public class FacetPropertiesSettings extends PropertiesSettings implements JDOMExternalizable {
 
     private boolean includeProjectLevelPropertiesFiles = true;
-    private List<String> propertyFiles = Collections.emptyList();
     private boolean includeProjectLevelAdditionalProperties = true;
-    private IvyIdeaFacetConfiguration.SortedProperties additionalProperties = new IvyIdeaFacetConfiguration.SortedProperties();
 
     public boolean isIncludeProjectLevelPropertiesFiles() {
         return includeProjectLevelPropertiesFiles;
@@ -35,22 +33,6 @@ public class PropertiesSettings implements JDOMExternalizable {
         this.includeProjectLevelAdditionalProperties = includeProjectLevelAdditionalProperties;
     }
 
-    public List<String> getPropertyFiles() {
-        return propertyFiles;
-    }
-
-    public void setPropertyFiles(List<String> propertyFiles) {
-        this.propertyFiles = propertyFiles;
-    }
-
-    public IvyIdeaFacetConfiguration.SortedProperties getAdditionalProperties() {
-        return additionalProperties;
-    }
-
-    public void setAdditionalProperties(IvyIdeaFacetConfiguration.SortedProperties additionalProperties) {
-        this.additionalProperties = additionalProperties;
-    }
-
     public void readExternal(Element propertiesSettingsElement) throws InvalidDataException {
         final Element propertiesFilesElement = propertiesSettingsElement.getChild("propertiesFiles");
         List<String> fileNames = new ArrayList<String>();
@@ -65,7 +47,7 @@ public class PropertiesSettings implements JDOMExternalizable {
         setPropertyFiles(fileNames);
 
         final Element additionalPropertiesElement = propertiesSettingsElement.getChild("additionalProperties");
-        IvyIdeaFacetConfiguration.SortedProperties additionalProperties = new IvyIdeaFacetConfiguration.SortedProperties();
+        PropertiesSettings.SortedProperties additionalProperties = new PropertiesSettings.SortedProperties();
         if (additionalPropertiesElement != null) {
             setIncludeProjectLevelAdditionalProperties(Boolean.valueOf(propertiesFilesElement.getAttributeValue("includeProjectLevelAdditionalProperties", Boolean.TRUE.toString())));
             @SuppressWarnings("unchecked")
@@ -90,7 +72,7 @@ public class PropertiesSettings implements JDOMExternalizable {
         final Element additionalPropertiesElement = new Element("additionalProperties");
         additionalPropertiesElement.setAttribute("includeProjectLevelAdditionalProperties", Boolean.toString(isIncludeProjectLevelAdditionalProperties()));
         propertiesSettingsElement.addContent(additionalPropertiesElement);
-        final IvyIdeaFacetConfiguration.SortedProperties additionalProperties = getAdditionalProperties();
+        final SortedProperties additionalProperties = getAdditionalProperties();
         for (String propertyName : additionalProperties) {
             additionalPropertiesElement.addContent(new Element("property")
                     .setAttribute("name", propertyName)

@@ -5,9 +5,10 @@ import com.intellij.openapi.project.Project;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
+import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.intellij.IvyIdeaProjectSettings;
+import org.clarent.ivyidea.intellij.facet.config.FacetPropertiesSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.clarent.ivyidea.util.CollectionUtils;
@@ -21,6 +22,9 @@ import java.util.*;
 
 /**
  * Handles retrieval of settings from the configuration.
+ *
+ * TODO: This class has grown to become a monster - let's get rid of all the
+ *          statics and organize it a bit better 
  *
  * @author Guy Mahieu
  */
@@ -58,16 +62,17 @@ public class IvyIdeaConfigHelper {
     }
 
     public static boolean isValidationEnabled(Project project) {
-        IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
-        //noinspection SimplifiableIfStatement
-        if (component != null && component.getState() != null) {
-            return component.getState().isValidateIvyFiles();
-        }
-        return false;
-    }    
+        return getProjectConfig(project).isValidateIvyFiles();
+    }
 
     @NotNull
-    public static File getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
+    private static IvyIdeaProjectSettings getProjectConfig(Project project) {
+        IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
+        return component.getState();
+    }
+
+    @NotNull
+    private static File getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
         if (moduleConfiguration.isUseProjectSettings()) {
             return getProjectIvySettingsFile(module.getProject());
@@ -77,7 +82,7 @@ public class IvyIdeaConfigHelper {
     }
 
     @NotNull
-    public static File getModuleIvySettingsFile(Module module, IvyIdeaFacetConfiguration moduleConfiguration) throws IvySettingsNotFoundException {
+    private static File getModuleIvySettingsFile(Module module, IvyIdeaFacetConfiguration moduleConfiguration) throws IvySettingsNotFoundException {
         final String ivySettingsFile = moduleConfiguration.getIvySettingsFile();
         if (ivySettingsFile != null) {
             File result = new File(ivySettingsFile);
@@ -94,7 +99,7 @@ public class IvyIdeaConfigHelper {
     public static File getProjectIvySettingsFile(Project project) throws IvySettingsNotFoundException {
         IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
         final IvyIdeaProjectSettings state = component.getState();
-        if (state != null && StringUtils.isNotBlank(state.getIvySettingsFile())) {
+        if (StringUtils.isNotBlank(state.getIvySettingsFile())) {
             File result = new File(state.getIvySettingsFile());
             if (!result.exists()) {
                 throw new IvySettingsNotFoundException("The ivy settings file given in the project settings does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Project, project.getName());
@@ -108,7 +113,12 @@ public class IvyIdeaConfigHelper {
     @NotNull
     public static Properties getIvyProperties(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
-        final List<String> propertiesFiles = new ArrayList<String>(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
+        final List<String> propertiesFiles = new ArrayList<String>();
+        propertiesFiles.addAll(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
+        final FacetPropertiesSettings modulePropertiesSettings = moduleConfiguration.getPropertiesSettings();
+        if (modulePropertiesSettings.isIncludeProjectLevelPropertiesFiles()) {
+            propertiesFiles.addAll(getProjectConfig(module.getProject()).getPropertiesSettings().getPropertyFiles());
+        }
         return loadProperties(module, propertiesFiles);
     }
 
@@ -134,10 +144,17 @@ public class IvyIdeaConfigHelper {
     }
 
     @NotNull
-    public static IvySettings createConfiguredIvySettings(Module module) throws IOException, ParseException, IvySettingsNotFoundException, IvySettingsFileReadException {
+    public static IvySettings createConfiguredIvySettings(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         IvySettings s = new IvySettings();
         injectProperties(s, module); // inject our properties; they may be needed to parse the settings file
-        s.load(getIvySettingsFile(module));
+        final File ivySettingsFile = getIvySettingsFile(module);
+        try {
+            s.load(ivySettingsFile);
+        } catch (ParseException e) {
+            throw new IvySettingsFileReadException(ivySettingsFile.getAbsolutePath(), module.getName(), e);            
+        } catch (IOException e) {
+            throw new IvySettingsFileReadException(ivySettingsFile.getAbsolutePath(), module.getName(), e);            
+        }
         injectProperties(s, module); // re-inject our properties; they may overwrite some properties loaded by the settings file
         return s;
     }

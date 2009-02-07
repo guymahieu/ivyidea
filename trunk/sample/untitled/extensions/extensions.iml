@@ -2,10 +2,18 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
-      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\extensions\ivy.xml" useProjectSettings="true" ivySettingsFile="" onlyResolveSelectedConfigs="true">
+      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\extensions\ivy.xml" useProjectSettings="true" useCustomIvySettings="false" ivySettingsFile="" onlyResolveSelectedConfigs="true">
         <configsToResolve>
           <config>ide</config>
         </configsToResolve>
+        <propertiesSettings>
+          <propertiesFiles includeProjectLevelPropertiesFiles="true">
+            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions.properties</fileName>
+            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions-old.properties</fileName>
+            <fileName>C:\projects\ivyidea\trunk\sample\untitled\extensions\def2.properties</fileName>
+          </propertiesFiles>
+          <additionalProperties includeProjectLevelAdditionalProperties="true" />
+        </propertiesSettings>
       </configuration>
     </facet>
   </component>

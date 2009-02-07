@@ -3,7 +3,8 @@
             xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info organisation="clarent" module="untitled-plugin-test-core" revision="0.1"/>
     <configurations>
-        <conf name="default" description="The default minimal configuration."/>
+        <conf name="${def}" description="The default minimal configuration."/>
+        <!--<conf name="default" description="The default minimal configuration."/>-->
         <conf name="provided" description="These dependencies are already present at runtime."/>
         <conf name="test" description="These dependencies are only needed for running tests."/>
         <conf name="eclipse" description="Modules for eclipse."
@@ -11,6 +12,6 @@
         <conf name="ide" description="Dependencies to resolve for IDE's."/>
     </configurations>
     <dependencies>
-        <dependency org="apache" name="commons-collections" rev="3.2.1" conf="ide,default->default"/>
+        <dependency org="apache" name="commons-collections" rev="${apache.commons.collections.version}" conf="ide,default->default"/>
     </dependencies>
 </ivy-module>

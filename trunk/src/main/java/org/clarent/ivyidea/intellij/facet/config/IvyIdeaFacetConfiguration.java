@@ -11,6 +11,7 @@ import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
 import org.clarent.ivyidea.intellij.facet.ui.BasicSettingsTab;
 import org.clarent.ivyidea.intellij.facet.ui.PropertiesSettingsTab;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -27,9 +28,14 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
 
     private static final Logger LOGGER = Logger.getLogger(IvyIdeaFacetConfiguration.class.getName());
 
-    private String ivyFile;
+    /*
+        Al the fields are initialized with a default value to avoid errors when adding a new IvyIDEA facet to an
+        existing module.
+    */
+    private String ivyFile = "";
     private boolean useProjectSettings = true;
-    private String ivySettingsFile;
+    private boolean useCustomIvySettings = true;
+    private String ivySettingsFile = "";
     private boolean onlyResolveSelectedConfigs = false;
     private Set<String> configsToResolve = Collections.emptySet();
     private FacetPropertiesSettings facetPropertiesSettings = new FacetPropertiesSettings();
@@ -45,11 +51,12 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         }
     }
 
+    @NotNull
     public String getIvyFile() {
         return ivyFile;
     }
 
-    public void setIvyFile(String ivyFile) {
+    public void setIvyFile(@NotNull String ivyFile) {
         this.ivyFile = ivyFile;
     }
 
@@ -61,11 +68,28 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
         this.useProjectSettings = useProjectSettings;
     }
 
+    public boolean isUseCustomIvySettings() {
+        return useCustomIvySettings;
+    }
+
+    public void setUseCustomIvySettings(boolean useCustomIvySettings) {
+        this.useCustomIvySettings = useCustomIvySettings;
+    }
+
+    public FacetPropertiesSettings getFacetPropertiesSettings() {
+        return facetPropertiesSettings;
+    }
+
+    public void setFacetPropertiesSettings(FacetPropertiesSettings facetPropertiesSettings) {
+        this.facetPropertiesSettings = facetPropertiesSettings;
+    }
+
+    @NotNull
     public String getIvySettingsFile() {
         return ivySettingsFile;
     }
 
-    public void setIvySettingsFile(String ivySettingsFile) {
+    public void setIvySettingsFile(@NotNull String ivySettingsFile) {
         this.ivySettingsFile = ivySettingsFile;
     }
 
@@ -105,13 +129,10 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
 
     private void readBasicSettings(Element element) {
         setIvyFile(element.getAttributeValue("ivyFile", ""));
+        setUseCustomIvySettings(Boolean.valueOf(element.getAttributeValue("useCustomIvySettings", Boolean.TRUE.toString())));
         setIvySettingsFile(element.getAttributeValue("ivySettingsFile", ""));
-        Boolean useProjectSettingsDefault = Boolean.TRUE;
-        if (getIvySettingsFile() == null || getIvyFile().trim().length() == 0) {
-            useProjectSettingsDefault = Boolean.FALSE;
-        }
-        setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", useProjectSettingsDefault.toString())));
         setOnlyResolveSelectedConfigs(Boolean.valueOf(element.getAttributeValue("onlyResolveSelectedConfigs", Boolean.FALSE.toString())));
+        setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", Boolean.TRUE.toString())));
         final Element configsToResolveElement = element.getChild("configsToResolve");
         if (configsToResolveElement != null) {
             Set<String> configsToResolve = new TreeSet<String>();
@@ -136,6 +157,7 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
     private void writeBasicSettings(Element element) {
         element.setAttribute("ivyFile", ivyFile == null ? "" : ivyFile);
         element.setAttribute("useProjectSettings", Boolean.toString(useProjectSettings));
+        element.setAttribute("useCustomIvySettings", Boolean.toString(useCustomIvySettings));
         element.setAttribute("ivySettingsFile", ivySettingsFile == null ? "" : ivySettingsFile);
         element.setAttribute("onlyResolveSelectedConfigs", Boolean.toString(onlyResolveSelectedConfigs));
         if (configsToResolve != null && !configsToResolve.isEmpty()) {

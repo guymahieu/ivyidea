@@ -5,6 +5,8 @@
     <property name="ivyidea.sourcedir" value="src/main/java"/>
     <property name="ivyidea.builddir" value="target/main/java"/>
 
+    <property name="ivyidea.ivyfolder" value="lib/apache-ivy-2.0.0"/>
+
     <target name="jar">
         <mkdir dir="build"/>
         <jar file="build/ivyidea-${ivyidea.version}.jar">
@@ -20,13 +22,16 @@
     <target name="bundle" depends="jar">
         <delete dir="build/dist/tmp"/>
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
-        <copy todir="build/dist/tmp/IvyIDEA/lib">
-            <fileset dir="lib/apache-ivy-2.0.0-rc2" includes="*.jar"/>
+        <copy todir="build/dist/tmp/IvyIDEA/lib">            
+            <!-- Ivy -->
+            <fileset dir="${ivyidea.ivyfolder}" includes="*.jar"/>
 
-            <!--Third party ivy runtime dependencies-->
-<!--
-            <fileset dir="lib/apache-ivy-2.0.0-rc2/lib" includes="*.jar"/>
--->
+            <!--Third party Ivy runtime dependencies-->
+            <fileset dir="${ivyidea.ivyfolder}/lib" includes="jsch-*.jar"/>
+            <fileset dir="${ivyidea.ivyfolder}/lib" includes="oro-*.jar"/>
+            <fileset dir="${ivyidea.ivyfolder}/lib" includes="commons-vfs-*.jar"/>
+
+            <!-- IvyIDEA -->
             <fileset dir="build" includes="ivyidea-${ivyidea.version}.jar"/>
         </copy>
         <mkdir dir="build/dist/tmp/IvyIDEA/license"/>

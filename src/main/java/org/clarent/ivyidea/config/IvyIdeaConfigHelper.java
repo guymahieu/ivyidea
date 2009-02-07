@@ -62,6 +62,10 @@ public class IvyIdeaConfigHelper {
         }
     }
 
+    public static List<String> getPropertiesFiles(Project project) {
+         return getProjectConfig(project).getPropertiesSettings().getPropertyFiles();
+    }
+
     public static boolean isValidationEnabled(Project project) {
         return getProjectConfig(project).isValidateIvyFiles();
     }

@@ -62,7 +62,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
     }
 
     public boolean isModified() {
-        return modified;
+        return modified || orderedFileList.isModified();
     }
 
     public boolean isAlreadyOpenedBefore() {

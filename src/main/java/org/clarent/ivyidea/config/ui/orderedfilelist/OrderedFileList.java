@@ -81,18 +81,24 @@ public class OrderedFileList {
 
     private void addFilenameToList(String fileName) {
         ((OrderedFileListModel) lstFileNames.getModel()).add(fileName);
+        modified = true;
     }
 
     private void wireRemoveButton() {
         btnRemove.setEnabled(false);
         btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final int selectedIndex = lstFileNames.getSelectedIndex();
-                if (selectedIndex != -1) {
-                    ((OrderedFileListModel) lstFileNames.getModel()).removeItemAt(selectedIndex);
-                }
+                removeSelectedItemFromList();
             }
         });
+    }
+
+    private void removeSelectedItemFromList() {
+        final int selectedIndex = lstFileNames.getSelectedIndex();
+        if (selectedIndex != -1) {
+            ((OrderedFileListModel) lstFileNames.getModel()).removeItemAt(selectedIndex);
+            modified = true;
+        }
     }
 
     public boolean isModified() {

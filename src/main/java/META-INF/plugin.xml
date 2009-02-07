@@ -22,7 +22,7 @@
                 <li>Support for using ${} style properties in ivy and ivysettings files</li>
                 <li>Improved lookup method for artifacts; now useOrigin="true" will also be supported.</li>
                 <li>Resolved config names are now listed in the IvyIDEA console.</li>
-                <li>Several small improvements</li>
+                <li>Several small fixes and improvements</li>
             </ul>
             <strong>0.8</strong>
             <ul>

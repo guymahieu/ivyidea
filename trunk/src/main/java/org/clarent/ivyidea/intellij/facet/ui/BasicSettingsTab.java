@@ -148,7 +148,7 @@ public class BasicSettingsTab extends FacetEditorTab {
                 foundConfigsBefore = false;
             }
         } catch (ParseException e1) {
-            lblIvyFileMessage.setText("Error while parsing the ivy file. If you use ant properties or specific ivy settings you should configure those first and click 'Apply'");
+            lblIvyFileMessage.setText("Error parsing the file. If you use properties or specific ivy settings, configure those first.");
         }
     }
 

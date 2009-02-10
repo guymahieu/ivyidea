@@ -10,7 +10,7 @@
     <target name="jar">
         <mkdir dir="build"/>
         <jar file="build/ivyidea-${ivyidea.version}.jar">
-            <fileset dir="out/production/IvyIDEA">
+            <fileset dir="${ivyidea.builddir}">
                 <include name="**/*"/>
             </fileset>
             <fileset dir="${ivyidea.sourcedir}">

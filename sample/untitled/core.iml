@@ -3,6 +3,9 @@
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
       <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\ivy.xml" useProjectSettings="true" useCustomIvySettings="true" ivySettingsFile="C:\projects\ivyidea\trunk\sample\untitled\ivy-settings.xml" onlyResolveSelectedConfigs="true">
+        <configsToResolve>
+          <config>ide</config>
+        </configsToResolve>
         <propertiesSettings>
           <propertiesFiles includeProjectLevelPropertiesFiles="true">
             <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions.properties</fileName>
@@ -21,9 +24,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library name="IvyIDEA-resolved">
-        <CLASSES />
-        <JAVADOC />
-        <SOURCES />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/ivycache/apache/commons-collections/jars/commons-collections-3.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/ivycache/apache/commons-collections/javadocs/commons-collections-3.2.1.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/ivycache/apache/commons-collections/sources/commons-collections-3.2.1.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>

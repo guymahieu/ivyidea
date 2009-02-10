@@ -10,7 +10,6 @@
           <propertiesFiles includeProjectLevelPropertiesFiles="true">
             <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions.properties</fileName>
             <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions-old.properties</fileName>
-            <fileName>C:\projects\ivyidea\trunk\sample\untitled\extensions\def2.properties</fileName>
           </propertiesFiles>
           <additionalProperties includeProjectLevelAdditionalProperties="true" />
         </propertiesSettings>

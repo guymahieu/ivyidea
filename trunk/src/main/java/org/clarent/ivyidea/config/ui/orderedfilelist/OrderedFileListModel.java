@@ -32,26 +32,39 @@ class OrderedFileListModel extends AbstractListModel {
         return Collections.unmodifiableList(items);
     }
 
-    public void add(List<String> items) {
-        this.items.addAll(items);
-        fireContentsChanged(this, 0, items.size());
+    public void setItems(List<String> itemsToSet) {
+        clear();
+        add(itemsToSet);
     }
 
-    public void add(String item) {
-        this.items.add(item);
-        fireContentsChanged(this, 0, items.size());
+    private void add(List<String> itemsToAdd) {
+        items.addAll(itemsToAdd);
+        fireIntervalAdded(this, items.size() - itemsToAdd.size(), items.size());
     }
 
-    public void removeItemAt(int index) {
-        this.items.remove(index);
-        fireContentsChanged(this, 0, items.size());
+    void add(String item) {
+        items.add(item);
+        fireIntervalAdded(this, items.size(), items.size());
+    }
+
+    void removeItemAt(int index) {
+        if (index >= 0 && index < items.size()) {
+            items.remove(index);
+            fireIntervalRemoved(this, index, index);
+        }
+    }
+
+    void clear() {
+        int nrOfItemsBeforeClear = items.size();
+        items.clear();
+        fireContentsChanged(this, 0, nrOfItemsBeforeClear);
     }
 
     public int getSize() {
         return items.size();
     }       
 
-    public String getItemAt(int index) {
+    String getItemAt(int index) {
         return items.get(index);
     }
 

@@ -25,6 +25,8 @@ import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 
 import javax.swing.*;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
@@ -76,9 +78,31 @@ public class OrderedFileList {
         lstFileNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstFileNames.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                btnRemove.setEnabled(lstFileNames.getSelectedIndex() > -1);
+                updateRemoveButtonState();
             }
         });
+        lstFileNames.getModel().addListDataListener(new ListDataListener() {
+            public void intervalAdded(ListDataEvent e) {
+                updateRemoveButtonState();
+            }
+
+            public void intervalRemoved(ListDataEvent e) {
+                updateRemoveButtonState();
+            }
+
+            public void contentsChanged(ListDataEvent e) {
+                updateRemoveButtonState();
+            }
+        });
+    }
+
+    private void updateRemoveButtonState() {
+        btnRemove.setEnabled(isRemoveAllowed());
+    }
+
+    private boolean isRemoveAllowed() {
+        return lstFileNames.getModel().getSize() > 0 &&
+                lstFileNames.getSelectedIndex() > -1;
     }
 
     private void wireAddButton() {
@@ -95,11 +119,6 @@ public class OrderedFileList {
 
     }
 
-    private void addFilenameToList(String fileName) {
-        ((OrderedFileListModel) lstFileNames.getModel()).add(fileName);
-        modified = true;
-    }
-
     private void wireRemoveButton() {
         btnRemove.setEnabled(false);
         btnRemove.addActionListener(new ActionListener() {
@@ -109,12 +128,30 @@ public class OrderedFileList {
         });
     }
 
+    private void addFilenameToList(String fileName) {
+        getFileListModel().add(fileName);
+        modified = true;
+    }
+
     private void removeSelectedItemFromList() {
         final int selectedIndex = lstFileNames.getSelectedIndex();
-        if (selectedIndex != -1) {
-            ((OrderedFileListModel) lstFileNames.getModel()).removeItemAt(selectedIndex);
-            modified = true;
+        getFileListModel().removeItemAt(selectedIndex);
+        updateListSelection(selectedIndex);
+        modified = true;
+    }
+
+    private void updateListSelection(int indexToSelect) {
+        if (indexToSelect >= 0) {
+            if (indexToSelect < getFileListModel().getSize()) {
+                lstFileNames.getSelectionModel().setSelectionInterval(indexToSelect, indexToSelect);
+            } else {
+                lstFileNames.getSelectionModel().setSelectionInterval(getFileListModel().getSize() - 1, getFileListModel().getSize() - 1);
+            }
         }
+    }
+
+    private OrderedFileListModel getFileListModel() {
+        return ((OrderedFileListModel) lstFileNames.getModel());
     }
 
     public boolean isModified() {
@@ -122,13 +159,11 @@ public class OrderedFileList {
     }
 
     public List<String> getFileNames() {
-        return ((OrderedFileListModel) lstFileNames.getModel()).getAllItems();
+        return getFileListModel().getAllItems();
     }
 
     public void setFileNames(List<String> items) {
-        final OrderedFileListModel model = new OrderedFileListModel();
-        lstFileNames.setModel(model);
-        model.add(items);
+        getFileListModel().setItems(items);
     }
 
     public JPanel getRootPanel() {

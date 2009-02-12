@@ -72,7 +72,7 @@ public class IntellijModuleWrapper implements Closeable {
     }
 
     public void updateDependencies(Collection<ResolvedDependency> resolvedDependencies) {
-        cleanupOnlyKeepGivenDependencies(resolvedDependencies);
+        removeDependenciesNotInList(resolvedDependencies);
         for (ResolvedDependency resolvedDependency : resolvedDependencies) {
             resolvedDependency.addTo(this);
         }
@@ -99,7 +99,6 @@ public class IntellijModuleWrapper implements Closeable {
 
     public void addExternalDependency(ExternalDependency externalDependency) {
         libraryModel.addRoot(externalDependency.getUrlForLibrary(), externalDependency.getType());
-//        libraryModel.
     }
 
     public boolean alreadyHasDependencyOnModule(Module module) {
@@ -121,26 +120,37 @@ public class IntellijModuleWrapper implements Closeable {
         return false;
     }
 
-    public void cleanupOnlyKeepGivenDependencies(Collection<ResolvedDependency> resolvedDependencies) {
+    public void removeDependenciesNotInList(Collection<ResolvedDependency> dependenciesToKeep) {
         for (OrderRootType type : IntellijCompatibilityService.getCompatibilityMethods().getAllOrderRootTypes()) {
-            final VirtualFile[] intellijDependencies = libraryModel.getFiles(type);
-            List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(Arrays.asList(intellijDependencies)); // add all dependencies initially
-            for (VirtualFile intellijDependency : intellijDependencies) {
-                for (ResolvedDependency resolvedDependency : resolvedDependencies) {
-                    if (resolvedDependency instanceof ExternalDependency) {
-                        ExternalDependency externalDependency = (ExternalDependency) resolvedDependency;
-                        if (externalDependency.isSameDependency(intellijDependency)) {
-                            dependenciesToRemove.remove(intellijDependency); // remove existing ones
-                        }
+            List<VirtualFile> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
+            for (VirtualFile virtualFile : dependenciesToRemove) {
+                removeDependency(type, virtualFile);
+            }
+        }
+    }
+
+    private void removeDependency(OrderRootType type, VirtualFile virtualFile) {
+        final String dependencyUrl = virtualFile.getUrl();
+        LOGGER.info("Removing no longer needed dependency of type " + type + ": " + dependencyUrl);
+        libraryModel.removeRoot(dependencyUrl, type);
+    }
+
+    private List<VirtualFile> getDependenciesToRemove(OrderRootType type, Collection<ResolvedDependency> resolvedDependencies) {
+        final VirtualFile[] intellijDependencies = libraryModel.getFiles(type);
+        List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(Arrays.asList(intellijDependencies)); // add all dependencies initially
+        for (VirtualFile intellijDependency : intellijDependencies) {
+            for (ResolvedDependency resolvedDependency : resolvedDependencies) {
+                // TODO: We don't touch module to module dependencies here because we currently can't determine if
+                //          they were added by IvyIDEA or by the user
+                if (resolvedDependency instanceof ExternalDependency) {
+                    ExternalDependency externalDependency = (ExternalDependency) resolvedDependency;
+                    if (externalDependency.isSameDependency(intellijDependency)) {
+                        dependenciesToRemove.remove(intellijDependency); // remove existing ones
                     }
                 }
             }
-            for (VirtualFile virtualFile : dependenciesToRemove) {
-                final String dependencyUrl = virtualFile.getUrl();
-                LOGGER.info("Removing no longer needed dependency of type " + type + ": " + dependencyUrl);
-                libraryModel.removeRoot(dependencyUrl, type);
-            }
         }
+        return dependenciesToRemove;
     }
 
 }

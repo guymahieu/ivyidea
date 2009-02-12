@@ -1,0 +1,13 @@
+<ivysettings>
+        <properties file="${my.settings.file.test}" />
+        <!--<properties file="${ivy.settings.dir}/ivysettings-file.properties" />-->
+        <settings defaultCache="${cache.dir}" defaultResolver="internal" checkUpToDate="false" />
+        <resolvers>
+                <ibiblio name="ibiblio" />
+                <!--<ibiblio name="internal" />-->
+                <filesystem name="internal">
+                        <ivy pattern="${repository.dir}/[organisation]/[module]/ivy-[revision].xml" />
+                        <artifact pattern="${repository.dir}/[organisation]/[type]s/[artifact]-[revision].[ext]" />
+                </filesystem>
+        </resolvers>
+</ivysettings>

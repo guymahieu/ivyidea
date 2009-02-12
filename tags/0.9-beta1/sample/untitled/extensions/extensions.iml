@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="IvyIDEA" name="IvyIDEA">
+      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\extensions\ivy.xml" useProjectSettings="true" useCustomIvySettings="false" ivySettingsFile="" onlyResolveSelectedConfigs="true">
+        <configsToResolve>
+          <config>ide</config>
+        </configsToResolve>
+        <propertiesSettings>
+          <propertiesFiles includeProjectLevelPropertiesFiles="true">
+            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions.properties</fileName>
+            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions-old.properties</fileName>
+          </propertiesFiles>
+          <additionalProperties includeProjectLevelAdditionalProperties="true" />
+        </propertiesSettings>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module-library">
+      <library name="IvyIDEA-resolved">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/javadocs/commons-collections-3.2.1.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/sources/commons-collections-3.2.1.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
+

@@ -18,7 +18,6 @@ package org.clarent.ivyidea.config.ui.orderedfilelist;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ class OrderedFileListModel extends AbstractListModel {
     private List<String> items = new ArrayList<String>();
 
     public List<String> getAllItems() {
-        return Collections.unmodifiableList(items);
+        return new ArrayList<String>(items);
     }
 
     public void setItems(List<String> itemsToSet) {

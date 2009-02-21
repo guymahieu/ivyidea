@@ -27,6 +27,10 @@ import java.util.*;
  */
 public class ConfigurationSelectionTableModel extends AbstractTableModel {
 
+    private static final int COLUMN_SELECTION = 0;
+    private static final int COLUMN_NAME = 1;
+    private static final int COLUMN_DESCRIPTION = 2;
+
     private List<Configuration> data;
     private Set<Integer> selectedIndexes;
 
@@ -48,7 +52,7 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     public Set<Configuration> getSelectedConfigurations() {
         Set<Configuration> result = new HashSet<Configuration>();
         for (Integer selectedIndex : selectedIndexes) {
-            result.add(data.get(selectedIndex));
+            result.add(getConfigurationAt(selectedIndex));
         }
         return result;
     }
@@ -70,28 +74,40 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     }
 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (columnIndex == 0 && aValue instanceof Boolean) {
+        if (columnIndex == COLUMN_SELECTION && aValue instanceof Boolean) {
             boolean checked = (Boolean) aValue;
             if (checked) {
-                selectedIndexes.add(rowIndex);
+                selectRow(rowIndex);
             } else {
-                selectedIndexes.remove(rowIndex);
+                unselectRow(rowIndex);
             }
         }
     }
 
+    private void unselectRow(int rowIndex) {
+        selectedIndexes.remove(rowIndex);
+    }
+
+    private void selectRow(int rowIndex) {
+        selectedIndexes.add(rowIndex);
+    }
+
     public Object getValueAt(int rowIndex, int columnIndex) {
-        final Configuration configuration = data.get(rowIndex);
-        if (columnIndex == 0) {
-            return selectedIndexes.contains(rowIndex);
+        final Configuration configuration = getConfigurationAt(rowIndex);
+        if (columnIndex == COLUMN_SELECTION) {
+            return isRowSelected(rowIndex);
         }
-        if (columnIndex == 1) {
+        if (columnIndex == COLUMN_NAME) {
             return configuration.getName();
         }
-        if (columnIndex == 2) {
+        if (columnIndex == COLUMN_DESCRIPTION) {
             return configuration.getDescription();
         }
         return null;
+    }
+
+    private boolean isRowSelected(int rowIndex) {
+        return selectedIndexes.contains(rowIndex);
     }
 
     private static Set<Integer> buildSelectedIndexes(@NotNull List<Configuration> configurations, @NotNull Collection<String> selectedConfigNames) {

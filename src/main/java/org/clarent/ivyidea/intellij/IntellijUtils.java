@@ -25,9 +25,9 @@ import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
-import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +53,15 @@ public class IntellijUtils {
         final Module[] allModules = ModuleManager.getInstance(project).getModules();
         final List<Module> result = new ArrayList<Module>();
         for (Module module : allModules) {
-            final IvyIdeaFacet ivyIdeaFacet = FacetManager.getInstance(module).getFacetByType(IvyIdeaFacetType.ID);
-            if (ivyIdeaFacet != null) {
+            if (containsIvyIdeaFacet(module)) {
                 result.add(module);
             }
         }
         return result.toArray(new Module[result.size()]);
+    }
+
+    public static boolean containsIvyIdeaFacet(@Nullable Module module) {
+        return module != null && FacetManager.getInstance(module).getFacetByType(IvyIdeaFacetType.ID) != null;
     }
 
     @NotNull

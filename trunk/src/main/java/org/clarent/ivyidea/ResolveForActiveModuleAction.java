@@ -16,7 +16,6 @@
 
 package org.clarent.ivyidea;
 
-import com.intellij.facet.FacetManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
@@ -26,8 +25,7 @@ import com.intellij.openapi.progress.ProgressManager;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.intellij.facet.IvyIdeaFacet;
-import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
+import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
@@ -63,19 +61,14 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
     }
 
     public void update(AnActionEvent e) {
-        final Presentation presentation = e.getPresentation();
         final Module activeModule = DataKeys.MODULE.getData(e.getDataContext());
-        if (activeModule != null) {
-            final IvyIdeaFacet ivyIdeaFacet = FacetManager.getInstance(activeModule).getFacetByType(IvyIdeaFacetType.ID);
-            if (ivyIdeaFacet != null) {
-                presentation.setText(MessageFormat.format(MENU_TEXT, activeModule.getName()));
-                presentation.setEnabled(true);
-                presentation.setVisible(true);
-                return;
-            }
-        }
-        presentation.setText(MessageFormat.format(MENU_TEXT, "active"));
-        presentation.setEnabled(false);
-        presentation.setVisible(false);
+        updatePresentation(e.getPresentation(), activeModule);
+    }
+
+    private void updatePresentation(Presentation presentation, Module activeModule) {
+        boolean linkEnabled = IntellijUtils.containsIvyIdeaFacet(activeModule);
+        presentation.setText(MessageFormat.format(MENU_TEXT, linkEnabled ? activeModule.getName() : "active"));
+        presentation.setEnabled(linkEnabled);
+        presentation.setVisible(linkEnabled);
     }
 }

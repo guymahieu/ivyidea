@@ -58,7 +58,9 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
     }
 
     public boolean isSuitableModuleType(ModuleType moduleType) {
-        return IntellijCompatibilityService.getCompatibilityMethods().getJavaModuleType().equals(moduleType);
+        // Allow ivy facets for all module types...
+        return true;
+        // return IntellijCompatibilityService.getCompatibilityMethods().getJavaModuleType().equals(moduleType);
     }
 
     public javax.swing.Icon getIcon() {

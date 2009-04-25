@@ -136,8 +136,12 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         return modified;
     }
 
-    public List<String> getPropertiesFiles() {
+    private List<String> getPropertiesFiles() {
         return orderedFileList.getFileNames();
+    }
+
+    private void setPropertiesFiles(List<String> fileNames) {
+        orderedFileList.setFileNames(fileNames);
     }
 
     public void apply() throws ConfigurationException {
@@ -160,7 +164,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         txtIvySettingsFile.setText(config.getIvySettingsFile());
         chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
         useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
-        orderedFileList.setFileNames(config.getPropertiesSettings().getPropertyFiles());
+        setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
     }
 
     public void disposeUIResources() {

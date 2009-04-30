@@ -66,6 +66,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     private OrderedFileList orderedFileList;
 
     public IvyIdeaProjectSettingsComponent() {
+        internalState = new IvyIdeaProjectSettings();
         wireActivityWatcher();
         wireIvySettingsTextbox();
         wireIvySettingsRadioButtons();
@@ -172,9 +173,6 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
 
     @NotNull
     public IvyIdeaProjectSettings getState() {
-        if (internalState == null) {
-            internalState = new IvyIdeaProjectSettings();
-        }
         return internalState;
     }
 
@@ -182,7 +180,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         if (state == null) {
             state = new IvyIdeaProjectSettings();
         }
-        this.internalState = state;
+        this.internalState = IvyIdeaProjectSettings.copyDataFrom(state);
     }
 
     private void createUIComponents() {

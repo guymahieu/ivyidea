@@ -1,0 +1,90 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin url="http://www.ivyidea.org">
+    <name>IvyIDEA</name>
+    <description><![CDATA[Resolves module dependencies through Ivy
+        <p>Features:
+            <ul>
+                <li>Ivy integration (up to v2.0.0); no need for external ant build scripts to be called</li>
+                <li>Automatic ivy configuration of modules using facets (for modules containing an ivy.xml file)</li>
+                <li>Detection of dependencies that are really other intellij modules in the same project; these are added as module references</li>
+                <li>Detect source/document/jar type ivy artifacts in dependencies and add them as such to the module</li>
+                <li>Creation of a module library with all resolved ivy dependencies</li>
+                <li>Ivy configurations that need to be resolved can be chosen for each module</li>
+                <li>Properties can be injected into the ivy resolve process</li>
+            </ul>
+        </p>]]>
+    </description>
+    <change-notes><![CDATA[
+        <p>
+            <strong>0.9</strong>
+            <ul>
+                <li>Upgraded internal ivy to 2.0.0 (including dependencies)</li>
+                <li>Support for using ${} style properties in ivy and ivysettings files</li>
+                <li>Improved lookup method for artifacts; now useOrigin="true" will also be supported.</li>
+                <li>Resolved config names are now listed in the IvyIDEA console.</li>
+                <li>Several small fixes and improvements</li>
+            </ul>
+            <strong>0.8</strong>
+            <ul>
+                <li>Upgraded internal ivy to 2.0.0rc2</li>
+                <li>Improved exception handling</li>
+            </ul>
+            <strong>0.7-alpha</strong>
+            <ul>
+                <li>IvyIDEA is now compatible with IntelliJ 8.0 (and will run on previous versions as well)</li>
+                <li>Switched to JDK 1.5 so the plugin will also run on mac os</li>
+                <li>Made looking up intellij module dependencies more lenient; now the revision is ignored when
+                    identifying dependencies as existing intellij modules rather than jars</li>
+            </ul>
+            <strong>0.6-alpha</strong>
+            <ul>
+                <li>Removed toolwindow logging again as a quickfix - it blocked UI on larger projects.</li>
+            </ul>
+            <strong>0.5-alpha</strong>
+            <ul>
+                <li>The ivy configurations that need to be resolved are now configurable. They can be selected in the module configuration.</li>
+                <li>Dependencies that are in the module library from a previous resolve, but that are no longer valid are now removed during the resolve process.</li>
+                <li>Resolve process is now done in a background task to avoid blocking the UI.</li>
+                <li>Added a first simple toolwindow with the logging from the ivy resolve process.</li>
+            </ul>
+        </p>]]>
+    </change-notes>
+    <version>0.9-beta2</version>
+    <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
+    <idea-version since-build="3000"/>
+    <application-components>
+        <component>
+            <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>
+        </component>
+    </application-components>
+    <project-components>
+        <component>
+            <implementation-class>org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent</implementation-class>
+        </component>
+        <component>
+            <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
+        </component>
+    </project-components>
+    <actions>
+        <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module dependencies using Ivy"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <separator/>
+            <action id="IvyIDEA.UpdateSingleModuleDependencies"
+                    class="org.clarent.ivyidea.ResolveForActiveModuleAction" text="Resolve for active module"
+                    description="Resolve dependencies for the active module">
+            </action>
+            <action id="IvyIDEA.UpdateAllDependencies"
+                    class="org.clarent.ivyidea.ResolveForAllModulesAction" text="Resolve for all modules"
+                    description="Resolve dependencies for all modules">
+            </action>
+            <separator/>
+            <action id="ivyidea.RemoveAllIvyIdeaModuleLibrariesAction"
+                    class="org.clarent.ivyidea.RemoveAllIvyIdeaModuleLibrariesAction"
+                    text="Remove all resolved libraries"
+                    description="Remove all module libraries generated by IvyIDEA."/>
+        </group>
+    </actions>
+</idea-plugin>

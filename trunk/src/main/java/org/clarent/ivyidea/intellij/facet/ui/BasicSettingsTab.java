@@ -75,6 +75,7 @@ public class BasicSettingsTab extends FacetEditorTab {
     public BasicSettingsTab(@NotNull FacetEditorContext editorContext, @NotNull PropertiesSettingsTab propertiesSettingsTab) {
         this.editorContext = editorContext;
         this.propertiesSettingsTab = propertiesSettingsTab;
+        this.propertiesSettingsTab.reset();
 
         UserActivityWatcher watcher = new UserActivityWatcher();
         watcher.addUserActivityListener(new UserActivityListener() {
@@ -134,10 +135,7 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     @Override
     public void onTabEntering() {
-        // TODO: this does not seem to work!!!
-//        if (propertiesSettingsTab.isModified()) {
-            reloadIvyFile();
-//        }
+        reloadIvyFile();
     }
 
     public void reloadIvyFile() {
@@ -164,6 +162,7 @@ public class BasicSettingsTab extends FacetEditorTab {
                 foundConfigsBefore = false;
             }
         } catch (ParseException e1) {
+            // TODO: provide link to error display dialog with full exception
             lblIvyFileMessage.setText("Error parsing the file. If you use properties or specific ivy settings, configure those first.");
         }
     }
@@ -182,37 +181,28 @@ public class BasicSettingsTab extends FacetEditorTab {
     @Nullable
     private String getIvySettingsFileNameForCurrentSettingsInUI() throws IvySettingsNotFoundException {
         if (chkOverrideProjectIvySettings.isSelected()) {
+            if (rbnUseCustomIvySettings.isSelected())  {
+                return txtIvySettingsFile.getTextField().getText();
+            }
+        } else {
             final File projectIvySettingsFile = IvyIdeaConfigHelper.getProjectIvySettingsFile(editorContext.getProject());
             if (projectIvySettingsFile != null) {
                 return projectIvySettingsFile.getAbsolutePath();
-            } else {
-                return null;
-            }
-        } else {
-            if (rbnUseCustomIvySettings.isSelected())  {
-                return txtIvySettingsFile.getTextField().getText();
-            } else {
-                return null;
             }
         }
+        return null;
     }
 
     private Properties getPropertiesForCurrentSettingsInUI() throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        final Properties properties;
-        if (propertiesSettingsTab.isAlreadyOpenedBefore()) {
-            final List<String> propertiesFiles = new ArrayList<String>(propertiesSettingsTab.getFileNames());
-            // TODO: only include the project properties files if this option is chosen on the screen.
-            //          for now this is not configurable yet - so it always is true
-            boolean includeProjectProperties = true;
-            //noinspection ConstantConditions
-            if (includeProjectProperties) {
-                propertiesFiles.addAll(IvyIdeaConfigHelper.getPropertiesFiles(editorContext.getProject()));
-            }
-            properties = IvyIdeaConfigHelper.loadProperties(editorContext.getModule(), propertiesFiles);
-        } else {
-            properties = IvyIdeaConfigHelper.getIvyProperties(editorContext.getModule());
+        final List<String> propertiesFiles = new ArrayList<String>(propertiesSettingsTab.getFileNames());
+        // TODO: only include the project properties files if this option is chosen on the screen.
+        //          for now this is not configurable yet - so it always is true
+        boolean includeProjectProperties = true;
+        //noinspection ConstantConditions
+        if (includeProjectProperties) {
+            propertiesFiles.addAll(IvyIdeaConfigHelper.getPropertiesFiles(editorContext.getProject()));
         }
-        return properties;
+        return IvyIdeaConfigHelper.loadProperties(editorContext.getModule(), propertiesFiles);
     }
 
     @Nls

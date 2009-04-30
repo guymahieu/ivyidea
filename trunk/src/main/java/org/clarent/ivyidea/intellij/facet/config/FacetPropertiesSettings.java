@@ -62,19 +62,6 @@ public class FacetPropertiesSettings extends PropertiesSettings implements JDOME
         }
         setPropertyFiles(fileNames);
 
-        final Element additionalPropertiesElement = propertiesSettingsElement.getChild("additionalProperties");
-        PropertiesSettings.SortedProperties additionalProperties = new PropertiesSettings.SortedProperties();
-        if (additionalPropertiesElement != null) {
-            setIncludeProjectLevelAdditionalProperties(Boolean.valueOf(propertiesFilesElement.getAttributeValue("includeProjectLevelAdditionalProperties", Boolean.TRUE.toString())));
-            @SuppressWarnings("unchecked")
-            final List<Element> additionalProperty = (List<Element>) additionalPropertiesElement.getChildren("property");
-            for (Element element : additionalProperty) {
-                final String key = element.getAttributeValue("name");
-                final String value = element.getText();
-                additionalProperties.add(key, value);
-            }
-            setAdditionalProperties(additionalProperties);
-        }
     }
 
     public void writeExternal(Element propertiesSettingsElement) throws WriteExternalException {
@@ -85,16 +72,5 @@ public class FacetPropertiesSettings extends PropertiesSettings implements JDOME
             propertiesFilesElement.addContent(new Element("fileName").setText(fileName));
         }
 
-        final Element additionalPropertiesElement = new Element("additionalProperties");
-        additionalPropertiesElement.setAttribute("includeProjectLevelAdditionalProperties", Boolean.toString(isIncludeProjectLevelAdditionalProperties()));
-        propertiesSettingsElement.addContent(additionalPropertiesElement);
-        final SortedProperties additionalProperties = getAdditionalProperties();
-        for (String propertyName : additionalProperties) {
-            additionalPropertiesElement.addContent(new Element("property")
-                    .setAttribute("name", propertyName)
-                    .setText(additionalProperties.getValue(propertyName)));
-
-
-        }
     }
 }

@@ -27,6 +27,15 @@ public class IvyIdeaProjectSettings {
 
     private PropertiesSettings propertiesSettings = new PropertiesSettings();
 
+    public static IvyIdeaProjectSettings copyDataFrom(IvyIdeaProjectSettings ivyIdeaProjectSettings) {
+        IvyIdeaProjectSettings result = new IvyIdeaProjectSettings();
+        result.useCustomIvySettings = ivyIdeaProjectSettings.useCustomIvySettings;
+        result.ivySettingsFile = ivyIdeaProjectSettings.ivySettingsFile;
+        result.validateIvyFiles = ivyIdeaProjectSettings.validateIvyFiles;
+        result.propertiesSettings = PropertiesSettings.copyDataFrom(ivyIdeaProjectSettings.propertiesSettings);
+        return result;
+    }
+
     public String getIvySettingsFile() {
         return ivySettingsFile;
     }

@@ -18,6 +18,7 @@ package org.clarent.ivyidea.config;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
+import com.intellij.util.net.HttpConfigurable;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.*;                                                                                    
 
@@ -93,7 +95,7 @@ public class IvyIdeaConfigHelper {
     }
 
     @Nullable
-    private static File getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
+    private static String getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
         if (moduleConfiguration.isUseProjectSettings()) {
             return getProjectIvySettingsFile(module.getProject());
@@ -103,15 +105,22 @@ public class IvyIdeaConfigHelper {
     }
 
     @Nullable
-    private static File getModuleIvySettingsFile(Module module, IvyIdeaFacetConfiguration moduleConfiguration) throws IvySettingsNotFoundException {
+    private static String getModuleIvySettingsFile(Module module, IvyIdeaFacetConfiguration moduleConfiguration) throws IvySettingsNotFoundException {
         if (moduleConfiguration.isUseCustomIvySettings()) {
-            final String ivySettingsFile = moduleConfiguration.getIvySettingsFile();
-            if (ivySettingsFile != null) {
-                File result = new File(ivySettingsFile);
-                if (!result.exists()) {
-                    throw new IvySettingsNotFoundException("The ivy settings file given in the module settings for module " + module.getName() + " does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
+            final String ivySettingsFile = StringUtils.trim(moduleConfiguration.getIvySettingsFile());
+            if (!StringUtils.isBlank(ivySettingsFile)) {
+                if (!ivySettingsFile.startsWith("http://")
+                        && !ivySettingsFile.startsWith("https://")
+                        && !ivySettingsFile.startsWith("file://")) {
+                    File result = new File(ivySettingsFile);
+                    if (!result.exists()) {
+                        throw new IvySettingsNotFoundException("The ivy settings file given in the module settings for module " + module.getName() + " does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
+                    }
+                    if (result.isDirectory()) {
+                        throw new IvySettingsNotFoundException("The ivy settings file given in the module settings for module " + module.getName() + " is a directory: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
+                    }
                 }
-                return result;
+                return ivySettingsFile;
             } else {
                 throw new IvySettingsNotFoundException("No ivy settings file given in the settings of module " + module.getName(), IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
             }
@@ -121,16 +130,24 @@ public class IvyIdeaConfigHelper {
     }
 
     @Nullable
-    public static File getProjectIvySettingsFile(Project project) throws IvySettingsNotFoundException {
+    public static String getProjectIvySettingsFile(Project project) throws IvySettingsNotFoundException {
         IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
         final IvyIdeaProjectSettings state = component.getState();
         if (state.isUseCustomIvySettings()) {
-            if (StringUtils.isNotBlank(state.getIvySettingsFile())) {
-                File result = new File(state.getIvySettingsFile());
-                if (!result.exists()) {
-                    throw new IvySettingsNotFoundException("The ivy settings file given in the project settings does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Project, project.getName());
+            String settingsFile = StringUtils.trim(state.getIvySettingsFile());
+            if (StringUtils.isNotBlank(settingsFile)) {
+                if (!settingsFile.startsWith("http://")
+                        && !settingsFile.startsWith("https://")
+                        && !settingsFile.startsWith("file://")) {
+                    File result = new File(settingsFile);
+                    if (!result.exists()) {
+                        throw new IvySettingsNotFoundException("The ivy settings file given in the project settings does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Project, project.getName());
+                    }
+                    if (result.isDirectory()) {
+                        throw new IvySettingsNotFoundException("The ivy settings file given in the project settings is a directory: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Project, project.getName());
+                    }
                 }
-                return result;
+                return settingsFile;
             } else {
                 throw new IvySettingsNotFoundException("No ivy settings file specified in the project settings.", IvySettingsNotFoundException.ConfigLocation.Project, project.getName());
             }
@@ -174,30 +191,32 @@ public class IvyIdeaConfigHelper {
 
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        IvySettings s = new IvySettings();
-        injectProperties(s, module); // inject our properties; they may be needed to parse the settings file
-        final File ivySettingsFile = getIvySettingsFile(module);
-        if (ivySettingsFile != null) {
-            try {
-                s.load(ivySettingsFile);
-            } catch (ParseException e) {
-                throw new IvySettingsFileReadException(ivySettingsFile.getAbsolutePath(), module.getName(), e);
-            } catch (IOException e) {
-                throw new IvySettingsFileReadException(ivySettingsFile.getAbsolutePath(), module.getName(), e);
-            }
-        }
-        injectProperties(s, module); // re-inject our properties; they may overwrite some properties loaded by the settings file
-        return s;
+        return createConfiguredIvySettings(module, getIvySettingsFile(module), getIvyProperties(module));
     }
 
     @NotNull
-    public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IOException, ParseException, IvySettingsNotFoundException, IvySettingsFileReadException {
+    public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         IvySettings s = new IvySettings();
-        injectProperties(s, module, properties);
-        if (settingsFile != null) {
-            s.load(new File(settingsFile));
+        injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
+
+        if (!StringUtils.isBlank(settingsFile)) {
+            try {
+                if (settingsFile.startsWith("http://") || settingsFile.startsWith("https://")) {
+                    HttpConfigurable.getInstance().prepareURL(settingsFile);
+                    s.load(new URL(settingsFile));
+                } else if (settingsFile.startsWith("file://")) {
+                    s.load(new URL(settingsFile));
+                } else {
+                    s.load(new File(settingsFile));
+                }
+            } catch (ParseException e) {
+                throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
+            } catch (IOException e) {
+                throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
+            }
         }
-        injectProperties(s, module, properties);
+
+        injectProperties(s, module, properties); // re-inject our properties; they may overwrite some properties loaded by the settings file
         return s;
     }
 

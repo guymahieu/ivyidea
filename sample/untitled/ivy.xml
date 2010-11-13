@@ -3,8 +3,8 @@
             xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info organisation="clarent" module="untitled-plugin-test-core" revision="0.1"/>
     <configurations>
-        <conf name="${def}" description="The default minimal configuration."/>
-        <!--<conf name="default" description="The default minimal configuration."/>-->
+        <!--<conf name="${def}" description="The default minimal configuration."/>-->
+        <conf name="default" description="The default minimal configuration."/>
         <conf name="provided" description="These dependencies are already present at runtime."/>
         <conf name="test" description="These dependencies are only needed for running tests."/>
         <conf name="eclipse" description="Modules for eclipse."

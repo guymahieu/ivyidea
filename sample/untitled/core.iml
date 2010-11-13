@@ -2,16 +2,15 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
-      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\ivy.xml" useProjectSettings="true" useCustomIvySettings="true" ivySettingsFile="C:\projects\ivyidea\trunk\sample\untitled\ivy-settings.xml" onlyResolveSelectedConfigs="true">
+      <configuration ivyFile="D:\Development\ivyidea\sample\untitled\ivy.xml" useProjectSettings="true" useCustomIvySettings="true" ivySettingsFile="C:\projects\ivyidea\trunk\sample\untitled\ivy-settings.xml" onlyResolveSelectedConfigs="true">
         <configsToResolve>
-          <config>ide</config>
+          <config>default</config>
         </configsToResolve>
         <propertiesSettings>
           <propertiesFiles includeProjectLevelPropertiesFiles="true">
-            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions.properties</fileName>
-            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions-old.properties</fileName>
+            <fileName>D:\Development\ivyidea\sample\untitled\versions.properties</fileName>
+            <fileName>D:\Development\ivyidea\sample\untitled\versions-old.properties</fileName>
           </propertiesFiles>
-          <additionalProperties includeProjectLevelAdditionalProperties="true" />
         </propertiesSettings>
       </configuration>
     </facet>
@@ -19,11 +18,14 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/ivycache" />
+      <excludeFolder url="file://$MODULE_DIR$/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/repository" />
     </content>
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library name="IvyIDEA-resolved">
+    <orderEntry type="module-library">
+      <library name="IvyIDEA--core-default">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/ivycache/apache/commons-collections/jars/commons-collections-3.2.1.jar!/" />
         </CLASSES>

@@ -36,16 +36,16 @@ public class ExternalDependencyFactory {
     }
 
     @Nullable
-    public ExternalDependency createExternalDependency(@NotNull Artifact artifact, @Nullable File file) {
+    public ExternalDependency createExternalDependency(@NotNull Artifact artifact, @Nullable File file, @NotNull final String configurationName) {
         ResolvedArtifact resolvedArtifact = new ResolvedArtifact(artifact);
         if (resolvedArtifact.isSourceType()) {
-            return new ExternalSourceDependency(artifact, file);
+            return new ExternalSourceDependency(artifact, file, configurationName);
         }
         if (resolvedArtifact.isJavaDocType()) {
-            return new ExternalJavaDocDependency(artifact, file);
+            return new ExternalJavaDocDependency(artifact, file, configurationName);
         }
         if (resolvedArtifact.isClassesType()) {
-            return new ExternalJarDependency(artifact, file);
+            return new ExternalJarDependency(artifact, file, configurationName);
         }
         return null;
     }

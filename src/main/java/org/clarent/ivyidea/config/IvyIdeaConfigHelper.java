@@ -18,6 +18,7 @@ package org.clarent.ivyidea.config;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.util.net.HttpConfigurable;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
@@ -49,8 +50,23 @@ import java.util.*;
  */
 public class IvyIdeaConfigHelper {
 
-    public static String getCreatedLibraryName() {
-        return "IvyIDEA-resolved";
+    private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA-";
+
+    public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName) {
+        final Project project = model.getProject();
+        String libraryName = RESOLVED_LIB_NAME_ROOT;
+        if (isLibraryNameIncludesModule(project)) {
+            final String moduleName = model.getModule().getName();
+            libraryName += "-" + moduleName;
+        }
+        if (isLibraryNameIncludesConfiguration(project)) {
+            libraryName += "-" + configName;
+        }
+        return libraryName;
+    }
+
+    public static boolean isCreatedLibraryName(final String libraryName) {
+        return libraryName != null && libraryName.startsWith(RESOLVED_LIB_NAME_ROOT);
     }
 
     @NotNull
@@ -82,6 +98,14 @@ public class IvyIdeaConfigHelper {
 
     public static List<String> getPropertiesFiles(Project project) {
          return getProjectConfig(project).getPropertiesSettings().getPropertyFiles();
+    }
+
+    public static boolean isLibraryNameIncludesModule(final Project project) {
+        return getProjectConfig(project).isLibraryNameIncludesModule();
+    }
+
+    public static boolean isLibraryNameIncludesConfiguration(final Project project) {
+        return getProjectConfig(project).isLibraryNameIncludesConfiguration();
     }
 
     public static boolean isValidationEnabled(Project project) {
@@ -215,8 +239,7 @@ public class IvyIdeaConfigHelper {
                 throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
             }
         }
-
-        injectProperties(s, module, properties); // re-inject our properties; they may overwrite some properties loaded by the settings file
+        injectProperties(s, module); // re-inject our properties; they may overwrite some properties loaded by the settings file
         return s;
     }
 

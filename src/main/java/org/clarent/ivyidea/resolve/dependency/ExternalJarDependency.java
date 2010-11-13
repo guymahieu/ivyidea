@@ -27,8 +27,8 @@ import java.io.File;
 
 public class ExternalJarDependency extends ExternalDependency {
 
-    public ExternalJarDependency(Artifact artifact, File externalArtifact) {
-        super(artifact, externalArtifact);
+    public ExternalJarDependency(Artifact artifact, File externalArtifact, final String configurationName) {
+        super(artifact, externalArtifact, configurationName);
     }
 
     protected String getTypeName() {

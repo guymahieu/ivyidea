@@ -16,6 +16,7 @@
 
 package org.clarent.ivyidea.intellij;
 
+import com.intellij.execution.ui.ConsoleView;
 import com.intellij.facet.FacetManager;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -25,6 +26,8 @@ import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -68,4 +71,14 @@ public class IntellijUtils {
     public static FileType getXmlFileType() {
         return FileTypeManager.getInstance().getFileTypeByExtension("xml");
     }
+
+
+    public static ConsoleView getConsoleView(Project project) {
+        return (ConsoleView) getToolWindow(project).getContentManager().findContent("Console").getComponent();
+    }
+
+    public static  ToolWindow getToolWindow(Project project) {
+        return ToolWindowManager.getInstance(project).getToolWindow(ToolWindowRegistrationComponent.TOOLWINDOW_ID);
+    }
+
 }

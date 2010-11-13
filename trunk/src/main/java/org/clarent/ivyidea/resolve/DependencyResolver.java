@@ -91,7 +91,7 @@ class DependencyResolver {
 
             // TODO: Refactor this a bit
             registerProblems(configurationReport, moduleDependencies);
-            
+
             @SuppressWarnings({"unchecked"})
             Set<ModuleRevisionId> dependencies = (Set<ModuleRevisionId>) configurationReport.getModuleRevisionIds();
             for (ModuleRevisionId dependency : dependencies) {
@@ -102,7 +102,7 @@ class DependencyResolver {
                     for (ArtifactDownloadReport artifactDownloadReport : artifactDownloadReports) {
                         final Artifact artifact = artifactDownloadReport.getArtifact();
                         final File actifactFile = artifactDownloadReport.getLocalFile();
-                        final ExternalDependency externalDependency = createExternalDependency(artifact, actifactFile);
+                        final ExternalDependency externalDependency = createExternalDependency(artifact, actifactFile, resolvedConfiguration);
                         if (externalDependency != null) {
                             if (externalDependency.isMissing()) {
                                 resolveProblems.add(new ResolveProblem(
@@ -121,8 +121,8 @@ class DependencyResolver {
     }
 
     @Nullable
-    private ExternalDependency createExternalDependency(Artifact artifact, File actifactFile) {
-        ExternalDependency externalDependency = ExternalDependencyFactory.getInstance().createExternalDependency(artifact, actifactFile);
+    private ExternalDependency createExternalDependency(Artifact artifact, File actifactFile, final String configurationName) {
+        ExternalDependency externalDependency = ExternalDependencyFactory.getInstance().createExternalDependency(artifact, actifactFile, configurationName);
         if (externalDependency == null) {
             resolveProblems.add(new ResolveProblem(
                     artifact.getModuleRevisionId().toString(),

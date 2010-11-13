@@ -20,27 +20,22 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.roots.libraries.LibraryTable;
+import com.intellij.openapi.roots.libraries.Library.ModifiableModel;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
 import java.io.Closeable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class IntellijModuleWrapper implements Closeable {
 
-    private static final Logger LOGGER = Logger.getLogger(IntellijModuleWrapper.class.getName());
-
     private final ModifiableRootModel intellijModule;
-    private final Library.ModifiableModel libraryModel;
+    private final LibraryModels libraryModels;
 
     public static IntellijModuleWrapper forModule(Module module) {
         ModifiableRootModel modifiableModel = null;
@@ -57,18 +52,7 @@ public class IntellijModuleWrapper implements Closeable {
 
     private IntellijModuleWrapper(ModifiableRootModel intellijModule) {
         this.intellijModule = intellijModule;
-        this.libraryModel = getIvyIdeaLibrary(intellijModule).getModifiableModel();
-    }
-
-    private static Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel) {
-        final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName();
-        final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
-        final Library library = libraryTable.getLibraryByName(libraryName);
-        if (library == null) {
-            LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getModuleFilePath() + ", creating with name " + libraryName + "...");
-            return libraryTable.createLibrary(libraryName);
-        }        
-        return library;
+        this.libraryModels = new LibraryModels(intellijModule);
     }
 
     public void updateDependencies(Collection<ResolvedDependency> resolvedDependencies) {
@@ -79,9 +63,7 @@ public class IntellijModuleWrapper implements Closeable {
     }
 
     public void close() {
-        if (libraryModel.isChanged()) {
-            libraryModel.commit();
-        }
+        libraryModels.close();
         if (intellijModule.isChanged()) {
             intellijModule.commit();
         } else {
@@ -98,6 +80,7 @@ public class IntellijModuleWrapper implements Closeable {
     }
 
     public void addExternalDependency(ExternalDependency externalDependency) {
+        ModifiableModel libraryModel = libraryModels.getForExternalDependency(externalDependency);
         libraryModel.addRoot(externalDependency.getUrlForLibrary(), externalDependency.getType());
     }
 
@@ -112,6 +95,7 @@ public class IntellijModuleWrapper implements Closeable {
     }
 
     public boolean alreadyHasDependencyOnLibrary(ExternalDependency externalDependency) {
+        ModifiableModel libraryModel = libraryModels.getForExternalDependency(externalDependency);
         for (VirtualFile file : libraryModel.getFiles(externalDependency.getType())) {
             if (externalDependency.isSameDependency(file)) {
                 return true;
@@ -124,20 +108,14 @@ public class IntellijModuleWrapper implements Closeable {
         for (OrderRootType type : IntellijCompatibilityService.getCompatibilityMethods().getAllOrderRootTypes()) {
             List<VirtualFile> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
             for (VirtualFile virtualFile : dependenciesToRemove) {
-                removeDependency(type, virtualFile);
+                libraryModels.removeDependency(type, virtualFile);
             }
         }
     }
 
-    private void removeDependency(OrderRootType type, VirtualFile virtualFile) {
-        final String dependencyUrl = virtualFile.getUrl();
-        LOGGER.info("Removing no longer needed dependency of type " + type + ": " + dependencyUrl);
-        libraryModel.removeRoot(dependencyUrl, type);
-    }
-
     private List<VirtualFile> getDependenciesToRemove(OrderRootType type, Collection<ResolvedDependency> resolvedDependencies) {
-        final VirtualFile[] intellijDependencies = libraryModel.getFiles(type);
-        List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(Arrays.asList(intellijDependencies)); // add all dependencies initially
+        final List<VirtualFile> intellijDependencies = libraryModels.getIntellijDependenciesForType(type);
+        final List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(intellijDependencies); // add all dependencies initially
         for (VirtualFile intellijDependency : intellijDependencies) {
             for (ResolvedDependency resolvedDependency : resolvedDependencies) {
                 // TODO: We don't touch module to module dependencies here because we currently can't determine if

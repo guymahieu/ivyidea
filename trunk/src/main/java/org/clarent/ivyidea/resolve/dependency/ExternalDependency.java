@@ -38,11 +38,13 @@ public abstract class ExternalDependency implements ResolvedDependency {
     private static final Logger LOGGER = Logger.getLogger(ExternalJarDependency.class.getName());
 
     private final Artifact artifact;
+    private final String configurationName;
     private final File localFile;
 
-    public ExternalDependency(Artifact artifact, File localFile) {
+    public ExternalDependency(Artifact artifact, File localFile, final String configurationName) {
         this.artifact = artifact;
         this.localFile = localFile;
+        this.configurationName = configurationName;
     }
 
     public File getLocalFile() {
@@ -51,6 +53,10 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     public Artifact getArtifact() {
         return artifact;
+    }
+
+    public String getConfigurationName() {
+        return configurationName;
     }
 
     public void addTo(IntellijModuleWrapper intellijModuleWrapper) {

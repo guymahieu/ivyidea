@@ -56,9 +56,15 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
                                 public void run() {
                                     final ModifiableRootModel model = ModuleRootManager.getInstance(module).getModifiableModel();
                                     final LibraryTable moduleLibraryTable = model.getModuleLibraryTable();
-                                    final Library library = moduleLibraryTable.getLibraryByName(IvyIdeaConfigHelper.getCreatedLibraryName());
-                                    if (library != null) {
-                                        moduleLibraryTable.removeLibrary(library);
+                                    final Library[] libraries = moduleLibraryTable.getLibraries();
+                                    boolean found = false;
+                                    for (final Library library : libraries) {
+                                        if (IvyIdeaConfigHelper.isCreatedLibraryName(library.getName())) {
+                                            found = true;
+                                            moduleLibraryTable.removeLibrary(library);
+                                        }
+                                    }
+                                    if (found) {
                                         model.commit();
                                     } else {
                                         model.dispose();

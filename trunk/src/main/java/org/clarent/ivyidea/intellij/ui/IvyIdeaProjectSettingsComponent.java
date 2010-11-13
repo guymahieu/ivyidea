@@ -62,14 +62,21 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     private JRadioButton useIvyDefaultRadioButton;
     private JRadioButton useYourOwnIvySettingsRadioButton;
     private JPanel pnlPropertiesFiles;
+    private JComboBox ivyLogLevelComboBox;
+    private JCheckBox includeModuleNameCheckBox;
+    private JCheckBox includeConfigurationNameCheckBox;
+    private JPanel pnlIvyLogging;
+    private JPanel pnlLibraryNaming;
     private IvyIdeaProjectSettings internalState;
     private OrderedFileList orderedFileList;
 
     public IvyIdeaProjectSettingsComponent() {
         internalState = new IvyIdeaProjectSettings();
-        wireActivityWatcher();
+        wireActivityWatchers();
         wireIvySettingsTextbox();
         wireIvySettingsRadioButtons();
+
+        pnlIvyLogging.setVisible(false); // functionality not implemented yet
     }
 
     private void wireIvySettingsRadioButtons() {
@@ -85,7 +92,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
     }
 
-    private void wireActivityWatcher() {
+    private void wireActivityWatchers() {
         UserActivityWatcher watcher = new UserActivityWatcher();
         watcher.addUserActivityListener(new UserActivityListener() {
             public void stateChanged() {
@@ -155,10 +162,17 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
         internalState.setPropertiesSettings(propertiesSettings);
+        internalState.setLibraryNameIncludesModule(includeModuleNameCheckBox.isSelected());
+        internalState.setLibraryNameIncludesConfiguration(includeConfigurationNameCheckBox.isSelected());
+
+//        // Adjust for combo box index 0 corresponding to log level -1.
+//        internalState.setIvyLogLevelFilter(ivyLogLevelComboBox.getSelectedIndex()-1);
+
+
     }
 
     public void reset() {
-        IvyIdeaProjectSettings config = internalState;       
+        IvyIdeaProjectSettings config = internalState;
         if (config == null) {
             config = new IvyIdeaProjectSettings();
         }
@@ -166,6 +180,11 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
         useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
+        includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
+        includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());
+
+//        // Adjust for combo box index 0 corresponding to log level -1.
+//        ivyLogLevelComboBox.setSelectedIndex(config.getIvyLogLevelFilter()+1);
     }
 
     public void disposeUIResources() {

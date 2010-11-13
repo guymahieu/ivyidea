@@ -24,6 +24,10 @@ public class IvyIdeaProjectSettings {
     private boolean useCustomIvySettings = true;
     private String ivySettingsFile = "";
     private boolean validateIvyFiles = false;
+    private boolean libraryNameIncludesModule = false;
+    private boolean libraryNameIncludesConfiguration = false;
+
+//    private int ivyLogLevelFilter = -1;
 
     private PropertiesSettings propertiesSettings = new PropertiesSettings();
 
@@ -32,7 +36,12 @@ public class IvyIdeaProjectSettings {
         result.useCustomIvySettings = ivyIdeaProjectSettings.useCustomIvySettings;
         result.ivySettingsFile = ivyIdeaProjectSettings.ivySettingsFile;
         result.validateIvyFiles = ivyIdeaProjectSettings.validateIvyFiles;
+        result.libraryNameIncludesModule = ivyIdeaProjectSettings.libraryNameIncludesModule;
+        result.libraryNameIncludesConfiguration = ivyIdeaProjectSettings.libraryNameIncludesConfiguration;
         result.propertiesSettings = PropertiesSettings.copyDataFrom(ivyIdeaProjectSettings.propertiesSettings);
+
+//        result.ivyLogLevelFilter = ivyIdeaProjectSettings.ivyLogLevelFilter;
+
         return result;
     }
 
@@ -67,4 +76,29 @@ public class IvyIdeaProjectSettings {
     public void setPropertiesSettings(PropertiesSettings propertiesSettings) {
         this.propertiesSettings = propertiesSettings;
     }
+
+    public boolean isLibraryNameIncludesModule() {
+        return libraryNameIncludesModule;
+    }
+
+    public void setLibraryNameIncludesModule(final boolean libraryNameIncludesModule) {
+        this.libraryNameIncludesModule = libraryNameIncludesModule;
+    }
+
+    public boolean isLibraryNameIncludesConfiguration() {
+        return libraryNameIncludesConfiguration;
+    }
+
+    public void setLibraryNameIncludesConfiguration(final boolean libraryNameIncludesConfiguration) {
+        this.libraryNameIncludesConfiguration = libraryNameIncludesConfiguration;
+    }
+
+
+//    public int getIvyLogLevelFilter() {
+//        return ivyLogLevelFilter;
+//    }
+//
+//    public void setIvyLogLevelFilter(final int ivyLogLevelFilter) {
+//        this.ivyLogLevelFilter = ivyLogLevelFilter;
+//    }
 }

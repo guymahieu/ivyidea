@@ -2,16 +2,15 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
-      <configuration ivyFile="C:\projects\ivyidea\trunk\sample\untitled\extensions\ivy.xml" useProjectSettings="true" useCustomIvySettings="false" ivySettingsFile="" onlyResolveSelectedConfigs="true">
+      <configuration ivyFile="D:\Development\ivyidea\sample\untitled\extensions\ivy.xml" useProjectSettings="true" useCustomIvySettings="false" ivySettingsFile="" onlyResolveSelectedConfigs="true">
         <configsToResolve>
-          <config>ide</config>
+          <config>default</config>
         </configsToResolve>
         <propertiesSettings>
           <propertiesFiles includeProjectLevelPropertiesFiles="true">
-            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions.properties</fileName>
-            <fileName>C:\projects\ivyidea\trunk\sample\untitled\versions-old.properties</fileName>
+            <fileName>D:\Development\ivyidea\sample\untitled\versions.properties</fileName>
+            <fileName>D:\Development\ivyidea\sample\untitled\versions-old.properties</fileName>
           </propertiesFiles>
-          <additionalProperties includeProjectLevelAdditionalProperties="true" />
         </propertiesSettings>
       </configuration>
     </facet>
@@ -25,16 +24,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
     <orderEntry type="module-library">
-      <library name="IvyIDEA-resolved">
+      <library name="IvyIDEA--extensions-default">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/jars/commons-collections-3.1.jar!/" />
         </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/javadocs/commons-collections-3.2.1.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../ivycache/apache/commons-collections/sources/commons-collections-3.2.1.jar!/" />
-        </SOURCES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

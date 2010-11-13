@@ -1,6 +1,6 @@
 <ivysettings>
-        <properties file="${my.settings.file.test}" />
-        <!--<properties file="${ivy.settings.dir}/ivysettings-file.properties" />-->
+        <!--<properties file="${my.settings.file.test}" />-->
+        <properties file="${ivy.settings.dir}/ivysettings-file.properties" />
         <settings defaultCache="${cache.dir}" defaultResolver="internal" checkUpToDate="false" />
         <resolvers>
                 <ibiblio name="ibiblio" />

@@ -39,7 +39,7 @@ import java.util.List;
 public class OrderedFileList {
 
     private final Project project;
-    
+
     private JPanel pnlRoot;
     private JButton btnUp;
     private JButton btnRemove;

@@ -32,6 +32,7 @@ import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +42,10 @@ import java.util.List;
 
 public class IntellijUtils {
 
+    @Deprecated // uses deprecated intellij api
     public static Project getCurrentProject() {
         DataContext dataContext = DataManager.getInstance().getDataContext();
         return DataKeys.PROJECT.getData(dataContext);
-    }
-
-    @NotNull
-    public static Module[] getAllModulesWithIvyIdeaFacet() {
-        return getAllModulesWithIvyIdeaFacet(getCurrentProject());
     }
 
     @NotNull

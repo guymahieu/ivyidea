@@ -64,7 +64,7 @@ class IntellijModuleDependencies {
         final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivyManager.getIvy(module).getSettings());
         if (descriptor != null) {
             final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
-            for (Module dependencyModule : IntellijUtils.getAllModulesWithIvyIdeaFacet()) {
+            for (Module dependencyModule : IntellijUtils.getAllModulesWithIvyIdeaFacet(module.getProject())) {
                 if (!module.equals(dependencyModule)) {
                     for (DependencyDescriptor ivyDependency : ivyDependencies) {
                         final ModuleId ivyDependencyId = ivyDependency.getDependencyId();

@@ -16,6 +16,8 @@
 
 package org.clarent.ivyidea.config.model;
 
+import org.clarent.ivyidea.logging.IvyLogLevel;
+
 /**
  * @author Guy Mahieu
  */
@@ -26,8 +28,7 @@ public class IvyIdeaProjectSettings {
     private boolean validateIvyFiles = false;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
-
-//    private int ivyLogLevelFilter = -1;
+    private String ivyLogLevelThreshold = IvyLogLevel.None.name();
 
     private PropertiesSettings propertiesSettings = new PropertiesSettings();
 
@@ -39,9 +40,7 @@ public class IvyIdeaProjectSettings {
         result.libraryNameIncludesModule = ivyIdeaProjectSettings.libraryNameIncludesModule;
         result.libraryNameIncludesConfiguration = ivyIdeaProjectSettings.libraryNameIncludesConfiguration;
         result.propertiesSettings = PropertiesSettings.copyDataFrom(ivyIdeaProjectSettings.propertiesSettings);
-
-//        result.ivyLogLevelFilter = ivyIdeaProjectSettings.ivyLogLevelFilter;
-
+        result.ivyLogLevelThreshold = ivyIdeaProjectSettings.ivyLogLevelThreshold;
         return result;
     }
 
@@ -93,12 +92,12 @@ public class IvyIdeaProjectSettings {
         this.libraryNameIncludesConfiguration = libraryNameIncludesConfiguration;
     }
 
+    public String getIvyLogLevelThreshold() {
+        return ivyLogLevelThreshold;
+    }
 
-//    public int getIvyLogLevelFilter() {
-//        return ivyLogLevelFilter;
-//    }
-//
-//    public void setIvyLogLevelFilter(final int ivyLogLevelFilter) {
-//        this.ivyLogLevelFilter = ivyLogLevelFilter;
-//    }
+    public void setIvyLogLevelThreshold(String ivyLogLevelThreshold) {
+        this.ivyLogLevelThreshold = ivyLogLevelThreshold;
+    }
+    
 }

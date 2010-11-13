@@ -47,7 +47,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
     public void actionPerformed(final AnActionEvent e) {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
-            ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(e) {
+            ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(module.getProject(), e) {
 
                 public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                     clearConsole(myProject);

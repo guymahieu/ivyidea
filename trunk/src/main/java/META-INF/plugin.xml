@@ -40,7 +40,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>0.9-beta2</version>
+    <version>0.9-beta3</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

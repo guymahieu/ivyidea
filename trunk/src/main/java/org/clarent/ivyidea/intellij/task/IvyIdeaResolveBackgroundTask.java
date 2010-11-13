@@ -30,7 +30,6 @@ import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.exception.ui.IvyIdeaExceptionDialog;
 import org.clarent.ivyidea.exception.ui.LinkBehavior;
-import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.NotNull;
@@ -43,19 +42,21 @@ import org.jetbrains.annotations.NotNull;
 public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask {
 
     private IvyIdeaException exception;
+    private final Project project;
 
     /**
      * Implementations should perform the resolve process inside this method.
      *
      * @param progressIndicator the progress indicator for this backgroundtask
-     * @throws IvySettingsNotFoundException if no settings file was configured or the configured file was not found 
+     * @throws IvySettingsNotFoundException if no settings file was configured or the configured file was not found
      * @throws IvySettingsFileReadException if there was a problem opening or parsing the ivy settings file
      * @throws IvyFileReadException         if there was a problem opening or parsing the ivy file
      */
     public abstract void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException;
 
-    protected IvyIdeaResolveBackgroundTask(AnActionEvent event) {
+    protected IvyIdeaResolveBackgroundTask(Project project, AnActionEvent event) {
         super(event);
+        this.project = project;
     }
 
     public final void run(@NotNull ProgressIndicator progressIndicator) {
@@ -115,7 +116,6 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
                     "Open " + exception.getConfigLocation() + " settings for " + exception.getConfigName() + "...",
                     new LinkListener() {
                         public void linkSelected(LinkLabel linkLabel, Object o) {
-                            final Project project = IntellijUtils.getCurrentProject();
                             Configurable component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
                             ShowSettingsUtil.getInstance().editConfigurable(project, component);
                         }

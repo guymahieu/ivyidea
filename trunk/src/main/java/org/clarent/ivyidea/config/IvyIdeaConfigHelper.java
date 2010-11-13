@@ -28,6 +28,7 @@ import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.facet.config.FacetPropertiesSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
+import org.clarent.ivyidea.logging.IvyLogLevel;
 import org.clarent.ivyidea.util.CollectionUtils;
 import org.clarent.ivyidea.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -106,6 +107,11 @@ public class IvyIdeaConfigHelper {
 
     public static boolean isLibraryNameIncludesConfiguration(final Project project) {
         return getProjectConfig(project).isLibraryNameIncludesConfiguration();
+    }
+
+    public static IvyLogLevel getIvyLoggingThreshold(final Project project) {
+        String ivyLogLevelThreshold = getProjectConfig(project).getIvyLogLevelThreshold();
+        return IvyLogLevel.fromName(ivyLogLevelThreshold);
     }
 
     public static boolean isValidationEnabled(Project project) {

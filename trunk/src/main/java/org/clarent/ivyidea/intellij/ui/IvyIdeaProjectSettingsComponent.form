@@ -134,19 +134,11 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="3a362" class="javax.swing.JComboBox" binding="ivyLogLevelComboBox">
+                  <component id="3a362" class="javax.swing.JComboBox" binding="ivyLogLevelComboBox" custom-create="true">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <model>
-                        <item value="None"/>
-                        <item value="Error"/>
-                        <item value="Warning"/>
-                        <item value="Information"/>
-                        <item value="Verbose"/>
-                        <item value="Debug"/>
-                      </model>
                       <toolTipText value="The level of Ivy logging that will be passed through to the IvyIDEA console window"/>
                     </properties>
                   </component>

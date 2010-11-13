@@ -30,6 +30,7 @@ import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.intellij.IntellijUtils;
+import org.clarent.ivyidea.logging.IvyLogLevel;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -75,8 +76,6 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         wireActivityWatchers();
         wireIvySettingsTextbox();
         wireIvySettingsRadioButtons();
-
-        pnlIvyLogging.setVisible(false); // functionality not implemented yet
     }
 
     private void wireIvySettingsRadioButtons() {
@@ -164,11 +163,8 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         internalState.setPropertiesSettings(propertiesSettings);
         internalState.setLibraryNameIncludesModule(includeModuleNameCheckBox.isSelected());
         internalState.setLibraryNameIncludesConfiguration(includeConfigurationNameCheckBox.isSelected());
-
-//        // Adjust for combo box index 0 corresponding to log level -1.
-//        internalState.setIvyLogLevelFilter(ivyLogLevelComboBox.getSelectedIndex()-1);
-
-
+        final Object selectedLogLevel = ivyLogLevelComboBox.getSelectedItem();
+        internalState.setIvyLogLevelThreshold(selectedLogLevel == null ? IvyLogLevel.None.name() : selectedLogLevel.toString());
     }
 
     public void reset() {
@@ -182,9 +178,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
         includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());
-
-//        // Adjust for combo box index 0 corresponding to log level -1.
-//        ivyLogLevelComboBox.setSelectedIndex(config.getIvyLogLevelFilter()+1);
+        ivyLogLevelComboBox.setSelectedItem(IvyLogLevel.fromName(config.getIvyLogLevelThreshold()));
     }
 
     public void disposeUIResources() {
@@ -206,5 +200,6 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         pnlPropertiesFiles = new JPanel(new BorderLayout());
         orderedFileList = new OrderedFileList(IntellijUtils.getCurrentProject());
         pnlPropertiesFiles.add(orderedFileList.getRootPanel(), BorderLayout.CENTER);
+        ivyLogLevelComboBox = new JComboBox(IvyLogLevel.values());
     }
 }

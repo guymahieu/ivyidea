@@ -17,9 +17,9 @@
 package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.ivy.core.module.descriptor.Artifact;
+import org.clarent.ivyidea.intellij.VirtualFileFactory;
 
 import java.io.File;
 
@@ -35,7 +35,7 @@ public class ExternalJarDependency extends ExternalDependency {
 
     @Override
     public VirtualFile getVirtualFile() {
-        return JarFileSystem.getInstance().findFileByPath(getLocalFile().getAbsolutePath() + "!/");
+        return VirtualFileFactory.forJarFile(getLocalFile());
     }
 
     protected String getTypeName() {

@@ -81,7 +81,7 @@ public class IntellijModuleWrapper implements Closeable {
 
     public void addExternalDependency(ExternalDependency externalDependency) {
         ModifiableModel libraryModel = libraryModels.getForExternalDependency(externalDependency);
-        libraryModel.addRoot(externalDependency.getUrlForLibrary(), externalDependency.getType());
+        libraryModel.addRoot(externalDependency.getVirtualFile(), externalDependency.getType());
     }
 
     public boolean alreadyHasDependencyOnModule(Module module) {

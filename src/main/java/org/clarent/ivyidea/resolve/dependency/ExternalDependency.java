@@ -23,6 +23,7 @@ import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
+import org.clarent.ivyidea.intellij.VirtualFileFactory;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,8 +53,10 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return localFile;
     }
 
-    public abstract VirtualFile getVirtualFile();
-
+    public VirtualFile getVirtualFile() {
+        return VirtualFileFactory.forFile(getLocalFile());
+    }
+    
     public Artifact getArtifact() {
         return artifact;
     }

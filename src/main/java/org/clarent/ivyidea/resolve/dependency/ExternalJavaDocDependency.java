@@ -34,11 +34,6 @@ public class ExternalJavaDocDependency extends ExternalDependency {
         super(artifact, externalArtifact, configurationName);
     }
 
-    @Override
-    public VirtualFile getVirtualFile() {
-        return VirtualFileManager.getInstance().findFileByUrl("file://" + getLocalFile().getAbsolutePath());
-    }
-
     protected String getTypeName() {
         return "javadoc";
     }

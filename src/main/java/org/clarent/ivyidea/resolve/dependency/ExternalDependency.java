@@ -16,6 +16,7 @@
 
 package org.clarent.ivyidea.resolve.dependency;
 
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.JarFileSystem;
@@ -51,6 +52,8 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return localFile;
     }
 
+    public abstract VirtualFile getVirtualFile();
+
     public Artifact getArtifact() {
         return artifact;
     }
@@ -75,11 +78,6 @@ public abstract class ExternalDependency implements ResolvedDependency {
         }
         LOGGER.info("Registering external " + getTypeName() + " file dependency: " + artifactPath);
         intellijModuleWrapper.addExternalDependency(this);
-    }
-
-    @NotNull
-    public String getUrlForLibrary() {
-        return VirtualFileManager.constructUrl(JarFileSystem.PROTOCOL, localFile.getAbsolutePath()) + JarFileSystem.JAR_SEPARATOR;
     }
 
     public boolean isMissing() {

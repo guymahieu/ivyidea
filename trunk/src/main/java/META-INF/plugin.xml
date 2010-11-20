@@ -24,6 +24,7 @@
                 <li>Resolved config names are now listed in the IvyIDEA console.</li>
                 <li>Resolved library names can now contain the module and or configuration name (with help from wajiii).</li>
                 <li>Configurable log level for ivy logging (with help from wajiii)</li>
+                <li>Dependencies are now added to the module library with a relative path.</li>
                 <li>Several small fixes and improvements</li>
             </ul>
             <strong>0.8</strong>

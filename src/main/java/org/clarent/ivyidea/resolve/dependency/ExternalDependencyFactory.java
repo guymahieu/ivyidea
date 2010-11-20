@@ -60,7 +60,7 @@ public class ExternalDependencyFactory {
         // TODO: make these types configurable
         private static final String[] SOURCE_TYPES = {"source", "src", "sources", "srcs"};
         private static final String[] JAVADOC_TYPES = {"javadoc", "doc", "docs", "apidoc", "apidocs", "documentation", "documents"};
-        private static final String[] CLASSES_TYPES = {"jar", "sar", "war", "ear", "ejb"};
+        private static final String[] CLASSES_TYPES = {"jar", "sar", "war", "ear", "ejb", "bundle"};
 
         private Artifact artifact;
 

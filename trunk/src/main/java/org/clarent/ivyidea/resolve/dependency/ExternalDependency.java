@@ -16,16 +16,11 @@
 
 package org.clarent.ivyidea.resolve.dependency;
 
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
 import org.clarent.ivyidea.intellij.VirtualFileFactory;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -85,15 +80,6 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     public boolean isMissing() {
         return localFile != null && !new File(localFile.getAbsolutePath()).exists();
-    }
-
-    protected boolean isAlreadyRegistered(Library.ModifiableModel libraryModel) {
-        for (VirtualFile file : libraryModel.getFiles(getType())) {
-            if (isSameDependency(file)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean isSameDependency(VirtualFile file) {

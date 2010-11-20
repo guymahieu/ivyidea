@@ -17,6 +17,7 @@
 package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
 import org.apache.ivy.core.module.descriptor.Artifact;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
@@ -98,11 +99,12 @@ class DependencyResolver {
                 if (moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId())) {
                     resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
                 } else {
-                    ArtifactDownloadReport[] artifactDownloadReports = configurationReport.getDownloadReports(dependency);
+                    final Project project = moduleDependencies.getModule().getProject();
+                    final ArtifactDownloadReport[] artifactDownloadReports = configurationReport.getDownloadReports(dependency);
                     for (ArtifactDownloadReport artifactDownloadReport : artifactDownloadReports) {
                         final Artifact artifact = artifactDownloadReport.getArtifact();
-                        final File actifactFile = artifactDownloadReport.getLocalFile();
-                        final ExternalDependency externalDependency = createExternalDependency(artifact, actifactFile, resolvedConfiguration);
+                        final File artifactFile = artifactDownloadReport.getLocalFile();
+                        final ExternalDependency externalDependency = createExternalDependency(artifact, artifactFile, resolvedConfiguration, project);
                         if (externalDependency != null) {
                             if (externalDependency.isMissing()) {
                                 resolveProblems.add(new ResolveProblem(
@@ -121,8 +123,8 @@ class DependencyResolver {
     }
 
     @Nullable
-    private ExternalDependency createExternalDependency(Artifact artifact, File actifactFile, final String configurationName) {
-        ExternalDependency externalDependency = ExternalDependencyFactory.getInstance().createExternalDependency(artifact, actifactFile, configurationName);
+    private ExternalDependency createExternalDependency(Artifact artifact, File artifactFile, final String configurationName, final Project project) {
+        ExternalDependency externalDependency = ExternalDependencyFactory.getInstance().createExternalDependency(artifact, artifactFile, project, configurationName);
         if (externalDependency == null) {
             resolveProblems.add(new ResolveProblem(
                     artifact.getModuleRevisionId().toString(),

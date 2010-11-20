@@ -16,13 +16,14 @@
 
 package org.clarent.ivyidea.resolve.dependency;
 
+import com.intellij.openapi.project.Project;
 import org.apache.ivy.core.module.descriptor.Artifact;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * @author Guy Mahieu
@@ -36,58 +37,28 @@ public class ExternalDependencyFactory {
     }
 
     @Nullable
-    public ExternalDependency createExternalDependency(@NotNull Artifact artifact, @Nullable File file, @NotNull final String configurationName) {
-        ResolvedArtifact resolvedArtifact = new ResolvedArtifact(artifact);
-        if (resolvedArtifact.isSourceType()) {
-            return new ExternalSourceDependency(artifact, file, configurationName);
-        }
-        if (resolvedArtifact.isJavaDocType()) {
-            return new ExternalJavaDocDependency(artifact, file, configurationName);
-        }
-        if (resolvedArtifact.isClassesType()) {
-            return new ExternalJarDependency(artifact, file, configurationName);
+    public ExternalDependency createExternalDependency(@NotNull Artifact artifact, @Nullable File file,
+                                                       @NotNull Project project, @NotNull final String configurationName) {
+        final ArtifactTypeSettings.DependencyCategory category = determineCategory(project, artifact);
+        if (category != null) {
+            switch (category) {
+                case Classes:
+                    return new ExternalJarDependency(artifact, file, configurationName);
+                case Sources:
+                    return new ExternalSourceDependency(artifact, file, configurationName);
+                case Javadoc:
+                    return new ExternalJavaDocDependency(artifact, file, configurationName);
+            }
         }
         return null;
     }
 
-    /**
-     * Wraps an ivy artifact and provides utility methods to check the type of artifact it is.
-     *
-     * @author Guy Mahieu
-     */
-    private static class ResolvedArtifact {
-
-        // TODO: make these types configurable
-        private static final String[] SOURCE_TYPES = {"source", "src", "sources", "srcs"};
-        private static final String[] JAVADOC_TYPES = {"javadoc", "doc", "docs", "apidoc", "apidocs", "documentation", "documents"};
-        private static final String[] CLASSES_TYPES = {"jar", "sar", "war", "ear", "ejb", "bundle", "test-jar"};
-
-        private Artifact artifact;
-
-        public ResolvedArtifact(@NotNull Artifact artifact) {
-            this.artifact = artifact;
+    private static ArtifactTypeSettings.DependencyCategory determineCategory(@NotNull Project project, @NotNull Artifact artifact) {
+        final ArtifactTypeSettings typeSettings = IvyIdeaConfigHelper.getArtifactTypeSettings(project);
+        if (typeSettings == null) {
+            return null;
         }
-
-        public boolean isSourceType() {
-            return isOfType(Arrays.asList(SOURCE_TYPES));
-        }
-
-        public boolean isClassesType() {
-            return isOfType(Arrays.asList(CLASSES_TYPES));
-        }
-
-        public boolean isJavaDocType() {
-            return isOfType(Arrays.asList(JAVADOC_TYPES));
-        }
-
-        protected boolean isOfType(@NotNull Collection<String> types) {
-            for (String type : types) {
-                if (type.equals(artifact.getType())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
+        return typeSettings.getCategoryForType(artifact.getType());
     }
+
 }

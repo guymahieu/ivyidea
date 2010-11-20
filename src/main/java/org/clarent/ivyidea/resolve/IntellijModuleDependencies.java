@@ -51,6 +51,10 @@ class IntellijModuleDependencies {
         fillModuleDependencies();
     }
 
+    public Module getModule() {
+        return module;
+    }
+
     public boolean isInternalIntellijModuleDependency(ModuleId moduleId) {
         return moduleDependencies.containsKey(moduleId);
     }

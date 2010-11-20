@@ -18,6 +18,9 @@ package org.clarent.ivyidea.config.model;
 
 import org.clarent.ivyidea.logging.IvyLogLevel;
 
+import java.util.Collections;
+import java.util.Set;
+
 /**
  * @author Guy Mahieu
  */
@@ -29,20 +32,9 @@ public class IvyIdeaProjectSettings {
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
+    private ArtifactTypeSettings artifactTypeSettings = new ArtifactTypeSettings();
 
     private PropertiesSettings propertiesSettings = new PropertiesSettings();
-
-    public static IvyIdeaProjectSettings copyDataFrom(IvyIdeaProjectSettings ivyIdeaProjectSettings) {
-        IvyIdeaProjectSettings result = new IvyIdeaProjectSettings();
-        result.useCustomIvySettings = ivyIdeaProjectSettings.useCustomIvySettings;
-        result.ivySettingsFile = ivyIdeaProjectSettings.ivySettingsFile;
-        result.validateIvyFiles = ivyIdeaProjectSettings.validateIvyFiles;
-        result.libraryNameIncludesModule = ivyIdeaProjectSettings.libraryNameIncludesModule;
-        result.libraryNameIncludesConfiguration = ivyIdeaProjectSettings.libraryNameIncludesConfiguration;
-        result.propertiesSettings = PropertiesSettings.copyDataFrom(ivyIdeaProjectSettings.propertiesSettings);
-        result.ivyLogLevelThreshold = ivyIdeaProjectSettings.ivyLogLevelThreshold;
-        return result;
-    }
 
     public String getIvySettingsFile() {
         return ivySettingsFile;
@@ -99,5 +91,12 @@ public class IvyIdeaProjectSettings {
     public void setIvyLogLevelThreshold(String ivyLogLevelThreshold) {
         this.ivyLogLevelThreshold = ivyLogLevelThreshold;
     }
-    
+
+    public ArtifactTypeSettings getArtifactTypeSettings() {
+        return artifactTypeSettings;
+    }
+
+    public void setArtifactTypeSettings(ArtifactTypeSettings artifactTypeSettings) {
+        this.artifactTypeSettings = artifactTypeSettings;
+    }
 }

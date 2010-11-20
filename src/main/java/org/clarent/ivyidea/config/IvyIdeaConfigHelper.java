@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class IvyIdeaConfigHelper {
 
-    private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA-";
+    private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA";
 
     public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName) {
         final Project project = model.getProject();

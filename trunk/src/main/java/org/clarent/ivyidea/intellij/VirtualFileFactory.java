@@ -16,6 +16,9 @@
 
 package org.clarent.ivyidea.intellij;
 
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
+import com.intellij.openapi.fileTypes.FileTypes;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -29,23 +32,24 @@ import java.io.File;
 public class VirtualFileFactory {
 
     public static VirtualFile forFile(@NotNull File file) {
-        if (looksLikeJarFile(file)) {
+        final VirtualFile virtualFile = createFromRegularFile(file);
+        final FileType fileType = determineFileType(virtualFile);
+        if (fileType == FileTypes.ARCHIVE) {
             return createFromJarFile(file);
         }
-        return createFromRegularFile(file);
+        return virtualFile;
     }
 
-    private static VirtualFile createFromRegularFile(@NotNull File file) {
+    protected static FileType determineFileType(VirtualFile virtualFile) {
+        return FileTypeManager.getInstance().getFileTypeByFile(virtualFile);
+    }
+
+    protected static VirtualFile createFromRegularFile(@NotNull File file) {
         return VirtualFileManager.getInstance().findFileByUrl("file://" + file.getAbsolutePath());
     }
 
     protected static VirtualFile createFromJarFile(@NotNull File file) {
-        return JarFileSystem.getInstance().findFileByPath(file.getAbsolutePath() + "!/");
-    }
-
-    protected static boolean looksLikeJarFile(@NotNull File file) {        
-        final String fileName = file.getName();
-        return file.isFile() && fileName.endsWith(".jar");
+        return JarFileSystem.getInstance().findFileByPath(file.getAbsolutePath() + JarFileSystem.JAR_SEPARATOR);
     }
 
 }

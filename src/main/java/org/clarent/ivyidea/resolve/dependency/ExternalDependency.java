@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  */
 public abstract class ExternalDependency implements ResolvedDependency {
 
-    private static final Logger LOGGER = Logger.getLogger(ExternalJarDependency.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ExternalDependency.class.getName());
 
     private final Artifact artifact;
     private final String configurationName;
@@ -50,10 +50,6 @@ public abstract class ExternalDependency implements ResolvedDependency {
 
     public VirtualFile getVirtualFile() {
         return VirtualFileFactory.forFile(getLocalFile());
-    }
-    
-    public Artifact getArtifact() {
-        return artifact;
     }
 
     public String getConfigurationName() {

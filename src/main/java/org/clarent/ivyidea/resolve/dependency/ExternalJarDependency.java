@@ -33,11 +33,6 @@ public class ExternalJarDependency extends ExternalDependency {
         super(artifact, externalArtifact, configurationName);
     }
 
-    @Override
-    public VirtualFile getVirtualFile() {
-        return VirtualFileFactory.forJarFile(getLocalFile());
-    }
-
     protected String getTypeName() {
         return "jar";
     }

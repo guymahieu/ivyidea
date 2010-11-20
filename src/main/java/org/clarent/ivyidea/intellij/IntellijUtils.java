@@ -42,12 +42,6 @@ import java.util.List;
 
 public class IntellijUtils {
 
-    @Deprecated // uses deprecated intellij api
-    public static Project getCurrentProject() {
-        DataContext dataContext = DataManager.getInstance().getDataContext();
-        return DataKeys.PROJECT.getData(dataContext);
-    }
-
     @NotNull
     public static Module[] getAllModulesWithIvyIdeaFacet(Project project) {
         final Module[] allModules = ModuleManager.getInstance(project).getModules();

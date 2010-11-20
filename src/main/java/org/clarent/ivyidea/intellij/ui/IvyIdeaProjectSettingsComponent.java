@@ -23,13 +23,14 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
-import org.clarent.ivyidea.intellij.IntellijUtils;
+import org.clarent.ivyidea.intellij.VirtualFileFactory;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -70,8 +71,10 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     private JPanel pnlLibraryNaming;
     private IvyIdeaProjectSettings internalState;
     private OrderedFileList orderedFileList;
+    private final Project project;
 
-    public IvyIdeaProjectSettingsComponent() {
+    public IvyIdeaProjectSettingsComponent(Project project) {
+        this.project = project;
         internalState = new IvyIdeaProjectSettings();
         wireActivityWatchers();
         wireIvySettingsTextbox();
@@ -87,7 +90,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     }
 
     private void wireIvySettingsTextbox() {
-        txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", IntellijUtils.getCurrentProject(), new FileChooserDescriptor(true, false, false, false, false, false));
+        txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", "", project, new FileChooserDescriptor(true, false, false, false, false, false));
         txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
     }
 
@@ -198,7 +201,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
 
     private void createUIComponents() {
         pnlPropertiesFiles = new JPanel(new BorderLayout());
-        orderedFileList = new OrderedFileList(IntellijUtils.getCurrentProject());
+        orderedFileList = new OrderedFileList(project);
         pnlPropertiesFiles.add(orderedFileList.getRootPanel(), BorderLayout.CENTER);
         ivyLogLevelComboBox = new JComboBox(IvyLogLevel.values());
     }

@@ -22,6 +22,7 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.util.net.HttpConfigurable;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
+import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
@@ -95,6 +96,10 @@ public class IvyIdeaConfigHelper {
         } else {
             return Collections.emptySet();
         }
+    }
+
+    public static ArtifactTypeSettings getArtifactTypeSettings(Project project)   {
+        return getProjectConfig(project).getArtifactTypeSettings();
     }
 
     public static List<String> getPropertiesFiles(Project project) {

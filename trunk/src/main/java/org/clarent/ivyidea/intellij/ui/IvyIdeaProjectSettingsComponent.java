@@ -27,10 +27,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
-import org.clarent.ivyidea.intellij.VirtualFileFactory;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -42,6 +42,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.List;
+
+import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.*;
 
 /**
  * @author Guy Mahieu
@@ -69,6 +71,11 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
     private JCheckBox includeConfigurationNameCheckBox;
     private JPanel pnlIvyLogging;
     private JPanel pnlLibraryNaming;
+    private JTextField txtClassesArtifactTypes;
+    private JTextField txtSourcesArtifactTypes;
+    private JTextField txtJavadocArtifactTypes;
+    private JPanel pnlIvyFiles;
+    private JPanel pnlArtefactTypes;
     private IvyIdeaProjectSettings internalState;
     private OrderedFileList orderedFileList;
     private final Project project;
@@ -168,7 +175,11 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         internalState.setLibraryNameIncludesConfiguration(includeConfigurationNameCheckBox.isSelected());
         final Object selectedLogLevel = ivyLogLevelComboBox.getSelectedItem();
         internalState.setIvyLogLevelThreshold(selectedLogLevel == null ? IvyLogLevel.None.name() : selectedLogLevel.toString());
+        internalState.getArtifactTypeSettings().setTypesForCategory(Classes, txtClassesArtifactTypes.getText());
+        internalState.getArtifactTypeSettings().setTypesForCategory(Sources, txtSourcesArtifactTypes.getText());
+        internalState.getArtifactTypeSettings().setTypesForCategory(Javadoc, txtJavadocArtifactTypes.getText());
     }
+
 
     public void reset() {
         IvyIdeaProjectSettings config = internalState;
@@ -182,6 +193,9 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
         includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());
         ivyLogLevelComboBox.setSelectedItem(IvyLogLevel.fromName(config.getIvyLogLevelThreshold()));
+        txtSourcesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Sources));
+        txtClassesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Classes));
+        txtJavadocArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Javadoc));
     }
 
     public void disposeUIResources() {
@@ -196,7 +210,7 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
         if (state == null) {
             state = new IvyIdeaProjectSettings();
         }
-        this.internalState = IvyIdeaProjectSettings.copyDataFrom(state);
+        XmlSerializerUtil.copyBean(state, this.getState());
     }
 
     private void createUIComponents() {

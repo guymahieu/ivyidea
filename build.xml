@@ -16,15 +16,45 @@
 
 <project name="IvyIDEA" default="bundle" basedir=".">
 
-    <property name="ivyidea.version" value="0.9-beta4"/>    
+    <property name="ivyidea.version" value="0.9-beta5"/>    
 
     <property name="ivyidea.sourcedir" value="src/main/java"/>
-    <property name="ivyidea.builddir" value="target/main/java"/>
-
+    <property name="ivyidea.builddir" value="build/classes"/>
+    
     <property name="ivyidea.ivyfolder" value="lib/apache-ivy-2.0.0"/>
+    
+    <property environment="env" />
+    <property name="idea.home" value="${env.IDEA_HOME}" />
+
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2">
+        <classpath>
+            <pathelement location="${idea.home}/redist/javac2.jar" />
+            <pathelement location="${idea.home}/lib/asm.jar" />
+            <pathelement location="${idea.home}/lib/asm-commons.jar" />
+            <pathelement location="${idea.home}/lib/jdom.jar" />
+            <pathelement location="${idea.home}/lib/jgoodies-forms.jar" />
+        </classpath>
+    </taskdef>
 
     <target name="jar">
-        <mkdir dir="build"/>
+        <mkdir dir="build" />
+        <mkdir dir="${ivyidea.builddir}" />
+        
+        <javac2 srcdir="${ivyidea.sourcedir}" destdir="${ivyidea.builddir}" includeantruntime="false">
+            <classpath>
+                <!-- intelliJ API -->
+                <pathelement location="${idea.home}/lib/annotations.jar" />
+                <pathelement location="${idea.home}/lib/extensions.jar" />
+                <pathelement location="${idea.home}/lib/forms_rt.jar" />
+                <pathelement location="${idea.home}/lib/jdom.jar" />
+                <pathelement location="${idea.home}/lib/openapi.jar" />
+                <pathelement location="${idea.home}/lib/util.jar" />
+            
+                <!-- Ivy -->
+                <fileset dir="${ivyidea.ivyfolder}" includes="*.jar"/>
+            </classpath>
+        </javac2>
+        
         <jar file="build/ivyidea-${ivyidea.version}.jar">
             <fileset dir="${ivyidea.builddir}">
                 <include name="**/*"/>

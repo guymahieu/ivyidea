@@ -30,7 +30,6 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class IntellijModuleWrapper implements Closeable {
 
@@ -56,10 +55,10 @@ public class IntellijModuleWrapper implements Closeable {
     }
 
     public void updateDependencies(Collection<ResolvedDependency> resolvedDependencies) {
-        removeDependenciesNotInList(resolvedDependencies);
         for (ResolvedDependency resolvedDependency : resolvedDependencies) {
             resolvedDependency.addTo(this);
         }
+        removeDependenciesNotInList(resolvedDependencies);
     }
 
     public void close() {

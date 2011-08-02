@@ -20,7 +20,6 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
-import com.intellij.openapi.vfs.VirtualFile;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 
@@ -70,19 +69,18 @@ class LibraryModels implements Closeable {
         return library;
     }
 
-    public void removeDependency(OrderRootType type, VirtualFile virtualFile) {
-        final String dependencyUrl = virtualFile.getUrl();
+    public void removeDependency(OrderRootType type, String dependencyUrl) {
         LOGGER.info("Removing no longer needed dependency of type " + type + ": " + dependencyUrl);
         for (Library.ModifiableModel libraryModel : libraryModels.values()) {
             libraryModel.removeRoot(dependencyUrl, type);
         }
     }
 
-    public List<VirtualFile> getIntellijDependenciesForType(OrderRootType type) {
-        final List<VirtualFile> intellijDependencies = new ArrayList<VirtualFile>();
+    public List<String> getIntellijDependencyUrlsForType(OrderRootType type) {
+        final List<String> intellijDependencies = new ArrayList<String>();
         for (final Library.ModifiableModel libraryModel : libraryModels.values()) {
-            final VirtualFile[] libraryModelFiles = libraryModel.getFiles(type);
-            intellijDependencies.addAll(asList(libraryModelFiles));
+            final String[] libraryModelUrls = libraryModel.getUrls(type);
+            intellijDependencies.addAll(asList(libraryModelUrls));
         }
         return intellijDependencies;
     }

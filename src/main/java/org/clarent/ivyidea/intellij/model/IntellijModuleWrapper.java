@@ -105,17 +105,17 @@ public class IntellijModuleWrapper implements Closeable {
 
     public void removeDependenciesNotInList(Collection<ResolvedDependency> dependenciesToKeep) {
         for (OrderRootType type : IntellijCompatibilityService.getCompatibilityMethods().getAllOrderRootTypes()) {
-            List<VirtualFile> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
-            for (VirtualFile virtualFile : dependenciesToRemove) {
-                libraryModels.removeDependency(type, virtualFile);
+            List<String> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
+            for (String dependencyUrl : dependenciesToRemove) {
+                libraryModels.removeDependency(type, dependencyUrl);
             }
         }
     }
 
-    private List<VirtualFile> getDependenciesToRemove(OrderRootType type, Collection<ResolvedDependency> resolvedDependencies) {
-        final List<VirtualFile> intellijDependencies = libraryModels.getIntellijDependenciesForType(type);
-        final List<VirtualFile> dependenciesToRemove = new ArrayList<VirtualFile>(intellijDependencies); // add all dependencies initially
-        for (VirtualFile intellijDependency : intellijDependencies) {
+    private List<String> getDependenciesToRemove(OrderRootType type, Collection<ResolvedDependency> resolvedDependencies) {
+        final List<String> intellijDependencies = libraryModels.getIntellijDependencyUrlsForType(type);
+        final List<String> dependenciesToRemove = new ArrayList<String>(intellijDependencies); // add all dependencies initially
+        for (String intellijDependency : intellijDependencies) {
             for (ResolvedDependency resolvedDependency : resolvedDependencies) {
                 // TODO: We don't touch module to module dependencies here because we currently can't determine if
                 //          they were added by IvyIDEA or by the user

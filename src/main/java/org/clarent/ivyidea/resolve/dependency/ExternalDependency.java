@@ -90,6 +90,14 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return new File(existingDependencyPath).equals(new File(artifactPath));
     }
 
+    public boolean isSameDependency(String url) {
+        if (localFile == null) {
+            return false;
+        }
+
+        return getVirtualFile().getUrl().equals(url);
+    }
+
     public abstract OrderRootType getType();
 
     protected abstract String getTypeName();

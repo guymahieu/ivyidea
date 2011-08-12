@@ -51,13 +51,13 @@ public class OrderedFileList {
     public OrderedFileList(Project project) {
         this.project = project;
 
-        // TODO: implement reordering functionality
-        btnUp.setVisible(false);
-        btnDown.setVisible(false);
-
         wireFileList();
         wireAddButton();
         wireRemoveButton();
+        wireMoveUpButton();
+        wireMoveDownButton();
+
+        updateButtonStates();
 
         installActivityListener();
     }
@@ -78,31 +78,56 @@ public class OrderedFileList {
         lstFileNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstFileNames.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                updateRemoveButtonState();
+                updateButtonStates();
             }
         });
         lstFileNames.getModel().addListDataListener(new ListDataListener() {
             public void intervalAdded(ListDataEvent e) {
-                updateRemoveButtonState();
+                updateButtonStates();
             }
 
             public void intervalRemoved(ListDataEvent e) {
-                updateRemoveButtonState();
+                updateButtonStates();
             }
 
             public void contentsChanged(ListDataEvent e) {
-                updateRemoveButtonState();
+                updateButtonStates();
             }
         });
+    }
+
+    private void updateButtonStates() {
+        updateRemoveButtonState();
+        updateMoveUpButtonState();
+        updateMoveDownButtonState();
     }
 
     private void updateRemoveButtonState() {
         btnRemove.setEnabled(isRemoveAllowed());
     }
 
+    private void updateMoveUpButtonState() {
+        btnUp.setEnabled(isMoveUpAllowed());
+    }
+
+    private void updateMoveDownButtonState() {
+        btnDown.setEnabled(isMoveDownAllowed());
+    }
+
     private boolean isRemoveAllowed() {
         return lstFileNames.getModel().getSize() > 0 &&
                 lstFileNames.getSelectedIndex() > -1;
+    }
+
+    private boolean isMoveUpAllowed() {
+        final int size = lstFileNames.getModel().getSize();
+        return size > 1 && lstFileNames.getSelectedIndex() > 0;
+    }
+
+    private boolean isMoveDownAllowed() {
+        final int size = lstFileNames.getModel().getSize();
+        final int selectedIndex = lstFileNames.getSelectedIndex();
+        return size > 1 && selectedIndex >= 0 && selectedIndex < size - 1;
     }
 
     private void wireAddButton() {
@@ -116,14 +141,28 @@ public class OrderedFileList {
                 }
             }
         });
-
     }
 
     private void wireRemoveButton() {
-        btnRemove.setEnabled(false);
         btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeSelectedItemFromList();
+            }
+        });
+    }
+
+    private void wireMoveUpButton() {
+        btnUp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                moveSelectedItemUp();
+            }
+        });
+    }
+
+    private void wireMoveDownButton() {
+        btnDown.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                moveSelectedItemDown();
             }
         });
     }
@@ -137,6 +176,20 @@ public class OrderedFileList {
         final int selectedIndex = lstFileNames.getSelectedIndex();
         getFileListModel().removeItemAt(selectedIndex);
         updateListSelection(selectedIndex);
+        modified = true;
+    }
+
+    private void moveSelectedItemUp() {
+        final int selectedIndex = lstFileNames.getSelectedIndex();
+        getFileListModel().moveItemUp(selectedIndex);
+        updateListSelection(selectedIndex - 1);
+        modified = true;
+    }
+
+    private void moveSelectedItemDown() {
+        final int selectedIndex = lstFileNames.getSelectedIndex();
+        getFileListModel().moveItemDown(selectedIndex);
+        updateListSelection(selectedIndex + 1);
         modified = true;
     }
 

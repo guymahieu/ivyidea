@@ -16,9 +16,9 @@
 
 package org.clarent.ivyidea.config.ui.orderedfilelist;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractListModel;
 
 /**
  * @author Guy Mahieu
@@ -50,6 +50,22 @@ class OrderedFileListModel extends AbstractListModel {
         if (index >= 0 && index < items.size()) {
             items.remove(index);
             fireIntervalRemoved(this, index, index);
+        }
+    }
+
+    void moveItemUp(int index) {
+        if (index > 0 && index < items.size()) {
+            final String item = items.remove(index);
+            items.add(index - 1, item);
+            fireContentsChanged(this, index - 1, index);
+        }
+    }
+
+    void moveItemDown(int index) {
+        if (index >= 0 && index < items.size() - 1) {
+            final String item = items.remove(index);
+            items.add(index + 1, item);
+            fireContentsChanged(this, index, index + 1);
         }
     }
 

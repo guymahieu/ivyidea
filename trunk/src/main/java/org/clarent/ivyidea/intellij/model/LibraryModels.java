@@ -51,15 +51,15 @@ class LibraryModels implements Closeable {
     }
 
     private Library.ModifiableModel getForConfiguration(String ivyConfiguration) {
-        if (!libraryModels.containsKey(ivyConfiguration)) {
-            final Library.ModifiableModel libraryModel = getIvyIdeaLibrary(intellijModule, ivyConfiguration).getModifiableModel();
-            libraryModels.putIfAbsent(ivyConfiguration, libraryModel);
+        final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, ivyConfiguration);
+        if (!libraryModels.containsKey(libraryName)) {
+            final Library.ModifiableModel libraryModel = getIvyIdeaLibrary(intellijModule, libraryName).getModifiableModel();
+            libraryModels.putIfAbsent(libraryName, libraryModel);
         }
-        return libraryModels.get(ivyConfiguration);
+        return libraryModels.get(libraryName);
     }
 
-    private Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel, final String configurationName) {
-        final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName(modifiableRootModel, configurationName);
+    private Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel, final String libraryName) {
         final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
         final Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {

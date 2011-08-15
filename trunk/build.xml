@@ -21,7 +21,7 @@
     <property name="ivyidea.sourcedir" value="src/main/java"/>
     <property name="ivyidea.builddir" value="build/classes"/>
     
-    <property name="ivyidea.ivyfolder" value="lib/apache-ivy-2.0.0"/>
+    <property name="ivyidea.libdir" value="lib"/>
     
     <property environment="env" />
     <property name="idea.home" value="${env.IDEA_HOME}" />
@@ -35,6 +35,10 @@
             <pathelement location="${idea.home}/lib/jgoodies-forms.jar" />
         </classpath>
     </taskdef>
+    
+    <target name="clean">
+        <delete dir="build" />
+    </target>
 
     <target name="jar">
         <mkdir dir="build" />
@@ -51,7 +55,7 @@
                 <pathelement location="${idea.home}/lib/util.jar" />
             
                 <!-- Ivy -->
-                <fileset dir="${ivyidea.ivyfolder}" includes="*.jar"/>
+                <pathelement location="${ivyidea.libdir}/ivy-2.2.0.jar" />
             </classpath>
         </javac2>
         
@@ -70,12 +74,12 @@
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
         <copy todir="build/dist/tmp/IvyIDEA/lib">            
             <!-- Ivy -->
-            <fileset dir="${ivyidea.ivyfolder}" includes="*.jar"/>
+            <fileset file="${ivyidea.libdir}/ivy-2.2.0.jar"/>
 
             <!--Third party Ivy runtime dependencies-->
-            <fileset dir="${ivyidea.ivyfolder}/lib" includes="jsch-*.jar"/>
-            <fileset dir="${ivyidea.ivyfolder}/lib" includes="oro-*.jar"/>
-            <fileset dir="${ivyidea.ivyfolder}/lib" includes="commons-vfs-*.jar"/>
+            <fileset file="${ivyidea.libdir}/jsch-0.1.31.jar"/>
+            <fileset file="${ivyidea.libdir}/oro-2.0.8.jar"/>
+            <fileset file="${ivyidea.libdir}/commons-vfs-1.0.jar"/>
 
             <!-- IvyIDEA -->
             <fileset dir="build" includes="ivyidea-${ivyidea.version}.jar"/>

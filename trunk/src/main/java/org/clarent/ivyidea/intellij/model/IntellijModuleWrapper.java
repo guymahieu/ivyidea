@@ -20,16 +20,17 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.Library.ModifiableModel;
+import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
 import java.io.Closeable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class IntellijModuleWrapper implements Closeable {
 
@@ -108,6 +109,24 @@ public class IntellijModuleWrapper implements Closeable {
             List<String> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
             for (String dependencyUrl : dependenciesToRemove) {
                 libraryModels.removeDependency(type, dependencyUrl);
+            }
+        }
+
+        // remove resolved libraries that are no longer used
+        Set<String> librariesInUse = new HashSet<String>();
+        for (ResolvedDependency dependency : dependenciesToKeep) {
+            if (dependency instanceof ExternalDependency) {
+                ExternalDependency externalDependency = (ExternalDependency) dependency;
+                String library = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, externalDependency.getConfigurationName());
+                librariesInUse.add(library);
+            }
+        }
+
+        final LibraryTable libraryTable = intellijModule.getModuleLibraryTable();
+        for (Library library : libraryTable.getLibraries()) {
+            final String libraryName = library.getName();
+            if (IvyIdeaConfigHelper.isCreatedLibraryName(libraryName) && !librariesInUse.contains(libraryName)) {
+                libraryTable.removeLibrary(library);
             }
         }
     }

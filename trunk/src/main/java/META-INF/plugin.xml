@@ -4,7 +4,7 @@
     <description><![CDATA[Resolves module dependencies through Ivy
         <p>Features:
             <ul>
-                <li>Ivy integration (up to v2.2.0); no need for external ant build scripts to be called</li>
+                <li>Apache Ivy integration (up to v2.2.0); no need for external ant build scripts to be called</li>
                 <li>Automatic ivy configuration of modules using facets (for modules containing an ivy.xml file)</li>
                 <li>Detection of dependencies that are really other intellij modules in the same project; these are added as module references</li>
                 <li>Detect source/document/jar type ivy artifacts in dependencies and add them as such to the module</li>
@@ -18,7 +18,7 @@
         <p>
             <strong>0.9</strong>
             <ul>
-                <li>Upgraded internal ivy to 2.2.0 (including dependencies)</li>
+                <li>Upgraded internal Apache Ivy to 2.2.0 (including dependencies)</li>
                 <li>Support for using ${} style properties in ivy and ivysettings files</li>
                 <li>Improved lookup method for artifacts; now useOrigin="true" will also be supported.</li>
                 <li>Resolved config names are now listed in the IvyIDEA console</li>

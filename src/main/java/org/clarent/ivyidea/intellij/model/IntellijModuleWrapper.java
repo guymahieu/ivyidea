@@ -81,7 +81,7 @@ public class IntellijModuleWrapper implements Closeable {
 
     public void addExternalDependency(ExternalDependency externalDependency) {
         ModifiableModel libraryModel = libraryModels.getForExternalDependency(externalDependency);
-        libraryModel.addRoot(externalDependency.getVirtualFile(), externalDependency.getType());
+        libraryModel.addRoot(externalDependency.getUrlForLibraryRoot(), externalDependency.getType());
     }
 
     public boolean alreadyHasDependencyOnModule(Module module) {
@@ -96,8 +96,8 @@ public class IntellijModuleWrapper implements Closeable {
 
     public boolean alreadyHasDependencyOnLibrary(ExternalDependency externalDependency) {
         ModifiableModel libraryModel = libraryModels.getForExternalDependency(externalDependency);
-        for (VirtualFile file : libraryModel.getFiles(externalDependency.getType())) {
-            if (externalDependency.isSameDependency(file)) {
+        for (String url : libraryModel.getUrls(externalDependency.getType())) {
+            if (externalDependency.isSameDependency(url)) {
                 return true;
             }
         }

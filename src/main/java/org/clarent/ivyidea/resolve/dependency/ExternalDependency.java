@@ -17,9 +17,8 @@
 package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VfsUtil;
 import org.apache.ivy.core.module.descriptor.Artifact;
-import org.clarent.ivyidea.intellij.VirtualFileFactory;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 
 import java.io.File;
@@ -48,8 +47,8 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return localFile;
     }
 
-    public VirtualFile getVirtualFile() {
-        return VirtualFileFactory.forFile(getLocalFile());
+    public String getUrlForLibraryRoot() {
+        return VfsUtil.getUrlForLibraryRoot(getLocalFile());
     }
 
     public String getConfigurationName() {
@@ -78,24 +77,12 @@ public abstract class ExternalDependency implements ResolvedDependency {
         return localFile != null && !new File(localFile.getAbsolutePath()).exists();
     }
 
-    public boolean isSameDependency(VirtualFile file) {
-        if (localFile == null) {
-            return false;
-        }
-        // TODO: see if this naive check is good enough - is there a better way to do this?
-        final String artifactPath = localFile.getAbsolutePath();
-        final String existingDependencyPath = file.getFileSystem().extractPresentableUrl(file.getPath());
-        // Compare the files not just the paths
-        // TODO: Are these paths always absolute??
-        return new File(existingDependencyPath).equals(new File(artifactPath));
-    }
-
     public boolean isSameDependency(String url) {
         if (localFile == null) {
             return false;
         }
 
-        return getVirtualFile().getUrl().equals(url);
+        return getUrlForLibraryRoot().equals(url);
     }
 
     public abstract OrderRootType getType();

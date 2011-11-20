@@ -85,7 +85,7 @@ class DependencyResolver {
     }
 
     // TODO: This method performs way too much tasks -- refactor it!
-    protected void extractDependencies(ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) {
+    protected void extractDependencies(ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) throws IOException {
         final String[] resolvedConfigurations = resolveReport.getConfigurations();
         for (String resolvedConfiguration : resolvedConfigurations) {
             ConfigurationResolveReport configurationReport = resolveReport.getConfigurationReport(resolvedConfiguration);
@@ -103,7 +103,10 @@ class DependencyResolver {
                     final ArtifactDownloadReport[] artifactDownloadReports = configurationReport.getDownloadReports(dependency);
                     for (ArtifactDownloadReport artifactDownloadReport : artifactDownloadReports) {
                         final Artifact artifact = artifactDownloadReport.getArtifact();
-                        final File artifactFile = artifactDownloadReport.getLocalFile();
+                        File artifactFile = artifactDownloadReport.getLocalFile();
+                        if (artifactFile != null) {
+                            artifactFile = artifactFile.getCanonicalFile();
+                        }
                         final ExternalDependency externalDependency = createExternalDependency(artifact, artifactFile, resolvedConfiguration, project);
                         if (externalDependency != null) {
                             if (externalDependency.isMissing()) {

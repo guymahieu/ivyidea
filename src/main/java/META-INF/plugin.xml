@@ -20,6 +20,7 @@
             <ul>
                 <li>Added support for 'mar' artifact types (Axis module archives)</li>
                 <li>Fixed compatibility issue with IntelliJ 11 EAP (110.365)</li>
+                <li>Fixed problem on Windows when the case in filesystem resolvers didn't match the case on disk</li>
             </ul>
             <strong>0.9</strong>
             <ul>

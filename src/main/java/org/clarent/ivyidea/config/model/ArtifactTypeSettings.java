@@ -36,7 +36,7 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
     public enum DependencyCategory {
         Sources("source", "src", "sources", "srcs"),
         Javadoc("javadoc", "doc", "docs", "apidoc", "apidocs", "documentation", "documents"),
-        Classes("jar", "sar", "war", "ear", "ejb", "bundle", "test-jar");
+        Classes("jar", "mar", "sar", "war", "ear", "ejb", "bundle", "test-jar");
 
         private final String[] defaultTypes;
 

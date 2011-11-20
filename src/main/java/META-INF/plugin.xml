@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0</strong>
+            <ul>
+                <li>Added support for 'mar' artifact types (Axis module archives)</li>
+            </ul>
             <strong>0.9</strong>
             <ul>
                 <li>Upgraded internal Apache Ivy to 2.2.0 (including dependencies)</li>
@@ -42,7 +46,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>0.9</version>
+    <version>1.0</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

@@ -27,6 +27,12 @@
     <property environment="env" />
     <property name="idea.home" value="${env.IDEA_HOME}" />
 
+    <fail message="Environment variable IDEA_HOME was not set!">
+        <condition>
+            <equals arg1="${idea.home}" arg2="$${env.IDEA_HOME}" />
+        </condition>
+    </fail>
+
     <taskdef name="javac2" classname="com.intellij.ant.Javac2">
         <classpath>
             <pathelement location="${idea.home}/redist/javac2.jar" />

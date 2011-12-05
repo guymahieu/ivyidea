@@ -45,6 +45,10 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
 
     public static final FacetTypeId<IvyIdeaFacet> ID = new FacetTypeId<IvyIdeaFacet>("IvyIDEA");
 
+    public static IvyIdeaFacetType getInstance() {
+        return findInstance(IvyIdeaFacetType.class);
+    }
+
     public IvyIdeaFacetType() {
         super(ID, "IvyIDEA", "IvyIDEA");
     }

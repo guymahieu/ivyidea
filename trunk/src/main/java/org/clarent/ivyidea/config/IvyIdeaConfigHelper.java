@@ -234,8 +234,8 @@ public class IvyIdeaConfigHelper {
         IvySettings s = new IvySettings();
         injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
 
-        if (!StringUtils.isBlank(settingsFile)) {
-            try {
+        try {
+            if (!StringUtils.isBlank(settingsFile)) {
                 if (settingsFile.startsWith("http://") || settingsFile.startsWith("https://")) {
                     HttpConfigurable.getInstance().prepareURL(settingsFile);
                     s.load(new URL(settingsFile));
@@ -244,12 +244,15 @@ public class IvyIdeaConfigHelper {
                 } else {
                     s.load(new File(settingsFile));
                 }
-            } catch (ParseException e) {
-                throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
-            } catch (IOException e) {
-                throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
+            } else {
+                s.loadDefault();
             }
+        } catch (ParseException e) {
+            throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
+        } catch (IOException e) {
+            throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
         }
+
         injectProperties(s, module); // re-inject our properties; they may overwrite some properties loaded by the settings file
         return s;
     }

@@ -16,7 +16,7 @@
 
 <project name="IvyIDEA" default="bundle" basedir=".">
 
-    <property name="ivyidea.version" value="1.0"/>
+    <property name="ivyidea.version" value="1.0.1"/>
 
     <property name="ivyidea.sourcedir" value="src/main/java"/>
     <property name="ivyidea.resourcedir" value="src/main/resources"/>

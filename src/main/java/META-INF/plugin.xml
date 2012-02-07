@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.1</strong>
+            <ul>
+                <li>Bugfix: it was not possible to use the default Ivy settings</li>
+            </ul>
             <strong>1.0</strong>
             <ul>
                 <li>Added support for 'mar' artifact types (Axis module archives)</li>
@@ -48,7 +52,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

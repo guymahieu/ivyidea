@@ -4,7 +4,7 @@
     <description><![CDATA[Resolves module dependencies through Ivy
         <p>Features:
             <ul>
-                <li>Apache Ivy integration (up to v2.2.0); no need for external ant build scripts to be called</li>
+                <li>Apache Ivy integration (up to v2.3.0); no need for external ant build scripts to be called</li>
                 <li>Automatic ivy configuration of modules using facets (for modules containing an ivy.xml file)</li>
                 <li>Detection of dependencies that are really other intellij modules in the same project; these are added as module references</li>
                 <li>Detect source/document/jar type ivy artifacts in dependencies and add them as such to the module</li>
@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.2</strong>
+            <ul>
+                <li>Upgraded Apache Ivy to 2.3.0-rc1</li>
+            </ul>
             <strong>1.0.1</strong>
             <ul>
                 <li>Bugfix: it was not possible to use the default Ivy settings</li>
@@ -52,7 +56,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

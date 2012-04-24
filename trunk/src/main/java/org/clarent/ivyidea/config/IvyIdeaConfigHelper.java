@@ -253,13 +253,17 @@ public class IvyIdeaConfigHelper {
             throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
         }
 
-        injectProperties(s, module); // re-inject our properties; they may overwrite some properties loaded by the settings file
-        return s;
-    }
+        // re-inject our properties; they may overwrite some properties loaded by the settings file
+        for (Map.Entry<Object,Object> entry : properties.entrySet()) {
+            String key = (String) entry.getKey();
+            String value = (String) entry.getValue();
 
-    private static void injectProperties(IvySettings ivySettings, Module module) throws IvySettingsFileReadException, IvySettingsNotFoundException {
-        // Inject properties from settings
-        injectProperties(ivySettings, module, getIvyProperties(module));
+            // we first clear the property to avoid possible cyclic-variable errors (cfr issue 95)
+            s.setVariable(key, null);
+            s.setVariable(key, value);
+        }
+
+        return s;
     }
 
     private static void injectProperties(IvySettings ivySettings, Module module, Properties properties) {

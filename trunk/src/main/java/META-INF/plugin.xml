@@ -18,7 +18,8 @@
         <p>
             <strong>1.0.2</strong>
             <ul>
-                <li>Upgraded Apache Ivy to 2.3.0-rc1</li>
+                <li>Upgraded internal Apache Ivy to 2.3.0-rc1 (including dependencies)</li>
+                <li>Fixed issue when loading properties files containing cyclic properties</li>
             </ul>
             <strong>1.0.1</strong>
             <ul>

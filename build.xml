@@ -62,7 +62,7 @@
                 <pathelement location="${idea.home}/lib/util.jar" />
             
                 <!-- Ivy -->
-                <pathelement location="${ivyidea.libdir}/ivy-2.3.0-rc1.jar" />
+                <pathelement location="${ivyidea.libdir}/ivy-2.3.0-rc2.jar" />
             </classpath>
         </javac2>
         
@@ -82,7 +82,7 @@
         <mkdir dir="build/dist/tmp/IvyIDEA/lib"/>
         <copy todir="build/dist/tmp/IvyIDEA/lib">            
             <!-- Ivy -->
-            <fileset file="${ivyidea.libdir}/ivy-2.3.0-rc1.jar"/>
+            <fileset file="${ivyidea.libdir}/ivy-2.3.0-rc2.jar"/>
 
             <!--Third party Ivy runtime dependencies-->
             <fileset file="${ivyidea.libdir}/jsch-0.1.31.jar"/>

@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.3</strong>
+            <ul>
+                <li>Upgraded internal Apache Ivy to 2.3.0-rc2 (including dependencies)</li>
+            </ul>
             <strong>1.0.2</strong>
             <ul>
                 <li>Upgraded internal Apache Ivy to 2.3.0-rc1 (including dependencies)</li>

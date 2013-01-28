@@ -28,7 +28,7 @@ import javax.swing.*;
 
 public interface IvyIdeaIcons {
 
-    public static final Icon MAIN_ICON_SMALL = IconLoader.findIcon("/ivyidea16.png");
+    public static final Icon MAIN_ICON_SMALL = IconLoader.findIcon("/ivyidea13.png");
     public static final Icon MAIN_ICON = IconLoader.findIcon("/ivyidea32.png");
 
 //    public static final Icon ERROR_ICON = IconLoader.findIcon("/compiler/error.png");

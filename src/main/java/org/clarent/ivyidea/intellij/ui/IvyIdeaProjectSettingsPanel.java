@@ -16,13 +16,8 @@
 
 package org.clarent.ivyidea.intellij.ui;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ProjectComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
@@ -30,15 +25,10 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
-import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.logging.IvyLogLevel;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -76,6 +66,8 @@ public class IvyIdeaProjectSettingsPanel {
     private JTextField txtClassesArtifactTypes;
     private JTextField txtSourcesArtifactTypes;
     private JTextField txtJavadocArtifactTypes;
+    private JCheckBox chkResolveTransitively;
+    private JCheckBox chkUseCacheOnly;
     private JPanel pnlIvyFiles;
     private JPanel pnlArtefactTypes;
     private IvyIdeaProjectSettings internalState;
@@ -158,6 +150,8 @@ public class IvyIdeaProjectSettingsPanel {
         }
         internalState.setIvySettingsFile(txtIvySettingsFile.getText());
         internalState.setValidateIvyFiles(chkValidateIvyFiles.isSelected());
+        internalState.setResolveTransitively(chkResolveTransitively.isSelected());
+        internalState.setResolveCacheOnly(chkUseCacheOnly.isSelected());
         internalState.setUseCustomIvySettings(useYourOwnIvySettingsRadioButton.isSelected());
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
@@ -171,7 +165,6 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.getArtifactTypeSettings().setTypesForCategory(Javadoc, txtJavadocArtifactTypes.getText());
     }
 
-
     public void reset() {
         IvyIdeaProjectSettings config = internalState;
         if (config == null) {
@@ -179,6 +172,8 @@ public class IvyIdeaProjectSettingsPanel {
         }
         txtIvySettingsFile.setText(config.getIvySettingsFile());
         chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
+        chkResolveTransitively.setSelected(config.isResolveTransitively());
+        chkUseCacheOnly.setSelected(config.isResolveCacheOnly());
         useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());

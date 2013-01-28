@@ -74,7 +74,7 @@ public class IvyIdeaConfigHelper {
     @NotNull
     public static ResolveOptions createResolveOptions(Module module) {
         ResolveOptions options = new ResolveOptions();
-        options.setValidate(isValidationEnabled(module.getProject()));        
+        getProjectConfig(module.getProject()).updateResolveOptions(options);
         final Set<String> configsToResolve = getConfigurationsToResolve(module);
         if (!configsToResolve.isEmpty()) {
             options.setConfs(configsToResolve.toArray(new String[configsToResolve.size()]));
@@ -117,10 +117,6 @@ public class IvyIdeaConfigHelper {
     public static IvyLogLevel getIvyLoggingThreshold(final Project project) {
         String ivyLogLevelThreshold = getProjectConfig(project).getIvyLogLevelThreshold();
         return IvyLogLevel.fromName(ivyLogLevelThreshold);
-    }
-
-    public static boolean isValidationEnabled(Project project) {
-        return getProjectConfig(project).isValidateIvyFiles();
     }
 
     @NotNull

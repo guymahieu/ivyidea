@@ -16,10 +16,8 @@
 
 package org.clarent.ivyidea.config.model;
 
+import org.apache.ivy.core.resolve.ResolveOptions;
 import org.clarent.ivyidea.logging.IvyLogLevel;
-
-import java.util.Collections;
-import java.util.Set;
 
 /**
  * @author Guy Mahieu
@@ -29,6 +27,8 @@ public class IvyIdeaProjectSettings {
     private boolean useCustomIvySettings = true;
     private String ivySettingsFile = "";
     private boolean validateIvyFiles = false;
+    private boolean resolveTransitively = true;
+    private boolean resolveCacheOnly = false;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
@@ -50,6 +50,22 @@ public class IvyIdeaProjectSettings {
 
     public void setValidateIvyFiles(boolean validateIvyFiles) {
         this.validateIvyFiles = validateIvyFiles;
+    }
+
+    public boolean isResolveTransitively() {
+        return resolveTransitively;
+    }
+
+    public void setResolveTransitively(boolean resolveTransitively) {
+        this.resolveTransitively = resolveTransitively;
+    }
+
+    public boolean isResolveCacheOnly() {
+        return resolveCacheOnly;
+    }
+
+    public void setResolveCacheOnly(boolean resolveCacheOnly) {
+        this.resolveCacheOnly = resolveCacheOnly;
     }
 
     public boolean isUseCustomIvySettings() {
@@ -98,5 +114,11 @@ public class IvyIdeaProjectSettings {
 
     public void setArtifactTypeSettings(ArtifactTypeSettings artifactTypeSettings) {
         this.artifactTypeSettings = artifactTypeSettings;
+    }
+
+    public void updateResolveOptions(ResolveOptions options) {
+        options.setValidate(isValidateIvyFiles());
+        options.setTransitive(isResolveTransitively());
+        options.setUseCacheOnly(isResolveCacheOnly());
     }
 }

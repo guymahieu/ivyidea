@@ -19,6 +19,7 @@
             <strong>1.0.4</strong>
             <ul>
                 <li>Upgraded internal Apache Ivy to 2.3.0 (including dependencies)</li>
+                <li>Added some extra resolve options to the project settings</li>
             </ul>
             <strong>1.0.3</strong>
             <ul>

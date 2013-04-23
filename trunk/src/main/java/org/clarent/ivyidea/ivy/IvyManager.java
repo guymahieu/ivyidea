@@ -21,6 +21,7 @@ import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
 import org.apache.ivy.Ivy;
 import org.apache.ivy.core.event.EventManager;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.settings.IvySettings;
 import org.apache.ivy.plugins.resolver.BasicResolver;
 import org.apache.ivy.plugins.trigger.Trigger;
@@ -30,11 +31,10 @@ import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.logging.ConsoleViewMessageLogger;
 
-import java.io.IOException;
-import java.text.ParseException;
+import java.io.File;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -44,6 +44,7 @@ import java.util.Map;
 public class IvyManager {
 
     private Map<Module, Ivy> configuredIvyInstances = new HashMap<Module, Ivy>();
+    private Map<Module, ModuleDescriptor> moduleDescriptors = new HashMap<Module, ModuleDescriptor>();
 
     public Ivy getIvy(final Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!configuredIvyInstances.containsKey(module)) {
@@ -59,6 +60,16 @@ public class IvyManager {
             configuredIvyInstances.put(module, ivy);
         }
         return configuredIvyInstances.get(module);
+    }
+
+    public ModuleDescriptor getModuleDescriptor(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+        if (!moduleDescriptors.containsKey(module)) {
+            final File ivyFile = IvyUtil.getIvyFile(module);
+            final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, getIvy(module).getSettings());
+            moduleDescriptors.put(module, descriptor);
+        }
+
+        return moduleDescriptors.get(module);
     }
 
     private void postConfigure(final Ivy ivy) {

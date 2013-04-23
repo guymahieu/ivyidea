@@ -20,15 +20,12 @@ import com.intellij.openapi.module.Module;
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleId;
-import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.ivy.IvyUtil;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -64,8 +61,7 @@ class IntellijModuleDependencies {
     }
 
     private void fillModuleDependencies() throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        final File ivyFile = IvyUtil.getIvyFile(module);
-        final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, ivyManager.getIvy(module).getSettings());
+        final ModuleDescriptor descriptor = ivyManager.getModuleDescriptor(module);
         if (descriptor != null) {
             final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
             for (Module dependencyModule : IntellijUtils.getAllModulesWithIvyIdeaFacet(module.getProject())) {
@@ -86,9 +82,8 @@ class IntellijModuleDependencies {
 
     @Nullable
     private ModuleId getModuleId(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        final IvySettings ivySettings = ivyManager.getIvy(module).getSettings();
         if (!moduleDependencies.values().contains(module)) {
-            final ModuleDescriptor ivyModuleDescriptor = IvyUtil.getIvyModuleDescriptor(module, ivySettings);
+            final ModuleDescriptor ivyModuleDescriptor = ivyManager.getModuleDescriptor(module);
             if (ivyModuleDescriptor != null) {
                 moduleDependencies.put(ivyModuleDescriptor.getModuleRevisionId().getModuleId(), module);
             }

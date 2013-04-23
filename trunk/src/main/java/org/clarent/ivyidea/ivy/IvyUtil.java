@@ -43,16 +43,6 @@ public class IvyUtil {
 
     private static final Logger LOGGER = Logger.getLogger(IvyUtil.class.getName());
 
-    @Nullable
-    public static ModuleDescriptor getIvyModuleDescriptor(Module intellijModule, ParserSettings settings) {
-        final File ivyFile = getIvyFile(intellijModule);
-        if (ivyFile.exists()) {
-            return parseIvyFile(ivyFile, settings);
-        } else {
-            return null;
-        }
-    }
-
     /**
      * Returnes the ivy file for the given module.
      *

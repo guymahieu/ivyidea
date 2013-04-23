@@ -29,6 +29,7 @@ public class IvyIdeaProjectSettings {
     private boolean validateIvyFiles = false;
     private boolean resolveTransitively = true;
     private boolean resolveCacheOnly = false;
+    private boolean resolveInBackground = false;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
@@ -66,6 +67,14 @@ public class IvyIdeaProjectSettings {
 
     public void setResolveCacheOnly(boolean resolveCacheOnly) {
         this.resolveCacheOnly = resolveCacheOnly;
+    }
+
+    public boolean isResolveInBackground() {
+        return resolveInBackground;
+    }
+
+    public void setResolveInBackground(boolean resolveInBackground) {
+        this.resolveInBackground = resolveInBackground;
     }
 
     public boolean isUseCustomIvySettings() {

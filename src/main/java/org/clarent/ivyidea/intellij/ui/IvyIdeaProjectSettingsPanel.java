@@ -68,6 +68,7 @@ public class IvyIdeaProjectSettingsPanel {
     private JTextField txtJavadocArtifactTypes;
     private JCheckBox chkResolveTransitively;
     private JCheckBox chkUseCacheOnly;
+    private JCheckBox chkBackground;
     private JPanel pnlIvyFiles;
     private JPanel pnlArtefactTypes;
     private IvyIdeaProjectSettings internalState;
@@ -152,6 +153,7 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.setValidateIvyFiles(chkValidateIvyFiles.isSelected());
         internalState.setResolveTransitively(chkResolveTransitively.isSelected());
         internalState.setResolveCacheOnly(chkUseCacheOnly.isSelected());
+        internalState.setResolveInBackground(chkBackground.isSelected());
         internalState.setUseCustomIvySettings(useYourOwnIvySettingsRadioButton.isSelected());
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
@@ -174,6 +176,7 @@ public class IvyIdeaProjectSettingsPanel {
         chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
         chkResolveTransitively.setSelected(config.isResolveTransitively());
         chkUseCacheOnly.setSelected(config.isResolveCacheOnly());
+        chkBackground.setSelected(config.isResolveInBackground());
         useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());

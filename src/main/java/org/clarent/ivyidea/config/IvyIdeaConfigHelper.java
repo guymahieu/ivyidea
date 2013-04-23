@@ -119,6 +119,10 @@ public class IvyIdeaConfigHelper {
         return IvyLogLevel.fromName(ivyLogLevelThreshold);
     }
 
+    public static boolean getResolveInBackground(final Project project) {
+        return getProjectConfig(project).isResolveInBackground();
+    }
+
     @NotNull
     private static IvyIdeaProjectSettings getProjectConfig(Project project) {
         IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);

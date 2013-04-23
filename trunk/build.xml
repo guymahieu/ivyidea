@@ -51,7 +51,7 @@
         <mkdir dir="build" />
         <mkdir dir="${ivyidea.builddir}" />
         
-        <javac2 srcdir="${ivyidea.sourcedir}" destdir="${ivyidea.builddir}" includeantruntime="false">
+        <javac2 srcdir="${ivyidea.sourcedir}" destdir="${ivyidea.builddir}" includeantruntime="false" debug="true">
             <classpath>
                 <!-- intelliJ API -->
                 <pathelement location="${idea.home}/lib/annotations.jar" />

@@ -43,6 +43,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
 
     private IvyIdeaException exception;
     private final Project project;
+    private ProgressMonitorThread monitorThread;
 
     /**
      * Implementations should perform the resolve process inside this method.
@@ -59,7 +60,15 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         this.project = project;
     }
 
-    public final void run(@NotNull ProgressIndicator progressIndicator) {
+    protected ProgressMonitorThread getProgressMonitorThread() {
+        return monitorThread;
+    }
+
+    public final void run(@NotNull final ProgressIndicator indicator) {
+        final Thread resolveThread = Thread.currentThread();
+        monitorThread = new ProgressMonitorThread(indicator, resolveThread);
+        monitorThread.start();
+
         try {
             // Intercept URL requests and force the intellij proxy to be used
             //
@@ -68,10 +77,10 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
                 IntellijProxyURLHandler.setupHttpProxy();
             */
             // Start the actual resolve process
-            doResolve(progressIndicator);
+            doResolve(indicator);
         } catch (IvyIdeaException e) {
             exception = e;
-            progressIndicator.cancel();
+            indicator.cancel();
             // In InteliJ 7 cancelling the progressIndicator does not trigger the
             // onCancel() method, but in IntelliJ 8 it does
             if (!IntellijCompatibilityService.getCompatibilityMethods().isTaskCancelledOnProgressIndicatorCancel()) {
@@ -80,6 +89,10 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
                         onCancel();
                     }
                 });
+            }
+        } catch (RuntimeException e) {
+            if (!indicator.isCanceled()) {
+                throw e;
             }
         }
     }

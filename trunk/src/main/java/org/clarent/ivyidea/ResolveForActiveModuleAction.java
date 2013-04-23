@@ -29,11 +29,9 @@ import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
-import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 /**
  * Action to resolve the dependencies for the active module.
@@ -48,12 +46,15 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
             ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(module.getProject(), e) {
-
                 public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                     clearConsole(myProject);
-                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(new IvyManager());
-                    final List<ResolvedDependency> list = resolver.resolve(module);
-                    updateIntellijModel(module, list);
+
+                    final IvyManager ivyManager = new IvyManager();
+                    getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
+
+                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
+                    resolver.resolve(module);
+                    updateIntellijModel(module, resolver.getDependencies());
                     reportProblems(module, resolver.getProblems());
                 }
             });

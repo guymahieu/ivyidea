@@ -16,6 +16,13 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.5</strong>
+            <ul>
+                <li>Improved resolving dependencies in the background</li>
+                <li>Added an extra configuration option to always resolve in the background</li>
+                <li>Resolving dependencies can now be canceled</li>
+                <li>Fixed compatibility issue with IntelliJ 13 EAP (build 130.1619)</li>
+            </ul>
             <strong>1.0.4</strong>
             <ul>
                 <li>Upgraded internal Apache Ivy to 2.3.0 (including dependencies)</li>

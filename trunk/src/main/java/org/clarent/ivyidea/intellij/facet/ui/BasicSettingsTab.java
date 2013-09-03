@@ -20,11 +20,13 @@ import com.intellij.facet.Facet;
 import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import org.apache.ivy.Ivy;
 import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
@@ -141,7 +143,7 @@ public class BasicSettingsTab extends FacetEditorTab {
     public void reloadIvyFile() {
         final Set<Configuration> allConfigurations;
         try {
-            allConfigurations = IvyUtil.loadConfigurations(txtIvyFile.getText(), getIvySettings());
+            allConfigurations = loadConfigurations();
             chkOnlyResolveSpecificConfigs.setEnabled(allConfigurations != null);
             if (allConfigurations != null) {
                 LOGGER.info("Detected configs in file " + txtIvyFile.getText() + ": " + allConfigurations.toString());
@@ -164,18 +166,22 @@ public class BasicSettingsTab extends FacetEditorTab {
         } catch (ParseException e1) {
             // TODO: provide link to error display dialog with full exception
             lblIvyFileMessage.setText("Error parsing the file. If you use properties or specific ivy settings, configure those first.");
+        } catch (IvySettingsNotFoundException e) {
+            lblIvyFileMessage.setText("Could not find the settings file. Configure the settings file here or in the project settings first.");
+        } catch (IvySettingsFileReadException e) {
+            lblIvyFileMessage.setText("Error parsing the settings file. If you use properties, configure those first.");
         }
     }
 
+    private Set<Configuration> loadConfigurations() throws IvySettingsNotFoundException, IvySettingsFileReadException, ParseException {
+        return IvyUtil.loadConfigurations(txtIvyFile.getText(), createIvyEngineForCurrentSettingsInUI());
+    }
+
     @NotNull
-    private IvySettings getIvySettings() {
-        try {
-            final Properties properties = getPropertiesForCurrentSettingsInUI();
-            String ivySettingsFile = StringUtils.trim(getIvySettingsFileNameForCurrentSettingsInUI());
-            return IvyIdeaConfigHelper.createConfiguredIvySettings(editorContext.getModule(), ivySettingsFile, properties);
-        } catch (Exception e) {
-            return new IvySettings();
-        }
+    private Ivy createIvyEngineForCurrentSettingsInUI() throws IvySettingsNotFoundException, IvySettingsFileReadException {
+        final Module module = this.editorContext.getModule();
+        final IvySettings ivySettings = IvyIdeaConfigHelper.createConfiguredIvySettings(module, this.getIvySettingsFileNameForCurrentSettingsInUI(), getPropertiesForCurrentSettingsInUI());
+        return IvyUtil.createConfiguredIvyEngine(module, ivySettings);
     }
 
     @Nullable
@@ -249,8 +255,12 @@ public class BasicSettingsTab extends FacetEditorTab {
             rbnUseDefaultIvySettings.setSelected(!configuration.isUseCustomIvySettings());
             Set<Configuration> allConfigurations;
             try {
-                allConfigurations = IvyUtil.loadConfigurations(configuration.getIvyFile(), getIvySettings());
+                allConfigurations = loadConfigurations();
             } catch (ParseException e) {
+                allConfigurations = null;
+            } catch ( IvySettingsNotFoundException e ) {
+                allConfigurations = null;
+            } catch ( IvySettingsFileReadException e ) {
                 allConfigurations = null;
             }
             if (StringUtils.isNotBlank(configuration.getIvyFile())) {

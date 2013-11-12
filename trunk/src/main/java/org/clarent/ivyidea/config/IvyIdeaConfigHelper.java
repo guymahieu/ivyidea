@@ -91,7 +91,7 @@ public class IvyIdeaConfigHelper {
     @NotNull
     public static Set<String> getConfigurationsToResolve(Module module) {
         final IvyIdeaFacetConfiguration moduleConfiguration = IvyIdeaFacetConfiguration.getInstance(module);
-        if (moduleConfiguration != null && moduleConfiguration.getConfigsToResolve() != null) {
+        if (moduleConfiguration != null && moduleConfiguration.isOnlyResolveSelectedConfigs() && moduleConfiguration.getConfigsToResolve() != null) {
             return Collections.unmodifiableSet(moduleConfiguration.getConfigsToResolve());
         } else {
             return Collections.emptySet();

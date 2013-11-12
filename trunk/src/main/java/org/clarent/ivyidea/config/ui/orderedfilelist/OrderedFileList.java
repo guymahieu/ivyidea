@@ -16,13 +16,13 @@
 
 package org.clarent.ivyidea.config.ui.orderedfilelist;
 
-import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
@@ -135,7 +135,7 @@ public class OrderedFileList {
             public void actionPerformed(ActionEvent e) {
                 final FileChooserDescriptor fcDescriptor = FileChooserDescriptorFactory.createMultipleFilesNoJarsDescriptor();
                 fcDescriptor.setTitle("Select properties file(s)");
-                final VirtualFile[] files = FileChooser.chooseFiles(project, fcDescriptor);
+                final VirtualFile[] files = IntellijCompatibilityService.getCompatibilityMethods().chooseFiles(fcDescriptor, pnlRoot, project, null);
                 for (VirtualFile file : files) {
                     addFilenameToList(file.getPresentableUrl());
                 }

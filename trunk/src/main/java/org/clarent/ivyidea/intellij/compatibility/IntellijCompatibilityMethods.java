@@ -16,8 +16,13 @@
 
 package org.clarent.ivyidea.intellij.compatibility;
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.vfs.VirtualFile;
+
+import java.awt.*;
 
 /**
  * Interface defining methods that are impacted by API differences in supported
@@ -34,5 +39,7 @@ public interface IntellijCompatibilityMethods {
     ModuleType getJavaModuleType();
 
     boolean isTaskCancelledOnProgressIndicatorCancel();
+
+    VirtualFile[] chooseFiles(FileChooserDescriptor descriptor, Component parent, Project project, VirtualFile toSelect);
 
 }

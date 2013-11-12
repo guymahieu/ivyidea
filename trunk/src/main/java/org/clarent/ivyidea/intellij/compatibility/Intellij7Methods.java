@@ -16,8 +16,16 @@
 
 package org.clarent.ivyidea.intellij.compatibility;
 
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.vfs.VirtualFile;
+
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Compatibility implementation for Intellij IDEA 7.0 and earlier.
@@ -64,5 +72,31 @@ class Intellij7Methods implements IntellijCompatibilityMethods {
 
     public boolean isTaskCancelledOnProgressIndicatorCancel() {
         return false;
+    }
+
+    public VirtualFile[] chooseFiles(FileChooserDescriptor descriptor, Component parent, Project project, VirtualFile toSelect) {
+        if (parent == null) {
+            try {
+                Method chooseFilesMethod = FileChooser.class.getMethod("chooseFiles", Project.class, FileChooserDescriptor.class, VirtualFile.class);
+                return (VirtualFile[]) chooseFilesMethod.invoke(null, project, descriptor, toSelect);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(COMPAT_ERROR_MSG, e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(COMPAT_ERROR_MSG, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(COMPAT_ERROR_MSG, e);
+            }
+        } else {
+            try {
+                Method chooseFilesMethod = FileChooser.class.getMethod("chooseFiles", Component.class, FileChooserDescriptor.class, VirtualFile.class);
+                return (VirtualFile[]) chooseFilesMethod.invoke(null, parent, descriptor, toSelect);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(COMPAT_ERROR_MSG, e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(COMPAT_ERROR_MSG, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(COMPAT_ERROR_MSG, e);
+            }
+        }
     }
 }

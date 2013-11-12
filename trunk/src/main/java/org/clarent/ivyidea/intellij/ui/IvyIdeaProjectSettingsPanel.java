@@ -16,7 +16,6 @@
 
 package org.clarent.ivyidea.intellij.ui;
 
-import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
@@ -28,6 +27,7 @@ import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
+import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 
 import javax.swing.*;
@@ -99,7 +99,7 @@ public class IvyIdeaProjectSettingsPanel {
                 path = "file://" + path.replace(File.separatorChar, '/');
                 VirtualFile root = VirtualFileManager.getInstance().findFileByUrl(path);
 
-                VirtualFile[] files = FileChooser.chooseFiles(projectSettingsPanel, descriptor, root);
+                VirtualFile[] files = IntellijCompatibilityService.getCompatibilityMethods().chooseFiles(descriptor, projectSettingsPanel, project, root);
                 if ((files.length != 1) || (files[0] == null)) {
                     return;
                 }

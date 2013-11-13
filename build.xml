@@ -16,7 +16,7 @@
 
 <project name="IvyIDEA" default="bundle" basedir=".">
 
-    <property name="ivyidea.version" value="1.0.5"/>
+    <property name="ivyidea.version" value="1.0.6"/>
 
     <property name="ivyidea.sourcedir" value="src/main/java"/>
     <property name="ivyidea.resourcedir" value="src/main/resources"/>
@@ -38,6 +38,7 @@
             <pathelement location="${idea.home}/redist/javac2.jar" />
             <pathelement location="${idea.home}/lib/asm.jar" />
             <pathelement location="${idea.home}/lib/asm-commons.jar" />
+			<pathelement location="${idea.home}/lib/asm4-all.jar" />
             <pathelement location="${idea.home}/lib/jdom.jar" />
             <pathelement location="${idea.home}/lib/jgoodies-forms.jar" />
         </classpath>
@@ -65,6 +66,7 @@
                 <pathelement location="${idea.home}/lib/jdom.jar" />
                 <pathelement location="${idea.home}/lib/openapi.jar" />
                 <pathelement location="${idea.home}/lib/util.jar" />
+				<pathelement location="${idea.home}/lib/idea.jar" />
             
                 <!-- Ivy -->
                 <pathelement location="${ivyidea.libdir}/ivy-2.3.0.jar" />

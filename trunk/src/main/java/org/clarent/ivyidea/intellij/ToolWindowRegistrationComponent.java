@@ -38,6 +38,7 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
     public static final String TOOLWINDOW_ID = "IvyIDEA";
 
     private Project project;
+    private ConsoleView console;
 
     public ToolWindowRegistrationComponent(Project project) {
         this.project = project;
@@ -63,6 +64,11 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
     }
 
     private void unregisterToolWindow() {
+        if (console != null) {
+            console.dispose();
+        }
+        console = null;
+
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
         toolWindowManager.unregisterToolWindow(TOOLWINDOW_ID);
     }
@@ -70,8 +76,8 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
     private void registerToolWindow() {
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
         ToolWindow toolWindow = toolWindowManager.registerToolWindow(TOOLWINDOW_ID, false, ToolWindowAnchor.BOTTOM);
-        final ConsoleView consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
-        Content content = ServiceManager.getService(ContentFactory.class).createContent(consoleView.getComponent(), "Console", true);
+        console = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
+        Content content = ServiceManager.getService(ContentFactory.class).createContent(console.getComponent(), "Console", true);
         toolWindow.setIcon(IvyIdeaIcons.MAIN_ICON_SMALL);
         toolWindow.getContentManager().addContent(content);
     }

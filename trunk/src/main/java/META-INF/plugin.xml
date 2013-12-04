@@ -16,6 +16,11 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.7</strong>
+            <ul>
+                <li>Fixed compatibility issue with IntelliJ 13</li>
+                <li>Fixed issue with resolving dependencies of a single module if another module had an incorrect ivy file</li>
+            </ul>
             <strong>1.0.6</strong>
             <ul>
                 <li>Fixed issue with the 'Only resolve specific ivy configurations'-option on the IvyIDEA facet page</li>

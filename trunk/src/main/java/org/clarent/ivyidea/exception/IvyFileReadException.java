@@ -43,7 +43,11 @@ public class IvyFileReadException extends IvyIdeaException {
 
     @Override
     public String getMessage() {
-        return "Exception while reading ivy file " + fileName + " for module " + moduleName;
+        if (fileName == null) {
+            return "No ivy file specified for module " + moduleName;
+        } else {
+            return "Exception while reading ivy file " + fileName + " for module " + moduleName;
+        }
     }
 }
 

@@ -31,6 +31,7 @@ import org.apache.ivy.plugins.trigger.Trigger;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.logging.ConsoleViewMessageLogger;
+import org.clarent.ivyidea.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,13 +56,19 @@ public class IvyUtil {
      * @return the File representing the ivy xml file for the given module
      * @throws RuntimeException if the given module does not have an IvyIDEA facet configured.
      */
-    @NotNull
+    @Nullable
     public static File getIvyFile(Module module) {
         final IvyIdeaFacetConfiguration configuration = IvyIdeaFacetConfiguration.getInstance(module);
         if (configuration == null) {
             throw new RuntimeException("Internal error: No IvyIDEA facet configured for module " + module.getName() + ", but an attempt was made to use it as such.");
         }
-        return new File(configuration.getIvyFile());
+
+        String ivyFile = configuration.getIvyFile();
+        if (StringUtils.isBlank(ivyFile)) {
+            return null;
+        }
+
+        return new File(ivyFile);
     }
 
     /**

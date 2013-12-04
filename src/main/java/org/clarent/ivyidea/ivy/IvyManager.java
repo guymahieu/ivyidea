@@ -23,6 +23,7 @@ import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.HashMap;
@@ -47,11 +48,21 @@ public class IvyManager {
         return configuredIvyInstances.get(module);
     }
 
+    @Nullable
     public ModuleDescriptor getModuleDescriptor(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!moduleDescriptors.containsKey(module)) {
             final File ivyFile = IvyUtil.getIvyFile(module);
-            final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, getIvy(module));
-            moduleDescriptors.put(module, descriptor);
+            if (ivyFile != null) {
+                try {
+                    final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, getIvy(module));
+                    moduleDescriptors.put(module, descriptor);
+                } catch (RuntimeException e) {
+                    // ignore
+                    moduleDescriptors.put(module, null);
+                }
+            } else {
+                moduleDescriptors.put(module, null);
+            }
         }
 
         return moduleDescriptors.get(module);

@@ -72,8 +72,12 @@ class DependencyResolver {
     }
 
     public void resolve(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-        final Ivy ivy = ivyManager.getIvy(module);
         final File ivyFile = IvyUtil.getIvyFile(module);
+        if (ivyFile == null) {
+            throw new IvyFileReadException(null, module.getName(), null);
+        }
+
+        final Ivy ivy = ivyManager.getIvy(module);
         try {
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             extractDependencies(resolveReport, new IntellijModuleDependencies(module, ivyManager));

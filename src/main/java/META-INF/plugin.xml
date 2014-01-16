@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.8</strong>
+            <ul>
+                <li>Fixed compatibility issue with IntelliJ 13.0.2 EAP (build 133.609)</li>
+            </ul>
             <strong>1.0.7</strong>
             <ul>
                 <li>Fixed compatibility issue with IntelliJ 13</li>
@@ -84,7 +88,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

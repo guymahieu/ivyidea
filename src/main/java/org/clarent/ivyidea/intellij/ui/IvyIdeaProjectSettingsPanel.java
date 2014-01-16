@@ -20,23 +20,17 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.List;
 
 import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.*;
@@ -78,8 +72,10 @@ public class IvyIdeaProjectSettingsPanel {
     public IvyIdeaProjectSettingsPanel(Project project, IvyIdeaProjectSettings state) {
         this.project = project;
         this.internalState = state;
+
+        txtIvySettingsFile.addBrowseFolderListener("Select ivy settings file", null, project, new FileChooserDescriptor(true, false, false, false, false, false));
+
         wireActivityWatchers();
-        wireIvySettingsTextbox();
         wireIvySettingsRadioButtons();
     }
 
@@ -89,34 +85,6 @@ public class IvyIdeaProjectSettingsPanel {
                 txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
             }
         });
-    }
-
-    private void wireIvySettingsTextbox() {
-        final FileChooserDescriptor descriptor = createFileDescriptor();
-        txtIvySettingsFile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String path = txtIvySettingsFile.getText().trim();
-                path = "file://" + path.replace(File.separatorChar, '/');
-                VirtualFile root = VirtualFileManager.getInstance().findFileByUrl(path);
-
-                VirtualFile[] files = IntellijCompatibilityService.getCompatibilityMethods().chooseFiles(descriptor, projectSettingsPanel, project, root);
-                if ((files.length != 1) || (files[0] == null)) {
-                    return;
-                }
-                
-                txtIvySettingsFile.setText(files[0].getPath().replace('/', File.separatorChar));
-            }
-        });
-
-        txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
-    }
-
-    private FileChooserDescriptor createFileDescriptor() {
-        FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
-        descriptor.setShowFileSystemRoots(true);
-        descriptor.setTitle("Select ivy settings file");
-        descriptor.setDescription(null);
-        return descriptor;
     }
 
     private void wireActivityWatchers() {

@@ -53,7 +53,8 @@ public class ExternalDependencyFactory {
         return null;
     }
 
-    private static ArtifactTypeSettings.DependencyCategory determineCategory(@NotNull Project project, @NotNull Artifact artifact) {
+    @Nullable
+    public static ArtifactTypeSettings.DependencyCategory determineCategory(@NotNull Project project, @NotNull Artifact artifact) {
         final ArtifactTypeSettings typeSettings = IvyIdeaConfigHelper.getArtifactTypeSettings(project);
         if (typeSettings == null) {
             return null;

@@ -123,6 +123,14 @@ public class IvyIdeaConfigHelper {
         return getProjectConfig(project).isResolveInBackground();
     }
 
+    public static boolean alwaysAttachSources(final Project project) {
+        return getProjectConfig(project).isAlwaysAttachSources();
+    }
+
+    public static boolean alwaysAttachJavadocs(final Project project) {
+        return getProjectConfig(project).isAlwaysAttachJavadocs();
+    }
+
     @NotNull
     private static IvyIdeaProjectSettings getProjectConfig(Project project) {
         IvyIdeaProjectSettingsComponent component = project.getComponent(IvyIdeaProjectSettingsComponent.class);

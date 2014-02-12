@@ -30,6 +30,8 @@ public class IvyIdeaProjectSettings {
     private boolean resolveTransitively = true;
     private boolean resolveCacheOnly = false;
     private boolean resolveInBackground = false;
+    private boolean alwaysAttachSources = true;
+    private boolean alwaysAttachJavadocs = true;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
@@ -75,6 +77,22 @@ public class IvyIdeaProjectSettings {
 
     public void setResolveInBackground(boolean resolveInBackground) {
         this.resolveInBackground = resolveInBackground;
+    }
+
+    public boolean isAlwaysAttachSources() {
+        return alwaysAttachSources;
+    }
+
+    public void setAlwaysAttachSources(boolean alwaysAttachSources) {
+        this.alwaysAttachSources = alwaysAttachSources;
+    }
+
+    public boolean isAlwaysAttachJavadocs() {
+        return alwaysAttachJavadocs;
+    }
+
+    public void setAlwaysAttachJavadocs(boolean alwaysAttachJavadocs) {
+        this.alwaysAttachJavadocs = alwaysAttachJavadocs;
     }
 
     public boolean isUseCustomIvySettings() {

@@ -21,6 +21,7 @@
                 <li>Added an extra configuration option to always attach the source/javadoc artifacts, even when
                     they aren't selected by an Ivy configuration.</li>
                 <li>Fixed compatibility issue with IntelliJ 13.1</li>
+                <li>Upgraded internal Apache Ivy to 2.4.0-rc1 (including dependencies)</li>
             </ul>
             <strong>1.0.8</strong>
             <ul>

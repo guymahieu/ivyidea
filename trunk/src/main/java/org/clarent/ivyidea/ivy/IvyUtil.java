@@ -16,8 +16,6 @@
 
 package org.clarent.ivyidea.ivy;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
@@ -161,15 +159,11 @@ public class IvyUtil {
     }
 
     private static void registerConsoleLogger(final Ivy ivy, final Project project) {
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
-            public void run() {
-                ivy.getLoggerEngine().pushLogger(
-                        new ConsoleViewMessageLogger(
-                                project,
-                                IntellijUtils.getConsoleView(project)
-                        )
-                );
-            }
-        }, ModalityState.NON_MODAL);
+        ivy.getLoggerEngine().pushLogger(
+                new ConsoleViewMessageLogger(
+                        project,
+                        IntellijUtils.getConsoleView(project)
+                )
+        );
     }
 }

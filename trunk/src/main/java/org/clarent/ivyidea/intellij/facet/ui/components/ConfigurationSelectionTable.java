@@ -19,6 +19,7 @@ package org.clarent.ivyidea.intellij.facet.ui.components;
 import com.intellij.ui.BooleanTableCellEditor;
 import com.intellij.ui.BooleanTableCellRenderer;
 import com.intellij.util.ui.Table;
+import com.intellij.util.ui.UIUtil;
 import org.apache.ivy.core.module.descriptor.Configuration;
 
 import javax.swing.*;
@@ -40,6 +41,7 @@ public class ConfigurationSelectionTable extends Table {
 
     public ConfigurationSelectionTable() {
         super(new ConfigurationSelectionTableModel());
+        setForeground(UIUtil.getTableForeground());
         initComponents();
     }
 

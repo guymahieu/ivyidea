@@ -19,7 +19,6 @@ package org.clarent.ivyidea.intellij.facet.ui.components;
 import com.intellij.ui.BooleanTableCellEditor;
 import com.intellij.ui.BooleanTableCellRenderer;
 import com.intellij.util.ui.Table;
-import com.intellij.util.ui.UIUtil;
 import org.apache.ivy.core.module.descriptor.Configuration;
 
 import javax.swing.*;
@@ -39,15 +38,20 @@ import java.util.Set;
 
 public class ConfigurationSelectionTable extends Table {
 
+    private boolean configurationsEnabled = true;
+
     public ConfigurationSelectionTable() {
         super(new ConfigurationSelectionTableModel());
-        setForeground(UIUtil.getTableForeground());
         initComponents();
     }
 
     public void setModel(TableModel dataModel) {
         super.setModel(dataModel);
         initComponents();
+    }
+
+    public void setConfigurationsEnabled(boolean configurationsEnabled) {
+        this.configurationsEnabled = configurationsEnabled;
     }
 
     public Set<Configuration> getSelectedConfigurations() {
@@ -71,7 +75,7 @@ public class ConfigurationSelectionTable extends Table {
         getColumnModel().getColumn(0).setCellRenderer(new BooleanTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                rendererComponent.setEnabled(table.isEnabled());
+                rendererComponent.setEnabled(configurationsEnabled);
                 return rendererComponent;
             }
         });
@@ -103,7 +107,7 @@ public class ConfigurationSelectionTable extends Table {
                     setToolTipText(null);
                     rendererComponent.setFont(regularFont);
                 }
-                rendererComponent.setEnabled(table.isEnabled());
+                rendererComponent.setEnabled(configurationsEnabled);
                 return rendererComponent;
             }
         });
@@ -112,7 +116,7 @@ public class ConfigurationSelectionTable extends Table {
         getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                rendererComponent.setEnabled(table.isEnabled());
+                rendererComponent.setEnabled(configurationsEnabled);
                 return rendererComponent;
             }
         });

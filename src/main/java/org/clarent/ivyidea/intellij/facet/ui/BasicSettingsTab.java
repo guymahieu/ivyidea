@@ -126,7 +126,7 @@ public class BasicSettingsTab extends FacetEditorTab {
     }
 
     private void updateConfigurationsTable() {
-        tblConfigurationSelection.setEnabled(chkOnlyResolveSpecificConfigs.isSelected());
+        tblConfigurationSelection.setConfigurationsEnabled(chkOnlyResolveSpecificConfigs.isSelected());
     }
 
     private void updateIvySettingsUIState() {
@@ -274,7 +274,7 @@ public class BasicSettingsTab extends FacetEditorTab {
             } else {
                 tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel());
                 selectedConfigurations = new HashSet<Configuration>();
-                tblConfigurationSelection.setEnabled(false);
+                tblConfigurationSelection.setConfigurationsEnabled(false);
             }
             updateUI();
         }

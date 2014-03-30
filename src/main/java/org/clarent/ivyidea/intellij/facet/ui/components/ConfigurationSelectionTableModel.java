@@ -33,6 +33,7 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
 
     private List<Configuration> data;
     private Set<Integer> selectedIndexes;
+    private boolean editable = true;
 
     public ConfigurationSelectionTableModel() {
         this.data = Collections.emptyList();
@@ -47,6 +48,10 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     public ConfigurationSelectionTableModel(Collection<Configuration> data, Collection<String> selectedConfigNames) {
         this.data = new ArrayList<Configuration>(data);
         this.selectedIndexes = buildSelectedIndexes(this.data, selectedConfigNames);
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
     public Set<Configuration> getSelectedConfigurations() {
@@ -70,7 +75,7 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     }
 
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 0;
+        return editable && columnIndex == 0;
     }
 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {

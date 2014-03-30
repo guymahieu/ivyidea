@@ -38,7 +38,7 @@ import java.util.Set;
 
 public class ConfigurationSelectionTable extends Table {
 
-    private boolean configurationsEnabled = true;
+    private boolean editable = true;
 
     public ConfigurationSelectionTable() {
         super(new ConfigurationSelectionTableModel());
@@ -47,11 +47,17 @@ public class ConfigurationSelectionTable extends Table {
 
     public void setModel(TableModel dataModel) {
         super.setModel(dataModel);
+        ((ConfigurationSelectionTableModel) dataModel).setEditable(editable);
         initComponents();
     }
 
-    public void setConfigurationsEnabled(boolean configurationsEnabled) {
-        this.configurationsEnabled = configurationsEnabled;
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+        ((ConfigurationSelectionTableModel) dataModel).setEditable(editable);
+
+        initComponents();
+        revalidate();
+        repaint();
     }
 
     public Set<Configuration> getSelectedConfigurations() {
@@ -62,8 +68,8 @@ public class ConfigurationSelectionTable extends Table {
         setRowSelectionAllowed(false);
         setColumnSelectionAllowed(false);
 
-        setAutoResizeMode(AUTO_RESIZE_OFF);
         getColumnModel().getColumn(0).setPreferredWidth(30);
+        getColumnModel().getColumn(0).setMaxWidth(30);
         getColumnModel().getColumn(1).setPreferredWidth(120);
         getColumnModel().getColumn(2).setPreferredWidth(400);
 
@@ -75,7 +81,7 @@ public class ConfigurationSelectionTable extends Table {
         getColumnModel().getColumn(0).setCellRenderer(new BooleanTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                rendererComponent.setEnabled(configurationsEnabled);
+                rendererComponent.setEnabled(editable);
                 return rendererComponent;
             }
         });
@@ -107,7 +113,7 @@ public class ConfigurationSelectionTable extends Table {
                     setToolTipText(null);
                     rendererComponent.setFont(regularFont);
                 }
-                rendererComponent.setEnabled(configurationsEnabled);
+                rendererComponent.setEnabled(editable);
                 return rendererComponent;
             }
         });
@@ -116,11 +122,9 @@ public class ConfigurationSelectionTable extends Table {
         getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                rendererComponent.setEnabled(configurationsEnabled);
+                rendererComponent.setEnabled(editable);
                 return rendererComponent;
             }
         });
-
     }
-
 }

@@ -36,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 public class ToolWindowRegistrationComponent implements ProjectComponent {
 
     public static final String TOOLWINDOW_ID = "IvyIDEA";
+    public static final String COMPONENT_NAME = "IvyIDEA.ToolWindowRegistrationComponent";
 
     private Project project;
     private ConsoleView console;
@@ -52,7 +53,7 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
 
     @NotNull
     public String getComponentName() {
-        return "IvyIDEA.ToolWindowRegistrationComponent";
+        return COMPONENT_NAME;
     }
 
     public void projectOpened() {
@@ -61,6 +62,10 @@ public class ToolWindowRegistrationComponent implements ProjectComponent {
 
     public void projectClosed() {
         unregisterToolWindow();
+    }
+
+    public ConsoleView getConsole() {
+        return console;
     }
 
     private void unregisterToolWindow() {

@@ -18,9 +18,6 @@ package org.clarent.ivyidea.intellij;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.facet.FacetManager;
-import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.module.Module;
@@ -32,7 +29,6 @@ import org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,10 +61,10 @@ public class IntellijUtils {
 
 
     public static ConsoleView getConsoleView(Project project) {
-        return (ConsoleView) getToolWindow(project).getContentManager().findContent("Console").getComponent();
+        return ((ToolWindowRegistrationComponent) project.getComponent(ToolWindowRegistrationComponent.COMPONENT_NAME)).getConsole();
     }
 
-    public static  ToolWindow getToolWindow(Project project) {
+    public static ToolWindow getToolWindow(Project project) {
         return ToolWindowManager.getInstance(project).getToolWindow(ToolWindowRegistrationComponent.TOOLWINDOW_ID);
     }
 

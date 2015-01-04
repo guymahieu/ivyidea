@@ -19,6 +19,7 @@
             <strong>1.0.11</strong>
             <ul>
                 <li>Fixed compatibility issue with IntelliJ 11</li>
+                <li>Upgraded internal Apache Ivy to 2.4.0 (including dependencies)</li>
             </ul>
             <strong>1.0.10</strong>
             <ul>

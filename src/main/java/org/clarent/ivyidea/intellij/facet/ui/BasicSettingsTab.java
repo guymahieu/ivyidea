@@ -236,7 +236,7 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     @NotNull
     private static Set<String> getNames(@NotNull Set<Configuration> selectedConfigurations) {
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new TreeSet<String>();
         for (Configuration selectedConfiguration : selectedConfigurations) {
             result.add(selectedConfiguration.getName());
         }

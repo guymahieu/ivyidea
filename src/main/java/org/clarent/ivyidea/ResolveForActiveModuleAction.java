@@ -19,6 +19,7 @@ package org.clarent.ivyidea;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
@@ -43,6 +44,8 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
     private static final String MENU_TEXT = "Resolve for {0} module";
 
     public void actionPerformed(final AnActionEvent e) {
+        FileDocumentManager.getInstance().saveAllDocuments();
+
         final Module module = DataKeys.MODULE.getData(e.getDataContext());
         if (module != null) {
             ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(module.getProject(), e) {

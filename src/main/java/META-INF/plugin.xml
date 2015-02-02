@@ -19,6 +19,7 @@
             <strong>1.0.12</strong>
             <ul>
                 <li>The configurations to resolve are now stored alphabetically in the .iml file</li>
+                <li>Modified files are now saved before starting to resolve the dependencies</li>
             </ul>
             <strong>1.0.11</strong>
             <ul>

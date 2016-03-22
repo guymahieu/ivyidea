@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.13</strong>
+            <ul>
+                <li>The IvyIDEA settings window was no longer visible in IntelliJ 2016.1</li>
+            </ul>
             <strong>1.0.12</strong>
             <ul>
                 <li>The configurations to resolve are now stored alphabetically in the .iml file</li>
@@ -109,7 +113,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>
@@ -119,7 +123,7 @@
     </application-components>
     <project-components>
         <component>
-            <implementation-class>org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent</implementation-class>
+            <implementation-class>org.clarent.ivyidea.intellij.IvyIdeaProjectComponent</implementation-class>
         </component>
         <component>
             <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
@@ -150,5 +154,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
         <framework.detector implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetDetector"/>
+		<projectConfigurable id="IvyIDEA.ProjectSettings"
+							 instance="org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent"
+							 displayName="IvyIDEA" />
     </extensions>
 </idea-plugin>

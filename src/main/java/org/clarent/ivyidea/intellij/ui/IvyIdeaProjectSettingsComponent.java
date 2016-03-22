@@ -25,6 +25,7 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
+import org.clarent.ivyidea.intellij.IvyIdeaProjectComponent;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -35,41 +36,14 @@ import javax.swing.*;
 /**
  * @author Guy Mahieu
  */
-
-@State(
-        name = IvyIdeaProjectSettingsComponent.COMPONENT_NAME,
-        storages = {@Storage(id = "IvyIDEA", file = "$PROJECT_FILE$")}
-)
-public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Configurable, PersistentStateComponent<IvyIdeaProjectSettings> {
-
-    public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";
+public class IvyIdeaProjectSettingsComponent implements Configurable {
 
     private final Project project;
-    private final IvyIdeaProjectSettings internalState;
 
     private IvyIdeaProjectSettingsPanel settingsPanel;
 
     public IvyIdeaProjectSettingsComponent(Project project) {
         this.project = project;
-        this.internalState = new IvyIdeaProjectSettings();
-    }
-
-    public void projectOpened() {
-    }
-
-    public void projectClosed() {
-    }
-
-    @NonNls
-    @NotNull
-    public String getComponentName() {
-        return COMPONENT_NAME;
-    }
-
-    public void initComponent() {
-    }
-
-    public void disposeComponent() {
     }
 
     @Nls
@@ -94,7 +68,8 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
 
     private IvyIdeaProjectSettingsPanel getSettingsPanel() {
         if (settingsPanel == null) {
-            settingsPanel = new IvyIdeaProjectSettingsPanel(project, internalState);
+            IvyIdeaProjectSettings state = project.getComponent(IvyIdeaProjectComponent.class).getState();
+            settingsPanel = new IvyIdeaProjectSettingsPanel(project, state);
         }
         return settingsPanel;
     }
@@ -113,14 +88,5 @@ public class IvyIdeaProjectSettingsComponent implements ProjectComponent, Config
 
     public void disposeUIResources() {
         settingsPanel = null;
-    }
-
-    @NotNull
-    public IvyIdeaProjectSettings getState() {
-        return internalState;
-    }
-
-    public void loadState(IvyIdeaProjectSettings state) {
-        XmlSerializerUtil.copyBean(state, this.getState());
     }
 }

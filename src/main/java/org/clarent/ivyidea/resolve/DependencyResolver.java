@@ -19,7 +19,12 @@ package org.clarent.ivyidea.resolve;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
+import org.apache.ivy.core.event.IvyEvent;
+import org.apache.ivy.core.event.IvyListener;
+import org.apache.ivy.core.event.resolve.StartResolveEvent;
 import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
+import org.apache.ivy.core.module.descriptor.ExcludeRule;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
 import org.apache.ivy.core.report.ArtifactDownloadReport;
@@ -45,6 +50,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -73,13 +79,26 @@ class DependencyResolver {
         return Collections.unmodifiableList(resolvedDependencies);
     }
 
-    public void resolve(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
+    public void resolve(Module module, IvyManager ivyManager, final List<ExcludeRule> excludeRules) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
         final File ivyFile = IvyUtil.getIvyFile(module);
         if (ivyFile == null) {
             throw new IvyFileReadException(null, module.getName(), null);
         }
 
         final Ivy ivy = ivyManager.getIvy(module);
+        ivy.getEventManager().addIvyListener(new IvyListener() {
+            public void progress(IvyEvent event) {
+                if (event instanceof StartResolveEvent) {
+                    ModuleDescriptor moduleDescriptor = ((StartResolveEvent) event).getModuleDescriptor();
+                    if (moduleDescriptor instanceof DefaultModuleDescriptor) {
+                        for (ExcludeRule excludeRule : excludeRules) {
+                            ((DefaultModuleDescriptor) moduleDescriptor).addExcludeRule(excludeRule);
+                        }
+                    }
+                }
+            }
+        });
+
         try {
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             extractDependencies(ivy, resolveReport, new IntellijModuleDependencies(module, ivyManager));
@@ -92,6 +111,10 @@ class DependencyResolver {
 
     // TODO: This method performs way too much tasks -- refactor it!
     protected void extractDependencies(Ivy ivy, ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) {
+        for (Module module : moduleDependencies.getModuleDependencies()) {
+            resolvedDependencies.add(new InternalDependency(module));
+        }
+
         final String[] resolvedConfigurations = resolveReport.getConfigurations();
         for (String resolvedConfiguration : resolvedConfigurations) {
             ConfigurationResolveReport configurationReport = resolveReport.getConfigurationReport(resolvedConfiguration);
@@ -103,6 +126,7 @@ class DependencyResolver {
             Set<ModuleRevisionId> dependencies = (Set<ModuleRevisionId>) configurationReport.getModuleRevisionIds();
             for (ModuleRevisionId dependency : dependencies) {
                 if (moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId())) {
+                    //should no longer happen
                     resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
                 } else {
                     final Project project = moduleDependencies.getModule().getProject();

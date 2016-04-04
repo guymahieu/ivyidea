@@ -16,7 +16,9 @@
 
 package org.clarent.ivyidea.intellij.model;
 
+import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
@@ -61,11 +63,13 @@ class LibraryModels implements Closeable {
 
     private Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel, final String libraryName) {
         final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
-        final Library library = libraryTable.getLibraryByName(libraryName);
+        Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {
             LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getModuleFilePath() + ", creating with name " + libraryName + "...");
-            return libraryTable.createLibrary(libraryName);
+            library = libraryTable.createLibrary(libraryName);
         }
+        LibraryOrderEntry libraryOrderEntry = modifiableRootModel.findLibraryOrderEntry(library);
+        libraryOrderEntry.setExported(true);
         return library;
     }
 

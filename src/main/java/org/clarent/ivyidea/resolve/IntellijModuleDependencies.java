@@ -26,7 +26,9 @@ import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -40,7 +42,7 @@ class IntellijModuleDependencies {
 
     private IvyManager ivyManager;
     private Module module;
-    private Map<ModuleId, Module> moduleDependencies = new HashMap<ModuleId, Module>();
+    private Map<ModuleId, Module> moduleDependencies = new LinkedHashMap<ModuleId, Module>();
 
     public IntellijModuleDependencies(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         this.module = module;
@@ -60,13 +62,18 @@ class IntellijModuleDependencies {
         return moduleDependencies.get(moduleId);
     }
 
+    public Collection<Module> getModuleDependencies() {
+        return Collections.unmodifiableCollection(moduleDependencies.values());
+    }
+
     private void fillModuleDependencies() throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final ModuleDescriptor descriptor = ivyManager.getModuleDescriptor(module);
         if (descriptor != null) {
             final DependencyDescriptor[] ivyDependencies = descriptor.getDependencies();
-            for (Module dependencyModule : IntellijUtils.getAllModulesWithIvyIdeaFacet(module.getProject())) {
-                if (!module.equals(dependencyModule)) {
-                    for (DependencyDescriptor ivyDependency : ivyDependencies) {
+            final Module[] dependencyModules = IntellijUtils.getAllModulesWithIvyIdeaFacet(module.getProject());
+            for (DependencyDescriptor ivyDependency : ivyDependencies) {
+                for (Module dependencyModule : dependencyModules) {
+                    if (!module.equals(dependencyModule)) {
                         final ModuleId ivyDependencyId = ivyDependency.getDependencyId();
                         final ModuleId dependencyModuleId = getModuleId(dependencyModule);
                         if (ivyDependencyId.equals(dependencyModuleId)) {
@@ -85,7 +92,7 @@ class IntellijModuleDependencies {
         if (!moduleDependencies.values().contains(module)) {
             final ModuleDescriptor ivyModuleDescriptor = ivyManager.getModuleDescriptor(module);
             if (ivyModuleDescriptor != null) {
-                moduleDependencies.put(ivyModuleDescriptor.getModuleRevisionId().getModuleId(), module);
+                return ivyModuleDescriptor.getModuleRevisionId().getModuleId();
             }
 
         }

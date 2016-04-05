@@ -79,7 +79,7 @@
                 <include name="**/*"/>
             </fileset>
             <fileset dir="${ivyidea.sourcedir}">
-                <include name="/META-INF/**/*"/>
+                <include name="META-INF/**/*"/>
             </fileset>
             <fileset dir="${ivyidea.resourcedir}"/>
         </jar>

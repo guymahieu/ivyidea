@@ -129,8 +129,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
                     "Open " + exception.getConfigLocation() + " settings for " + exception.getConfigName() + "...",
                     new LinkListener() {
                         public void linkSelected(LinkLabel linkLabel, Object o) {
-                            Configurable component = project.getComponent(IvyIdeaProjectSettingsComponent.class);
-                            ShowSettingsUtil.getInstance().editConfigurable(project, component);
+                            ShowSettingsUtil.getInstance().showSettingsDialog(project, IvyIdeaProjectSettingsComponent.class);
                         }
                     }, null);
         }

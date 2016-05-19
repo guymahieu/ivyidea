@@ -16,6 +16,11 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.14</strong>
+            <ul>
+                <li>When trying to resolve dependencies without an Ivy settings file, an IllegalArgumentException 
+				    was thrown when clicking on the 'Open Project Settings' link</li>
+            </ul>
             <strong>1.0.13</strong>
             <ul>
                 <li>The IvyIDEA settings window was no longer visible in IntelliJ 2016.1</li>
@@ -113,7 +118,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

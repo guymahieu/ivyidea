@@ -17,6 +17,7 @@
 package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.module.Module;
+import org.apache.ivy.core.module.descriptor.ExcludeRule;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
@@ -57,10 +58,11 @@ public class IntellijDependencyResolver {
         return dependencies;
     }
 
-    public void resolve(final Module module) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
+    public void resolve(final Module module, List<ExcludeRule> excludeRules) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
         this.module = module;
+
         final DependencyResolver dependencyResolver = new DependencyResolver();
-        dependencyResolver.resolve(module, ivyManager);
+        dependencyResolver.resolve(module, ivyManager, excludeRules);
         dependencies = dependencyResolver.getResolvedDependencies();
         problems = dependencyResolver.getResolveProblems();
     }

@@ -30,6 +30,7 @@ import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
+import org.clarent.ivyidea.resolve.ResolveUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
@@ -56,7 +57,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
                     getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
 
                     final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    resolver.resolve(module);
+                    resolver.resolve(module, ResolveUtil.buildExcludeRulesForIvyModules(ivyManager, module.getProject()));
                     updateIntellijModel(module, resolver.getDependencies());
                     reportProblems(module, resolver.getProblems());
                 }

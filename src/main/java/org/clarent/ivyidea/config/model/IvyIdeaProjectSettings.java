@@ -34,7 +34,10 @@ public class IvyIdeaProjectSettings {
     private boolean alwaysAttachJavadocs = true;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
+    private boolean avoidInternalModuleDependenciesResolving = false;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
+
+
     private ArtifactTypeSettings artifactTypeSettings = new ArtifactTypeSettings();
 
     private PropertiesSettings propertiesSettings = new PropertiesSettings();
@@ -125,6 +128,14 @@ public class IvyIdeaProjectSettings {
 
     public void setLibraryNameIncludesConfiguration(final boolean libraryNameIncludesConfiguration) {
         this.libraryNameIncludesConfiguration = libraryNameIncludesConfiguration;
+    }
+
+    public boolean isAvoidInternalModuleDependenciesResolving() {
+        return avoidInternalModuleDependenciesResolving;
+    }
+
+    public void setAvoidInternalModuleDependenciesResolving(boolean avoidInternalModuleDependenciesResolving) {
+        this.avoidInternalModuleDependenciesResolving = avoidInternalModuleDependenciesResolving;
     }
 
     public String getIvyLogLevelThreshold() {

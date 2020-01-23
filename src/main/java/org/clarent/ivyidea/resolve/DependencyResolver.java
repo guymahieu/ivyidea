@@ -102,7 +102,9 @@ class DependencyResolver {
             @SuppressWarnings({"unchecked"})
             Set<ModuleRevisionId> dependencies = (Set<ModuleRevisionId>) configurationReport.getModuleRevisionIds();
             for (ModuleRevisionId dependency : dependencies) {
-                if (moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId())) {
+                // Added check to configuration to avoid internal module deps resolving in case user has checked the checkbox in config
+                boolean isAvoidInternalModuleDepsResolving = IvyIdeaConfigHelper.avoidInternalModuleDependeciesResolving(moduleDependencies.getModule().getProject());
+                if (moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId()) && !isAvoidInternalModuleDepsResolving) {
                     resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
                 } else {
                     final Project project = moduleDependencies.getModule().getProject();

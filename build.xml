@@ -16,7 +16,7 @@
 
 <project name="IvyIDEA" default="bundle" basedir=".">
 
-    <property name="ivyidea.version" value="1.0.14"/>
+    <property name="ivyidea.version" value="1.0.15-jberta93"/>
 
     <property name="ivyidea.sourcedir" value="src/main/java"/>
     <property name="ivyidea.resourcedir" value="src/main/resources"/>
@@ -25,6 +25,7 @@
     <property name="ivyidea.libdir" value="lib"/>
     
     <property environment="env" />
+    <property name="env.IDEA_HOME" value="/Applications/IntelliJ IDEA.app/Contents"/>
     <property name="idea.home" value="${env.IDEA_HOME}" />
 
     <fail message="Environment variable IDEA_HOME was not set!">
@@ -49,29 +50,35 @@
         <delete dir="build" />
     </target>
 
+
+    <path id="clspath">
+
+        <fileset dir="${idea.home}/lib">
+            <include name="*.jar"/>
+
+        </fileset>
+
+        <fileset dir="${idea.home}/plugins/java/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${ivyidea.libdir}">
+            <include name="ivy-2.4.0.jar"/>
+        </fileset>
+    </path>
+
+
     <target name="jar">
         <mkdir dir="build" />
         <mkdir dir="${ivyidea.builddir}" />
+
         
         <javac2 srcdir="${ivyidea.sourcedir}"
                 destdir="${ivyidea.builddir}"
-                source="1.6"
-                target="1.6"
+                source="1.8"
+                target="1.8"
                 includeantruntime="false"
                 debug="true">
-            <classpath>
-                <!-- intelliJ API -->
-                <pathelement location="${idea.home}/lib/annotations.jar" />
-                <pathelement location="${idea.home}/lib/extensions.jar" />
-                <pathelement location="${idea.home}/lib/forms_rt.jar" />
-                <pathelement location="${idea.home}/lib/jdom.jar" />
-                <pathelement location="${idea.home}/lib/openapi.jar" />
-                <pathelement location="${idea.home}/lib/util.jar" />
-				<pathelement location="${idea.home}/lib/idea.jar" />
-            
-                <!-- Ivy -->
-                <pathelement location="${ivyidea.libdir}/ivy-2.4.0.jar" />
-            </classpath>
+            <classpath refid="clspath"></classpath>
         </javac2>
         
         <jar file="build/ivyidea-${ivyidea.version}.jar">

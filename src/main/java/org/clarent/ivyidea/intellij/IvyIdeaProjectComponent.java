@@ -38,7 +38,7 @@ import javax.swing.*;
 
 @State(
         name = IvyIdeaProjectComponent.COMPONENT_NAME,
-        storages = {@Storage(id = "IvyIDEA", file = "$PROJECT_FILE$")}
+        storages = {@Storage(file = "$PROJECT_FILE$")}
 )
 public class IvyIdeaProjectComponent implements ProjectComponent, PersistentStateComponent<IvyIdeaProjectSettings> {
 

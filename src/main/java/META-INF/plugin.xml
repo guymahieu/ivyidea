@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <p>
+            <strong>1.0.15-jberta93</strong>
+            <ul>
+                <li>Added checkbox "Avoid internal modules dependecies resolving" to force IvyIDEA to resolve dependecies only through the ivy.xml ignoring internal modules</li>
+            </ul>
             <strong>1.0.14</strong>
             <ul>
                 <li>When trying to resolve dependencies without an Ivy settings file, an IllegalArgumentException 
@@ -118,7 +122,7 @@
             </ul>
         </p>]]>
     </change-notes>
-    <version>1.0.14</version>
+    <version>1.0.15-jberta93</version>
     <vendor email="guy.mahieu@gmail.com" url="http://www.clarent.org" logo="/ivyidea16.png">Guy Mahieu</vendor>
     <idea-version since-build="3000"/>
     <application-components>

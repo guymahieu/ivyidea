@@ -65,6 +65,7 @@ public class IvyIdeaProjectSettingsPanel {
     private JCheckBox chkBackground;
     private JCheckBox autoAttachSources;
     private JCheckBox autoAttachJavadocs;
+    private JCheckBox avoidInternalModuleDependeciesResolving;
     private JPanel pnlIvyFiles;
     private JPanel pnlArtefactTypes;
     private IvyIdeaProjectSettings internalState;
@@ -127,6 +128,7 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.setAlwaysAttachSources(autoAttachSources.isSelected());
         internalState.setAlwaysAttachJavadocs(autoAttachJavadocs.isSelected());
         internalState.setUseCustomIvySettings(useYourOwnIvySettingsRadioButton.isSelected());
+        internalState.setAvoidInternalModuleDependenciesResolving(avoidInternalModuleDependeciesResolving.isSelected());
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
         internalState.setPropertiesSettings(propertiesSettings);
@@ -152,6 +154,7 @@ public class IvyIdeaProjectSettingsPanel {
         autoAttachSources.setSelected(config.isAlwaysAttachSources());
         autoAttachJavadocs.setSelected(config.isAlwaysAttachJavadocs());
         useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
+        avoidInternalModuleDependeciesResolving.setSelected(config.isAvoidInternalModuleDependenciesResolving());
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
         includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());

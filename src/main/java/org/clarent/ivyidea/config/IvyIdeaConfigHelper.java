@@ -131,6 +131,10 @@ public class IvyIdeaConfigHelper {
         return getProjectConfig(project).isAlwaysAttachJavadocs();
     }
 
+    public static boolean avoidInternalModuleDependeciesResolving(final Project project){
+        return getProjectConfig(project).isAvoidInternalModuleDependenciesResolving();
+    }
+
     @NotNull
     private static IvyIdeaProjectSettings getProjectConfig(Project project) {
         IvyIdeaProjectComponent component = project.getComponent(IvyIdeaProjectComponent.class);

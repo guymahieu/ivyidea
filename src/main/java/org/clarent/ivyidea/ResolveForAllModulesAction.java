@@ -17,7 +17,7 @@
 package org.clarent.ivyidea;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
@@ -45,14 +45,14 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
     public void actionPerformed(AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
 
-        final Project project = DataKeys.PROJECT.getData(e.getDataContext());
+        final Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, e) {
             public void doResolve(final @NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
 
                 final IvyManager ivyManager = new IvyManager();
 
-                Collection<IntellijDependencyResolver> resolvers = new ArrayList<IntellijDependencyResolver>();
+                Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
                 for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
                     getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
                     indicator.setText2("Resolving for module " + module.getName());

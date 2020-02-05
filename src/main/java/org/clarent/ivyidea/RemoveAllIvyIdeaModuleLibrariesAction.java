@@ -18,7 +18,7 @@ package org.clarent.ivyidea;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
@@ -43,36 +43,30 @@ import org.jetbrains.annotations.NotNull;
 public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {
-        final Project project = DataKeys.PROJECT.getData(e.getDataContext());
+        final Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
         ProgressManager.getInstance().run(new IvyIdeaBackgroundTask(e) {
             public void run(@NotNull final ProgressIndicator indicator) {
                 final Module[] facet = IntellijUtils.getAllModulesWithIvyIdeaFacet(project);
                 indicator.setIndeterminate(false);
                 for (final Module module : facet) {
                     indicator.setText2("Removing for module " + module.getName());
-                    ApplicationManager.getApplication().invokeAndWait(new Runnable() {
-                        public void run() {
-                            ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                                public void run() {
-                                    final ModifiableRootModel model = ModuleRootManager.getInstance(module).getModifiableModel();
-                                    final LibraryTable moduleLibraryTable = model.getModuleLibraryTable();
-                                    final Library[] libraries = moduleLibraryTable.getLibraries();
-                                    boolean found = false;
-                                    for (final Library library : libraries) {
-                                        if (IvyIdeaConfigHelper.isCreatedLibraryName(library.getName())) {
-                                            found = true;
-                                            moduleLibraryTable.removeLibrary(library);
-                                        }
-                                    }
-                                    if (found) {
-                                        model.commit();
-                                    } else {
-                                        model.dispose();
-                                    }
-                                }
-                            });
+                    ApplicationManager.getApplication().invokeAndWait(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+                        final ModifiableRootModel model = ModuleRootManager.getInstance(module).getModifiableModel();
+                        final LibraryTable moduleLibraryTable = model.getModuleLibraryTable();
+                        final Library[] libraries = moduleLibraryTable.getLibraries();
+                        boolean found = false;
+                        for (final Library library : libraries) {
+                            if (IvyIdeaConfigHelper.isCreatedLibraryName(library.getName())) {
+                                found = true;
+                                moduleLibraryTable.removeLibrary(library);
+                            }
                         }
-                    }, ModalityState.NON_MODAL);
+                        if (found) {
+                            model.commit();
+                        } else {
+                            model.dispose();
+                        }
+                    }), ModalityState.NON_MODAL);
                 }
             }
         });

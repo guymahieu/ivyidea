@@ -12,6 +12,6 @@
         <conf name="ide" description="Dependencies to resolve for IDE's."/>
     </configurations>
     <dependencies>
-        <dependency org="apache" name="commons-collections" rev="${apache.commons.collections.version}" conf="ide,default->default"/>
+        <dependency org="org.apache.commons" name="commons-collections4" rev="${apache.commons.collections.version}" conf="ide,default->default"/>
     </dependencies>
 </ivy-module>

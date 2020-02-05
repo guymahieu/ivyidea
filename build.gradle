@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.16'
+    id "idea"
+}
+
+group 'org.clarent'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://www.jetbrains.com/intellij-repository/releases" }
+    maven { url "https://jetbrains.bintray.com/intellij-third-party-dependencies" }
+}
+
+dependencies {
+    implementation  group: 'org.apache.ivy', name: 'ivy', version: '2.4.0'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version '2019.3'
+
+    plugins = ['java']
+}
+
+patchPluginXml {
+    changeNotes """      
+        <p>
+            <strong>1.0.15</strong>
+            <ul>
+                <li>Removed deprecated API usages</li>
+            </ul>
+            <strong>1.0.14</strong>
+            <ul>
+                <li>When trying to resolve dependencies without an Ivy settings file, an IllegalArgumentException was thrown when clicking on the 'Open Project Settings' link</li>
+            </ul>
+            <strong>1.0.13</strong>
+            <ul>
+            </ul>
+            <strong>1.0.12</strong>
+            <ul>
+                <li>The configurations to resolve are now stored alphabetically in the .iml file</li>
+                <li>Modified files are now saved before starting to resolve the dependencies</li>
+            </ul>
+            <strong>1.0.11</strong>
+            <ul>
+                <li>Fixed compatibility issue with IntelliJ 11</li>
+                <li>Upgraded internal Apache Ivy to 2.4.0 (including dependencies)</li>
+            </ul>
+        </p>"""
+}

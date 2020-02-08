@@ -23,9 +23,7 @@ import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.Library.ModifiableModel;
 import com.intellij.openapi.roots.libraries.LibraryTable;
-import com.intellij.openapi.vfs.VirtualFile;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
@@ -105,7 +103,7 @@ public class IntellijModuleWrapper implements Closeable {
     }
 
     public void removeDependenciesNotInList(Collection<ResolvedDependency> dependenciesToKeep) {
-        for (OrderRootType type : IntellijCompatibilityService.getCompatibilityMethods().getAllOrderRootTypes()) {
+        for (OrderRootType type : OrderRootType.getAllTypes()) {
             List<String> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
             for (String dependencyUrl : dependenciesToRemove) {
                 libraryModels.removeDependency(type, dependencyUrl);

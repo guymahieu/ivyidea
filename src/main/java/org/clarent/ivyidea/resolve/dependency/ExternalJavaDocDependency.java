@@ -16,11 +16,9 @@
 
 package org.clarent.ivyidea.resolve.dependency;
 
+import com.intellij.openapi.roots.JavadocOrderRootType;
 import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 
 import java.io.File;
 
@@ -39,7 +37,7 @@ public class ExternalJavaDocDependency extends ExternalDependency {
     }
 
     public OrderRootType getType() {
-        return IntellijCompatibilityService.getCompatibilityMethods().getJavadocOrderRootType();
+        return JavadocOrderRootType.getInstance();
     }
 
 }

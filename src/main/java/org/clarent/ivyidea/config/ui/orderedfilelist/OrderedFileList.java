@@ -16,13 +16,13 @@
 
 package org.clarent.ivyidea.config.ui.orderedfilelist;
 
+import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
@@ -134,8 +134,9 @@ public class OrderedFileList {
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final FileChooserDescriptor fcDescriptor = FileChooserDescriptorFactory.createMultipleFilesNoJarsDescriptor();
-                fcDescriptor.setTitle("Select properties file(s)");
-                final VirtualFile[] files = IntellijCompatibilityService.getCompatibilityMethods().chooseFiles(fcDescriptor, pnlRoot, project, null);
+                //noinspection DialogTitleCapitalization
+                fcDescriptor.setTitle("Select Properties File(s)");
+                final VirtualFile[] files = FileChooser.chooseFiles(fcDescriptor, pnlRoot, project, null);
                 for (VirtualFile file : files) {
                     addFilenameToList(file.getPresentableUrl());
                 }
@@ -144,27 +145,15 @@ public class OrderedFileList {
     }
 
     private void wireRemoveButton() {
-        btnRemove.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeSelectedItemFromList();
-            }
-        });
+        btnRemove.addActionListener(e -> removeSelectedItemFromList());
     }
 
     private void wireMoveUpButton() {
-        btnUp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveSelectedItemUp();
-            }
-        });
+        btnUp.addActionListener(e -> moveSelectedItemUp());
     }
 
     private void wireMoveDownButton() {
-        btnDown.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveSelectedItemDown();
-            }
-        });
+        btnDown.addActionListener(e -> moveSelectedItemDown());
     }
 
     private void addFilenameToList(String fileName) {

@@ -17,20 +17,15 @@
 package org.clarent.ivyidea.intellij.task;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.components.labels.LinkLabel;
-import com.intellij.ui.components.labels.LinkListener;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvyIdeaException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.exception.ui.IvyIdeaExceptionDialog;
 import org.clarent.ivyidea.exception.ui.LinkBehavior;
-import org.clarent.ivyidea.intellij.compatibility.IntellijCompatibilityService;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.NotNull;
 
@@ -81,15 +76,6 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         } catch (IvyIdeaException e) {
             exception = e;
             indicator.cancel();
-            // In InteliJ 7 cancelling the progressIndicator does not trigger the
-            // onCancel() method, but in IntelliJ 8 it does
-            if (!IntellijCompatibilityService.getCompatibilityMethods().isTaskCancelledOnProgressIndicatorCancel()) {
-                ApplicationManager.getApplication().invokeLater(new Runnable() {
-                    public void run() {
-                        onCancel();
-                    }
-                });
-            }
         } catch (RuntimeException e) {
             if (!indicator.isCanceled()) {
                 throw e;
@@ -127,11 +113,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         if (exception.getConfigLocation() == IvySettingsNotFoundException.ConfigLocation.Project) {
             linkBehavior = new LinkBehavior(
                     "Open " + exception.getConfigLocation() + " settings for " + exception.getConfigName() + "...",
-                    new LinkListener() {
-                        public void linkSelected(LinkLabel linkLabel, Object o) {
-                            ShowSettingsUtil.getInstance().showSettingsDialog(project, IvyIdeaProjectSettingsComponent.class);
-                        }
-                    }, null);
+                    (linkLabel, o) -> ShowSettingsUtil.getInstance().showSettingsDialog(project, IvyIdeaProjectSettingsComponent.class), null);
         }
         IvyIdeaExceptionDialog.showModalDialog("Ivy Settings Error", exception, myProject, linkBehavior);
     }

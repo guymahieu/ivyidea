@@ -291,7 +291,7 @@
                     <properties>
                       <selected value="true"/>
                       <text value="Detect dependencies on other modules in the same project"/>
-                      <toolTipText value="Force IvyIDEA to resolve dependecies only through the ivy.xml ignoring internal modules"/>
+                      <toolTipText value="Uncheck this option if you want IvyIDEA to ignore internal module dependencies and just resolve all dependencies to external libraries"/>
                     </properties>
                   </component>
                 </children>

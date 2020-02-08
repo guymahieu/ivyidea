@@ -82,7 +82,7 @@ class IntellijModuleDependencies {
 
     @Nullable
     private ModuleId getModuleId(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        if (!moduleDependencies.values().contains(module)) {
+        if (!moduleDependencies.containsValue(module)) {
             final ModuleDescriptor ivyModuleDescriptor = ivyManager.getModuleDescriptor(module);
             if (ivyModuleDescriptor != null) {
                 moduleDependencies.put(ivyModuleDescriptor.getModuleRevisionId().getModuleId(), module);

@@ -34,7 +34,7 @@ public class IvyIdeaProjectSettings {
     private boolean alwaysAttachJavadocs = true;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
-    private boolean detectDependenciesOnOtherModules = false;
+    private boolean detectDependenciesOnOtherModules = true;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
 
 

@@ -17,11 +17,9 @@
 package org.clarent.ivyidea.intellij.ui;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
@@ -29,8 +27,6 @@ import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.List;
 
@@ -42,8 +38,6 @@ import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCa
 
 public class IvyIdeaProjectSettingsPanel {
 
-    public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";
-
     private boolean modified;
     private TextFieldWithBrowseButton txtIvySettingsFile;
     private JPanel projectSettingsPanel;
@@ -53,7 +47,7 @@ public class IvyIdeaProjectSettingsPanel {
     private JRadioButton useIvyDefaultRadioButton;
     private JRadioButton useYourOwnIvySettingsRadioButton;
     private JPanel pnlPropertiesFiles;
-    private JComboBox ivyLogLevelComboBox;
+    private JComboBox<IvyLogLevel> ivyLogLevelComboBox;
     private JCheckBox includeModuleNameCheckBox;
     private JCheckBox includeConfigurationNameCheckBox;
     private JPanel pnlIvyLogging;
@@ -84,20 +78,12 @@ public class IvyIdeaProjectSettingsPanel {
     }
 
     private void wireIvySettingsRadioButtons() {
-        useYourOwnIvySettingsRadioButton.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected());
-            }
-        });
+        useYourOwnIvySettingsRadioButton.addChangeListener(e -> txtIvySettingsFile.setEnabled(useYourOwnIvySettingsRadioButton.isSelected()));
     }
 
     private void wireActivityWatchers() {
         UserActivityWatcher watcher = new UserActivityWatcher();
-        watcher.addUserActivityListener(new UserActivityListener() {
-            public void stateChanged() {
-                modified = true;
-            }
-        });
+        watcher.addUserActivityListener(() -> modified = true);
         watcher.register(projectSettingsPanel);
     }
 
@@ -117,7 +103,7 @@ public class IvyIdeaProjectSettingsPanel {
         orderedFileList.setFileNames(fileNames);
     }
 
-    public void apply() throws ConfigurationException {
+    public void apply() {
         if (internalState == null) {
             internalState = new IvyIdeaProjectSettings();
         }
@@ -172,6 +158,6 @@ public class IvyIdeaProjectSettingsPanel {
         pnlPropertiesFiles = new JPanel(new BorderLayout());
         orderedFileList = new OrderedFileList(project);
         pnlPropertiesFiles.add(orderedFileList.getRootPanel(), BorderLayout.CENTER);
-        ivyLogLevelComboBox = new ComboBox(IvyLogLevel.values());
+        ivyLogLevelComboBox = new ComboBox<>(IvyLogLevel.values());
     }
 }

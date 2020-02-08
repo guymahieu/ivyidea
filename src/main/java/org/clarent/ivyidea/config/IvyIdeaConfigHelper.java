@@ -77,7 +77,7 @@ public class IvyIdeaConfigHelper {
         getProjectConfig(module.getProject()).updateResolveOptions(options);
         final Set<String> configsToResolve = getConfigurationsToResolve(module);
         if (!configsToResolve.isEmpty()) {
-            options.setConfs(configsToResolve.toArray(new String[configsToResolve.size()]));
+            options.setConfs(configsToResolve.toArray(new String[0]));
         }
         return options;
     }
@@ -131,7 +131,7 @@ public class IvyIdeaConfigHelper {
         return getProjectConfig(project).isAlwaysAttachJavadocs();
     }
 
-    public static boolean avoidInternalModuleDependeciesResolving(final Project project){
+    public static boolean detectDependenciesOnOtherModulesWhileResolving(final Project project){
         return getProjectConfig(project).isDetectDependenciesOnOtherModules();
     }
 
@@ -206,8 +206,7 @@ public class IvyIdeaConfigHelper {
     @NotNull
     public static Properties getIvyProperties(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
-        final List<String> propertiesFiles = new ArrayList<String>();
-        propertiesFiles.addAll(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
+        final List<String> propertiesFiles = new ArrayList<>(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
         final FacetPropertiesSettings modulePropertiesSettings = moduleConfiguration.getPropertiesSettings();
         if (modulePropertiesSettings.isIncludeProjectLevelPropertiesFiles()) {
             propertiesFiles.addAll(getProjectConfig(module.getProject()).getPropertiesSettings().getPropertyFiles());
@@ -242,7 +241,7 @@ public class IvyIdeaConfigHelper {
     }
 
     @NotNull
-    public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+    public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
         IvySettings s = new IvySettings();
         injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
 
@@ -259,9 +258,7 @@ public class IvyIdeaConfigHelper {
             } else {
                 s.loadDefault();
             }
-        } catch (ParseException e) {
-            throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             throw new IvySettingsFileReadException(settingsFile, module.getName(), e);
         }
 

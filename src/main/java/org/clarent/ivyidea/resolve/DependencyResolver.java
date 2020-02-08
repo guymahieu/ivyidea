@@ -61,8 +61,8 @@ class DependencyResolver {
     private final List<ResolvedDependency> resolvedDependencies;
 
     public DependencyResolver() {
-        resolveProblems = new ArrayList<ResolveProblem>();
-        resolvedDependencies = new ArrayList<ResolvedDependency>();
+        resolveProblems = new ArrayList<>();
+        resolvedDependencies = new ArrayList<>();
     }
 
     public List<ResolveProblem> getResolveProblems() {
@@ -83,9 +83,7 @@ class DependencyResolver {
         try {
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             extractDependencies(ivy, resolveReport, new IntellijModuleDependencies(module, ivyManager));
-        } catch (ParseException e) {
-            throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
         }
     }
@@ -96,15 +94,17 @@ class DependencyResolver {
         for (String resolvedConfiguration : resolvedConfigurations) {
             ConfigurationResolveReport configurationReport = resolveReport.getConfigurationReport(resolvedConfiguration);
 
-            // TODO: Refactor this a bit
-            registerProblems(configurationReport, moduleDependencies);
+            boolean detectDependenciesOnOtherModulesWhileResolving = IvyIdeaConfigHelper.detectDependenciesOnOtherModulesWhileResolving(moduleDependencies.getModule().getProject());
 
-            @SuppressWarnings({"unchecked"})
-            Set<ModuleRevisionId> dependencies = (Set<ModuleRevisionId>) configurationReport.getModuleRevisionIds();
+            // TODO: Refactor this a bit
+            registerProblems(configurationReport, moduleDependencies, detectDependenciesOnOtherModulesWhileResolving);
+
+
+            Set<ModuleRevisionId> dependencies = configurationReport.getModuleRevisionIds();
             for (ModuleRevisionId dependency : dependencies) {
-                // Added check to configuration to avoid internal module deps resolving in case user has checked the checkbox in config
-                boolean isAvoidInternalModuleDepsResolving = IvyIdeaConfigHelper.avoidInternalModuleDependeciesResolving(moduleDependencies.getModule().getProject());
-                if (moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId()) && !isAvoidInternalModuleDepsResolving) {
+                if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId())) {
+                    // If the user has chosen to detect dependencies on internal modules we add a module dependency rather
+                    // than a dependency on an external library.
                     resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
                 } else {
                     final Project project = moduleDependencies.getModule().getProject();
@@ -173,9 +173,9 @@ class DependencyResolver {
         return ArtifactTypeSettings.DependencyCategory.Javadoc == ExternalDependencyFactory.determineCategory(project, artifact);
     }
 
-    private void registerProblems(ConfigurationResolveReport configurationReport, IntellijModuleDependencies moduleDependencies) {
+    private void registerProblems(ConfigurationResolveReport configurationReport, IntellijModuleDependencies moduleDependencies, boolean detectDependenciesOnOtherModulesWhileResolving) {
         for (IvyNode unresolvedDependency : configurationReport.getUnresolvedDependencies()) {
-            if (moduleDependencies.isInternalIntellijModuleDependency(unresolvedDependency.getModuleId())) {
+            if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(unresolvedDependency.getModuleId())) {
                 // centralize  this!
                 resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(unresolvedDependency.getModuleId())));
             } else {

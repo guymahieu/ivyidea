@@ -24,7 +24,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version '2019.3'
-
+    updateSinceUntilBuild=true
     plugins = ['java']
 }
 
@@ -33,6 +33,8 @@ publishPlugin {
 }
 
 patchPluginXml {
+    sinceBuild '143.2370.31'
+    untilBuild ''
     changeNotes """      
         <p>
             <strong>1.0.15</strong>

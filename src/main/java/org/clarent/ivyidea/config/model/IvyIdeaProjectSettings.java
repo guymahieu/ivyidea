@@ -34,7 +34,7 @@ public class IvyIdeaProjectSettings {
     private boolean alwaysAttachJavadocs = true;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
-    private boolean avoidInternalModuleDependenciesResolving = false;
+    private boolean detectDependenciesOnOtherModules = false;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
 
 
@@ -130,12 +130,12 @@ public class IvyIdeaProjectSettings {
         this.libraryNameIncludesConfiguration = libraryNameIncludesConfiguration;
     }
 
-    public boolean isAvoidInternalModuleDependenciesResolving() {
-        return avoidInternalModuleDependenciesResolving;
+    public boolean isDetectDependenciesOnOtherModules() {
+        return detectDependenciesOnOtherModules;
     }
 
-    public void setAvoidInternalModuleDependenciesResolving(boolean avoidInternalModuleDependenciesResolving) {
-        this.avoidInternalModuleDependenciesResolving = avoidInternalModuleDependenciesResolving;
+    public void setDetectDependenciesOnOtherModules(boolean detectDependenciesOnOtherModules) {
+        this.detectDependenciesOnOtherModules = detectDependenciesOnOtherModules;
     }
 
     public String getIvyLogLevelThreshold() {

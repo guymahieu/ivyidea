@@ -26,9 +26,9 @@ import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.intellij.IvyIdeaProjectComponent;
 import org.clarent.ivyidea.intellij.facet.config.FacetPropertiesSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
-import org.clarent.ivyidea.intellij.IvyIdeaProjectComponent;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 import org.clarent.ivyidea.util.CollectionUtils;
 import org.clarent.ivyidea.util.StringUtils;
@@ -132,7 +132,7 @@ public class IvyIdeaConfigHelper {
     }
 
     public static boolean avoidInternalModuleDependeciesResolving(final Project project){
-        return getProjectConfig(project).isAvoidInternalModuleDependenciesResolving();
+        return getProjectConfig(project).isDetectDependenciesOnOtherModules();
     }
 
     @NotNull

@@ -284,12 +284,13 @@
                       <toolTipText value="Always attach javadoc artifacts to the library, even if they aren't selected by an Ivy configuration"/>
                     </properties>
                   </component>
-                  <component id="39b4b" class="javax.swing.JCheckBox" binding="avoidInternalModuleDependeciesResolving">
+                  <component id="39b4b" class="javax.swing.JCheckBox" binding="detectDependenciesOnOtherModules">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Avoid internal modules dependecies resolving"/>
+                      <selected value="true"/>
+                      <text value="Detect dependencies on other modules in the same project"/>
                       <toolTipText value="Force IvyIDEA to resolve dependecies only through the ivy.xml ignoring internal modules"/>
                     </properties>
                   </component>

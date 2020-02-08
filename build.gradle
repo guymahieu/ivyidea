@@ -37,7 +37,7 @@ patchPluginXml {
                 <li>
                 Added checkbox "Detect dependencies on other modules in the same project". Disabling this option 
                 will force IvyIDEA to resolve dependecies only through the ivy.xml ignoring internal modules.
-                (thanks to jberta93)
+                (thanks to Lorenzo Bertacchi)
                 </li>
             </ul>
             <strong>1.0.14</strong>

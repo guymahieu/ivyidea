@@ -28,6 +28,10 @@ intellij {
     plugins = ['java']
 }
 
+publishPlugin {
+    token intellijPublishToken
+}
+
 patchPluginXml {
     changeNotes """      
         <p>

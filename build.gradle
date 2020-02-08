@@ -25,7 +25,6 @@ dependencies {
 intellij {
     version '2019.3'
     updateSinceUntilBuild=true
-//    plugins = ['java']
 }
 
 publishPlugin {

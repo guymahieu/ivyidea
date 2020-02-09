@@ -17,51 +17,27 @@
 package org.clarent.ivyidea.intellij;
 
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Guy Mahieu
  */
-
 @State(
         name = IvyIdeaProjectComponent.COMPONENT_NAME,
         storages = {@Storage("$PROJECT_FILE$")}
 )
-public class IvyIdeaProjectComponent implements ProjectComponent, PersistentStateComponent<IvyIdeaProjectSettings> {
+public class IvyIdeaProjectComponent implements PersistentStateComponent<IvyIdeaProjectSettings> {
 
     public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";
 
-    private final Project project;
     private final IvyIdeaProjectSettings internalState;
 
-    public IvyIdeaProjectComponent(Project project) {
-        this.project = project;
+    public IvyIdeaProjectComponent() {
         this.internalState = new IvyIdeaProjectSettings();
-    }
-
-    public void projectOpened() {
-    }
-
-    public void projectClosed() {
-    }
-
-    @NonNls
-    @NotNull
-    public String getComponentName() {
-        return COMPONENT_NAME;
-    }
-
-    public void initComponent() {
-    }
-
-    public void disposeComponent() {
     }
 
     @NotNull

@@ -17,8 +17,8 @@
 package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.PathUtil;
 import org.apache.ivy.core.module.descriptor.Artifact;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
@@ -85,7 +85,7 @@ public abstract class ExternalDependency implements ResolvedDependency {
         }
 
         final String path = PathUtil.toPresentableUrl(url);
-        return localFile.equals(new File(path));
+        return FileUtil.filesEqual(localFile, new File(path));
     }
 
     public abstract OrderRootType getType();

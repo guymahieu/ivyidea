@@ -179,7 +179,6 @@ class DependencyResolver {
                 // centralize  this!
                 resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(unresolvedDependency.getModuleId())));
             } else {
-                //noinspection ThrowableResultOfMethodCallIgnored
                 resolveProblems.add(new ResolveProblem(
                         unresolvedDependency.getId().toString(),
                         unresolvedDependency.getProblemMessage(),

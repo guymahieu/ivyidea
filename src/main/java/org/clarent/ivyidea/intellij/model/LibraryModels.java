@@ -20,6 +20,7 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
+import com.intellij.openapi.util.Disposer;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 
@@ -52,11 +53,7 @@ class LibraryModels implements Closeable {
 
     private Library.ModifiableModel getForConfiguration(String ivyConfiguration) {
         final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, ivyConfiguration);
-        if (!libraryModels.containsKey(libraryName)) {
-            final Library.ModifiableModel libraryModel = getIvyIdeaLibrary(intellijModule, libraryName).getModifiableModel();
-            libraryModels.putIfAbsent(libraryName, libraryModel);
-        }
-        return libraryModels.get(libraryName);
+        return libraryModels.computeIfAbsent(libraryName, _libraryName -> getIvyIdeaLibrary(intellijModule, libraryName).getModifiableModel());
     }
 
     private Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel, final String libraryName) {
@@ -90,7 +87,7 @@ class LibraryModels implements Closeable {
             if (libraryModel.isChanged()) {
                 libraryModel.commit();
             } else {
-                libraryModel.dispose();
+                Disposer.dispose(libraryModel);
             }
         }
     }

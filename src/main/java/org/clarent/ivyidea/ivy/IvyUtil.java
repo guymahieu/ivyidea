@@ -25,6 +25,7 @@ import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.settings.IvySettings;
 import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
 import org.apache.ivy.plugins.resolver.BasicResolver;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
 import org.apache.ivy.plugins.trigger.Trigger;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
@@ -36,7 +37,10 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 /**
@@ -48,7 +52,7 @@ public class IvyUtil {
     private static final Logger LOGGER = Logger.getLogger(IvyUtil.class.getName());
 
     /**
-     * Returnes the ivy file for the given module.
+     * Returns the ivy file for the given module.
      *
      * @param module the IntelliJ module for which you want to lookup the ivy file
      * @return the File representing the ivy xml file for the given module
@@ -83,9 +87,7 @@ public class IvyUtil {
         try {
             ivy.pushContext();
             moduleDescriptor = ModuleDescriptorParserRegistry.getInstance().parseDescriptor(ivy.getSettings(), ivyFile.toURI().toURL(), false);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             throw new RuntimeException(e);
         } finally {
             ivy.popContext();
@@ -111,11 +113,7 @@ public class IvyUtil {
             final File file = new File(ivyFileName);
             if (file.exists() && !file.isDirectory()) {
                 final ModuleDescriptor md = parseIvyFile(file, ivy);
-                Set<Configuration> result = new TreeSet<Configuration>(new Comparator<Configuration>() {
-                    public int compare(Configuration o1, Configuration o2) {
-                        return o1.getName().compareToIgnoreCase(o2.getName());
-                    }
-                });
+                Set<Configuration> result = new TreeSet<>((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
                 result.addAll(Arrays.asList(md.getConfigurations()));
                 return result;
             } else {
@@ -135,7 +133,7 @@ public class IvyUtil {
         final Ivy ivy = Ivy.newInstance(ivySettings);
 
         // we should now call the Ivy#postConfigure() method, but it is private :-(
-        // so we have to execute the same code ourselfs
+        // so we have to execute the same code ourselves
         postConfigure(ivy);
 
         registerConsoleLogger(ivy, module.getProject());
@@ -144,14 +142,13 @@ public class IvyUtil {
 
     private static void postConfigure(final Ivy ivy) {
         EventManager eventManager = ivy.getEventManager();
-        Collection triggers = ivy.getSettings().getTriggers();
-        for (Iterator iter = triggers.iterator(); iter.hasNext();) {
-            Trigger trigger = (Trigger) iter.next();
+        IvySettings settings = ivy.getSettings();
+        List<Trigger> triggers = settings.getTriggers();
+        for (Trigger trigger : triggers) {
             eventManager.addIvyListener(trigger, trigger.getEventFilter());
         }
 
-        for (Iterator iter = ivy.getSettings().getResolvers().iterator(); iter.hasNext();) {
-            Object resolver = iter.next();
+        for (DependencyResolver resolver : settings.getResolvers()) {
             if (resolver instanceof BasicResolver) {
                 ((BasicResolver) resolver).setEventManager(eventManager);
             }

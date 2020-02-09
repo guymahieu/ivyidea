@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfiguration> {
 
-    public static final FacetTypeId<IvyIdeaFacet> ID = new FacetTypeId<IvyIdeaFacet>("IvyIDEA");
+    public static final FacetTypeId<IvyIdeaFacet> ID = new FacetTypeId<>("IvyIDEA");
 
     public static IvyIdeaFacetType getInstance() {
         return findInstance(IvyIdeaFacetType.class);

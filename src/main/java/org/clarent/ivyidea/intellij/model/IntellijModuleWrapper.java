@@ -27,10 +27,9 @@ import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
-import java.io.Closeable;
 import java.util.*;
 
-public class IntellijModuleWrapper implements Closeable {
+public class IntellijModuleWrapper implements AutoCloseable {
 
     private final ModifiableRootModel intellijModule;
     private final LibraryModels libraryModels;

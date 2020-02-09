@@ -18,8 +18,7 @@ package org.clarent.ivyidea.intellij;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.facet.FacetManager;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.FileTypeManager;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -41,31 +40,25 @@ public class IntellijUtils {
     @NotNull
     public static Module[] getAllModulesWithIvyIdeaFacet(Project project) {
         final Module[] allModules = ModuleManager.getInstance(project).getModules();
-        final List<Module> result = new ArrayList<Module>();
+        final List<Module> result = new ArrayList<>();
         for (Module module : allModules) {
             if (containsIvyIdeaFacet(module)) {
                 result.add(module);
             }
         }
-        return result.toArray(new Module[result.size()]);
+        return result.toArray(new Module[0]);
     }
 
     public static boolean containsIvyIdeaFacet(@Nullable Module module) {
         return module != null && FacetManager.getInstance(module).getFacetByType(IvyIdeaFacetType.ID) != null;
     }
 
-    @NotNull
-    public static FileType getXmlFileType() {
-        return FileTypeManager.getInstance().getFileTypeByExtension("xml");
-    }
-
-
     public static ConsoleView getConsoleView(Project project) {
-        return ((ToolWindowRegistrationComponent) project.getComponent(ToolWindowRegistrationComponent.COMPONENT_NAME)).getConsole();
+        return ServiceManager.getService(project, IvyIdeaConsoleService.class).getConsoleView();
     }
 
     public static ToolWindow getToolWindow(Project project) {
-        return ToolWindowManager.getInstance(project).getToolWindow(ToolWindowRegistrationComponent.TOOLWINDOW_ID);
+        return ToolWindowManager.getInstance(project).getToolWindow(IvyIdeaConsoleToolWindowFactory.TOOLWINDOW_ID);
     }
 
 }

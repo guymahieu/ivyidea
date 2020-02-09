@@ -53,9 +53,8 @@ public class FacetPropertiesSettings extends PropertiesSettings implements JDOME
         final Element propertiesFilesElement = propertiesSettingsElement.getChild("propertiesFiles");
         List<String> fileNames = new ArrayList<String>();
         if (propertiesFilesElement != null) {
-            setIncludeProjectLevelPropertiesFiles(Boolean.valueOf(propertiesFilesElement.getAttributeValue("includeProjectLevelPropertiesFiles", Boolean.TRUE.toString())));
-            @SuppressWarnings("unchecked")
-            final List<Element> propertiesFileNames = (List<Element>) propertiesFilesElement.getChildren("fileName");
+            setIncludeProjectLevelPropertiesFiles(Boolean.parseBoolean(propertiesFilesElement.getAttributeValue("includeProjectLevelPropertiesFiles", Boolean.TRUE.toString())));
+            final List<Element> propertiesFileNames = propertiesFilesElement.getChildren("fileName");
             for (Element element : propertiesFileNames) {
                 fileNames.add(element.getValue());
             }

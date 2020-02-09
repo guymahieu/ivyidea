@@ -27,20 +27,6 @@
         will be overwritten by gradle
     </change-notes>
 
-    <application-components>
-        <component>
-            <implementation-class>org.clarent.ivyidea.IvyIdeaPlugin</implementation-class>
-        </component>
-    </application-components>
-    <project-components>
-        <component>
-            <implementation-class>org.clarent.ivyidea.intellij.IvyIdeaProjectComponent</implementation-class>
-        </component>
-        <component>
-            <implementation-class>org.clarent.ivyidea.intellij.ToolWindowRegistrationComponent</implementation-class>
-        </component>
-    </project-components>
-
     <actions>
         <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module dependencies using Ivy"
                popup="true">
@@ -64,8 +50,16 @@
         </group>
     </actions>
     <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="org.clarent.ivyidea.IvyIdeaPlugin"/>
+
+        <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaProjectComponent" />
+        <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaConsoleService" />
+
+        <toolWindow id="IvyIDEA" icon="/ivyidea13.png" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
+
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
         <framework.detector implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetDetector"/>
+
         <projectConfigurable id="IvyIDEA.ProjectSettings"
                              instance="org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent"
                              displayName="IvyIDEA"/>

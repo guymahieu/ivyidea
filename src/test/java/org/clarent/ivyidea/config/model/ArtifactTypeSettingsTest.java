@@ -16,74 +16,74 @@
 
 package org.clarent.ivyidea.config.model;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.Classes;
 
 /**
  * @author Guy Mahieu
  */
-public class ArtifactTypeSettingsTest extends TestCase {
+public class ArtifactTypeSettingsTest {
 
     @Test
     public void testNewObjectAlwaysEmpty() {
-        Assert.assertTrue(new ArtifactTypeSettings().isConfigurationEmpty());
+        assertThat(new ArtifactTypeSettings().isConfigurationEmpty()).isTrue();
     }
 
     @Test
     public void testObjectWithOnlyEmptyStringsAlwaysEmpty() {
         final ArtifactTypeSettings artifactTypeSettings = new ArtifactTypeSettings();
         artifactTypeSettings.setClassesTypes("");
-        Assert.assertTrue(artifactTypeSettings.isConfigurationEmpty());
+        assertThat(artifactTypeSettings.isConfigurationEmpty()).isTrue();
     }
 
     @Test
     public void testObjectWithDataNeverEmpty() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         typeSettings.setTypesForCategory(Classes, "jar");
-        Assert.assertFalse(typeSettings.isConfigurationEmpty());
+        assertThat(typeSettings.isConfigurationEmpty()).isFalse();
     }
 
     @Test
     public void testTypeNamesAreCaseInsensitive() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         typeSettings.setTypesForCategory(Classes, "JAR");
-        Assert.assertEquals(Classes, typeSettings.getCategoryForType("jar"));
+        assertThat(typeSettings.getCategoryForType("jar")).isSameAs(Classes);
     }
 
     @Test
     public void testCorrectCategoryReturnedForType() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         typeSettings.setTypesForCategory(Classes, "jar");
-        Assert.assertEquals(Classes, typeSettings.getCategoryForType("jar"));
-        Assert.assertEquals(Classes, typeSettings.getCategoryForType("jar "));
-        Assert.assertEquals(Classes, typeSettings.getCategoryForType(" jar"));
-        Assert.assertEquals(Classes, typeSettings.getCategoryForType(" jar "));
+        assertThat(typeSettings.getCategoryForType("jar")).isSameAs(Classes);
+        assertThat(typeSettings.getCategoryForType(" jar")).isSameAs(Classes);
+        assertThat(typeSettings.getCategoryForType("jar ")).isSameAs(Classes);
+        assertThat(typeSettings.getCategoryForType(" jar ")).isSameAs(Classes);
     }
+
     @Test
     public void testOrderOfTypesPreservedWhenSettingAndGetting() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         final String expected = "a, b, c, d, e, f, g";
         typeSettings.setTypesForCategory(Classes, expected);
         final String actual = typeSettings.getTypesStringForCategory(Classes);
-        Assert.assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testNullForUnknownType() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         typeSettings.setTypesForCategory(Classes, "jar");
-        Assert.assertNull(typeSettings.getCategoryForType("foo"));
+        assertThat(typeSettings.getCategoryForType("foo")).isNull();
     }
 
     @Test
     public void testSerializationGettersDoNotReturnDefaultValuesIfObjectEmpty() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
-        Assert.assertEquals("", typeSettings.getClassesTypes());
-        Assert.assertEquals("", typeSettings.getSourcesTypes());
-        Assert.assertEquals("", typeSettings.getJavadocTypes());
+        assertThat(typeSettings.getClassesTypes()).isEmpty();
+        assertThat(typeSettings.getSourcesTypes()).isEmpty();
+        assertThat(typeSettings.getJavadocTypes()).isEmpty();
     }
 
     @Test
@@ -91,8 +91,8 @@ public class ArtifactTypeSettingsTest extends TestCase {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         for (ArtifactTypeSettings.DependencyCategory category : ArtifactTypeSettings.DependencyCategory.values()) {
             final String typesStringForCategory = typeSettings.getTypesStringForCategory(category);
-            Assert.assertNotNull(typesStringForCategory);
-            Assert.assertTrue(typesStringForCategory.length() > 0);
+            assertThat(typesStringForCategory).isNotNull();
+            assertThat(typesStringForCategory.length() > 0).isTrue();
         }
     }
 

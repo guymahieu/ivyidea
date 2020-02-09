@@ -50,7 +50,6 @@
         </group>
     </actions>
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.clarent.ivyidea.IvyIdeaPlugin"/>
 
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaProjectComponent" />
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaConsoleService" />

@@ -16,7 +16,8 @@
 
 package org.clarent.ivyidea.config.ui.propertieseditor;
 
-import com.intellij.util.ui.Table;
+import com.intellij.ui.table.JBTable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.table.TableModel;
 
@@ -26,14 +27,14 @@ import javax.swing.table.TableModel;
  *
  * @author Guy Mahieu
  */
-public class PropertiesTable extends Table {
+public class PropertiesTable extends JBTable {
 
     public PropertiesTable() {
         super(new PropertiesTableModel());
         initComponents();
     }
 
-    public void setModel(TableModel dataModel) {
+    public void setModel(@NotNull TableModel dataModel) {
         super.setModel(dataModel);
         initComponents();
     }
@@ -48,47 +49,6 @@ public class PropertiesTable extends Table {
 
         getColumnModel().getColumn(0).setHeaderValue("Name");
         getColumnModel().getColumn(1).setHeaderValue("Value");
-
-        // Register custom renderer to draw deprecated configs in 'strikethrough'
-//        getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
-//
-//            private Font regularFont;
-//            private Font strikethroughFont;
-//
-//            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//                final ConfigurationSelectionTableModel tableModel = (ConfigurationSelectionTableModel) table.getModel();
-//                final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//                if (regularFont == null) {
-//                    regularFont = rendererComponent.getFont();
-//                }
-////                final int modelIndex = table.convertRowIndexToModel(row); // JDK 1.6 - if table sorting is enabled
-//                final Configuration configuration = tableModel.getConfigurationAt(row);
-//                if (configuration.getDeprecated() != null) {
-//                    if (strikethroughFont == null) {
-//                        final HashMap<TextAttribute, Object> attribs = new HashMap<TextAttribute, Object>();
-//                        attribs.put(TextAttribute.STRIKETHROUGH, Boolean.TRUE);
-//                        strikethroughFont = regularFont.deriveFont(attribs);
-//                    }
-//                    setToolTipText("Depracated: " + configuration.getDeprecated());
-//                    rendererComponent.setFont(strikethroughFont);
-//                } else {
-//                    setToolTipText(null);
-//                    rendererComponent.setFont(regularFont);
-//                }
-//                rendererComponent.setEnabled(table.isEnabled());
-//                return rendererComponent;
-//            }
-//        });
-//
-//        // Render description disabled if table is disabled
-//        getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
-//            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//                final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//                rendererComponent.setEnabled(table.isEnabled());
-//                return rendererComponent;
-//            }
-//        });
-
     }
 
 }

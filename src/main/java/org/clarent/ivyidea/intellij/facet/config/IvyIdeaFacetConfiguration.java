@@ -145,15 +145,14 @@ public class IvyIdeaFacetConfiguration implements FacetConfiguration {
 
     private void readBasicSettings(Element element) {
         setIvyFile(element.getAttributeValue("ivyFile", ""));
-        setUseCustomIvySettings(Boolean.valueOf(element.getAttributeValue("useCustomIvySettings", Boolean.TRUE.toString())));
+        setUseCustomIvySettings(Boolean.parseBoolean(element.getAttributeValue("useCustomIvySettings", Boolean.TRUE.toString())));
         setIvySettingsFile(element.getAttributeValue("ivySettingsFile", ""));
-        setOnlyResolveSelectedConfigs(Boolean.valueOf(element.getAttributeValue("onlyResolveSelectedConfigs", Boolean.FALSE.toString())));
-        setUseProjectSettings(Boolean.valueOf(element.getAttributeValue("useProjectSettings", Boolean.TRUE.toString())));
+        setOnlyResolveSelectedConfigs(Boolean.parseBoolean(element.getAttributeValue("onlyResolveSelectedConfigs", Boolean.FALSE.toString())));
+        setUseProjectSettings(Boolean.parseBoolean(element.getAttributeValue("useProjectSettings", Boolean.TRUE.toString())));
         final Element configsToResolveElement = element.getChild("configsToResolve");
         if (configsToResolveElement != null) {
-            Set<String> configsToResolve = new TreeSet<String>();
-            @SuppressWarnings("unchecked")
-            final List<Element> configElements = (List<Element>) configsToResolveElement.getChildren("config");
+            Set<String> configsToResolve = new TreeSet<>();
+            final List<Element> configElements = configsToResolveElement.getChildren("config");
             for (Element configElement : configElements) {
                 configsToResolve.add(configElement.getTextTrim());
             }

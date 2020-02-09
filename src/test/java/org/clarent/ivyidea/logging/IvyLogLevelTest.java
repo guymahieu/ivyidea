@@ -18,7 +18,8 @@ package org.clarent.ivyidea.logging;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.clarent.ivyidea.logging.IvyLogLevel.Error;
 import static org.clarent.ivyidea.logging.IvyLogLevel.*;
 
 /**
@@ -28,8 +29,8 @@ public class IvyLogLevelTest {
 
     @Test
     public void test_isMoreVerboseThan() {
-        assertTrue(Error.isMoreVerboseThan(None));
-        assertTrue(Info.isMoreVerboseThan(None));
-        assertFalse(Error.isMoreVerboseThan(Debug));
+        assertThat(Error.isMoreVerboseThan(None)).isTrue();
+        assertThat(Info.isMoreVerboseThan(None)).isTrue();
+        assertThat(Error.isMoreVerboseThan(Debug)).isFalse();
     }
 }

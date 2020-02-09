@@ -20,6 +20,7 @@ import com.intellij.ui.BooleanTableCellEditor;
 import com.intellij.ui.BooleanTableCellRenderer;
 import com.intellij.ui.table.JBTable;
 import org.apache.ivy.core.module.descriptor.Configuration;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -45,7 +46,7 @@ public class ConfigurationSelectionTable extends JBTable {
         initComponents();
     }
 
-    public void setModel(TableModel dataModel) {
+    public void setModel(@NotNull TableModel dataModel) {
         super.setModel(dataModel);
         ((ConfigurationSelectionTableModel) dataModel).setEditable(editable);
         initComponents();
@@ -99,11 +100,10 @@ public class ConfigurationSelectionTable extends JBTable {
                 if (regularFont == null) {
                     regularFont = rendererComponent.getFont();
                 }
-//                final int modelIndex = table.convertRowIndexToModel(row); // JDK 1.6 - if table sorting is enabled
                 final Configuration configuration = tableModel.getConfigurationAt(row);
                 if (configuration.getDeprecated() != null) {
                     if (strikethroughFont == null) {
-                        final HashMap<TextAttribute, Object> attribs = new HashMap<TextAttribute, Object>();
+                        final HashMap<TextAttribute, Object> attribs = new HashMap<>();
                         attribs.put(TextAttribute.STRIKETHROUGH, Boolean.TRUE);
                         strikethroughFont = regularFont.deriveFont(attribs);
                     }

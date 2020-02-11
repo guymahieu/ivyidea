@@ -24,13 +24,7 @@ import java.util.List;
  */
 public class PropertiesSettings {
     
-    private List<String> propertyFiles = new ArrayList<String>();
-
-    public static PropertiesSettings copyDataFrom(PropertiesSettings propertiesSettings) {
-        PropertiesSettings result = new PropertiesSettings();
-        result.propertyFiles = new ArrayList<String>(propertiesSettings.propertyFiles);
-        return result;
-    }
+    private List<String> propertyFiles = new ArrayList<>();
 
     public List<String> getPropertyFiles() {
         return propertyFiles;

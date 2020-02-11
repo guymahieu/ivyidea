@@ -34,12 +34,14 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
 
     public static final FacetTypeId<IvyIdeaFacet> ID = new FacetTypeId<>("IvyIDEA");
 
+    public static final String STRING_ID = "IvyIDEA";
+
     public static IvyIdeaFacetType getInstance() {
         return findInstance(IvyIdeaFacetType.class);
     }
 
     public IvyIdeaFacetType() {
-        super(ID, "IvyIDEA", "IvyIDEA");
+        super(ID, STRING_ID, "IvyIDEA");
     }
 
     public IvyIdeaFacetConfiguration createDefaultConfiguration() {

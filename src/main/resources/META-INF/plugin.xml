@@ -51,8 +51,10 @@
     </actions>
     <extensions defaultExtensionNs="com.intellij">
 
-        <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaProjectComponent" />
+        <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaProjectService" />
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaConsoleService" />
+
+        <project.converterProvider implementation="org.clarent.ivyidea.intellij.facet.config.IvyIdeaLegacyFacetConfigConverterProvider"/>
 
         <toolWindow id="IvyIDEA" icon="/ivyidea13.png" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
 

@@ -26,7 +26,7 @@ import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.intellij.IvyIdeaProjectComponent;
+import org.clarent.ivyidea.intellij.IvyIdeaProjectService;
 import org.clarent.ivyidea.intellij.facet.config.FacetPropertiesSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.logging.IvyLogLevel;
@@ -137,7 +137,7 @@ public class IvyIdeaConfigHelper {
 
     @NotNull
     private static IvyIdeaProjectSettings getProjectConfig(Project project) {
-        IvyIdeaProjectComponent component = project.getComponent(IvyIdeaProjectComponent.class);
+        IvyIdeaProjectService component = project.getComponent(IvyIdeaProjectService.class);
         return component.getState();
     }
 
@@ -178,7 +178,7 @@ public class IvyIdeaConfigHelper {
 
     @Nullable
     public static String getProjectIvySettingsFile(Project project) throws IvySettingsNotFoundException {
-        IvyIdeaProjectComponent component = project.getComponent(IvyIdeaProjectComponent.class);
+        IvyIdeaProjectService component = project.getComponent(IvyIdeaProjectService.class);
         final IvyIdeaProjectSettings state = component.getState();
         if (state.isUseCustomIvySettings()) {
             String settingsFile = StringUtils.trim(state.getIvySettingsFile());

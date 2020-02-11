@@ -17,10 +17,9 @@
 package org.clarent.ivyidea.intellij.ui;
 
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
-import org.clarent.ivyidea.intellij.IvyIdeaProjectComponent;
+import org.clarent.ivyidea.intellij.IvyIdeaProjectService;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
@@ -62,7 +61,7 @@ public class IvyIdeaProjectSettingsComponent implements Configurable {
 
     private IvyIdeaProjectSettingsPanel getSettingsPanel() {
         if (settingsPanel == null) {
-            IvyIdeaProjectComponent component = project.getComponent(IvyIdeaProjectComponent.class);
+            IvyIdeaProjectService component = project.getComponent(IvyIdeaProjectService.class);
             IvyIdeaProjectSettings state;
             if (component != null) {
                 state = component.getState();
@@ -78,7 +77,7 @@ public class IvyIdeaProjectSettingsComponent implements Configurable {
         return getSettingsPanel().isModified();
     }
 
-    public void apply() throws ConfigurationException {
+    public void apply() {
         getSettingsPanel().apply();
     }
 

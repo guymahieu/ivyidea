@@ -16,22 +16,14 @@
 
 package org.clarent.ivyidea.intellij.facet.config;
 
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.JDOMExternalizable;
-import com.intellij.openapi.util.WriteExternalException;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
-import org.jdom.Element;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Guy Mahieu
 */
-public class FacetPropertiesSettings extends PropertiesSettings implements JDOMExternalizable {
+public class FacetPropertiesSettings extends PropertiesSettings {
 
     private boolean includeProjectLevelPropertiesFiles = true;
-    private boolean includeProjectLevelAdditionalProperties = true;
 
     public boolean isIncludeProjectLevelPropertiesFiles() {
         return includeProjectLevelPropertiesFiles;
@@ -41,35 +33,4 @@ public class FacetPropertiesSettings extends PropertiesSettings implements JDOME
         this.includeProjectLevelPropertiesFiles = includeProjectLevelPropertiesFiles;
     }
 
-    public boolean isIncludeProjectLevelAdditionalProperties() {
-        return includeProjectLevelAdditionalProperties;
-    }
-
-    public void setIncludeProjectLevelAdditionalProperties(boolean includeProjectLevelAdditionalProperties) {
-        this.includeProjectLevelAdditionalProperties = includeProjectLevelAdditionalProperties;
-    }
-
-    public void readExternal(Element propertiesSettingsElement) throws InvalidDataException {
-        final Element propertiesFilesElement = propertiesSettingsElement.getChild("propertiesFiles");
-        List<String> fileNames = new ArrayList<String>();
-        if (propertiesFilesElement != null) {
-            setIncludeProjectLevelPropertiesFiles(Boolean.parseBoolean(propertiesFilesElement.getAttributeValue("includeProjectLevelPropertiesFiles", Boolean.TRUE.toString())));
-            final List<Element> propertiesFileNames = propertiesFilesElement.getChildren("fileName");
-            for (Element element : propertiesFileNames) {
-                fileNames.add(element.getValue());
-            }
-        }
-        setPropertyFiles(fileNames);
-
-    }
-
-    public void writeExternal(Element propertiesSettingsElement) throws WriteExternalException {
-        final Element propertiesFilesElement = new Element("propertiesFiles");
-        propertiesFilesElement.setAttribute("includeProjectLevelPropertiesFiles", Boolean.toString(isIncludeProjectLevelPropertiesFiles()));
-        propertiesSettingsElement.addContent(propertiesFilesElement);
-        for (String fileName : getPropertyFiles()) {
-            propertiesFilesElement.addContent(new Element("fileName").setText(fileName));
-        }
-
-    }
 }

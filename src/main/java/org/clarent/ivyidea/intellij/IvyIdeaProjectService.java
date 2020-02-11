@@ -27,16 +27,16 @@ import org.jetbrains.annotations.NotNull;
  * @author Guy Mahieu
  */
 @State(
-        name = IvyIdeaProjectComponent.COMPONENT_NAME,
+        name = IvyIdeaProjectService.COMPONENT_NAME,
         storages = {@Storage("$PROJECT_FILE$")}
 )
-public class IvyIdeaProjectComponent implements PersistentStateComponent<IvyIdeaProjectSettings> {
+public class IvyIdeaProjectService implements PersistentStateComponent<IvyIdeaProjectSettings> {
 
     public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";
 
     private final IvyIdeaProjectSettings internalState;
 
-    public IvyIdeaProjectComponent() {
+    public IvyIdeaProjectService() {
         this.internalState = new IvyIdeaProjectSettings();
     }
 

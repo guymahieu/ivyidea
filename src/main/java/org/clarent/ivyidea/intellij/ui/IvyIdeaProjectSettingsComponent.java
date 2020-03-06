@@ -61,7 +61,7 @@ public class IvyIdeaProjectSettingsComponent implements Configurable {
 
     private IvyIdeaProjectSettingsPanel getSettingsPanel() {
         if (settingsPanel == null) {
-            IvyIdeaProjectService component = project.getComponent(IvyIdeaProjectService.class);
+            IvyIdeaProjectService component = project.getService(IvyIdeaProjectService.class);
             IvyIdeaProjectSettings state;
             if (component != null) {
                 state = component.getState();

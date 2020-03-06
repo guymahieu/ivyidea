@@ -137,7 +137,7 @@ public class IvyIdeaConfigHelper {
 
     @NotNull
     private static IvyIdeaProjectSettings getProjectConfig(Project project) {
-        IvyIdeaProjectService component = project.getComponent(IvyIdeaProjectService.class);
+        IvyIdeaProjectService component = project.getService(IvyIdeaProjectService.class);
         return component.getState();
     }
 
@@ -178,7 +178,7 @@ public class IvyIdeaConfigHelper {
 
     @Nullable
     public static String getProjectIvySettingsFile(Project project) throws IvySettingsNotFoundException {
-        IvyIdeaProjectService component = project.getComponent(IvyIdeaProjectService.class);
+        IvyIdeaProjectService component = project.getService(IvyIdeaProjectService.class);
         final IvyIdeaProjectSettings state = component.getState();
         if (state.isUseCustomIvySettings()) {
             String settingsFile = StringUtils.trim(state.getIvySettingsFile());

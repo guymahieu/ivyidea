@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'org.clarent'
-version '1.0.16'
+version '1.0.16-RC1'
 
 sourceCompatibility = 1.8
 
@@ -16,7 +16,17 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.apache.ivy', name: 'ivy', version: '2.5.0'
+    implementation group: 'org.apache.ivy'                , name: 'ivy'                               , version: '2.5.0'
+
+    runtimeOnly    group: 'org.apache.httpcomponents'     , name: 'httpclient'                        , version: '4.5.9'     // optional httpclient for better http handling
+    runtimeOnly    group: 'oro'                           , name: 'oro'                               , version: '2.0.8'     // to use optional glob matcher
+    runtimeOnly    group: 'org.apache.commons'            , name: 'commons-vfs2'                      , version: '2.2'       // optional VirtualFileSystem(VFS) support
+    runtimeOnly    group: 'com.jcraft'                    , name: 'jsch'                              , version: '0.1.55'    // optional SFTP support
+    runtimeOnly    group: 'com.jcraft'                    , name: 'jsch.agentproxy'                   , version: '0.0.9'     // optional SFTP support
+    runtimeOnly    group: 'com.jcraft'                    , name: 'jsch.agentproxy.connector-factory' , version: '0.0.9'     // optional SFTP support
+    runtimeOnly    group: 'com.jcraft'                    , name: 'jsch.agentproxy.jsch'              , version: '0.0.9'     // optional SFTP support
+    runtimeOnly    group: 'org.bouncycastle'              , name: 'bcpg-jdk15on'                      , version: '1.62'      // optional
+    runtimeOnly    group: 'org.bouncycastle'              , name: 'bcprov-jdk15on'                    , version: '1.62'      // optional
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
@@ -29,6 +39,7 @@ intellij {
 }
 
 publishPlugin {
+    channels 'eap'
     token intellijPublishToken
 }
 

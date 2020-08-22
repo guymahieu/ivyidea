@@ -25,6 +25,8 @@ import com.intellij.openapi.project.Project;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
+import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
+import org.clarent.ivyidea.resolve.dependency.InternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
@@ -36,10 +38,10 @@ import java.util.Set;
  */
 public abstract class AbstractResolveAction extends AnAction {
 
-    protected void updateIntellijModel(final Module module, final List<ResolvedDependency> dependencies) {
+    protected void updateIntellijModel(final Module module, final List<ExternalDependency> externalDependencies, final List<InternalDependency> internalDependencies) {
         ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
             try (IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(module)) {
-                moduleWrapper.updateDependencies(dependencies);
+                moduleWrapper.updateDependencies(externalDependencies, internalDependencies);
             }
         }));
     }

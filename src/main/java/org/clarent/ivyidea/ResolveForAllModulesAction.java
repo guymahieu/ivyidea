@@ -67,7 +67,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
 
                 for (IntellijDependencyResolver resolver : resolvers) {
                     Module module = resolver.getModule();
-                    updateIntellijModel(module, resolver.getExternalDependencies());
+                    updateIntellijModel(module, resolver.getExternalDependencies(), resolver.getInternalDependencies());
                     reportProblems(module, resolver.getProblems());
                 }
             }

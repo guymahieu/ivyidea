@@ -44,4 +44,8 @@ public class InternalDependency implements ResolvedDependency {
         }
     }
 
+    public String getModuleName() {
+        return module.getName();
+    }
+
 }

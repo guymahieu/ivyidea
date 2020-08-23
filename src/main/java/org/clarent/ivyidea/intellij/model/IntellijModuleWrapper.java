@@ -16,6 +16,7 @@
 
 package org.clarent.ivyidea.intellij.model;
 
+import com.google.common.collect.Streams;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleOrderEntry;
@@ -55,9 +56,7 @@ public class IntellijModuleWrapper implements AutoCloseable {
     }
 
     public void updateDependencies(Collection<ExternalDependency> resolvedExternalDependencies, Collection<InternalDependency> resolvedInternalDependencies) {
-        for (ResolvedDependency resolvedDependency : resolvedExternalDependencies) {
-            resolvedDependency.addTo(this);
-        }
+        Streams.concat(resolvedExternalDependencies.stream(), resolvedInternalDependencies.stream()).forEach(resolvedDependency -> resolvedDependency.addTo(this));
         removeDependenciesNotInList(resolvedExternalDependencies, resolvedInternalDependencies);
     }
 

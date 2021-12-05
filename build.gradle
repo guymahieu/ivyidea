@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.16'
+    id 'org.jetbrains.intellij' version '0.7.3'
     id "idea"
 }
 
@@ -30,8 +30,8 @@ dependencies {
     runtimeOnly    group: 'org.bouncycastle'              , name: 'bcpg-jdk15on'                      , version: '1.62'      // optional
     runtimeOnly    group: 'org.bouncycastle'              , name: 'bcprov-jdk15on'                    , version: '1.62'      // optional
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -42,6 +42,11 @@ intellij {
 
 publishPlugin {
     token intellijPublishToken
+}
+
+tasks.named('wrapper') {
+    gradleVersion = '7.3.1'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 patchPluginXml {

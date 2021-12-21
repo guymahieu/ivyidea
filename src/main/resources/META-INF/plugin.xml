@@ -2,30 +2,10 @@
     <id>IvyIDEA</id>
     <name>IvyIDEA</name>
     <vendor email="guy.mahieu@gmail.com" url="http://ivyidea.org">Guy Mahieu (Clarent BV)</vendor>
-    <version>set-by-build</version>
-
-    <description><![CDATA[Resolves module dependencies through Ivy
-        <p>Features:
-            <ul>
-                <li>Apache Ivy integration (up to v2.5.0); no need for external ant build scripts to be called</li>
-                <li>Automatic ivy configuration of modules using facets (for modules containing an ivy.xml file)</li>
-                <li>Detection of dependencies that are really other intellij modules in the same project; these are added as module references</li>
-                <li>Detect source/document/jar type ivy artifacts in dependencies and add them as such to the module</li>
-                <li>Creation of a module library with all resolved ivy dependencies</li>
-                <li>Ivy configurations that need to be resolved can be chosen for each module</li>
-                <li>Properties can be injected into the ivy resolve process</li>
-            </ul>
-        </p>]]>
-    </description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
-
-    <change-notes>
-        will be overwritten by gradle
-        will be overwritten by gradle
-    </change-notes>
 
     <actions>
         <group id="IvyIDEA.Menu" text="IvyIDEA" description="Resolve module dependencies using Ivy"

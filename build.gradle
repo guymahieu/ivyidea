@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'org.clarent'
-version '1.0.16'
+version '1.0.17'
 
 sourceCompatibility = 1.8
 
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.apache.ivy'                , name: 'ivy'                               , version: '2.5.0'
+    implementation group: 'org.apache.ivy'                , name: 'ivy'                               , version: '2.5.1'
 
     runtimeOnly    group: 'org.apache.httpcomponents'     , name: 'httpclient'                        , version: '4.5.9'     // optional httpclient for better http handling
     runtimeOnly    group: 'oro'                           , name: 'oro'                               , version: '2.0.8'     // to use optional glob matcher
@@ -36,7 +36,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'LATEST-EAP-SNAPSHOT'
+    version 'IC-2020.1.1'
     updateSinceUntilBuild=true
 }
 
@@ -47,8 +47,15 @@ publishPlugin {
 patchPluginXml {
     sinceBuild '143.2370.31'
     untilBuild ''
-    changeNotes """      
+    changeNotes """
         <p>
+            <strong>1.0.17</strong>
+            <ul>
+                <li>
+                Upgraded internal Apache Ivy to 2.5.1 to address the CVE-2022-37865 and CVE-2022-37866 
+                vulnerabilities.
+                </li>
+            </ul>  
             <strong>1.0.16</strong>
             <ul>
                 <li>Upgraded internal Apache Ivy to 2.5.0</li>

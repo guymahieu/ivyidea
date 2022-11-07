@@ -45,7 +45,7 @@ publishPlugin {
 }
 
 patchPluginXml {
-    sinceBuild '143.2370.31'
+    sinceBuild '193+'
     untilBuild ''
     changeNotes """
         <p>

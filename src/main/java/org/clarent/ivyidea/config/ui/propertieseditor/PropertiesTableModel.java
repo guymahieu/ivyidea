@@ -26,14 +26,14 @@ import java.util.List;
  */
 public class PropertiesTableModel extends AbstractTableModel {
 
-    private List<Property> data;
+    private final List<Property> data;
 
     public PropertiesTableModel() {
-        this.data = new ArrayList<Property>();
+        this.data = new ArrayList<>();
     }
 
     public PropertiesTableModel(Collection<Property> data) {
-        this.data = new ArrayList<Property>(data);
+        this.data = new ArrayList<>(data);
     }
 
     public Property getPropertyAt(int rowIndex) {

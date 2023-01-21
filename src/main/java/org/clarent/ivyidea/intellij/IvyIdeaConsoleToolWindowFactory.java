@@ -17,10 +17,11 @@
 package org.clarent.ivyidea.intellij;
 
 import com.intellij.execution.ui.ConsoleView;
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowEP;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
@@ -30,20 +31,15 @@ import org.jetbrains.annotations.NotNull;
  * @author Guy Mahieu
  */
 
-public class IvyIdeaConsoleToolWindowFactory implements ToolWindowFactory, DumbAware {
+public class IvyIdeaConsoleToolWindowFactory extends ToolWindowEP implements ToolWindowFactory, DumbAware {
 
     public static final String TOOLWINDOW_ID = "IvyIDEA";
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        ConsoleView console = ServiceManager.getService(project, IvyIdeaConsoleService.class).getConsoleView();
-        Content content = ServiceManager.getService(ContentFactory.class).createContent(console.getComponent(), "Console", true);
+        ConsoleView console = project.getService(IvyIdeaConsoleService.class).getConsoleView();
+        Content content = ApplicationManager.getApplication().getService(ContentFactory.class).createContent(console.getComponent(), "Console", true);
         toolWindow.getContentManager().addContent(content);
     }
 
-    @Override
-    public boolean isDoNotActivateOnStart() {
-        // Start with ivyidea toolwindow closed
-        return true;
-    }
 }

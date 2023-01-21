@@ -29,7 +29,7 @@ public class InternalDependency implements ResolvedDependency {
 
     private static final Logger LOGGER = Logger.getLogger(InternalDependency.class.getName());
 
-    private Module module;
+    private final Module module;
 
     public InternalDependency(Module module) {
         this.module = module;

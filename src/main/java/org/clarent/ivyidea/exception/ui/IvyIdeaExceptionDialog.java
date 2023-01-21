@@ -35,7 +35,7 @@ public class IvyIdeaExceptionDialog extends DialogWrapper {
 
     private JPanel rootPanel;
     private JTextArea txtMessage;
-    private LinkLabel lblLink;
+    private LinkLabel<Object> lblLink;
 
     /**
      * Shows a standard IvyIDEA exception dialog without a hyperlink.
@@ -58,9 +58,7 @@ public class IvyIdeaExceptionDialog extends DialogWrapper {
     public IvyIdeaExceptionDialog(Project project) {
         super(project, false);
 
-        setButtonsAlignment(SwingConstants.CENTER);
-
-        // By default we do not show a link
+        // By default, we do not show a link
         lblLink.setVisible(false);
 
         // You have to call this or nothing is shown!

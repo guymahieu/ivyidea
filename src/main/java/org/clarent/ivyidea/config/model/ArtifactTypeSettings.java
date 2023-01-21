@@ -24,9 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 import static java.util.Arrays.asList;
-import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.Classes;
-import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.Javadoc;
-import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.Sources;
+import static org.clarent.ivyidea.config.model.ArtifactTypeSettings.DependencyCategory.*;
 
 /**
  * @author Guy Mahieu
@@ -49,7 +47,7 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
         }
     }
 
-    private Map<DependencyCategory, Set<String>> typesPerCategory = new HashMap<DependencyCategory, Set<String>>();
+    private final Map<DependencyCategory, Set<String>> typesPerCategory = new HashMap<>();
 
     @Nullable
     public DependencyCategory getCategoryForType(String type) {
@@ -101,7 +99,7 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
     }
 
     private Set<String> splitArtifactTypes(String artifactTypesString) {
-        Set<String> result = new LinkedHashSet<String>();
+        Set<String> result = new LinkedHashSet<>();
         if (artifactTypesString != null) {
             final String[] types = artifactTypesString.split(",");
             for (String type : types) {

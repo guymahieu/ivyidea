@@ -18,7 +18,6 @@ package org.clarent.ivyidea.intellij;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.facet.FacetManager;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -54,7 +53,7 @@ public class IntellijUtils {
     }
 
     public static ConsoleView getConsoleView(Project project) {
-        return ServiceManager.getService(project, IvyIdeaConsoleService.class).getConsoleView();
+        return project.getService(IvyIdeaConsoleService.class).getConsoleView();
     }
 
     public static ToolWindow getToolWindow(Project project) {

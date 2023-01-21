@@ -26,8 +26,8 @@ import org.apache.ivy.Ivy;
  */
 public class ProgressMonitorThread extends Thread {
 
-    private ProgressIndicator indicator;
-    private Thread resolveThread;
+    private final ProgressIndicator indicator;
+    private final Thread resolveThread;
     private Ivy ivy;
 
     public ProgressMonitorThread(ProgressIndicator indicator, Thread resolveThread) {
@@ -50,6 +50,7 @@ public class ProgressMonitorThread extends Thread {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e1) {
+                Thread.currentThread().interrupt();
             }
         }
     }

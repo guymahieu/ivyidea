@@ -30,7 +30,7 @@ import java.io.File;
  */
 public class ExternalDependencyFactory {
 
-    private static ExternalDependencyFactory instance = new ExternalDependencyFactory();
+    private static final ExternalDependencyFactory instance = new ExternalDependencyFactory();
 
     public static ExternalDependencyFactory getInstance() {
         return instance;
@@ -41,14 +41,11 @@ public class ExternalDependencyFactory {
                                                        @NotNull Project project, @NotNull final String configurationName) {
         final ArtifactTypeSettings.DependencyCategory category = determineCategory(project, artifact);
         if (category != null) {
-            switch (category) {
-                case Classes:
-                    return new ExternalJarDependency(artifact, file, configurationName);
-                case Sources:
-                    return new ExternalSourceDependency(artifact, file, configurationName);
-                case Javadoc:
-                    return new ExternalJavaDocDependency(artifact, file, configurationName);
-            }
+            return switch (category) {
+                case Classes -> new ExternalJarDependency(artifact, file, configurationName);
+                case Sources -> new ExternalSourceDependency(artifact, file, configurationName);
+                case Javadoc -> new ExternalJavaDocDependency(artifact, file, configurationName);
+            };
         }
         return null;
     }

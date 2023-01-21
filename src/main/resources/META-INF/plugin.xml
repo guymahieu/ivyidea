@@ -54,9 +54,9 @@
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaProjectService" />
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaConsoleService" />
 
-        <project.converterProvider implementation="org.clarent.ivyidea.intellij.facet.config.IvyIdeaLegacyFacetConfigConverterProvider"/>
+        <project.converterProvider id="IvyIDEA-FacetConfig" implementation="org.clarent.ivyidea.intellij.facet.config.IvyIdeaLegacyFacetConfigConverterProvider"/>
 
-        <toolWindow id="IvyIDEA" icon="/ivyidea13.png" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
+        <toolWindow id="IvyIDEA" icon="/ivyidea13.png" anchor="bottom" canCloseContents="false" doNotActivateOnStart="true" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
 
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
         <framework.detector implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetDetector"/>

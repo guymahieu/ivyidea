@@ -38,9 +38,9 @@ class IntellijModuleDependencies {
 
     private static final Logger LOGGER = Logger.getLogger(IntellijModuleDependencies.class.getName());
 
-    private IvyManager ivyManager;
-    private Module module;
-    private Map<ModuleId, Module> moduleDependencies = new HashMap<ModuleId, Module>();
+    private final IvyManager ivyManager;
+    private final Module module;
+    private final Map<ModuleId, Module> moduleDependencies = new HashMap<>();
 
     public IntellijModuleDependencies(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         this.module = module;

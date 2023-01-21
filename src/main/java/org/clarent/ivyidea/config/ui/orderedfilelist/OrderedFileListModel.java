@@ -16,19 +16,19 @@
 
 package org.clarent.ivyidea.config.ui.orderedfilelist;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractListModel;
 
 /**
  * @author Guy Mahieu
 */
-class OrderedFileListModel extends AbstractListModel {
+class OrderedFileListModel extends AbstractListModel<String> {
 
-    private List<String> items = new ArrayList<String>();
+    private final List<String> items = new ArrayList<>();
 
     public List<String> getAllItems() {
-        return new ArrayList<String>(items);
+        return new ArrayList<>(items);
     }
 
     public void setItems(List<String> itemsToSet) {
@@ -83,7 +83,7 @@ class OrderedFileListModel extends AbstractListModel {
         return items.get(index);
     }
 
-    public Object getElementAt(int index) {
+    public String getElementAt(int index) {
         return getItemAt(index);
     }
 }

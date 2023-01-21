@@ -16,10 +16,6 @@ import java.util.TreeSet;
  */
 public class IvyIdeaLegacyFacetConfigConverterProvider extends ConverterProvider {
 
-    public IvyIdeaLegacyFacetConfigConverterProvider() {
-        super("IvyIDEA-FacetConfig");
-    }
-
     @NotNull
     @Override
     public String getConversionDescription() {

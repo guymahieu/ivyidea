@@ -24,9 +24,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class ResolveProblem {
 
-    private String targetId;
-    private String message;
-    private Throwable throwable;
+    private final String targetId;
+    private final String message;
+    private final Throwable throwable;
 
     public ResolveProblem(String targetId, String message) {
         this(targetId, message, null);

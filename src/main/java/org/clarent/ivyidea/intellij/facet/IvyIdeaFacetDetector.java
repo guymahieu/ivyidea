@@ -26,6 +26,7 @@ import com.intellij.patterns.ElementPattern;
 import com.intellij.util.indexing.FileContent;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -54,14 +55,12 @@ public class IvyIdeaFacetDetector extends FacetBasedFrameworkDetector<IvyIdeaFac
     }
 
     @Override
-    protected IvyIdeaFacetConfiguration createConfiguration(Collection<VirtualFile> files) {
+    protected @Nullable IvyIdeaFacetConfiguration createConfiguration(Collection<? extends VirtualFile> files) {
         final IvyIdeaFacetConfiguration result = super.createConfiguration(files);
-
-        if (!files.isEmpty()) {
+        if (result != null && !files.isEmpty()) {
             VirtualFile ivyFile = files.iterator().next();
             result.setIvyFile(ivyFile.getPath());
         }
-
         return result;
     }
 }

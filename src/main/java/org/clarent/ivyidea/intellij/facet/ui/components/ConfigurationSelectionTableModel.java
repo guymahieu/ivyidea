@@ -31,8 +31,8 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     private static final int COLUMN_NAME = 1;
     private static final int COLUMN_DESCRIPTION = 2;
 
-    private List<Configuration> data;
-    private Set<Integer> selectedIndexes;
+    private final List<Configuration> data;
+    private final Set<Integer> selectedIndexes;
     private boolean editable = true;
 
     public ConfigurationSelectionTableModel() {
@@ -41,12 +41,12 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     }
 
     public ConfigurationSelectionTableModel(Collection<Configuration> data) {
-        this.data = new ArrayList<Configuration>(data);
-        this.selectedIndexes = new HashSet<Integer>();
+        this.data = new ArrayList<>(data);
+        this.selectedIndexes = new HashSet<>();
     }
 
     public ConfigurationSelectionTableModel(Collection<Configuration> data, Collection<String> selectedConfigNames) {
-        this.data = new ArrayList<Configuration>(data);
+        this.data = new ArrayList<>(data);
         this.selectedIndexes = buildSelectedIndexes(this.data, selectedConfigNames);
     }
 
@@ -55,7 +55,7 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     }
 
     public Set<Configuration> getSelectedConfigurations() {
-        Set<Configuration> result = new HashSet<Configuration>();
+        Set<Configuration> result = new HashSet<>();
         for (Integer selectedIndex : selectedIndexes) {
             result.add(getConfigurationAt(selectedIndex));
         }
@@ -116,7 +116,7 @@ public class ConfigurationSelectionTableModel extends AbstractTableModel {
     }
 
     private static Set<Integer> buildSelectedIndexes(@NotNull List<Configuration> configurations, @NotNull Collection<String> selectedConfigNames) {
-        final HashSet<Integer> result = new HashSet<Integer>();
+        final HashSet<Integer> result = new HashSet<>();
         for (Configuration configuration : configurations) {
             if (selectedConfigNames.contains(configuration.getName())) {
                 result.add(configurations.indexOf(configuration));

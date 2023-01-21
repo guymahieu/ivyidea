@@ -19,6 +19,8 @@ package org.clarent.ivyidea.config;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.net.HttpConfigurable;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
@@ -291,9 +293,9 @@ public class IvyIdeaConfigHelper {
     }
 
     private static void fillDefaultBaseDir(IvySettings ivySettings, Module module) {
-        final File moduleFileFolder = new File(module.getModuleFilePath()).getParentFile();
-        if (moduleFileFolder != null) {
-            ivySettings.setBaseDir(moduleFileFolder.getAbsoluteFile());
+        VirtualFile[] contentRoots = ModuleRootManager.getInstance(module).getContentRoots();
+        if (contentRoots.length > 0) {
+            ivySettings.setBaseDir(new File(contentRoots[0].getPath()));
         }
     }
 

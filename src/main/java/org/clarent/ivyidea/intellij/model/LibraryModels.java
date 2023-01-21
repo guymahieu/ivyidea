@@ -38,9 +38,9 @@ class LibraryModels implements Closeable {
 
     private static final Logger LOGGER = Logger.getLogger(LibraryModels.class.getName());    
 
-    private final ConcurrentMap<String, Library.ModifiableModel> libraryModels = new ConcurrentHashMap<String, Library.ModifiableModel>();
+    private final ConcurrentMap<String, Library.ModifiableModel> libraryModels = new ConcurrentHashMap<>();
 
-    private ModifiableRootModel intellijModule;
+    private final ModifiableRootModel intellijModule;
 
     LibraryModels(ModifiableRootModel intellijModule) {
         this.intellijModule = intellijModule;
@@ -60,7 +60,7 @@ class LibraryModels implements Closeable {
         final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
         final Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {
-            LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getModuleFilePath() + ", creating with name " + libraryName + "...");
+            LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getName() + ", creating with name " + libraryName + "...");
             return libraryTable.createLibrary(libraryName);
         }
         return library;
@@ -74,7 +74,7 @@ class LibraryModels implements Closeable {
     }
 
     public List<String> getIntellijDependencyUrlsForType(OrderRootType type) {
-        final List<String> intellijDependencies = new ArrayList<String>();
+        final List<String> intellijDependencies = new ArrayList<>();
         for (final Library.ModifiableModel libraryModel : libraryModels.values()) {
             final String[] libraryModelUrls = libraryModel.getUrls(type);
             intellijDependencies.addAll(asList(libraryModelUrls));

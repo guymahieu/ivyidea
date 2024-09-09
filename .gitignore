@@ -1,1 +1,5 @@
-/gradle.properties
+.gradle
+.idea
+.intellijPlatform
+.qodana
+build

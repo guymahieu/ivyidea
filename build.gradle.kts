@@ -97,6 +97,10 @@ intellijPlatform {
         }
     }
 
+    pluginVerification {
+        freeArgs = listOf("-mute", "TemplateWordInPluginName")
+    }
+
     signing {
         certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
         privateKey = providers.environmentVariable("PRIVATE_KEY")

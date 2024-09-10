@@ -54,7 +54,7 @@ public class IvyIdeaFacetDetector extends FacetBasedFrameworkDetector<IvyIdeaFac
     }
 
     @Override
-    protected IvyIdeaFacetConfiguration createConfiguration(Collection<VirtualFile> files) {
+    protected IvyIdeaFacetConfiguration createConfiguration(Collection<? extends VirtualFile> files) {
         final IvyIdeaFacetConfiguration result = super.createConfiguration(files);
 
         if (!files.isEmpty()) {

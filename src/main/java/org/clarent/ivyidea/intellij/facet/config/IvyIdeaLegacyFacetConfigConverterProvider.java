@@ -17,7 +17,7 @@ import java.util.TreeSet;
 public class IvyIdeaLegacyFacetConfigConverterProvider extends ConverterProvider {
 
     public IvyIdeaLegacyFacetConfigConverterProvider() {
-        super("IvyIDEA-FacetConfig");
+        super();
     }
 
     @NotNull

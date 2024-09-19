@@ -5,9 +5,10 @@
 ## [Unreleased]
 - Upgraded Apache Ivy to 2.5.2 to address the CVE-2022-46751 vulnerability
 - rebased build on [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Fixed deprecation warning about ActionUpdateThread.OLD_EDT in IntelliJ IDEA 2024.2
 
 ## [1.0.17]
-- Upgraded Apache Ivy to 2.5.1 to address the CVE-2022-37865 and CVE-2022-37866 vulnerabilities.
+- Upgraded Apache Ivy to 2.5.1 to address the CVE-2022-37865 and CVE-2022-37866 vulnerabilities
 
 ## [1.0.16]
 - Upgraded internal Apache Ivy to 2.5.0

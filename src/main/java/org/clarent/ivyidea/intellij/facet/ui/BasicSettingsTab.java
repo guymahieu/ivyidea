@@ -253,9 +253,6 @@ public class BasicSettingsTab extends FacetEditorTab {
         updateUI();
     }
 
-    public void disposeUIResources() {
-    }
-
     private void createUIComponents() {
     }
 

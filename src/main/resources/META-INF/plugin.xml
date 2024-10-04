@@ -31,8 +31,6 @@
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaProjectService" />
         <projectService serviceImplementation="org.clarent.ivyidea.intellij.IvyIdeaConsoleService" />
 
-        <project.converterProvider implementation="org.clarent.ivyidea.intellij.facet.config.IvyIdeaLegacyFacetConfigConverterProvider" id="IvyIDEA.FacetConverterProvider"/>
-
         <toolWindow id="IvyIDEA" icon="/ivyidea13.png" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
 
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>

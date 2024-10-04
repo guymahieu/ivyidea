@@ -66,7 +66,7 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
                         } else {
                             model.dispose();
                         }
-                    }), ModalityState.NON_MODAL);
+                    }), ModalityState.nonModal());
                 }
             }
         });

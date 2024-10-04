@@ -21,7 +21,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.net.HttpConfigurable;
+import com.intellij.util.net.HttpConnectionUtils;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
@@ -250,7 +250,7 @@ public class IvyIdeaConfigHelper {
         try {
             if (!StringUtils.isBlank(settingsFile)) {
                 if (settingsFile.startsWith("http://") || settingsFile.startsWith("https://")) {
-                    HttpConfigurable.getInstance().prepareURL(settingsFile);
+                    HttpConnectionUtils.prepareUrl(settingsFile);
                     s.load(new URL(settingsFile));
                 } else if (settingsFile.startsWith("file://")) {
                     s.load(new URL(settingsFile));

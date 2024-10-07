@@ -3,6 +3,8 @@
 # IvyIDEA Changelog
 
 ## [Unreleased]
+
+## [1.0.18]
 - Upgraded Apache Ivy to 2.5.2 to address the CVE-2022-46751 vulnerability
 - rebased build on [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 - Fixed deprecation warning about ActionUpdateThread.OLD_EDT in IntelliJ IDEA 2024.2
@@ -31,7 +33,8 @@
 - Fixed compatibility issue with IntelliJ 11
 - Upgraded internal Apache Ivy to 2.4.0 (including dependencies)
 
-[Unreleased]: https://github.com/guymahieu/ivyidea/compare/1.0.17...HEAD
+[Unreleased]: https://github.com/guymahieu/ivyidea/compare/1.0.18...HEAD
+[1.0.18]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.18
 [1.0.17]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.17
 [1.0.16]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.16
 [1.0.15]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.15

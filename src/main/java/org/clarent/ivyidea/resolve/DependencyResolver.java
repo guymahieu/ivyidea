@@ -34,10 +34,7 @@ import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
-import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
-import org.clarent.ivyidea.resolve.dependency.ExternalDependencyFactory;
-import org.clarent.ivyidea.resolve.dependency.InternalDependency;
-import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
+import org.clarent.ivyidea.resolve.dependency.*;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
 import java.io.File;
@@ -58,19 +55,25 @@ class DependencyResolver {
     private static final Logger LOGGER = Logger.getLogger(DependencyResolver.class.getName());
 
     private final List<ResolveProblem> resolveProblems;
-    private final List<ResolvedDependency> resolvedDependencies;
+    private final List<ExternalDependency> resolvedExternalDependencies;
+    private final List<InternalDependency> resolvedInternalDependencies;
 
     public DependencyResolver() {
         resolveProblems = new ArrayList<>();
-        resolvedDependencies = new ArrayList<>();
+        resolvedExternalDependencies = new ArrayList<>();
+        resolvedInternalDependencies = new ArrayList<>();
     }
 
     public List<ResolveProblem> getResolveProblems() {
         return Collections.unmodifiableList(resolveProblems);
     }
 
-    public List<ResolvedDependency> getResolvedDependencies() {
-        return Collections.unmodifiableList(resolvedDependencies);
+    public List<ExternalDependency> getResolvedExternalDependencies() {
+        return Collections.unmodifiableList(resolvedExternalDependencies);
+    }
+
+    public List<InternalDependency> getResolvedInternalDependencies() {
+        return Collections.unmodifiableList(resolvedInternalDependencies);
     }
 
     public void resolve(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
@@ -105,7 +108,7 @@ class DependencyResolver {
                 if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId())) {
                     // If the user has chosen to detect dependencies on internal modules we add a module dependency rather
                     // than a dependency on an external library.
-                    resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
+                    resolvedInternalDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
                 } else {
                     final Project project = moduleDependencies.getModule().getProject();
                     final ArtifactDownloadReport[] artifactDownloadReports = configurationReport.getDownloadReports(dependency);
@@ -161,7 +164,7 @@ class DependencyResolver {
                     "File not found: " + externalDependency.getLocalFile().getAbsolutePath())
             );
         } else {
-            resolvedDependencies.add(externalDependency);
+            resolvedExternalDependencies.add(externalDependency);
         }
     }
 
@@ -177,7 +180,7 @@ class DependencyResolver {
         for (IvyNode unresolvedDependency : configurationReport.getUnresolvedDependencies()) {
             if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(unresolvedDependency.getModuleId())) {
                 // centralize  this!
-                resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(unresolvedDependency.getModuleId())));
+                resolvedInternalDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(unresolvedDependency.getModuleId())));
             } else {
                 resolveProblems.add(new ResolveProblem(
                         unresolvedDependency.getId().toString(),

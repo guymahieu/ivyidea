@@ -58,7 +58,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
 
                     final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
                     resolver.resolve(module);
-                    updateIntellijModel(module, resolver.getDependencies());
+                    updateIntellijModel(module, resolver.getExternalDependencies(), resolver.getInternalDependencies());
                     reportProblems(module, resolver.getProblems());
                 }
             });

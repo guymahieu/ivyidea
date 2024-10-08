@@ -16,6 +16,7 @@
 
 package org.clarent.ivyidea;
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -71,4 +72,10 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
             }
         });
     }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
+
 }

@@ -18,6 +18,7 @@ package org.clarent.ivyidea;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
@@ -27,6 +28,7 @@ import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -58,7 +60,7 @@ public abstract class AbstractResolveAction extends AnAction {
             String configsForModule;
             if (ivyIdeaFacetConfiguration.isOnlyResolveSelectedConfigs()) {
                 final Set<String> configs = ivyIdeaFacetConfiguration.getConfigsToResolve();
-                if (configs == null || configs.size() == 0) {
+                if (configs == null || configs.isEmpty()) {
                     configsForModule = "[No configurations selected!]";
                 } else {
                     configsForModule = configs.toString();
@@ -78,5 +80,11 @@ public abstract class AbstractResolveAction extends AnAction {
             }
         });
     }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
+
 }
 

@@ -16,7 +16,6 @@
 
 package org.clarent.ivyidea;
 
-import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
@@ -77,8 +76,4 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         presentation.setVisible(linkEnabled);
     }
 
-    @Override
-    public @NotNull ActionUpdateThread getActionUpdateThread() {
-        return ActionUpdateThread.EDT;
-    }
 }

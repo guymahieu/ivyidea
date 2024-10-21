@@ -3,6 +3,7 @@
 # IvyIDEA Changelog
 
 ## [Unreleased]
+- The action "Resolve for current module" was no longer available. This has been fixed.
 
 ## [1.0.18]
 - Upgraded Apache Ivy to 2.5.2 to address the CVE-2022-46751 vulnerability

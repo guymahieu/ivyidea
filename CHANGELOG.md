@@ -3,6 +3,8 @@
 # IvyIDEA Changelog
 
 ## [Unreleased]
+
+## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.
 
 ## [1.0.18]
@@ -34,7 +36,8 @@
 - Fixed compatibility issue with IntelliJ 11
 - Upgraded internal Apache Ivy to 2.4.0 (including dependencies)
 
-[Unreleased]: https://github.com/guymahieu/ivyidea/compare/1.0.18...HEAD
+[Unreleased]: https://github.com/guymahieu/ivyidea/compare/1.0.19...HEAD
+[1.0.19]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.19
 [1.0.18]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.18
 [1.0.17]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.17
 [1.0.16]: https://github.com/guymahieu/ivyidea/releases/tag/1.0.16

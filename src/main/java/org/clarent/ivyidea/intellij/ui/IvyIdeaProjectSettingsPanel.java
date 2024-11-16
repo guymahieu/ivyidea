@@ -61,6 +61,7 @@ public class IvyIdeaProjectSettingsPanel {
     private JCheckBox autoAttachSources;
     private JCheckBox autoAttachJavadocs;
     private JCheckBox detectDependenciesOnOtherModules;
+    private JCheckBox skipDownloadForInternalIntellijModules;
     private JPanel pnlIvyFiles;
     private JPanel pnlArtefactTypes;
     private IvyIdeaProjectSettings internalState;
@@ -116,6 +117,7 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.setAlwaysAttachJavadocs(autoAttachJavadocs.isSelected());
         internalState.setUseCustomIvySettings(useYourOwnIvySettingsRadioButton.isSelected());
         internalState.setDetectDependenciesOnOtherModules(detectDependenciesOnOtherModules.isSelected());
+        internalState.setSkipArtifactDownloadForInternalModules(skipDownloadForInternalIntellijModules.isSelected());
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
         internalState.setPropertiesSettings(propertiesSettings);

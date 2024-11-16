@@ -36,7 +36,7 @@ public class IvyIdeaProjectSettings {
     private boolean libraryNameIncludesConfiguration = false;
     private boolean detectDependenciesOnOtherModules = true;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
-
+    private boolean skipArtifactDownloadForInternalModules = false;
 
     private ArtifactTypeSettings artifactTypeSettings = new ArtifactTypeSettings();
 
@@ -154,9 +154,18 @@ public class IvyIdeaProjectSettings {
         this.artifactTypeSettings = artifactTypeSettings;
     }
 
+    public boolean isSkipArtifactDownloadForInternalModules() {
+        return skipArtifactDownloadForInternalModules;
+    }
+
+    public void setSkipArtifactDownloadForInternalModules(boolean skipArtifactDownloadForInternalModules) {
+        this.skipArtifactDownloadForInternalModules = skipArtifactDownloadForInternalModules;
+    }
+
     public void updateResolveOptions(ResolveOptions options) {
         options.setValidate(isValidateIvyFiles());
         options.setTransitive(isResolveTransitively());
         options.setUseCacheOnly(isResolveCacheOnly());
+        options.setDownload(!isSkipArtifactDownloadForInternalModules());
     }
 }

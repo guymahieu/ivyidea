@@ -3,6 +3,7 @@
 # IvyIDEA Changelog
 
 ## [Unreleased]
+- Upgraded internal Apache Ivy to 2.5.3
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

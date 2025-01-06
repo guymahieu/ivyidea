@@ -1,7 +1,7 @@
 [versions]
 # libraries
 annotations = "24.0.1"
-ivy = "2.5.2"
+ivy = "2.5.3"
 httpclient = "4.5.13"
 oro = "2.0.8"
 vfs2 = "2.2"

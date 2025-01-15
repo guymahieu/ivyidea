@@ -27,6 +27,7 @@ import org.apache.ivy.core.report.ConfigurationResolveReport;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.DownloadOptions;
 import org.apache.ivy.core.resolve.IvyNode;
+import org.apache.ivy.core.resolve.ResolveOptions;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
 import org.clarent.ivyidea.exception.IvyFileReadException;
@@ -81,15 +82,22 @@ class DependencyResolver {
 
         final Ivy ivy = ivyManager.getIvy(module);
         try {
-            final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
-            extractDependencies(ivy, resolveReport, new IntellijModuleDependencies(module, ivyManager));
+            final IntellijModuleDependencies moduleDependencies = new IntellijModuleDependencies(module, ivyManager);
+            final ResolveOptions resolveOptions = IvyIdeaConfigHelper.createResolveOptions(module);
+            final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), resolveOptions);
+            if (!resolveOptions.isDownload()) {
+                // Artifacts not yet downloaded - this means we will download only the non-internal module artifacts
+                ivy.getResolveEngine().downloadArtifacts(resolveReport, artifact -> !moduleDependencies.isInternalIntellijModuleDependency(artifact), new DownloadOptions());
+            }
+            extractDependencies(ivy, resolveReport, moduleDependencies);
         } catch (ParseException | IOException e) {
             throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
         }
     }
 
+
     // TODO: This method performs way too much tasks -- refactor it!
-    protected void extractDependencies(Ivy ivy, ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) {
+    protected void extractDependencies(Ivy ivy, ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) throws IOException {
         final String[] resolvedConfigurations = resolveReport.getConfigurations();
         for (String resolvedConfiguration : resolvedConfigurations) {
             ConfigurationResolveReport configurationReport = resolveReport.getConfigurationReport(resolvedConfiguration);
@@ -130,7 +138,7 @@ class DependencyResolver {
                             // TODO: if sources are found, don't bother attaching javadoc?
                             // That way, IDEA will generate the javadoc and resolve links to other javadocs
                             if ((attachSources && isSource(project, artifact))
-                                    || (attachJavadocs && isJavadoc(project, artifact))) {
+                                || (attachJavadocs && isJavadoc(project, artifact))) {
                                 if (resolveReport.getArtifacts().contains(artifact)) {
                                     continue; // already resolved, ignore.
                                 }
@@ -154,8 +162,7 @@ class DependencyResolver {
                     "Unrecognized artifact type: " + artifact.getType() + ", will not add this as a dependency in IntelliJ.",
                     null));
             LOGGER.warning("Artifact of unrecognized type " + artifact.getType() + " found, *not* adding as a dependency.");
-        }
-        else if (externalDependency.isMissing()) {
+        } else if (externalDependency.isMissing()) {
             resolveProblems.add(new ResolveProblem(
                     artifact.getModuleRevisionId().toString(),
                     "File not found: " + externalDependency.getLocalFile().getAbsolutePath())

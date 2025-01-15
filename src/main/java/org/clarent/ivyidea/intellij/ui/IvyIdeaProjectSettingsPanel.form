@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="projectSettingsPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="829" height="627"/>
+      <xy x="20" y="20" width="837" height="690"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -292,6 +292,17 @@
                       <selected value="true"/>
                       <text value="Detect dependencies on other modules in the same project"/>
                       <toolTipText value="Uncheck this option if you want IvyIDEA to ignore internal module dependencies and just resolve all dependencies to external libraries"/>
+                    </properties>
+                  </component>
+                  <component id="ba137" class="javax.swing.JCheckBox" binding="skipDownloadForInternalIntellijModules">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <enabled value="true"/>
+                      <selected value="false"/>
+                      <text value="Skip redundant download of artifacts for project modules"/>
+                      <toolTipText value="Do not download artifacts that are actually other modules in this IntelliJ project as they would just be ignored."/>
                     </properties>
                   </component>
                 </children>

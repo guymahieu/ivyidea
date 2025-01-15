@@ -17,6 +17,7 @@
 package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.module.Module;
+import org.apache.ivy.core.module.descriptor.Artifact;
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleId;
@@ -50,6 +51,10 @@ class IntellijModuleDependencies {
 
     public Module getModule() {
         return module;
+    }
+
+    public boolean isInternalIntellijModuleDependency(Artifact artifact) {
+        return moduleDependencies.containsKey(artifact.getModuleRevisionId().getModuleId());
     }
 
     public boolean isInternalIntellijModuleDependency(ModuleId moduleId) {

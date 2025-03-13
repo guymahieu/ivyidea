@@ -21,7 +21,8 @@ import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
+import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
+import org.clarent.ivyidea.resolve.dependency.InternalDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
 import java.util.Collections;
@@ -36,7 +37,8 @@ import java.util.List;
 public class IntellijDependencyResolver {
 
     private Module module;
-    private List<ResolvedDependency> dependencies = Collections.emptyList();
+    private List<ExternalDependency> externalDependencies = Collections.emptyList();
+    private List<InternalDependency> internalDependencies = Collections.emptyList();
     private List<ResolveProblem> problems = Collections.emptyList();
 
     private IvyManager ivyManager;
@@ -53,15 +55,20 @@ public class IntellijDependencyResolver {
         return problems;
     }
 
-    public List<ResolvedDependency> getDependencies() {
-        return dependencies;
+    public List<ExternalDependency> getExternalDependencies() {
+        return externalDependencies;
+    }
+
+    public List<InternalDependency> getInternalDependencies() {
+        return internalDependencies;
     }
 
     public void resolve(final Module module) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
         this.module = module;
         final DependencyResolver dependencyResolver = new DependencyResolver();
         dependencyResolver.resolve(module, ivyManager);
-        dependencies = dependencyResolver.getResolvedDependencies();
+        externalDependencies = dependencyResolver.getResolvedExternalDependencies();
+        internalDependencies = dependencyResolver.getResolvedInternalDependencies();
         problems = dependencyResolver.getResolveProblems();
     }
 

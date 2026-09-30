@@ -11,11 +11,11 @@ jschAgentproxy = "0.0.9"
 bouncycastle = "1.70"
 
 # plugins
-changelog = "2.2.1"
-intelliJPlatform = "2.0.1"
-kotlin = "1.9.25"
-kover = "0.8.3"
-qodana = "2024.1.9"
+changelog = "2.5.0"
+intelliJPlatform = "2.19.0"
+kotlin = "2.4.20"
+kover = "0.9.11"
+qodana = "2026.2.2"
 
 [libraries]
 annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }

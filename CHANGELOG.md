@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 - Upgraded internal Apache Ivy to 2.6.0
+- The minimum supported IntelliJ IDEA version is now 2023.3
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

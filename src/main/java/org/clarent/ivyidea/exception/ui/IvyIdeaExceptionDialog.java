@@ -58,8 +58,6 @@ public class IvyIdeaExceptionDialog extends DialogWrapper {
     public IvyIdeaExceptionDialog(Project project) {
         super(project, false);
 
-        setButtonsAlignment(SwingConstants.CENTER);
-
         // By default we do not show a link
         lblLink.setVisible(false);
 

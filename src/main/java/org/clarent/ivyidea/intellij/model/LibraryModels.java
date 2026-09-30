@@ -60,7 +60,7 @@ class LibraryModels implements Closeable {
         final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
         final Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {
-            LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getModuleFilePath() + ", creating with name " + libraryName + "...");
+            LOGGER.info("Internal library not found for module " + modifiableRootModel.getModule().getName() + ", creating with name " + libraryName + "...");
             return libraryTable.createLibrary(libraryName);
         }
         return library;

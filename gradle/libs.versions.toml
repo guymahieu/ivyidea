@@ -1,9 +1,10 @@
 [versions]
 # libraries
 annotations = "24.0.1"
-ivy = "2.5.3"
+ivy = "2.6.0"
 httpclient = "4.5.13"
 oro = "2.0.8"
+compress = "1.27.1"
 vfs2 = "2.2"
 jsch = "0.1.55"
 jschAgentproxy = "0.0.9"
@@ -21,6 +22,7 @@ annotations = { group = "org.jetbrains", name = "annotations", version.ref = "an
 ivy = { group = "org.apache.ivy", name = "ivy", version.ref = "ivy" }
 httpclient = { group = "org.apache.httpcomponents", name = "httpclient", version.ref = "httpclient" }
 oro = { group = "oro", name = "oro", version.ref = "oro" }
+compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "compress" }
 vfs2 = { group = "org.apache.commons", name = "commons-vfs2", version.ref = "vfs2" }
 jsch = { group = "com.jcraft", name = "jsch", version.ref = "jsch" }
 jschagentproxyconnectorfactory = { group = "com.jcraft", name = "jsch.agentproxy.connector-factory", version.ref = "jschAgentproxy" }

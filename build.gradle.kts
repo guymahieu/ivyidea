@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.ivy)
     runtimeOnly(libs.httpclient)
     runtimeOnly(libs.oro)
+    runtimeOnly(libs.compress)
     runtimeOnly(libs.vfs2)
     runtimeOnly(libs.jsch)
     runtimeOnly(libs.jschagentproxyconnectorfactory)

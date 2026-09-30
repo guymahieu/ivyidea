@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+    <info organisation="com.example" module="test-module" revision="1.0.0" status="release">
+        <license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+    </info>
+    <configurations>
+        <conf name="default" visibility="public"/>
+        <conf name="compile" visibility="public"/>
+        <conf name="runtime" visibility="private"/>
+    </configurations>
+    <publications/>
+    <dependencies>
+        <dependency org="com.example" name="dep-a" rev="2.0.0"/>
+        <dependency org="com.example" name="dep-b" rev="1.5.0" conf="compile->default"/>
+        <exclude org="com.example" module="dep-c"/>
+    </dependencies>
+</ivy-module>

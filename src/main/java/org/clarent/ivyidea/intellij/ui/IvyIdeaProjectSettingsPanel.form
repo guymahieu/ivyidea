@@ -294,6 +294,16 @@
                       <toolTipText value="Uncheck this option if you want IvyIDEA to ignore internal module dependencies and just resolve all dependencies to external libraries"/>
                     </properties>
                   </component>
+                  <component id="c72a1" class="javax.swing.JCheckBox" binding="chkParallelResolve">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <selected value="true"/>
+                      <text value="Resolve modules in parallel when resolving all modules"/>
+                      <toolTipText value="Uncheck this option to resolve modules one at a time when using &quot;Resolve for all modules&quot;, instead of on a pool of worker threads"/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
             </children>

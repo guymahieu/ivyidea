@@ -68,7 +68,10 @@ public abstract class ExternalDependency implements ResolvedDependency {
             return;
         }
         if (intellijModuleWrapper.alreadyHasDependencyOnLibrary(this)) {
-            LOGGER.info("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already present.");
+            // FINE, not INFO: this is the steady-state no-op case and fires once per artifact per
+            // module on every resolve -- at workspace scale that's ~200k log writes/run at INFO,
+            // which was the actual cause of multi-minute EDT stalls, not IDE-side reindexing.
+            LOGGER.fine("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already present.");
             return;
         }
         LOGGER.info("Registering external " + getTypeName() + " file dependency: " + artifactPath);

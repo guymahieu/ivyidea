@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+    <info organisation="com.example" module="test-empty" revision="1.0.0"/>
+    <configurations/>
+    <dependencies>
+        <dependency org="com.example" name="dep-x" rev="1.0.0"/>
+    </dependencies>
+</ivy-module>

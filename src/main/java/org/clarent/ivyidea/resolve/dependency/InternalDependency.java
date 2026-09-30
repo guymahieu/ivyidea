@@ -40,7 +40,8 @@ public class InternalDependency implements ResolvedDependency {
             LOGGER.info("Registering module dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName());
             intellijModuleWrapper.addModuleDependency(module);
         } else {
-            LOGGER.info("Dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName() + " was already present; not reregistring");
+            // FINE, not INFO: see ExternalDependency.addTo() -- same steady-state no-op path.
+            LOGGER.fine("Dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName() + " was already present; not reregistring");
         }
     }
 

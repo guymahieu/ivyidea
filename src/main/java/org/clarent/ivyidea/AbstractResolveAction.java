@@ -26,6 +26,7 @@ import com.intellij.openapi.project.Project;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
+import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +43,23 @@ public abstract class AbstractResolveAction extends AnAction {
         ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
             try (IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(module)) {
                 moduleWrapper.updateDependencies(dependencies);
+            }
+        }));
+    }
+
+    /**
+     * Same update as {@link #updateIntellijModel(Module, List)}, but applies every module's
+     * update inside a single write action instead of one per module. Committing many separate
+     * write actions back-to-back (one "Resolve for all modules" run touches every module in the
+     * workspace) can make IntelliJ react to each commit separately; batching them into one
+     * transaction lets it reindex the accumulated changes once instead of up to N times.
+     */
+    protected void updateIntellijModel(final List<IntellijDependencyResolver> resolvers) {
+        ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+            for (IntellijDependencyResolver resolver : resolvers) {
+                try (IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(resolver.getModule())) {
+                    moduleWrapper.updateDependencies(resolver.getDependencies());
+                }
             }
         }));
     }

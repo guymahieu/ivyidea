@@ -68,10 +68,10 @@ public abstract class ExternalDependency implements ResolvedDependency {
             return;
         }
         if (intellijModuleWrapper.alreadyHasDependencyOnLibrary(this)) {
-            LOGGER.info("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already present.");
+            LOGGER.fine("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already present.");
             return;
         }
-        LOGGER.info("Registering external " + getTypeName() + " file dependency: " + artifactPath);
+        LOGGER.fine("Registering external " + getTypeName() + " file dependency: " + artifactPath);
         intellijModuleWrapper.addExternalDependency(this);
     }
 

@@ -81,7 +81,7 @@ public class IvyUtil {
      * @return the ModuleDescriptor object representing the ivy file.
      */
     public static ModuleDescriptor parseIvyFile(@NotNull File ivyFile, @NotNull Ivy ivy) {
-        LOGGER.info("Parsing ivy file " + ivyFile.getAbsolutePath());
+        LOGGER.fine("Parsing ivy file " + ivyFile.getAbsolutePath());
 
         ModuleDescriptor moduleDescriptor;
         try {

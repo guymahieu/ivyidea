@@ -37,10 +37,10 @@ public class InternalDependency implements ResolvedDependency {
 
     public void addTo(IntellijModuleWrapper intellijModuleWrapper) {
         if (!intellijModuleWrapper.alreadyHasDependencyOnModule(module)) {
-            LOGGER.info("Registering module dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName());
+            LOGGER.fine("Registering module dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName());
             intellijModuleWrapper.addModuleDependency(module);
         } else {
-            LOGGER.info("Dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName() + " was already present; not reregistring");
+            LOGGER.fine("Dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName() + " was already present; not reregistring");
         }
     }
 

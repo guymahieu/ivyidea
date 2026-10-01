@@ -67,7 +67,7 @@ class LibraryModels implements Closeable {
     }
 
     public void removeDependency(OrderRootType type, String dependencyUrl) {
-        LOGGER.info("Removing no longer needed dependency of type " + type + ": " + dependencyUrl);
+        LOGGER.fine("Removing no longer needed dependency of type " + type + ": " + dependencyUrl);
         for (Library.ModifiableModel libraryModel : libraryModels.values()) {
             libraryModel.removeRoot(dependencyUrl, type);
         }

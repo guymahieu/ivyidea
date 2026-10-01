@@ -89,7 +89,8 @@ class DependencyResolver {
     }
 
     // TODO: This method performs way too much tasks -- refactor it!
-    protected void extractDependencies(Ivy ivy, ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) {
+    protected void extractDependencies(Ivy ivy, ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies)
+            throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final String[] resolvedConfigurations = resolveReport.getConfigurations();
         for (String resolvedConfiguration : resolvedConfigurations) {
             ConfigurationResolveReport configurationReport = resolveReport.getConfigurationReport(resolvedConfiguration);
@@ -173,7 +174,8 @@ class DependencyResolver {
         return ArtifactTypeSettings.DependencyCategory.Javadoc == ExternalDependencyFactory.determineCategory(project, artifact);
     }
 
-    private void registerProblems(ConfigurationResolveReport configurationReport, IntellijModuleDependencies moduleDependencies, boolean detectDependenciesOnOtherModulesWhileResolving) {
+    private void registerProblems(ConfigurationResolveReport configurationReport, IntellijModuleDependencies moduleDependencies, boolean detectDependenciesOnOtherModulesWhileResolving)
+            throws IvySettingsNotFoundException, IvySettingsFileReadException {
         for (IvyNode unresolvedDependency : configurationReport.getUnresolvedDependencies()) {
             if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(unresolvedDependency.getModuleId())) {
                 // centralize  this!

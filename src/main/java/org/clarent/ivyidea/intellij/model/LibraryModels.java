@@ -21,12 +21,21 @@ import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.openapi.util.SystemInfo;
+import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.util.PathUtil;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 
 import java.io.Closeable;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Logger;
@@ -40,13 +49,45 @@ class LibraryModels implements Closeable {
 
     private final ConcurrentMap<String, Library.ModifiableModel> libraryModels = new ConcurrentHashMap<String, Library.ModifiableModel>();
 
+    private final Map<Library.ModifiableModel, Map<OrderRootType, Set<String>>> rootPaths = new HashMap<>();
+
     private ModifiableRootModel intellijModule;
 
     LibraryModels(ModifiableRootModel intellijModule) {
         this.intellijModule = intellijModule;
     }
 
-    public Library.ModifiableModel getForExternalDependency(final ExternalDependency externalDependency) {
+    public boolean containsRoot(final ExternalDependency externalDependency) {
+        final File localFile = externalDependency.getLocalFile();
+        if (localFile == null) {
+            return false;
+        }
+        final Library.ModifiableModel libraryModel = getForExternalDependency(externalDependency);
+        final Set<String> paths = getRootPaths(libraryModel, externalDependency.getType());
+        final String path = FileUtil.toCanonicalPath(localFile.getPath());
+        return paths.contains(path);
+    }
+
+    public void addRoot(final ExternalDependency externalDependency) {
+        final Library.ModifiableModel libraryModel = getForExternalDependency(externalDependency);
+        final String url = externalDependency.getUrlForLibraryRoot();
+        libraryModel.addRoot(url, externalDependency.getType());
+        getRootPaths(libraryModel, externalDependency.getType()).add(toCanonicalPath(url));
+    }
+
+    private Set<String> getRootPaths(final Library.ModifiableModel libraryModel, final OrderRootType type) {
+        return rootPaths
+                .computeIfAbsent(libraryModel, _libraryModel -> new HashMap<>())
+                .computeIfAbsent(type, _type -> {
+                    final Set<String> paths = createPathSet();
+                    for (String url : libraryModel.getUrls(type)) {
+                        paths.add(toCanonicalPath(url));
+                    }
+                    return paths;
+                });
+    }
+
+    private Library.ModifiableModel getForExternalDependency(final ExternalDependency externalDependency) {
         String resolvedConfiguration = externalDependency.getConfigurationName();
         return getForConfiguration(isBlank(resolvedConfiguration) ? "default" : resolvedConfiguration);
     }
@@ -71,6 +112,13 @@ class LibraryModels implements Closeable {
         for (Library.ModifiableModel libraryModel : libraryModels.values()) {
             libraryModel.removeRoot(dependencyUrl, type);
         }
+        final String path = toCanonicalPath(dependencyUrl);
+        for (Map<OrderRootType, Set<String>> pathsByType : rootPaths.values()) {
+            final Set<String> paths = pathsByType.get(type);
+            if (paths != null) {
+                paths.remove(path);
+            }
+        }
     }
 
     public List<String> getIntellijDependencyUrlsForType(OrderRootType type) {
@@ -80,6 +128,21 @@ class LibraryModels implements Closeable {
             intellijDependencies.addAll(asList(libraryModelUrls));
         }
         return intellijDependencies;
+    }
+
+    /**
+     * Creates a set for canonical paths that ignores case on case-insensitive file systems, so lookups
+     * match like {@link FileUtil#filesEqual}.
+     */
+    static Set<String> createPathSet() {
+        return SystemInfo.isFileSystemCaseSensitive ? new HashSet<>() : new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+    }
+
+    /**
+     * Returns the canonical local path of a library root url, e.g. {@code jar://C:/repo/x.jar!/}.
+     */
+    static String toCanonicalPath(String libraryRootUrl) {
+        return FileUtil.toCanonicalPath(PathUtil.toPresentableUrl(libraryRootUrl));
     }
 
     public void close() {

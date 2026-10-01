@@ -21,9 +21,14 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.util.net.HttpConfigurable;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.plugins.resolver.ChainResolver;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
 import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
+import org.clarent.ivyidea.ivy.WorkspaceModuleIndex;
+import org.clarent.ivyidea.ivy.WorkspaceModuleResolver;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
@@ -41,7 +46,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
-import java.util.*;                                                                                    
+import java.util.*;
+import java.util.logging.Logger;                                                                                    
 
 /**
  * Handles retrieval of settings from the configuration.
@@ -238,11 +244,24 @@ public class IvyIdeaConfigHelper {
 
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        return createConfiguredIvySettings(module, getIvySettingsFile(module), getIvyProperties(module));
+        return createConfiguredIvySettings(module, new HashMap<File, ModuleDescriptor>(), new WorkspaceModuleIndex());
+    }
+
+    @NotNull
+    public static IvySettings createConfiguredIvySettings(Module module, Map<File, ModuleDescriptor> workspaceIvyFileCache,
+                                                            WorkspaceModuleIndex workspaceModuleIndex) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+        return createConfiguredIvySettings(module, getIvySettingsFile(module), getIvyProperties(module), workspaceIvyFileCache, workspaceModuleIndex);
     }
 
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
+        return createConfiguredIvySettings(module, settingsFile, properties, new HashMap<File, ModuleDescriptor>(), new WorkspaceModuleIndex());
+    }
+
+    @NotNull
+    public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties,
+                                                            Map<File, ModuleDescriptor> workspaceIvyFileCache,
+                                                            WorkspaceModuleIndex workspaceModuleIndex) throws IvySettingsFileReadException {
         IvySettings s = new IvySettings();
         injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
 
@@ -273,7 +292,43 @@ public class IvyIdeaConfigHelper {
             s.setVariable(key, value);
         }
 
+        wrapResolverChain(s, module.getProject(), workspaceIvyFileCache, workspaceModuleIndex);
+
         return s;
+    }
+
+    private static void wrapResolverChain(IvySettings settings, Project project, Map<File, ModuleDescriptor> workspaceIvyFileCache,
+                                           WorkspaceModuleIndex workspaceModuleIndex) {
+        Logger logger = Logger.getLogger(IvyIdeaConfigHelper.class.getName());
+
+        Collection<DependencyResolver> allResolvers = new ArrayList<>(settings.getResolvers());
+        if (allResolvers.isEmpty()) {
+            logger.warning("wrapResolverChain: no resolvers found, skipping");
+            return;
+        }
+
+        WorkspaceModuleResolver workspaceResolver = new WorkspaceModuleResolver(project, settings, workspaceIvyFileCache, workspaceModuleIndex);
+
+        for (DependencyResolver resolver : allResolvers) {
+            if (resolver.getName().startsWith("ivyidea-")) {
+                continue;
+            }
+
+            String originalName = resolver.getName();
+            String renamedName = originalName + ".original";
+
+            resolver.setName(renamedName);
+            settings.addResolver(resolver);
+
+            ChainResolver chain = new ChainResolver();
+            chain.setName(originalName);
+            chain.setReturnFirst(true);
+            chain.add(workspaceResolver);
+            chain.add(resolver);
+            settings.addResolver(chain);
+
+            logger.info("wrapResolverChain: wrapped resolver '" + originalName + "' with workspace resolver");
+        }
     }
 
     private static void injectProperties(IvySettings ivySettings, Module module, Properties properties) {

@@ -23,10 +23,14 @@ import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.Library.ModifiableModel;
 import com.intellij.openapi.roots.libraries.LibraryTable;
+import com.intellij.openapi.util.SystemInfo;
+import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.util.PathUtil;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
+import java.io.File;
 import java.util.*;
 
 public class IntellijModuleWrapper implements AutoCloseable {
@@ -102,8 +106,9 @@ public class IntellijModuleWrapper implements AutoCloseable {
     }
 
     public void removeDependenciesNotInList(Collection<ResolvedDependency> dependenciesToKeep) {
+        final Set<String> pathsToKeep = getCanonicalLocalPaths(dependenciesToKeep);
         for (OrderRootType type : OrderRootType.getAllTypes()) {
-            List<String> dependenciesToRemove = getDependenciesToRemove(type, dependenciesToKeep);
+            List<String> dependenciesToRemove = getDependenciesToRemove(type, pathsToKeep);
             for (String dependencyUrl : dependenciesToRemove) {
                 libraryModels.removeDependency(type, dependencyUrl);
             }
@@ -128,22 +133,33 @@ public class IntellijModuleWrapper implements AutoCloseable {
         }
     }
 
-    private List<String> getDependenciesToRemove(OrderRootType type, Collection<ResolvedDependency> resolvedDependencies) {
+    private List<String> getDependenciesToRemove(OrderRootType type, Set<String> pathsToKeep) {
         final List<String> intellijDependencies = libraryModels.getIntellijDependencyUrlsForType(type);
-        final List<String> dependenciesToRemove = new ArrayList<String>(intellijDependencies); // add all dependencies initially
+        final List<String> dependenciesToRemove = new ArrayList<>();
         for (String intellijDependency : intellijDependencies) {
-            for (ResolvedDependency resolvedDependency : resolvedDependencies) {
-                // TODO: We don't touch module to module dependencies here because we currently can't determine if
-                //          they were added by IvyIDEA or by the user
-                if (resolvedDependency instanceof ExternalDependency) {
-                    ExternalDependency externalDependency = (ExternalDependency) resolvedDependency;
-                    if (externalDependency.isSameDependency(intellijDependency)) {
-                        dependenciesToRemove.remove(intellijDependency); // remove existing ones
-                    }
-                }
+            final String path = FileUtil.toCanonicalPath(PathUtil.toPresentableUrl(intellijDependency));
+            if (!pathsToKeep.contains(path)) {
+                dependenciesToRemove.add(intellijDependency);
             }
         }
         return dependenciesToRemove;
+    }
+
+    /**
+     * Returns the canonical local file paths of the given external dependencies. The returned set
+     * ignores case on case-insensitive file systems, so lookups match like {@link FileUtil#filesEqual}.
+     */
+    private static Set<String> getCanonicalLocalPaths(Collection<ResolvedDependency> dependencies) {
+        Set<String> paths = SystemInfo.isFileSystemCaseSensitive ? new HashSet<>() : new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        for (ResolvedDependency dependency : dependencies) {
+            if (dependency instanceof ExternalDependency) {
+                File localFile = ((ExternalDependency) dependency).getLocalFile();
+                if (localFile != null) {
+                    paths.add(FileUtil.toCanonicalPath(localFile.getPath()));
+                }
+            }
+        }
+        return paths;
     }
 
 }

@@ -85,20 +85,12 @@ public class WorkspaceModuleResolver extends WorkspaceResolver {
     }
 
     /**
-     * Returns the workspace module with the organisation and name of the given module, if its revision matches.
+     * Returns the workspace module with the organisation and name of the given module.
      */
     @Nullable
     private Module findWorkspaceModule(ModuleRevisionId mrid) {
         final IvySettings settings = (IvySettings) getSettings();
-        final Module workspaceModule = workspaceModuleIndex.findModule(mrid.getModuleId(), project, settings, workspaceIvyFileCache);
-        if (workspaceModule == null) {
-            return null;
-        }
-        if (!settings.getVersionMatcher().accept(mrid, getWorkspaceDescriptor(workspaceModule))) {
-            LOG.fine("Revision of workspace module '" + workspaceModule.getName() + "' doesn't match " + mrid);
-            return null;
-        }
-        return workspaceModule;
+        return workspaceModuleIndex.findModule(mrid.getModuleId(), project, settings, workspaceIvyFileCache);
     }
 
     private ModuleDescriptor getWorkspaceDescriptor(Module workspaceModule) {

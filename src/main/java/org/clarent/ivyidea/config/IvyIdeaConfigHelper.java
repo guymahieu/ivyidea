@@ -242,18 +242,26 @@ public class IvyIdeaConfigHelper {
 
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        return createConfiguredIvySettings(module, getIvySettingsFile(module), getIvyProperties(module), ivyManager);
+        final String settingsFile = getIvySettingsFile(module);
+        final Properties properties = getIvyProperties(module);
+        if (!detectDependenciesOnOtherModulesWhileResolving(module.getProject())) {
+            return createConfiguredIvySettings(module, settingsFile, properties);
+        }
+
+        WorkspaceAwareIvySettings s = new WorkspaceAwareIvySettings();
+        configureIvySettings(s, module, settingsFile, properties);
+        s.setWorkspaceResolver(new WorkspaceModuleResolver(ivyManager));
+        return s;
     }
 
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
-        return createConfiguredIvySettings(module, settingsFile, properties, null);
+        IvySettings s = new IvySettings();
+        configureIvySettings(s, module, settingsFile, properties);
+        return s;
     }
 
-    @NotNull
-    private static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties,
-                                                           @Nullable IvyManager ivyManager) throws IvySettingsFileReadException {
-        WorkspaceAwareIvySettings s = new WorkspaceAwareIvySettings();
+    private static void configureIvySettings(IvySettings s, Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
         injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
 
         try {
@@ -282,12 +290,6 @@ public class IvyIdeaConfigHelper {
             s.setVariable(key, null);
             s.setVariable(key, value);
         }
-
-        if (ivyManager != null && detectDependenciesOnOtherModulesWhileResolving(module.getProject())) {
-            s.setWorkspaceResolver(new WorkspaceModuleResolver(ivyManager));
-        }
-
-        return s;
     }
 
     @NotNull

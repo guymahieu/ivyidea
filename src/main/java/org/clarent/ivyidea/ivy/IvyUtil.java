@@ -81,17 +81,16 @@ public class IvyUtil {
      * @return the ModuleDescriptor object representing the ivy file.
      */
     public static ModuleDescriptor parseIvyFile(@NotNull File ivyFile, @NotNull Ivy ivy) {
-        return parseIvyFile(ivyFile, ivy.getSettings());
-    }
-
-    public static ModuleDescriptor parseIvyFile(@NotNull File ivyFile, @NotNull IvySettings settings) {
         LOGGER.fine("Parsing ivy file " + ivyFile.getAbsolutePath());
 
         ModuleDescriptor moduleDescriptor;
         try {
-            moduleDescriptor = ModuleDescriptorParserRegistry.getInstance().parseDescriptor(settings, ivyFile.toURI().toURL(), false);
+            ivy.pushContext();
+            moduleDescriptor = ModuleDescriptorParserRegistry.getInstance().parseDescriptor(ivy.getSettings(), ivyFile.toURI().toURL(), false);
         } catch (ParseException | IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            ivy.popContext();
         }
 
         return moduleDescriptor;

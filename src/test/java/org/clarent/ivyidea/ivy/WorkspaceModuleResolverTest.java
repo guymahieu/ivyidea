@@ -1,5 +1,6 @@
 package org.clarent.ivyidea.ivy;
 
+import org.apache.ivy.Ivy;
 import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
 import org.apache.ivy.core.module.descriptor.ExcludeRule;
@@ -22,9 +23,9 @@ public class WorkspaceModuleResolverTest {
 
     @Before
     public void setUp() throws Exception {
-        IvySettings settings = new IvySettings();
-        originalMd = parseTestIvy("test-ivy.xml", settings);
-        emptyConfigMd = parseTestIvy("test-ivy-empty-configs.xml", settings);
+        Ivy ivy = Ivy.newInstance(new IvySettings());
+        originalMd = parseTestIvy("test-ivy.xml", ivy);
+        emptyConfigMd = parseTestIvy("test-ivy-empty-configs.xml", ivy);
     }
 
     @Test
@@ -91,9 +92,9 @@ public class WorkspaceModuleResolverTest {
         assertThat(cloned.getLastModified()).isGreaterThan(0);
     }
 
-    private static ModuleDescriptor parseTestIvy(String resourceName, IvySettings settings) throws URISyntaxException {
+    private static ModuleDescriptor parseTestIvy(String resourceName, Ivy ivy) throws URISyntaxException {
         URL url = WorkspaceModuleResolverTest.class.getResource(resourceName);
         assertThat(url).isNotNull();
-        return IvyUtil.parseIvyFile(new File(url.toURI()), settings);
+        return IvyUtil.parseIvyFile(new File(url.toURI()), ivy);
     }
 }

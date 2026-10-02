@@ -6,7 +6,9 @@
 - Upgraded internal Apache Ivy to 2.6.0
 - The minimum supported IntelliJ IDEA version is now 2023.3
 - Per-artifact messages are no longer logged at INFO level in idea.log
-- Faster updating of module libraries after a resolve on large projects
+- Faster updating of module libraries after a resolve on large projects (thanks to Stijn Vranckx)
+- Other IvyIDEA modules in the project are now resolved from their local ivy.xml, so their transitive dependencies no longer come from an outdated published version (thanks to Stijn Vranckx)
+- Added an option to clear the IvyIDEA workspace cache to File | Invalidate Caches
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

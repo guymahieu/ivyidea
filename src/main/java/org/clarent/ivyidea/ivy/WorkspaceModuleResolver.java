@@ -16,27 +16,14 @@
 
 package org.clarent.ivyidea.ivy;
 
-import com.intellij.openapi.module.Module;
-import org.apache.ivy.core.module.descriptor.Configuration;
-import org.apache.ivy.core.module.descriptor.DefaultArtifact;
-import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
-import org.apache.ivy.core.module.descriptor.ExcludeRule;
-import org.apache.ivy.core.module.descriptor.License;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
-import org.apache.ivy.core.report.DownloadStatus;
-import org.apache.ivy.core.report.MetadataArtifactDownloadReport;
 import org.apache.ivy.core.resolve.ResolveData;
 import org.apache.ivy.core.resolve.ResolvedModuleRevision;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 
-import java.text.ParseException;
-
 public class WorkspaceModuleResolver extends WorkspaceResolver {
-
-    private static final String INTELLIJ_MODULE_TYPE = "intellij-module";
-    private static final String INTELLIJ_MODULE_EXTENSION = "intellij-module";
 
     private final IvyManager ivyManager;
 
@@ -53,52 +40,8 @@ public class WorkspaceModuleResolver extends WorkspaceResolver {
         return ivyManager.getWorkspaceModule(mrid.getModuleId()) != null;
     }
 
-    public ResolvedModuleRevision getDependency(DependencyDescriptor dd, ResolveData data) throws ParseException {
-        final Module workspaceModule = ivyManager.getWorkspaceModule(dd.getDependencyId());
-        if (workspaceModule == null) {
-            return null;
-        }
-
-        DefaultModuleDescriptor clonedMd = cloneMd(ivyManager.getWorkspaceModuleDescriptor(dd.getDependencyId()), workspaceModule);
-
-        MetadataArtifactDownloadReport madr = new MetadataArtifactDownloadReport(
-                new DefaultArtifact(clonedMd.getModuleRevisionId(),
-                        clonedMd.getPublicationDate(),
-                        workspaceModule.getName(),
-                        INTELLIJ_MODULE_TYPE,
-                        INTELLIJ_MODULE_EXTENSION));
-        madr.setDownloadStatus(DownloadStatus.SUCCESSFUL);
-        madr.setSearched(true);
-
-        return new ResolvedModuleRevision(this, this, clonedMd, madr);
-    }
-
-    static DefaultModuleDescriptor cloneMd(ModuleDescriptor original, Module workspaceModule) {
-        DefaultModuleDescriptor cloned = new DefaultModuleDescriptor(
-                original.getModuleRevisionId(), original.getStatus(), original.getPublicationDate(), true);
-        cloned.setLastModified(System.currentTimeMillis());
-
-        Configuration[] allConfigs = original.getConfigurations();
-        if (allConfigs.length == 0) {
-            cloned.addConfiguration(new Configuration("default"));
-        } else {
-            for (Configuration conf : allConfigs) {
-                cloned.addConfiguration(conf);
-            }
-        }
-
-        for (DependencyDescriptor dep : original.getDependencies()) {
-            cloned.addDependency(dep);
-        }
-
-        for (ExcludeRule excludeRule : original.getAllExcludeRules()) {
-            cloned.addExcludeRule(excludeRule);
-        }
-
-        for (License license : original.getLicenses()) {
-            cloned.addLicense(license);
-        }
-
-        return cloned;
+    public ResolvedModuleRevision getDependency(DependencyDescriptor dd, ResolveData data) {
+        final ModuleDescriptor md = ivyManager.getWorkspaceModuleDescriptor(dd.getDependencyId());
+        return md == null ? null : createResolvedModuleRevision(md);
     }
 }

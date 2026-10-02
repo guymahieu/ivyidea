@@ -21,8 +21,6 @@ import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleId;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
-import org.apache.ivy.core.report.DownloadStatus;
-import org.apache.ivy.core.report.MetadataArtifactDownloadReport;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.ResolveData;
 import org.apache.ivy.core.resolve.ResolveOptions;
@@ -130,6 +128,37 @@ public class WorkspaceAwareIvySettingsTest {
     }
 
     @Test
+    public void doesNotDownloadArtifactsOfWorkspaceModule() throws Exception {
+        StubWorkspaceResolver workspaceResolver = new StubWorkspaceResolver(workspaceCache);
+        workspaceResolver.add(parse(writeIvyFile("ws", "<artifact name='ws' type='jar' ext='jar'/>",
+                "<dependency org='org' name='lib' rev='2.0'/>")));
+        WorkspaceAwareIvySettings settings = createSettings(new WorkspaceAwareIvySettings());
+        settings.setWorkspaceResolver(workspaceResolver);
+
+        ResolveReport report = resolve(settings, writeIvyFile("app", "<dependency org='org' name='ws' rev='latest.integration'/>"), false);
+
+        assertThat(report.hasError()).isFalse();
+        assertThat(report.getAllProblemMessages()).isEmpty();
+    }
+
+    @Test
+    public void appliesOverridesOfWorkspaceModule() throws Exception {
+        publish("mid", "1.0", "<dependency org='org' name='lib' rev='1.0'/>");
+        StubWorkspaceResolver workspaceResolver = new StubWorkspaceResolver(workspaceCache);
+        workspaceResolver.add(parse(writeIvyFile("ws",
+                "<dependency org='org' name='mid' rev='1.0'/><override org='org' module='lib' rev='2.0'/>")));
+        WorkspaceAwareIvySettings settings = createSettings(new WorkspaceAwareIvySettings());
+        settings.setWorkspaceResolver(workspaceResolver);
+
+        ResolveReport report = resolve(settings, writeIvyFile("app", "<dependency org='org' name='ws' rev='latest.integration'/>"), false);
+
+        assertThat(report.getAllProblemMessages()).isEmpty();
+        assertThat(report.getAllArtifactsReports())
+                .extracting(adr -> adr.getArtifact().getModuleRevisionId().toString())
+                .containsExactlyInAnyOrder("org#mid;1.0", "org#lib;2.0");
+    }
+
+    @Test
     public void savesWorkspaceModulesInWorkspaceCache() throws Exception {
         StubWorkspaceResolver workspaceResolver = new StubWorkspaceResolver(workspaceCache);
         workspaceResolver.add(parse(writeIvyFile("ws", "<dependency org='org' name='lib' rev='2.0'/>")));
@@ -181,10 +210,14 @@ public class WorkspaceAwareIvySettingsTest {
     }
 
     private File writeIvyFile(String module, String dependencies) throws IOException {
+        return writeIvyFile(module, "", dependencies);
+    }
+
+    private File writeIvyFile(String module, String publications, String dependencies) throws IOException {
         File file = new File(temp.newFolder(), "ivy.xml");
         write(file, "<ivy-module version='2.0'>"
                 + "<info organisation='org' module='" + module + "'/>"
-                + "<publications/>"
+                + "<publications>" + publications + "</publications>"
                 + "<dependencies>" + dependencies + "</dependencies>"
                 + "</ivy-module>");
         return file;
@@ -216,10 +249,7 @@ public class WorkspaceAwareIvySettingsTest {
         }
 
         public ResolvedModuleRevision getDependency(DependencyDescriptor dd, ResolveData data) {
-            ModuleDescriptor md = modules.get(dd.getDependencyId());
-            MetadataArtifactDownloadReport madr = new MetadataArtifactDownloadReport(md.getMetadataArtifact());
-            madr.setDownloadStatus(DownloadStatus.SUCCESSFUL);
-            return new ResolvedModuleRevision(this, this, md, madr);
+            return createResolvedModuleRevision(modules.get(dd.getDependencyId()));
         }
     }
 }

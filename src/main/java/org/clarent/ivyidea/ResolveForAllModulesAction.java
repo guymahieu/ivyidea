@@ -50,6 +50,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
             public void doResolve(final @NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
 
+                indicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
 
                 Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();

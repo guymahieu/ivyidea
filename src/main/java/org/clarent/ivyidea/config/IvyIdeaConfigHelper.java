@@ -22,12 +22,11 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.util.net.HttpConfigurable;
-import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
+import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.WorkspaceAwareIvySettings;
-import org.clarent.ivyidea.ivy.WorkspaceModuleIndex;
 import org.clarent.ivyidea.ivy.WorkspaceModuleResolver;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
@@ -242,25 +241,18 @@ public class IvyIdeaConfigHelper {
     }
 
     @NotNull
-    public static IvySettings createConfiguredIvySettings(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        return createConfiguredIvySettings(module, new HashMap<File, ModuleDescriptor>(), new WorkspaceModuleIndex());
-    }
-
-    @NotNull
-    public static IvySettings createConfiguredIvySettings(Module module, Map<File, ModuleDescriptor> workspaceIvyFileCache,
-                                                            WorkspaceModuleIndex workspaceModuleIndex) throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        return createConfiguredIvySettings(module, getIvySettingsFile(module), getIvyProperties(module), workspaceIvyFileCache, workspaceModuleIndex);
+    public static IvySettings createConfiguredIvySettings(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+        return createConfiguredIvySettings(module, getIvySettingsFile(module), getIvyProperties(module), ivyManager);
     }
 
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
-        return createConfiguredIvySettings(module, settingsFile, properties, new HashMap<File, ModuleDescriptor>(), new WorkspaceModuleIndex());
+        return createConfiguredIvySettings(module, settingsFile, properties, null);
     }
 
     @NotNull
-    public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties,
-                                                            Map<File, ModuleDescriptor> workspaceIvyFileCache,
-                                                            WorkspaceModuleIndex workspaceModuleIndex) throws IvySettingsFileReadException {
+    private static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties,
+                                                           @Nullable IvyManager ivyManager) throws IvySettingsFileReadException {
         WorkspaceAwareIvySettings s = new WorkspaceAwareIvySettings();
         injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
 
@@ -291,9 +283,8 @@ public class IvyIdeaConfigHelper {
             s.setVariable(key, value);
         }
 
-        final Project project = module.getProject();
-        if (detectDependenciesOnOtherModulesWhileResolving(project)) {
-            s.setWorkspaceResolver(new WorkspaceModuleResolver(project, s, workspaceIvyFileCache, workspaceModuleIndex));
+        if (ivyManager != null && detectDependenciesOnOtherModulesWhileResolving(module.getProject())) {
+            s.setWorkspaceResolver(new WorkspaceModuleResolver(ivyManager));
         }
 
         return s;

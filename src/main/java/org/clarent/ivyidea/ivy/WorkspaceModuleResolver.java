@@ -17,7 +17,6 @@
 package org.clarent.ivyidea.ivy;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
 import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.module.descriptor.DefaultArtifact;
 import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
@@ -30,47 +29,37 @@ import org.apache.ivy.core.report.DownloadStatus;
 import org.apache.ivy.core.report.MetadataArtifactDownloadReport;
 import org.apache.ivy.core.resolve.ResolveData;
 import org.apache.ivy.core.resolve.ResolvedModuleRevision;
-import org.apache.ivy.core.settings.IvySettings;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
-import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.text.ParseException;
-import java.util.Map;
-import java.util.logging.Logger;
 
 public class WorkspaceModuleResolver extends WorkspaceResolver {
 
-    private static final Logger LOG = Logger.getLogger(WorkspaceModuleResolver.class.getName());
     private static final String INTELLIJ_MODULE_TYPE = "intellij-module";
     private static final String INTELLIJ_MODULE_EXTENSION = "intellij-module";
 
-    private final Project project;
-    private final Map<File, ModuleDescriptor> workspaceIvyFileCache;
-    private final WorkspaceModuleIndex workspaceModuleIndex;
+    private final IvyManager ivyManager;
 
-    public WorkspaceModuleResolver(Project project, IvySettings settings, Map<File, ModuleDescriptor> workspaceIvyFileCache,
-                                    WorkspaceModuleIndex workspaceModuleIndex) {
+    /**
+     * @param ivyManager provides the workspace modules, see {@link IvyManager#forProject}
+     */
+    public WorkspaceModuleResolver(IvyManager ivyManager) {
         super("ivyidea-workspace-resolver", IvyIdeaConfigHelper.getWorkspaceCacheDir());
-        this.project = project;
-        this.workspaceIvyFileCache = workspaceIvyFileCache;
-        this.workspaceModuleIndex = workspaceModuleIndex;
-        setSettings(settings);
-        LOG.info("WorkspaceModuleResolver created for project: " + project.getName());
+        this.ivyManager = ivyManager;
     }
 
     @Override
     public boolean isWorkspaceModule(ModuleRevisionId mrid) {
-        return findWorkspaceModule(mrid) != null;
+        return ivyManager.getWorkspaceModule(mrid.getModuleId()) != null;
     }
 
     public ResolvedModuleRevision getDependency(DependencyDescriptor dd, ResolveData data) throws ParseException {
-        final Module workspaceModule = findWorkspaceModule(dd.getDependencyRevisionId());
+        final Module workspaceModule = ivyManager.getWorkspaceModule(dd.getDependencyId());
         if (workspaceModule == null) {
             return null;
         }
 
-        DefaultModuleDescriptor clonedMd = cloneMd(getWorkspaceDescriptor(workspaceModule), workspaceModule);
+        DefaultModuleDescriptor clonedMd = cloneMd(ivyManager.getWorkspaceModuleDescriptor(dd.getDependencyId()), workspaceModule);
 
         MetadataArtifactDownloadReport madr = new MetadataArtifactDownloadReport(
                 new DefaultArtifact(clonedMd.getModuleRevisionId(),
@@ -82,21 +71,6 @@ public class WorkspaceModuleResolver extends WorkspaceResolver {
         madr.setSearched(true);
 
         return new ResolvedModuleRevision(this, this, clonedMd, madr);
-    }
-
-    /**
-     * Returns the workspace module with the organisation and name of the given module.
-     */
-    @Nullable
-    private Module findWorkspaceModule(ModuleRevisionId mrid) {
-        final IvySettings settings = (IvySettings) getSettings();
-        return workspaceModuleIndex.findModule(mrid.getModuleId(), project, settings, workspaceIvyFileCache);
-    }
-
-    private ModuleDescriptor getWorkspaceDescriptor(Module workspaceModule) {
-        // the index only contains modules whose ivy file could be parsed, so this is a cache hit
-        final IvySettings settings = (IvySettings) getSettings();
-        return workspaceIvyFileCache.computeIfAbsent(IvyUtil.getIvyFile(workspaceModule), f -> IvyUtil.parseIvyFile(f, settings));
     }
 
     static DefaultModuleDescriptor cloneMd(ModuleDescriptor original, Module workspaceModule) {

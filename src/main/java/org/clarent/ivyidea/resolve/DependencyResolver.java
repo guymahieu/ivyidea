@@ -82,32 +82,33 @@ class DependencyResolver {
         final Ivy ivy = ivyManager.getIvy(module);
         try {
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
-            extractDependencies(ivy, resolveReport, new IntellijModuleDependencies(module, ivyManager));
+            extractDependencies(ivy, resolveReport, module, ivyManager);
         } catch (ParseException | IOException e) {
             throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
         }
     }
 
     // TODO: This method performs way too much tasks -- refactor it!
-    protected void extractDependencies(Ivy ivy, ResolveReport resolveReport, IntellijModuleDependencies moduleDependencies) {
+    private void extractDependencies(Ivy ivy, ResolveReport resolveReport, Module module, IvyManager ivyManager) {
+        final Project project = module.getProject();
         final String[] resolvedConfigurations = resolveReport.getConfigurations();
         for (String resolvedConfiguration : resolvedConfigurations) {
             ConfigurationResolveReport configurationReport = resolveReport.getConfigurationReport(resolvedConfiguration);
 
-            boolean detectDependenciesOnOtherModulesWhileResolving = IvyIdeaConfigHelper.detectDependenciesOnOtherModulesWhileResolving(moduleDependencies.getModule().getProject());
-
             // TODO: Refactor this a bit
-            registerProblems(configurationReport, moduleDependencies, detectDependenciesOnOtherModulesWhileResolving);
-
+            registerProblems(configurationReport, module, ivyManager);
 
             Set<ModuleRevisionId> dependencies = configurationReport.getModuleRevisionIds();
             for (ModuleRevisionId dependency : dependencies) {
-                if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(dependency.getModuleId())) {
-                    // If the user has chosen to detect dependencies on internal modules we add a module dependency rather
-                    // than a dependency on an external library.
-                    resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(dependency.getModuleId())));
+                final Module workspaceModule = ivyManager.getWorkspaceModule(dependency.getModuleId());
+                if (module.equals(workspaceModule)) {
+                    continue; // a cyclic dependency on the module itself
+                }
+                if (workspaceModule != null) {
+                    // a dependency on another module in the project becomes a module dependency rather than a
+                    // dependency on an external library
+                    resolvedDependencies.add(new InternalDependency(workspaceModule));
                 } else {
-                    final Project project = moduleDependencies.getModule().getProject();
                     final ArtifactDownloadReport[] artifactDownloadReports = configurationReport.getDownloadReports(dependency);
                     for (ArtifactDownloadReport artifactDownloadReport : artifactDownloadReports) {
                         final Artifact artifact = artifactDownloadReport.getArtifact();
@@ -173,11 +174,14 @@ class DependencyResolver {
         return ArtifactTypeSettings.DependencyCategory.Javadoc == ExternalDependencyFactory.determineCategory(project, artifact);
     }
 
-    private void registerProblems(ConfigurationResolveReport configurationReport, IntellijModuleDependencies moduleDependencies, boolean detectDependenciesOnOtherModulesWhileResolving) {
+    private void registerProblems(ConfigurationResolveReport configurationReport, Module module, IvyManager ivyManager) {
         for (IvyNode unresolvedDependency : configurationReport.getUnresolvedDependencies()) {
-            if (detectDependenciesOnOtherModulesWhileResolving && moduleDependencies.isInternalIntellijModuleDependency(unresolvedDependency.getModuleId())) {
-                // centralize  this!
-                resolvedDependencies.add(new InternalDependency(moduleDependencies.getModuleDependency(unresolvedDependency.getModuleId())));
+            final Module workspaceModule = ivyManager.getWorkspaceModule(unresolvedDependency.getModuleId());
+            if (module.equals(workspaceModule)) {
+                continue; // a cyclic dependency on the module itself
+            }
+            if (workspaceModule != null) {
+                resolvedDependencies.add(new InternalDependency(workspaceModule));
             } else {
                 resolveProblems.add(new ResolveProblem(
                         unresolvedDependency.getId().toString(),

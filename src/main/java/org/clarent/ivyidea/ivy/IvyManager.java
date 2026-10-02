@@ -100,8 +100,9 @@ public class IvyManager {
     }
 
     /**
-     * Returns the workspace module with the given organisation and name, or {@code null} if there is none. While
-     * the workspace modules are being loaded, this always returns {@code null}.
+     * Returns the workspace module with the given organisation and name, or {@code null} if there is none. If
+     * dependencies on other modules are not detected, or while the workspace modules are being loaded, this always
+     * returns {@code null}.
      *
      * @see #forProject(Project)
      */

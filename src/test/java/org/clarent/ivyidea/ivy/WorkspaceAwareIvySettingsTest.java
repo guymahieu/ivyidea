@@ -113,6 +113,23 @@ public class WorkspaceAwareIvySettingsTest {
     }
 
     @Test
+    public void resolvesWorkspaceModuleFromWorkspaceWhenPublishedModulePinsItsRevision() throws Exception {
+        publish("pub", "1.0", "<dependency org='org' name='ws' rev='1.0'/>");
+        StubWorkspaceResolver workspaceResolver = new StubWorkspaceResolver(workspaceCache);
+        workspaceResolver.add(parse(writeIvyFile("ws", "<dependency org='org' name='lib' rev='2.0'/>")));
+        WorkspaceAwareIvySettings settings = createSettings(new WorkspaceAwareIvySettings());
+        settings.setWorkspaceResolver(workspaceResolver);
+
+        ResolveReport report = resolve(settings, writeIvyFile("app",
+                "<dependency org='org' name='pub' rev='1.0'/><dependency org='org' name='ws' rev='latest.integration'/>"), false);
+
+        assertThat(report.getAllProblemMessages()).isEmpty();
+        assertThat(report.getAllArtifactsReports())
+                .extracting(adr -> adr.getArtifact().getModuleRevisionId().toString())
+                .containsExactlyInAnyOrder("org#pub;1.0", "org#lib;2.0");
+    }
+
+    @Test
     public void savesWorkspaceModulesInWorkspaceCache() throws Exception {
         StubWorkspaceResolver workspaceResolver = new StubWorkspaceResolver(workspaceCache);
         workspaceResolver.add(parse(writeIvyFile("ws", "<dependency org='org' name='lib' rev='2.0'/>")));

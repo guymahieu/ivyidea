@@ -41,5 +41,7 @@
         <projectConfigurable id="IvyIDEA.ProjectSettings"
                              instance="org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent"
                              displayName="IvyIDEA"/>
+
+        <cachesInvalidator implementation="org.clarent.ivyidea.intellij.IvyIdeaCachesInvalidator"/>
     </extensions>
 </idea-plugin>

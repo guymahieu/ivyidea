@@ -18,7 +18,6 @@ package org.clarent.ivyidea.ivy;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
-import org.apache.ivy.core.module.descriptor.Artifact;
 import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.module.descriptor.DefaultArtifact;
 import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
@@ -26,29 +25,21 @@ import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
 import org.apache.ivy.core.module.descriptor.ExcludeRule;
 import org.apache.ivy.core.module.descriptor.License;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
-import org.apache.ivy.core.module.id.ModuleId;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
-import org.apache.ivy.core.report.ArtifactDownloadReport;
-import org.apache.ivy.core.report.DownloadReport;
 import org.apache.ivy.core.report.DownloadStatus;
 import org.apache.ivy.core.report.MetadataArtifactDownloadReport;
-import org.apache.ivy.core.resolve.DownloadOptions;
 import org.apache.ivy.core.resolve.ResolveData;
 import org.apache.ivy.core.resolve.ResolvedModuleRevision;
 import org.apache.ivy.core.settings.IvySettings;
-import org.apache.ivy.plugins.resolver.AbstractResolver;
-import org.apache.ivy.plugins.resolver.util.ResolvedResource;
-import org.apache.ivy.plugins.version.VersionMatcher;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class WorkspaceModuleResolver extends AbstractResolver {
+public class WorkspaceModuleResolver extends WorkspaceResolver {
 
     private static final Logger LOG = Logger.getLogger(WorkspaceModuleResolver.class.getName());
     private static final String INTELLIJ_MODULE_TYPE = "intellij-module";
@@ -60,83 +51,60 @@ public class WorkspaceModuleResolver extends AbstractResolver {
 
     public WorkspaceModuleResolver(Project project, IvySettings settings, Map<File, ModuleDescriptor> workspaceIvyFileCache,
                                     WorkspaceModuleIndex workspaceModuleIndex) {
+        super("ivyidea-workspace-resolver", IvyIdeaConfigHelper.getWorkspaceCacheDir());
         this.project = project;
         this.workspaceIvyFileCache = workspaceIvyFileCache;
         this.workspaceModuleIndex = workspaceModuleIndex;
-        setName("ivyidea-workspace-resolver");
         setSettings(settings);
         LOG.info("WorkspaceModuleResolver created for project: " + project.getName());
     }
 
+    @Override
+    public boolean isWorkspaceModule(ModuleRevisionId mrid) {
+        return findWorkspaceModule(mrid) != null;
+    }
+
     public ResolvedModuleRevision getDependency(DependencyDescriptor dd, ResolveData data) throws ParseException {
-        if (!IvyIdeaConfigHelper.detectDependenciesOnOtherModulesWhileResolving(project)) {
-            LOG.info("detectDependenciesOnOtherModulesWhileResolving is false, skipping");
-            return null;
-        }
-
-        ModuleRevisionId requestedMrid = dd.getDependencyRevisionId();
-
-        IvySettings settings = (IvySettings) getSettings();
-        if (settings == null) {
-            LOG.info("settings is null, skipping lookup for " + requestedMrid);
-            return null;
-        }
-
-        ModuleId requestedModuleId = requestedMrid.getModuleId();
-        Module workspaceModule = workspaceModuleIndex.findModule(requestedModuleId, project, settings, workspaceIvyFileCache);
+        final Module workspaceModule = findWorkspaceModule(dd.getDependencyRevisionId());
         if (workspaceModule == null) {
             return null;
         }
 
-        File ivyFile = IvyUtil.getIvyFile(workspaceModule);
-        try {
-            // computeIfAbsent (not get-then-put) so concurrent resolves of different modules
-            // racing on the same shared ivy.xml can't corrupt the cache -- at worst they'd
-            // redundantly parse the same file once each, never see a half-written value.
-            ModuleDescriptor workspaceMd = workspaceIvyFileCache.computeIfAbsent(ivyFile, f -> IvyUtil.parseIvyFile(f, settings));
+        DefaultModuleDescriptor clonedMd = cloneMd(getWorkspaceDescriptor(workspaceModule), workspaceModule);
 
-            VersionMatcher versionMatcher = settings.getVersionMatcher();
-            if (!versionMatcher.accept(requestedMrid, workspaceMd)) {
-                LOG.info("versionMatcher rejected workspace module '" + workspaceModule.getName() + "' for " + requestedMrid);
-                return null;
-            }
+        MetadataArtifactDownloadReport madr = new MetadataArtifactDownloadReport(
+                new DefaultArtifact(clonedMd.getModuleRevisionId(),
+                        clonedMd.getPublicationDate(),
+                        workspaceModule.getName(),
+                        INTELLIJ_MODULE_TYPE,
+                        INTELLIJ_MODULE_EXTENSION));
+        madr.setDownloadStatus(DownloadStatus.SUCCESSFUL);
+        madr.setSearched(true);
 
-            LOG.info("MATCH! Returning workspace descriptor for '" + workspaceModule.getName() + "', " + requestedMrid);
-            DefaultModuleDescriptor clonedMd = cloneMd(workspaceMd, workspaceModule);
+        return new ResolvedModuleRevision(this, this, clonedMd, madr);
+    }
 
-            MetadataArtifactDownloadReport madr = new MetadataArtifactDownloadReport(
-                    new DefaultArtifact(clonedMd.getModuleRevisionId(),
-                            clonedMd.getPublicationDate(),
-                            workspaceModule.getName(),
-                            INTELLIJ_MODULE_TYPE,
-                            INTELLIJ_MODULE_EXTENSION));
-            madr.setDownloadStatus(DownloadStatus.SUCCESSFUL);
-            madr.setSearched(true);
-
-            return new ResolvedModuleRevision(this, this, clonedMd, madr);
-        } catch (RuntimeException e) {
-            LOG.info("error parsing ivy file '" + ivyFile + "': " + e.getMessage());
+    /**
+     * Returns the workspace module with the organisation and name of the given module, if its revision matches.
+     */
+    @Nullable
+    private Module findWorkspaceModule(ModuleRevisionId mrid) {
+        final IvySettings settings = (IvySettings) getSettings();
+        final Module workspaceModule = workspaceModuleIndex.findModule(mrid.getModuleId(), project, settings, workspaceIvyFileCache);
+        if (workspaceModule == null) {
             return null;
         }
-    }
-
-    public DownloadReport download(Artifact[] artifacts, DownloadOptions options) {
-        DownloadReport dr = new DownloadReport();
-        for (Artifact artifact : artifacts) {
-            ArtifactDownloadReport adr = new ArtifactDownloadReport(artifact);
-            adr.setDownloadStatus(DownloadStatus.FAILED);
-            adr.setSize(0);
-            dr.addArtifactReport(adr);
+        if (!settings.getVersionMatcher().accept(mrid, getWorkspaceDescriptor(workspaceModule))) {
+            LOG.fine("Revision of workspace module '" + workspaceModule.getName() + "' doesn't match " + mrid);
+            return null;
         }
-        return dr;
+        return workspaceModule;
     }
 
-    public void publish(Artifact artifact, File src, boolean overwrite) throws IOException {
-        throw new UnsupportedOperationException("publish not supported by " + getName());
-    }
-
-    public ResolvedResource findIvyFileRef(DependencyDescriptor dd, ResolveData data) {
-        return null;
+    private ModuleDescriptor getWorkspaceDescriptor(Module workspaceModule) {
+        // the index only contains modules whose ivy file could be parsed, so this is a cache hit
+        final IvySettings settings = (IvySettings) getSettings();
+        return workspaceIvyFileCache.computeIfAbsent(IvyUtil.getIvyFile(workspaceModule), f -> IvyUtil.parseIvyFile(f, settings));
     }
 
     static DefaultModuleDescriptor cloneMd(ModuleDescriptor original, Module workspaceModule) {

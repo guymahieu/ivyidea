@@ -18,7 +18,6 @@ package org.clarent.ivyidea;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import org.clarent.ivyidea.resolve.ResolveActionHelper;
 
@@ -30,8 +29,6 @@ import org.clarent.ivyidea.resolve.ResolveActionHelper;
 public class ResolveForAllModulesAction extends AbstractResolveAction {
 
     public void actionPerformed(AnActionEvent e) {
-        FileDocumentManager.getInstance().saveAllDocuments();
-
         final Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
         ResolveActionHelper.resolveForProject(project, e.getPresentation().getText());
     }

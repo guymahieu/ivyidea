@@ -46,8 +46,8 @@ public class ResolveActionHelper {
                 try {
                     clearConsole(myProject);
 
-                indicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
+                    indicator.setText2("Loading IvyIDEA modules");
+                    final IvyManager ivyManager = IvyManager.forProject(myProject);
 
                     Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
                     for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
@@ -96,10 +96,10 @@ public class ResolveActionHelper {
                 try {
                     clearConsole(myProject);
 
-                progressIndicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
-                progressIndicator.setText2("Resolving for module " + module.getName());
-                getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
+                    progressIndicator.setText2("Loading IvyIDEA modules");
+                    final IvyManager ivyManager = IvyManager.forProject(myProject);
+                    progressIndicator.setText2("Resolving for module " + module.getName());
+                    getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
 
                     final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
                     resolver.resolve(module);

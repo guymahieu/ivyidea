@@ -19,21 +19,8 @@ package org.clarent.ivyidea;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
-import org.clarent.ivyidea.exception.IvyFileReadException;
-import org.clarent.ivyidea.exception.IvySettingsFileReadException;
-import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.intellij.IntellijUtils;
-import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
-import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import org.clarent.ivyidea.resolve.ResolveActionHelper;
 
 /**
  * Action to resolve the dependencies for all modules that have an IvyIDEA facet configured.
@@ -46,33 +33,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
         FileDocumentManager.getInstance().saveAllDocuments();
 
         final Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
-        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, e) {
-            public void doResolve(final @NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                clearConsole(myProject);
-
-                indicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
-
-                Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
-                for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
-                    getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-                    indicator.setText2("Resolving for module " + module.getName());
-                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    resolver.resolve(module);
-                    resolvers.add(resolver);
-
-                    if (indicator.isCanceled()) {
-                        return;
-                    }
-                }
-
-                for (IntellijDependencyResolver resolver : resolvers) {
-                    Module module = resolver.getModule();
-                    updateIntellijModel(module, resolver.getDependencies());
-                    reportProblems(module, resolver.getProblems());
-                }
-            }
-        });
+        ResolveActionHelper.resolveForProject(project, e.getPresentation().getText());
     }
 
 }

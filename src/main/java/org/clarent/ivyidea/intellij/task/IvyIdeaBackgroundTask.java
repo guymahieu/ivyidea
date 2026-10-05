@@ -48,8 +48,10 @@ public abstract class IvyIdeaBackgroundTask extends Task.Backgroundable {
     }
 
     public IvyIdeaBackgroundTask(AnActionEvent event) {
-        super(PlatformDataKeys.PROJECT.getData(event.getDataContext()),
-                "IvyIDEA " + event.getPresentation().getText(),
-                true, new IvyIdeaPerformInBackgroundOption(PlatformDataKeys.PROJECT.getData(event.getDataContext())));
+        this(PlatformDataKeys.PROJECT.getData(event.getDataContext()), event.getPresentation().getText());
+    }
+
+    public IvyIdeaBackgroundTask(Project project, String taskText) {
+        super(project, "IvyIDEA " + taskText, true, new IvyIdeaPerformInBackgroundOption(project));
     }
 }

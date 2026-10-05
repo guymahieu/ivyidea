@@ -55,6 +55,11 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         this.project = project;
     }
 
+    protected IvyIdeaResolveBackgroundTask(Project project, String taskText) {
+        super(project, taskText);
+        this.project = project;
+    }
+
     protected ProgressMonitorThread getProgressMonitorThread() {
         return monitorThread;
     }

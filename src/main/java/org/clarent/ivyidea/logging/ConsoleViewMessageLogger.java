@@ -22,6 +22,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.util.AbstractMessageLogger;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.jetbrains.annotations.Nullable;
 
 import static com.intellij.execution.ui.ConsoleViewContentType.SYSTEM_OUTPUT;
 
@@ -29,10 +30,13 @@ public class ConsoleViewMessageLogger extends AbstractMessageLogger {
 
     private final ConsoleView consoleView;
     private final IvyLogLevel threshold;
+    private final String prefix;
 
-    public ConsoleViewMessageLogger(final Project project, final ConsoleView consoleView) {
+    public ConsoleViewMessageLogger(final Project project, final ConsoleView consoleView, @Nullable final String prefix) {
         this.consoleView = consoleView;
+        this.prefix = prefix == null ? "" : prefix;
         threshold = IvyIdeaConfigHelper.getIvyLoggingThreshold(project);
+        setShowProgress(prefix == null);
     }
 
     public void log(final String msg, final int level) {
@@ -45,7 +49,7 @@ public class ConsoleViewMessageLogger extends AbstractMessageLogger {
 
     public void rawlog(final String message, final IvyLogLevel logLevelForMessage) {
         if (threshold.isMoreVerboseThan(logLevelForMessage)) {
-            logToConsoleView(message + "\n", logLevelForMessage.getContentType());
+            logToConsoleView(prefix + message + "\n", logLevelForMessage.getContentType());
         }
     }
 

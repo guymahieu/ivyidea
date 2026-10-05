@@ -24,6 +24,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
@@ -36,8 +37,7 @@ import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -64,17 +64,13 @@ public class ResolveActionHelper {
                 indicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
 
-                Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
-                for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
-                    getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-                    indicator.setText2("Resolving for module " + module.getName());
-                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    resolver.resolve(module);
-                    resolvers.add(resolver);
-
-                    if (indicator.isCanceled()) {
-                        return;
-                    }
+                final List<Module> modules = Arrays.asList(IntellijUtils.getAllModulesWithIvyIdeaFacet(project));
+                final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator, getProgressMonitorThread());
+                final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(myProject)
+                        ? modulesResolver.resolveInParallel(modules)
+                        : modulesResolver.resolveOneByOne(modules);
+                if (indicator.isCanceled()) {
+                    return;
                 }
 
                 for (IntellijDependencyResolver resolver : resolvers) {
@@ -109,10 +105,13 @@ public class ResolveActionHelper {
                 progressIndicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
                 progressIndicator.setText2("Resolving for module " + module.getName());
-                getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-
                 final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                resolver.resolve(module);
+                getProgressMonitorThread().register(ivyManager.getIvy(module));
+                try {
+                    resolver.resolve(module);
+                } finally {
+                    getProgressMonitorThread().unregister();
+                }
                 updateIntellijModel(module, resolver.getDependencies());
                 reportProblems(module, resolver.getProblems());
             }
@@ -125,6 +124,11 @@ public class ResolveActionHelper {
                 moduleWrapper.updateDependencies(dependencies);
             }
         }));
+    }
+
+    public static void printWarning(final Project project, final String message) {
+        ApplicationManager.getApplication().invokeLater(() ->
+                IntellijUtils.getConsoleView(project).print(message + '\n', ConsoleViewContentType.LOG_WARNING_OUTPUT));
     }
 
     public static void clearConsole(final Project project) {

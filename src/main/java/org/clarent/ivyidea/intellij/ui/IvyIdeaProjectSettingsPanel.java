@@ -20,7 +20,12 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.openapi.ui.panel.ComponentPanelBuilder;
+import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.UserActivityWatcher;
+import com.intellij.util.ui.JBUI;
+import com.intellij.util.ui.UIUtil;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
@@ -61,6 +66,11 @@ public class IvyIdeaProjectSettingsPanel {
     private JCheckBox autoAttachSources;
     private JCheckBox autoAttachJavadocs;
     private JCheckBox detectDependenciesOnOtherModules;
+    private JCheckBox chkResolveInParallel;
+    private JLabel lblResolveInParallelComment;
+    private JPanel pnlResolveThreads;
+    private JLabel lblResolveThreads;
+    private JBIntSpinner spnResolveThreads;
     private JPanel pnlIvyFiles;
     private JPanel pnlArtefactTypes;
     private IvyIdeaProjectSettings internalState;
@@ -75,6 +85,29 @@ public class IvyIdeaProjectSettingsPanel {
 
         wireActivityWatchers();
         wireIvySettingsRadioButtons();
+        wireResolveInParallel();
+        styleAsComment(lblResolveInParallelComment, chkResolveInParallel);
+    }
+
+    private void wireResolveInParallel() {
+        pnlResolveThreads.setBorder(JBUI.Borders.emptyLeft(UIUtil.getCheckBoxTextHorizontalOffset(chkResolveInParallel)));
+        chkResolveInParallel.addItemListener(e -> updateResolveThreadsEnabled());
+        // the activity watcher doesn't notice the changes of a spinner
+        spnResolveThreads.addChangeListener(e -> modified = true);
+    }
+
+    private void updateResolveThreadsEnabled() {
+        lblResolveThreads.setEnabled(chkResolveInParallel.isSelected());
+        spnResolveThreads.setEnabled(chkResolveInParallel.isSelected());
+    }
+
+    /**
+     * Styles the given label as a comment below the given check box, as in the settings of IntelliJ itself.
+     */
+    private static void styleAsComment(JLabel label, JCheckBox checkBox) {
+        label.setFont(ComponentPanelBuilder.getCommentFont(label.getFont()));
+        label.setForeground(UIUtil.getContextHelpForeground());
+        label.setBorder(JBUI.Borders.emptyLeft(UIUtil.getCheckBoxTextHorizontalOffset(checkBox)));
     }
 
     private void wireIvySettingsRadioButtons() {
@@ -116,6 +149,8 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.setAlwaysAttachJavadocs(autoAttachJavadocs.isSelected());
         internalState.setUseCustomIvySettings(useYourOwnIvySettingsRadioButton.isSelected());
         internalState.setDetectDependenciesOnOtherModules(detectDependenciesOnOtherModules.isSelected());
+        internalState.setResolveInParallel(chkResolveInParallel.isSelected());
+        internalState.setResolveThreads(spnResolveThreads.getNumber());
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
         internalState.setPropertiesSettings(propertiesSettings);
@@ -142,6 +177,9 @@ public class IvyIdeaProjectSettingsPanel {
         autoAttachJavadocs.setSelected(config.isAlwaysAttachJavadocs());
         useYourOwnIvySettingsRadioButton.setSelected(config.isUseCustomIvySettings());
         detectDependenciesOnOtherModules.setSelected(config.isDetectDependenciesOnOtherModules());
+        chkResolveInParallel.setSelected(config.isResolveInParallel());
+        spnResolveThreads.setNumber(IvyIdeaConfigHelper.toValidResolveThreads(config.getResolveThreads()));
+        updateResolveThreadsEnabled();
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
         includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());
@@ -159,5 +197,6 @@ public class IvyIdeaProjectSettingsPanel {
         orderedFileList = new OrderedFileList(project);
         pnlPropertiesFiles.add(orderedFileList.getRootPanel(), BorderLayout.CENTER);
         ivyLogLevelComboBox = new ComboBox<>(IvyLogLevel.values());
+        spnResolveThreads = new JBIntSpinner(4, IvyIdeaConfigHelper.MIN_RESOLVE_THREADS, IvyIdeaConfigHelper.MAX_RESOLVE_THREADS);
     }
 }

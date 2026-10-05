@@ -59,8 +59,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     }
 
     public final void run(@NotNull final ProgressIndicator indicator) {
-        final Thread resolveThread = Thread.currentThread();
-        monitorThread = new ProgressMonitorThread(indicator, resolveThread);
+        monitorThread = new ProgressMonitorThread(indicator);
         monitorThread.start();
 
         try {

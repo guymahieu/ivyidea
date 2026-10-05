@@ -35,6 +35,8 @@ public class IvyIdeaProjectSettings {
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
     private boolean detectDependenciesOnOtherModules = true;
+    private boolean resolveInParallel = false;
+    private int resolveThreads = 4;
     private String ivyLogLevelThreshold = IvyLogLevel.None.name();
 
 
@@ -136,6 +138,22 @@ public class IvyIdeaProjectSettings {
 
     public void setDetectDependenciesOnOtherModules(boolean detectDependenciesOnOtherModules) {
         this.detectDependenciesOnOtherModules = detectDependenciesOnOtherModules;
+    }
+
+    public boolean isResolveInParallel() {
+        return resolveInParallel;
+    }
+
+    public void setResolveInParallel(boolean resolveInParallel) {
+        this.resolveInParallel = resolveInParallel;
+    }
+
+    public int getResolveThreads() {
+        return resolveThreads;
+    }
+
+    public void setResolveThreads(int resolveThreads) {
+        this.resolveThreads = resolveThreads;
     }
 
     public String getIvyLogLevelThreshold() {

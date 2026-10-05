@@ -59,11 +59,10 @@ public class IvyIdeaConfigHelper {
 
     private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA";
 
-    public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName) {
-        final Project project = model.getProject();
+    public static String getCreatedLibraryName(final Project project, final Module module, final String configName) {
         String libraryName = RESOLVED_LIB_NAME_ROOT;
         if (isLibraryNameIncludesModule(project)) {
-            final String moduleName = model.getModule().getName();
+            final String moduleName = module.getName();
             libraryName += "-" + moduleName;
         }
         if (isLibraryNameIncludesConfiguration(project)) {

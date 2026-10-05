@@ -13,6 +13,7 @@ import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
+import org.clarent.ivyidea.intellij.externalsystem.IvyIdeaListener;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
@@ -43,7 +44,10 @@ public class ResolveActionHelper {
         FileDocumentManager.getInstance().saveAllDocuments();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
+                IvyIdeaListener listener = null;
                 try {
+                    listener = project.getMessageBus().syncPublisher(IvyIdeaListener.TOPIC);
+                    listener.resolveStarted();
                     clearConsole(myProject);
 
                 indicator.setText2("Loading IvyIDEA modules");
@@ -68,6 +72,9 @@ public class ResolveActionHelper {
                         reportProblems(module, resolver.getProblems());
                     }
                 } finally {
+                    if (listener != null) {
+                        listener.resolveFinished();
+                    }
                     if (resolveDone != null) {
                         resolveDone.up();
                     }
@@ -93,7 +100,10 @@ public class ResolveActionHelper {
         Project project = module.getProject();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
+                IvyIdeaListener listener = null;
                 try {
+                    listener = project.getMessageBus().syncPublisher(IvyIdeaListener.TOPIC);
+                    listener.resolveStarted();
                     clearConsole(myProject);
 
                 progressIndicator.setText2("Loading IvyIDEA modules");
@@ -106,6 +116,9 @@ public class ResolveActionHelper {
                     updateIntellijModel(module, resolver.getDependencies());
                     reportProblems(module, resolver.getProblems());
                 } finally {
+                    if (listener != null) {
+                        listener.resolveFinished();
+                    }
                     if (resolveDone != null) {
                         resolveDone.up();
                     }

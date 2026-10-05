@@ -43,7 +43,8 @@ public class ResolveActionHelper {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
 
-                final IvyManager ivyManager = new IvyManager();
+                indicator.setText2("Loading IvyIDEA modules");
+                final IvyManager ivyManager = IvyManager.forProject(myProject);
 
                 Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
                 for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
@@ -85,7 +86,9 @@ public class ResolveActionHelper {
             public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
 
-                final IvyManager ivyManager = new IvyManager();
+                progressIndicator.setText2("Loading IvyIDEA modules");
+                final IvyManager ivyManager = IvyManager.forProject(myProject);
+                progressIndicator.setText2("Resolving for module " + module.getName());
                 getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
 
                 final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);

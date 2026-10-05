@@ -21,16 +21,8 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
-import org.clarent.ivyidea.exception.IvyFileReadException;
-import org.clarent.ivyidea.exception.IvySettingsFileReadException;
-import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
-import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
-import org.clarent.ivyidea.ivy.IvyManager;
-import org.clarent.ivyidea.resolve.IntellijDependencyResolver;
-import org.jetbrains.annotations.NotNull;
+import org.clarent.ivyidea.resolve.ResolveActionHelper;
 
 import java.text.MessageFormat;
 
@@ -47,23 +39,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         FileDocumentManager.getInstance().saveAllDocuments();
 
         final Module module = LangDataKeys.MODULE.getData(e.getDataContext());
-        if (module != null) {
-            ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(module.getProject(), e) {
-                public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                    clearConsole(myProject);
-
-                    progressIndicator.setText2("Loading IvyIDEA modules");
-                    final IvyManager ivyManager = IvyManager.forProject(myProject);
-                    progressIndicator.setText2("Resolving for module " + module.getName());
-                    getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-
-                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    resolver.resolve(module);
-                    updateIntellijModel(module, resolver.getDependencies());
-                    reportProblems(module, resolver.getProblems());
-                }
-            });
-        }
+        ResolveActionHelper.resolveForModule(module, e.getPresentation().getText());
     }
 
     public void update(AnActionEvent e) {

@@ -8,6 +8,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.util.concurrency.Semaphore;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
@@ -31,8 +32,9 @@ public class ResolveActionHelper {
      *
      * @param project     Mandatory: the Project to resolve for.
      * @param taskText    Optional: the text to show for this tasks' progress.
+     * @param resolveDone Optional: a semaphore for blocking until the resolve action is done.
      */
-    public static void resolveForProject(Project project, String taskText) {
+    public static void resolveForProject(Project project, String taskText, Semaphore resolveDone) {
         if (project == null)
             return;
         if (taskText == null)
@@ -41,28 +43,34 @@ public class ResolveActionHelper {
         FileDocumentManager.getInstance().saveAllDocuments();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                clearConsole(myProject);
+                try {
+                    clearConsole(myProject);
 
                 indicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
 
-                Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
-                for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
-                    getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-                    indicator.setText2("Resolving for module " + module.getName());
-                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    resolver.resolve(module);
-                    resolvers.add(resolver);
+                    Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
+                    for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
+                        getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
+                        indicator.setText2("Resolving for module " + module.getName());
+                        final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
+                        resolver.resolve(module);
+                        resolvers.add(resolver);
 
-                    if (indicator.isCanceled()) {
-                        return;
+                        if (indicator.isCanceled()) {
+                            return;
+                        }
                     }
-                }
 
-                for (IntellijDependencyResolver resolver : resolvers) {
-                    Module module = resolver.getModule();
-                    updateIntellijModel(module, resolver.getDependencies());
-                    reportProblems(module, resolver.getProblems());
+                    for (IntellijDependencyResolver resolver : resolvers) {
+                        Module module = resolver.getModule();
+                        updateIntellijModel(module, resolver.getDependencies());
+                        reportProblems(module, resolver.getProblems());
+                    }
+                } finally {
+                    if (resolveDone != null) {
+                        resolveDone.up();
+                    }
                 }
             }
         });
@@ -73,8 +81,9 @@ public class ResolveActionHelper {
      *
      * @param module      Mandatory: the Module to resolve for.
      * @param taskText    Optional: the text to show for this tasks' progress.
+     * @param resolveDone Optional: a semaphore for blocking until the resolve action is done.
      */
-    public static void resolveForModule(Module module, String taskText) {
+    public static void resolveForModule(Module module, String taskText, Semaphore resolveDone) {
         if (module == null)
             return;
         if (taskText == null)
@@ -84,17 +93,23 @@ public class ResolveActionHelper {
         Project project = module.getProject();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                clearConsole(myProject);
+                try {
+                    clearConsole(myProject);
 
                 progressIndicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
                 progressIndicator.setText2("Resolving for module " + module.getName());
                 getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
 
-                final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                resolver.resolve(module);
-                updateIntellijModel(module, resolver.getDependencies());
-                reportProblems(module, resolver.getProblems());
+                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
+                    resolver.resolve(module);
+                    updateIntellijModel(module, resolver.getDependencies());
+                    reportProblems(module, resolver.getProblems());
+                } finally {
+                    if (resolveDone != null) {
+                        resolveDone.up();
+                    }
+                }
             }
         });
     }

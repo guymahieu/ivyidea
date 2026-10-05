@@ -39,7 +39,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
         FileDocumentManager.getInstance().saveAllDocuments();
 
         final Module module = LangDataKeys.MODULE.getData(e.getDataContext());
-        ResolveActionHelper.resolveForModule(module, e.getPresentation().getText());
+        ResolveActionHelper.resolveForModule(module, e.getPresentation().getText(), null);
     }
 
     public void update(AnActionEvent e) {

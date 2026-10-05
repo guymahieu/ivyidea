@@ -33,7 +33,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
         FileDocumentManager.getInstance().saveAllDocuments();
 
         final Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
-        ResolveActionHelper.resolveForProject(project, e.getPresentation().getText());
+        ResolveActionHelper.resolveForProject(project, e.getPresentation().getText(), null);
     }
 
 }

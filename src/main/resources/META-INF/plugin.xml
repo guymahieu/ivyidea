@@ -43,5 +43,6 @@
                              displayName="IvyIDEA"/>
 
         <cachesInvalidator implementation="org.clarent.ivyidea.intellij.IvyIdeaCachesInvalidator"/>
+        <stepsBeforeRunProvider implementation="org.clarent.ivyidea.intellij.task.IvyIdeaBeforeRunResolveForProjectTaskProvider"/>
     </extensions>
 </idea-plugin>

@@ -9,6 +9,7 @@
 - Faster updating of module libraries after a resolve on large projects (thanks to Stijn Vranckx)
 - Other IvyIDEA modules in the project are now resolved from their local ivy.xml, so their transitive dependencies no longer come from an outdated published version (thanks to Stijn Vranckx)
 - Added an option to clear the IvyIDEA workspace cache to File | Invalidate Caches
+- Added an option to resolve the modules in parallel when resolving all modules, with a configurable number of threads (thanks to Stijn Vranckx)
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

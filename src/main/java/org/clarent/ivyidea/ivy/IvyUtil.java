@@ -19,14 +19,18 @@ package org.clarent.ivyidea.ivy;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
+import org.apache.ivy.core.cache.DefaultRepositoryCacheManager;
+import org.apache.ivy.core.cache.RepositoryCacheManager;
 import org.apache.ivy.core.event.EventManager;
 import org.apache.ivy.core.module.descriptor.Configuration;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.plugins.lock.NoLockStrategy;
 import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
 import org.apache.ivy.plugins.resolver.BasicResolver;
 import org.apache.ivy.plugins.resolver.DependencyResolver;
 import org.apache.ivy.plugins.trigger.Trigger;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.logging.ConsoleViewMessageLogger;
@@ -136,8 +140,23 @@ public class IvyUtil {
         // so we have to execute the same code ourselves
         postConfigure(ivy);
 
-        registerConsoleLogger(ivy, module.getProject());
+        registerConsoleLogger(ivy, module);
         return ivy;
+    }
+
+    /**
+     * Returns whether one of the repository caches of the given Ivy doesn't lock the files it writes.
+     */
+    public static boolean usesNoLockStrategy(Ivy ivy) {
+        final IvySettings settings = ivy.getSettings();
+        settings.getDefaultRepositoryCacheManager();
+        for (RepositoryCacheManager cacheManager : settings.getRepositoryCacheManagers()) {
+            if (cacheManager instanceof DefaultRepositoryCacheManager
+                    && ((DefaultRepositoryCacheManager) cacheManager).getLockStrategy() instanceof NoLockStrategy) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void postConfigure(final Ivy ivy) {
@@ -155,11 +174,16 @@ public class IvyUtil {
         }
     }
 
-    private static void registerConsoleLogger(final Ivy ivy, final Project project) {
-        ivy.getLoggerEngine().pushLogger(
+    private static void registerConsoleLogger(final Ivy ivy, final Module module) {
+        final Project project = module.getProject();
+        // when resolving in parallel, the messages of several modules are mixed in the console
+        final String prefix = IvyIdeaConfigHelper.isResolveInParallel(project) ? "[" + module.getName() + "] " : null;
+        // the default logger rather than a pushed one, as Ivy keeps the pushed loggers per thread
+        ivy.getLoggerEngine().setDefaultLogger(
                 new ConsoleViewMessageLogger(
                         project,
-                        IntellijUtils.getConsoleView(project)
+                        IntellijUtils.getConsoleView(project),
+                        prefix
                 )
         );
     }

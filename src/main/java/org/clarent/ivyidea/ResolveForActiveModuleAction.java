@@ -19,7 +19,6 @@ package org.clarent.ivyidea;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.resolve.ResolveActionHelper;
@@ -36,8 +35,6 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
     private static final String MENU_TEXT = "Resolve for {0} module";
 
     public void actionPerformed(final AnActionEvent e) {
-        FileDocumentManager.getInstance().saveAllDocuments();
-
         final Module module = LangDataKeys.MODULE.getData(e.getDataContext());
         ResolveActionHelper.resolveForModule(module, e.getPresentation().getText(), null);
     }

@@ -57,6 +57,9 @@ import java.util.*;
  */
 public class IvyIdeaConfigHelper {
 
+    public static final int MIN_RESOLVE_THREADS = 1;
+    public static final int MAX_RESOLVE_THREADS = 16;
+
     private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA";
 
     public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName) {
@@ -138,6 +141,24 @@ public class IvyIdeaConfigHelper {
 
     public static boolean detectDependenciesOnOtherModulesWhileResolving(final Project project){
         return getProjectConfig(project).isDetectDependenciesOnOtherModules();
+    }
+
+    public static boolean isResolveInParallel(final Project project) {
+        return getProjectConfig(project).isResolveInParallel();
+    }
+
+    /**
+     * Returns the number of modules to resolve at the same time when resolving in parallel.
+     */
+    public static int getResolveThreads(final Project project) {
+        return toValidResolveThreads(getProjectConfig(project).getResolveThreads());
+    }
+
+    /**
+     * Returns the given number of threads, limited to the supported range.
+     */
+    public static int toValidResolveThreads(int resolveThreads) {
+        return Math.max(MIN_RESOLVE_THREADS, Math.min(MAX_RESOLVE_THREADS, resolveThreads));
     }
 
     @NotNull

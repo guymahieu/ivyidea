@@ -32,7 +32,6 @@ public class IvyIdeaProjectSettings {
     private boolean resolveInBackground = false;
     private boolean alwaysAttachSources = true;
     private boolean alwaysAttachJavadocs = true;
-    private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
     private boolean detectDependenciesOnOtherModules = true;
     private boolean resolveInParallel = false;
@@ -114,14 +113,6 @@ public class IvyIdeaProjectSettings {
 
     public void setPropertiesSettings(PropertiesSettings propertiesSettings) {
         this.propertiesSettings = propertiesSettings;
-    }
-
-    public boolean isLibraryNameIncludesModule() {
-        return libraryNameIncludesModule;
-    }
-
-    public void setLibraryNameIncludesModule(final boolean libraryNameIncludesModule) {
-        this.libraryNameIncludesModule = libraryNameIncludesModule;
     }
 
     public boolean isLibraryNameIncludesConfiguration() {

@@ -53,7 +53,6 @@ public class IvyIdeaProjectSettingsPanel {
     private JRadioButton useYourOwnIvySettingsRadioButton;
     private JPanel pnlPropertiesFiles;
     private JComboBox<IvyLogLevel> ivyLogLevelComboBox;
-    private JCheckBox includeModuleNameCheckBox;
     private JCheckBox includeConfigurationNameCheckBox;
     private JPanel pnlIvyLogging;
     private JPanel pnlLibraryNaming;
@@ -154,7 +153,6 @@ public class IvyIdeaProjectSettingsPanel {
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
         internalState.setPropertiesSettings(propertiesSettings);
-        internalState.setLibraryNameIncludesModule(includeModuleNameCheckBox.isSelected());
         internalState.setLibraryNameIncludesConfiguration(includeConfigurationNameCheckBox.isSelected());
         final Object selectedLogLevel = ivyLogLevelComboBox.getSelectedItem();
         internalState.setIvyLogLevelThreshold(selectedLogLevel == null ? IvyLogLevel.None.name() : selectedLogLevel.toString());
@@ -181,7 +179,6 @@ public class IvyIdeaProjectSettingsPanel {
         spnResolveThreads.setNumber(IvyIdeaConfigHelper.toValidResolveThreads(config.getResolveThreads()));
         updateResolveThreadsEnabled();
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
-        includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
         includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());
         ivyLogLevelComboBox.setSelectedItem(IvyLogLevel.fromName(config.getIvyLogLevelThreshold()));
         txtSourcesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Sources));

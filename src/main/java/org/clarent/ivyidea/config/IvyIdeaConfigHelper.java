@@ -62,13 +62,9 @@ public class IvyIdeaConfigHelper {
 
     private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA";
 
-    public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName) {
-        final Project project = model.getProject();
-        String libraryName = RESOLVED_LIB_NAME_ROOT;
-        if (isLibraryNameIncludesModule(project)) {
-            final String moduleName = model.getModule().getName();
-            libraryName += "-" + moduleName;
-        }
+    public static String getCreatedLibraryName(final Project project, final Module module, final String configName) {
+        final String moduleName = module.getName();
+        String libraryName = RESOLVED_LIB_NAME_ROOT + "-" + moduleName;
         if (isLibraryNameIncludesConfiguration(project)) {
             libraryName += "-" + configName;
         }
@@ -112,10 +108,6 @@ public class IvyIdeaConfigHelper {
 
     public static List<String> getPropertiesFiles(Project project) {
          return getProjectConfig(project).getPropertiesSettings().getPropertyFiles();
-    }
-
-    public static boolean isLibraryNameIncludesModule(final Project project) {
-        return getProjectConfig(project).isLibraryNameIncludesModule();
     }
 
     public static boolean isLibraryNameIncludesConfiguration(final Project project) {

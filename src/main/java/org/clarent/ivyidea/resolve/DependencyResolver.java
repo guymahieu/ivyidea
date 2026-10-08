@@ -16,6 +16,8 @@
 
 package org.clarent.ivyidea.resolve;
 
+import com.intellij.ide.highlighter.ArchiveFileType;
+import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
@@ -135,6 +137,11 @@ class DependencyResolver {
                                 if (resolveReport.getArtifacts().contains(artifact)) {
                                     continue; // already resolved, ignore.
                                 }
+                                if (!isArchive(artifact)) {
+                                    // IntelliJ can't read sources or javadocs from it, so don't download it
+                                    LOGGER.fine("Not attaching " + artifact + ": " + artifact.getExt() + " is not an archive");
+                                    continue;
+                                }
 
                                 // try to download
                                 ArtifactDownloadReport adr = ivy.getResolveEngine().download(artifact, new DownloadOptions());
@@ -172,6 +179,13 @@ class DependencyResolver {
 
     private boolean isJavadoc(Project project, Artifact artifact) {
         return ArtifactTypeSettings.DependencyCategory.Javadoc == ExternalDependencyFactory.determineCategory(project, artifact);
+    }
+
+    /**
+     * Returns whether IntelliJ handles files with the extension of the given artifact as an archive, like jar and zip.
+     */
+    private static boolean isArchive(Artifact artifact) {
+        return FileTypeRegistry.getInstance().getFileTypeByExtension(artifact.getExt()) instanceof ArchiveFileType;
     }
 
     private void registerProblems(ConfigurationResolveReport configurationReport, Module module, IvyManager ivyManager) {

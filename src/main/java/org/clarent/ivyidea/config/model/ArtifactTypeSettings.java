@@ -18,6 +18,7 @@ package org.clarent.ivyidea.config.model;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +50,17 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
         }
     }
 
+    /**
+     * Artifact types that are expected in a resolve but have no meaning in IntelliJ. They are not downloaded and
+     * not reported as unrecognized.
+     */
+    public static final List<String> DEFAULT_IGNORED_TYPES = asList("pom");
+
     private Map<DependencyCategory, Set<String>> typesPerCategory = new HashMap<DependencyCategory, Set<String>>();
+
+    // null if never configured, so settings saved before this option existed also get the defaults
+    @Nullable
+    private Set<String> ignoredTypes;
 
     @Nullable
     public DependencyCategory getCategoryForType(String type) {
@@ -86,6 +97,27 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
             return joinArtifactTypes(category.getDefaultTypes());
         }
         return joinArtifactTypes(typesPerCategory.get(category));
+    }
+
+    /**
+     * A type that is also in one of the categories is not ignored: the category is the more explicit choice.
+     */
+    public boolean isIgnoredType(String type) {
+        return type != null
+                && getEffectiveIgnoredTypes().contains(type.trim().toLowerCase())
+                && getCategoryForType(type) == null;
+    }
+
+    /**
+     * The ignored types to show in the UI: the defaults if nothing has been configured.
+     */
+    @Transient
+    public String getIgnoredTypesString() {
+        return joinArtifactTypes(getEffectiveIgnoredTypes());
+    }
+
+    private Set<String> getEffectiveIgnoredTypes() {
+        return ignoredTypes == null ? new LinkedHashSet<String>(DEFAULT_IGNORED_TYPES) : ignoredTypes;
     }
 
     protected boolean isConfigurationEmpty() {
@@ -162,5 +194,14 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
 
     public void setJavadocTypes(String types) {
         setTypesForCategory(Javadoc, types);
+    }
+
+    @Nullable
+    public String getIgnoredTypes() {
+        return ignoredTypes == null ? null : joinArtifactTypes(ignoredTypes);
+    }
+
+    public void setIgnoredTypes(@Nullable String types) {
+        ignoredTypes = types == null ? null : splitArtifactTypes(types);
     }
 }

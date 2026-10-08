@@ -155,6 +155,9 @@ class DependencyResolver {
     }
 
     private void addExternalDependency(Artifact artifact, File artifactFile, String resolvedConfiguration, Project project) {
+        if (IvyIdeaConfigHelper.getArtifactTypeSettings(project).isIgnoredType(artifact.getType())) {
+            return;
+        }
         ExternalDependency externalDependency = ExternalDependencyFactory.getInstance().createExternalDependency(artifact, artifactFile, project, resolvedConfiguration);
         if (externalDependency == null) {
             resolveProblems.add(new ResolveProblem(

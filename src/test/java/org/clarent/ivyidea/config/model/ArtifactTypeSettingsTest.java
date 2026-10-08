@@ -96,4 +96,60 @@ public class ArtifactTypeSettingsTest {
         }
     }
 
+    @Test
+    public void testDefaultIgnoredTypesUsedIfNotConfigured() {
+        final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
+        assertThat(typeSettings.isIgnoredType("pom")).isTrue();
+        assertThat(typeSettings.isIgnoredType(" POM ")).isTrue();
+        assertThat(typeSettings.isIgnoredType("jar")).isFalse();
+        assertThat(typeSettings.isIgnoredType(null)).isFalse();
+        assertThat(typeSettings.getIgnoredTypesString()).isEqualTo("pom");
+        // not configured, so nothing gets serialized
+        assertThat(typeSettings.getIgnoredTypes()).isNull();
+    }
+
+    @Test
+    public void testDefaultIgnoredTypesUsedForSettingsSavedBeforeTheOptionExisted() {
+        final ArtifactTypeSettings saved = new ArtifactTypeSettings();
+        saved.setClassesTypes("jar");
+        saved.setSourcesTypes("source");
+        saved.setJavadocTypes("javadoc");
+
+        final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
+        typeSettings.loadState(saved);
+        assertThat(typeSettings.isIgnoredType("pom")).isTrue();
+        assertThat(typeSettings.getCategoryForType("jar")).isSameAs(Classes);
+    }
+
+    @Test
+    public void testConfiguredIgnoredTypesReplaceDefaults() {
+        final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
+        typeSettings.setIgnoredTypes("FOO, bar");
+        assertThat(typeSettings.isIgnoredType("foo")).isTrue();
+        assertThat(typeSettings.isIgnoredType("bar")).isTrue();
+        assertThat(typeSettings.isIgnoredType("pom")).isFalse();
+        assertThat(typeSettings.getIgnoredTypes()).isEqualTo("foo, bar");
+    }
+
+    @Test
+    public void testTypeInCategoryIsNeverIgnored() {
+        final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
+        typeSettings.setTypesForCategory(Classes, "jar, XML");
+        typeSettings.setIgnoredTypes("xml, txt");
+        assertThat(typeSettings.isIgnoredType("xml")).isFalse();
+        assertThat(typeSettings.isIgnoredType("txt")).isTrue();
+    }
+
+    @Test
+    public void testEmptyIgnoredTypesIgnoresNothing() {
+        final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
+        typeSettings.setIgnoredTypes("");
+        assertThat(typeSettings.isIgnoredType("pom")).isFalse();
+        assertThat(typeSettings.getIgnoredTypesString()).isEmpty();
+
+        final ArtifactTypeSettings reloaded = new ArtifactTypeSettings();
+        reloaded.loadState(typeSettings);
+        assertThat(reloaded.isIgnoredType("pom")).isFalse();
+    }
+
 }

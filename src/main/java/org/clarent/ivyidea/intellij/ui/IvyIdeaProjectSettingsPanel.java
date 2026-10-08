@@ -60,6 +60,7 @@ public class IvyIdeaProjectSettingsPanel {
     private JTextField txtClassesArtifactTypes;
     private JTextField txtSourcesArtifactTypes;
     private JTextField txtJavadocArtifactTypes;
+    private JTextField txtIgnoredArtifactTypes;
     private JCheckBox chkResolveTransitively;
     private JCheckBox chkUseCacheOnly;
     private JCheckBox chkBackground;
@@ -161,6 +162,7 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.getArtifactTypeSettings().setTypesForCategory(Classes, txtClassesArtifactTypes.getText());
         internalState.getArtifactTypeSettings().setTypesForCategory(Sources, txtSourcesArtifactTypes.getText());
         internalState.getArtifactTypeSettings().setTypesForCategory(Javadoc, txtJavadocArtifactTypes.getText());
+        internalState.getArtifactTypeSettings().setIgnoredTypes(txtIgnoredArtifactTypes.getText());
     }
 
     public void reset() {
@@ -187,6 +189,7 @@ public class IvyIdeaProjectSettingsPanel {
         txtSourcesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Sources));
         txtClassesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Classes));
         txtJavadocArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Javadoc));
+        txtIgnoredArtifactTypes.setText(config.getArtifactTypeSettings().getIgnoredTypesString());
     }
 
     public void disposeUIResources() {

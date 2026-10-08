@@ -38,6 +38,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     private IvyIdeaException exception;
     private final Project project;
     private ProgressMonitorThread monitorThread;
+    private volatile boolean started;
 
     /**
      * Implementations should perform the resolve process inside this method.
@@ -59,6 +60,8 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     }
 
     public final void run(@NotNull final ProgressIndicator indicator) {
+        started = true;
+        ResolveIndicator.resolveStarted(project);
         monitorThread = new ProgressMonitorThread(indicator);
         monitorThread.start();
 
@@ -78,6 +81,15 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
             if (!indicator.isCanceled()) {
                 throw e;
             }
+        }
+    }
+
+    @Override
+    public void onFinished() {
+        super.onFinished();
+        // also called when the task was cancelled before it started
+        if (started) {
+            ResolveIndicator.resolveFinished(project);
         }
     }
 

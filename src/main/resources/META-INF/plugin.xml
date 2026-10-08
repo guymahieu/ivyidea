@@ -33,7 +33,7 @@
 
         <project.converterProvider implementation="org.clarent.ivyidea.intellij.facet.config.IvyIdeaLegacyFacetConfigConverterProvider" id="IvyIDEA.FacetConverterProvider"/>
 
-        <toolWindow id="IvyIDEA" icon="/ivyidea13.png" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
+        <toolWindow id="IvyIDEA" icon="/icons/toolWindowIvyIdea.svg" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
 
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
         <framework.detector implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetDetector"/>
@@ -41,6 +41,8 @@
         <projectConfigurable id="IvyIDEA.ProjectSettings"
                              instance="org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent"
                              displayName="IvyIDEA"/>
+
+        <iconMapper mappingFile="IvyIdeaIconMappings.json"/>
 
         <cachesInvalidator implementation="org.clarent.ivyidea.intellij.IvyIdeaCachesInvalidator"/>
     </extensions>

@@ -171,6 +171,7 @@ public class IvyIdeaProjectSettingsPanel {
         internalState.getArtifactTypeSettings().setTypesForCategory(Sources, txtSourcesArtifactTypes.getText());
         internalState.getArtifactTypeSettings().setTypesForCategory(Javadoc, txtJavadocArtifactTypes.getText());
         internalState.getArtifactTypeSettings().setIgnoredTypes(txtIgnoredArtifactTypes.getText());
+        modified = false;
     }
 
     public void reset() {
@@ -198,6 +199,8 @@ public class IvyIdeaProjectSettingsPanel {
         txtClassesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Classes));
         txtJavadocArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Javadoc));
         txtIgnoredArtifactTypes.setText(config.getArtifactTypeSettings().getIgnoredTypesString());
+        // filling in the fields above triggers the activity watcher too
+        modified = false;
     }
 
     public void disposeUIResources() {

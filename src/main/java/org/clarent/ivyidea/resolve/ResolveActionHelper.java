@@ -36,10 +36,12 @@ import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class ResolveActionHelper {
     /**
@@ -49,6 +51,18 @@ public class ResolveActionHelper {
      * @param taskText    Optional: the text to show for this tasks' progress.
      */
     public static void resolveForProject(Project project, String taskText) {
+        resolveForProject(project, taskText, null);
+    }
+
+    /**
+     * Resolves the Ivy dependencies for the given Project.
+     *
+     * @param project      Mandatory: the Project to resolve for.
+     * @param taskText     Optional: the text to show for this tasks' progress.
+     * @param doneListener Optional: called on the event dispatch thread when the resolve is done, with whether it
+     *                     succeeded. It is not called when there is no project to resolve for.
+     */
+    public static void resolveForProject(Project project, String taskText, @Nullable Consumer<Boolean> doneListener) {
         if (project == null) {
             return;
         }
@@ -57,7 +71,7 @@ public class ResolveActionHelper {
         }
 
         FileDocumentManager.getInstance().saveAllDocuments();
-        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
+        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText, doneListener) {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
 

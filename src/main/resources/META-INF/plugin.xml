@@ -45,5 +45,7 @@
         <iconMapper mappingFile="IvyIdeaIconMappings.json"/>
 
         <cachesInvalidator implementation="org.clarent.ivyidea.intellij.IvyIdeaCachesInvalidator"/>
+
+        <stepsBeforeRunProvider implementation="org.clarent.ivyidea.intellij.task.ResolveBeforeRunTaskProvider"/>
     </extensions>
 </idea-plugin>

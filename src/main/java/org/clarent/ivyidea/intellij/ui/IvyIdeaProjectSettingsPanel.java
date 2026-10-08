@@ -21,6 +21,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.panel.ComponentPanelBuilder;
+import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.UserActivityWatcher;
 import com.intellij.util.ui.JBUI;
@@ -72,8 +73,9 @@ public class IvyIdeaProjectSettingsPanel {
     private JPanel pnlResolveThreads;
     private JLabel lblResolveThreads;
     private JBIntSpinner spnResolveThreads;
-    private JPanel pnlIvyFiles;
-    private JPanel pnlArtefactTypes;
+    private JPanel pnlIvySettings;
+    private JPanel pnlResolveOptions;
+    private JPanel pnlArtifactTypes;
     private IvyIdeaProjectSettings internalState;
     private OrderedFileList orderedFileList;
     private final Project project;
@@ -83,6 +85,12 @@ public class IvyIdeaProjectSettingsPanel {
         this.internalState = state;
 
         txtIvySettingsFile.addBrowseFolderListener("Select Ivy Settings File", null, project, new FileChooserDescriptor(true, false, false, false, false, false));
+
+        // a titled border in the form is drawn as a box, unlike the titled separators in the settings of IntelliJ itself
+        pnlIvySettings.setBorder(IdeBorderFactory.createTitledBorder("Ivy Settings"));
+        pnlResolveOptions.setBorder(IdeBorderFactory.createTitledBorder("Resolve Options"));
+        pnlArtifactTypes.setBorder(IdeBorderFactory.createTitledBorder("Artifact Types"));
+        pnlLibraryNaming.setBorder(IdeBorderFactory.createTitledBorder("Resolved Library Naming"));
 
         wireActivityWatchers();
         wireIvySettingsRadioButtons();

@@ -19,32 +19,46 @@ package org.clarent.ivyidea.intellij.task;
 import com.intellij.openapi.progress.ProgressIndicator;
 import org.apache.ivy.Ivy;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * Background thread that monitors the ProgressIndicator.
+ * Background thread that monitors the ProgressIndicator, and interrupts the running Ivy operations when it is
+ * cancelled.
  *
  * @author Maarten Coene
  */
 public class ProgressMonitorThread extends Thread {
 
-    private ProgressIndicator indicator;
-    private Thread resolveThread;
-    private Ivy ivy;
+    private final ProgressIndicator indicator;
+    private final Map<Thread, Ivy> runningIvys = new ConcurrentHashMap<>();
 
-    public ProgressMonitorThread(ProgressIndicator indicator, Thread resolveThread) {
+    public ProgressMonitorThread(ProgressIndicator indicator) {
         super("ProgressIndicator Monitor");
         this.indicator = indicator;
-        this.resolveThread = resolveThread;
     }
 
-    public void setIvy(Ivy ivy) {
-        this.ivy = ivy;
+    /**
+     * Registers the Ivy that is used by the current thread, until {@link #unregister()} is called.
+     * <p>
+     * When interrupting, Ivy waits for the thread to end, and stops it if it is still running after the interrupt
+     * timeout of the Ivy settings.
+     */
+    public void register(Ivy ivy) {
+        runningIvys.put(Thread.currentThread(), ivy);
+    }
+
+    public void unregister() {
+        runningIvys.remove(Thread.currentThread());
     }
 
     @Override
     public void run() {
         while (indicator.isRunning()) {
-            if (ivy != null && indicator.isCanceled()) {
-                ivy.interrupt(resolveThread);
+            if (!runningIvys.isEmpty() && indicator.isCanceled()) {
+                for (Map.Entry<Thread, Ivy> runningIvy : runningIvys.entrySet()) {
+                    runningIvy.getValue().interrupt(runningIvy.getKey());
+                }
                 return;
             }
             try {

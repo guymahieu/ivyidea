@@ -1,3 +1,19 @@
+/*
+ * Copyright 2010 Guy Mahieu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.clarent.ivyidea.resolve;
 
 import com.intellij.execution.ui.ConsoleView;
@@ -9,6 +25,7 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.concurrency.Semaphore;
+import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
@@ -22,8 +39,7 @@ import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -36,10 +52,12 @@ public class ResolveActionHelper {
      * @param resolveDone Optional: a semaphore for blocking until the resolve action is done.
      */
     public static void resolveForProject(Project project, String taskText, Semaphore resolveDone) {
-        if (project == null)
+        if (project == null) {
             return;
-        if (taskText == null)
+        }
+        if (taskText == null) {
             taskText = "resolve for project " + project.getName();
+        }
 
         FileDocumentManager.getInstance().saveAllDocuments();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
@@ -50,20 +68,16 @@ public class ResolveActionHelper {
                     listener.resolveStarted();
                     clearConsole(myProject);
 
-                indicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
+                    indicator.setText2("Loading IvyIDEA modules");
+                    final IvyManager ivyManager = IvyManager.forProject(myProject);
 
-                    Collection<IntellijDependencyResolver> resolvers = new ArrayList<>();
-                    for (final Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
-                        getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-                        indicator.setText2("Resolving for module " + module.getName());
-                        final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                        resolver.resolve(module);
-                        resolvers.add(resolver);
-
-                        if (indicator.isCanceled()) {
-                            return;
-                        }
+                    final List<Module> modules = Arrays.asList(IntellijUtils.getAllModulesWithIvyIdeaFacet(project));
+                    final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator, getProgressMonitorThread());
+                    final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(myProject)
+                            ? modulesResolver.resolveInParallel(modules)
+                            : modulesResolver.resolveOneByOne(modules);
+                    if (indicator.isCanceled()) {
+                        return;
                     }
 
                     for (IntellijDependencyResolver resolver : resolvers) {
@@ -91,10 +105,12 @@ public class ResolveActionHelper {
      * @param resolveDone Optional: a semaphore for blocking until the resolve action is done.
      */
     public static void resolveForModule(Module module, String taskText, Semaphore resolveDone) {
-        if (module == null)
+        if (module == null) {
             return;
-        if (taskText == null)
+        }
+        if (taskText == null) {
             taskText = "resolve for module " + module.getName();
+        }
 
         FileDocumentManager.getInstance().saveAllDocuments();
         Project project = module.getProject();
@@ -106,13 +122,16 @@ public class ResolveActionHelper {
                     listener.resolveStarted();
                     clearConsole(myProject);
 
-                progressIndicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
-                progressIndicator.setText2("Resolving for module " + module.getName());
-                getProgressMonitorThread().setIvy(ivyManager.getIvy(module));
-
+                    progressIndicator.setText2("Loading IvyIDEA modules");
+                    final IvyManager ivyManager = IvyManager.forProject(myProject);
+                    progressIndicator.setText2("Resolving for module " + module.getName());
                     final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    resolver.resolve(module);
+                    getProgressMonitorThread().register(ivyManager.getIvy(module));
+                    try {
+                        resolver.resolve(module);
+                    } finally {
+                        getProgressMonitorThread().unregister();
+                    }
                     updateIntellijModel(module, resolver.getDependencies());
                     reportProblems(module, resolver.getProblems());
                 } finally {
@@ -133,6 +152,11 @@ public class ResolveActionHelper {
                 moduleWrapper.updateDependencies(dependencies);
             }
         }));
+    }
+
+    public static void printWarning(final Project project, final String message) {
+        ApplicationManager.getApplication().invokeLater(() ->
+                IntellijUtils.getConsoleView(project).print(message + '\n', ConsoleViewContentType.LOG_WARNING_OUTPUT));
     }
 
     public static void clearConsole(final Project project) {

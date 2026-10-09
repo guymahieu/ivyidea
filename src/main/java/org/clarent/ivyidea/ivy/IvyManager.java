@@ -58,7 +58,7 @@ public class IvyManager {
         return ivyManager;
     }
 
-    public Ivy getIvy(final Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+    public synchronized Ivy getIvy(final Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!configuredIvyInstances.containsKey(module)) {
             final IvySettings configuredIvySettings = IvyIdeaConfigHelper.createConfiguredIvySettings(module, this);
             final Ivy ivy = IvyUtil.createConfiguredIvyEngine(module, configuredIvySettings);
@@ -69,7 +69,7 @@ public class IvyManager {
     }
 
     @Nullable
-    public ModuleDescriptor getModuleDescriptor(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+    public synchronized ModuleDescriptor getModuleDescriptor(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!moduleDescriptors.containsKey(module)) {
             final File ivyFile = IvyUtil.getIvyFile(module);
             if (ivyFile != null) {

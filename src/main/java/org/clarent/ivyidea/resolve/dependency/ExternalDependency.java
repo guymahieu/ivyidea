@@ -61,10 +61,6 @@ public abstract class ExternalDependency implements ResolvedDependency {
             return;
         }
         final String artifactPath = localFile.getAbsolutePath();
-        if (isMissing()) {
-            LOGGER.warning("Not registering external " + getTypeName() + " file dependency as the file does not seem to exist: " + artifactPath);
-            return;
-        }
         if (intellijModuleWrapper.alreadyHasDependencyOnLibrary(this)) {
             LOGGER.fine("Not re-registering external " + getTypeName() + " file dependency " + artifactPath + " as it is already present.");
             return;

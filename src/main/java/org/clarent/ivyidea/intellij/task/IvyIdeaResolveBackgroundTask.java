@@ -16,7 +16,6 @@
 
 package org.clarent.ivyidea.intellij.task;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
@@ -50,11 +49,6 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
      */
     public abstract void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException;
 
-    protected IvyIdeaResolveBackgroundTask(Project project, AnActionEvent event) {
-        super(event);
-        this.project = project;
-    }
-
     protected IvyIdeaResolveBackgroundTask(Project project, String taskText) {
         super(project, taskText);
         this.project = project;
@@ -65,8 +59,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     }
 
     public final void run(@NotNull final ProgressIndicator indicator) {
-        final Thread resolveThread = Thread.currentThread();
-        monitorThread = new ProgressMonitorThread(indicator, resolveThread);
+        monitorThread = new ProgressMonitorThread(indicator);
         monitorThread.start();
 
         try {

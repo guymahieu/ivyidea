@@ -176,5 +176,8 @@ public class IvyIdeaProjectSettings {
         options.setValidate(isValidateIvyFiles());
         options.setTransitive(isResolveTransitively());
         options.setUseCacheOnly(isResolveCacheOnly());
+        // don't download artifacts that won't be added to IntelliJ anyway
+        final ArtifactTypeSettings typeSettings = getArtifactTypeSettings();
+        options.setArtifactFilter(artifact -> !typeSettings.isIgnoredType(artifact.getType()));
     }
 }

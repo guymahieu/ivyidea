@@ -16,6 +16,7 @@
 
 package org.clarent.ivyidea.intellij.task;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
@@ -27,6 +28,9 @@ import org.clarent.ivyidea.exception.ui.IvyIdeaExceptionDialog;
 import org.clarent.ivyidea.exception.ui.LinkBehavior;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 /**
  * Base class for background tasks that trigger an ivy resolve process.
@@ -38,6 +42,9 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     private IvyIdeaException exception;
     private final Project project;
     private ProgressMonitorThread monitorThread;
+    private volatile boolean started;
+    @Nullable
+    private Consumer<Boolean> doneListener;
 
     /**
      * Implementations should perform the resolve process inside this method.
@@ -50,8 +57,17 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     public abstract void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException;
 
     protected IvyIdeaResolveBackgroundTask(Project project, String taskText) {
+        this(project, taskText, null);
+    }
+
+    /**
+     * @param doneListener called on the event dispatch thread when the task is done: with true when the resolve
+     *                     succeeded and the module libraries are updated, with false when it failed or was cancelled
+     */
+    protected IvyIdeaResolveBackgroundTask(Project project, String taskText, @Nullable Consumer<Boolean> doneListener) {
         super(project, taskText);
         this.project = project;
+        this.doneListener = doneListener;
     }
 
     protected ProgressMonitorThread getProgressMonitorThread() {
@@ -59,6 +75,8 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     }
 
     public final void run(@NotNull final ProgressIndicator indicator) {
+        started = true;
+        ResolveIndicator.resolveStarted(project);
         monitorThread = new ProgressMonitorThread(indicator);
         monitorThread.start();
 
@@ -71,6 +89,10 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
             */
             // Start the actual resolve process
             doResolve(indicator);
+            if (!indicator.isCanceled()) {
+                // doResolve updates the module libraries with invokeLater, so this runs after those updates
+                ApplicationManager.getApplication().invokeLater(() -> done(true));
+            }
         } catch (IvyIdeaException e) {
             exception = e;
             indicator.cancel();
@@ -82,10 +104,34 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     }
 
     @Override
+    public void onFinished() {
+        super.onFinished();
+        // also called when the task was cancelled before it started
+        if (started) {
+            ResolveIndicator.resolveFinished(project);
+        }
+    }
+
+    @Override
     public void onCancel() {
         super.onCancel();
         if (exception != null) {
             handle(exception);
+        }
+        done(false);
+    }
+
+    @Override
+    public void onThrowable(@NotNull Throwable error) {
+        super.onThrowable(error);
+        done(false);
+    }
+
+    private void done(boolean success) {
+        if (doneListener != null) {
+            Consumer<Boolean> listener = doneListener;
+            doneListener = null; // only the first result counts, e.g. when cancelled while finishing
+            listener.accept(success);
         }
     }
 

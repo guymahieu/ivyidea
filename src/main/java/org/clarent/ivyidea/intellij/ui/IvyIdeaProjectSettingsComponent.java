@@ -45,11 +45,6 @@ public class IvyIdeaProjectSettingsComponent implements Configurable {
     }
 
     @Nullable
-    public Icon getIcon() {
-        return IvyIdeaIcons.MAIN_ICON;
-    }
-
-    @Nullable
     @NonNls
     public String getHelpTopic() {
         return null;

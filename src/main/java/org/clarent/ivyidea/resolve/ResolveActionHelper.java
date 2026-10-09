@@ -24,13 +24,11 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.util.concurrency.Semaphore;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
-import org.clarent.ivyidea.intellij.externalsystem.IvyIdeaListener;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
@@ -38,10 +36,12 @@ import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class ResolveActionHelper {
     /**
@@ -49,9 +49,20 @@ public class ResolveActionHelper {
      *
      * @param project     Mandatory: the Project to resolve for.
      * @param taskText    Optional: the text to show for this tasks' progress.
-     * @param resolveDone Optional: a semaphore for blocking until the resolve action is done.
      */
-    public static void resolveForProject(Project project, String taskText, Semaphore resolveDone) {
+    public static void resolveForProject(Project project, String taskText) {
+        resolveForProject(project, taskText, null);
+    }
+
+    /**
+     * Resolves the Ivy dependencies for the given Project.
+     *
+     * @param project      Mandatory: the Project to resolve for.
+     * @param taskText     Optional: the text to show for this tasks' progress.
+     * @param doneListener Optional: called on the event dispatch thread when the resolve is done, with whether it
+     *                     succeeded. It is not called when there is no project to resolve for.
+     */
+    public static void resolveForProject(Project project, String taskText, @Nullable Consumer<Boolean> doneListener) {
         if (project == null) {
             return;
         }
@@ -60,38 +71,26 @@ public class ResolveActionHelper {
         }
 
         FileDocumentManager.getInstance().saveAllDocuments();
-        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
+        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText, doneListener) {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                IvyIdeaListener listener = null;
-                try {
-                    listener = project.getMessageBus().syncPublisher(IvyIdeaListener.TOPIC);
-                    listener.resolveStarted();
-                    clearConsole(myProject);
+                clearConsole(myProject);
 
-                    indicator.setText2("Loading IvyIDEA modules");
-                    final IvyManager ivyManager = IvyManager.forProject(myProject);
+                indicator.setText2("Loading IvyIDEA modules");
+                final IvyManager ivyManager = IvyManager.forProject(myProject);
 
-                    final List<Module> modules = Arrays.asList(IntellijUtils.getAllModulesWithIvyIdeaFacet(project));
-                    final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator, getProgressMonitorThread());
-                    final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(myProject)
-                            ? modulesResolver.resolveInParallel(modules)
-                            : modulesResolver.resolveOneByOne(modules);
-                    if (indicator.isCanceled()) {
-                        return;
-                    }
+                final List<Module> modules = Arrays.asList(IntellijUtils.getAllModulesWithIvyIdeaFacet(project));
+                final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator, getProgressMonitorThread());
+                final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(myProject)
+                        ? modulesResolver.resolveInParallel(modules)
+                        : modulesResolver.resolveOneByOne(modules);
+                if (indicator.isCanceled()) {
+                    return;
+                }
 
-                    for (IntellijDependencyResolver resolver : resolvers) {
-                        Module module = resolver.getModule();
-                        updateIntellijModel(module, resolver.getDependencies());
-                        reportProblems(module, resolver.getProblems());
-                    }
-                } finally {
-                    if (listener != null) {
-                        listener.resolveFinished();
-                    }
-                    if (resolveDone != null) {
-                        resolveDone.up();
-                    }
+                for (IntellijDependencyResolver resolver : resolvers) {
+                    Module module = resolver.getModule();
+                    updateIntellijModel(module, resolver.getDependencies());
+                    reportProblems(module, resolver.getProblems());
                 }
             }
         });
@@ -102,9 +101,8 @@ public class ResolveActionHelper {
      *
      * @param module      Mandatory: the Module to resolve for.
      * @param taskText    Optional: the text to show for this tasks' progress.
-     * @param resolveDone Optional: a semaphore for blocking until the resolve action is done.
      */
-    public static void resolveForModule(Module module, String taskText, Semaphore resolveDone) {
+    public static void resolveForModule(Module module, String taskText) {
         if (module == null) {
             return;
         }
@@ -116,32 +114,20 @@ public class ResolveActionHelper {
         Project project = module.getProject();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                IvyIdeaListener listener = null;
-                try {
-                    listener = project.getMessageBus().syncPublisher(IvyIdeaListener.TOPIC);
-                    listener.resolveStarted();
-                    clearConsole(myProject);
+                clearConsole(myProject);
 
-                    progressIndicator.setText2("Loading IvyIDEA modules");
-                    final IvyManager ivyManager = IvyManager.forProject(myProject);
-                    progressIndicator.setText2("Resolving for module " + module.getName());
-                    final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                    getProgressMonitorThread().register(ivyManager.getIvy(module));
-                    try {
-                        resolver.resolve(module);
-                    } finally {
-                        getProgressMonitorThread().unregister();
-                    }
-                    updateIntellijModel(module, resolver.getDependencies());
-                    reportProblems(module, resolver.getProblems());
+                progressIndicator.setText2("Loading IvyIDEA modules");
+                final IvyManager ivyManager = IvyManager.forProject(myProject);
+                progressIndicator.setText2("Resolving for module " + module.getName());
+                final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
+                getProgressMonitorThread().register(ivyManager.getIvy(module));
+                try {
+                    resolver.resolve(module);
                 } finally {
-                    if (listener != null) {
-                        listener.resolveFinished();
-                    }
-                    if (resolveDone != null) {
-                        resolveDone.up();
-                    }
+                    getProgressMonitorThread().unregister();
                 }
+                updateIntellijModel(module, resolver.getDependencies());
+                reportProblems(module, resolver.getProblems());
             }
         });
     }

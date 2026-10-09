@@ -10,6 +10,9 @@
 - Other IvyIDEA modules in the project are now resolved from their local ivy.xml, so their transitive dependencies no longer come from an outdated published version (thanks to Stijn Vranckx)
 - Added an option to clear the IvyIDEA workspace cache to File | Invalidate Caches
 - Added an option to resolve the modules in parallel when resolving all modules, with a configurable number of threads (thanks to Stijn Vranckx)
+- "Always attach sources/javadocs" no longer attaches artifacts that IntelliJ can't read as an archive
+- Added an option to ignore artifact types (default: pom). Artifacts of these types are no longer downloaded or reported as "Unrecognized artifact type" after a resolve
+- Added "IvyIDEA: Resolve for All Modules" as a "Before launch" task for run configurations (thanks to Eric Jarosch)
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

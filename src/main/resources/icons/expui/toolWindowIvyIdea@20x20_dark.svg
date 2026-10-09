@@ -1,0 +1,11 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="bulb" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<rect width="20" height="20" fill="white"/>
+<path d="M7.56 14.38 C7.56 13.38 5.62 12.37 5.62 10.25 A3 3 0 1 1 11.62 10.25 C11.62 12.37 9.69 13.38 9.69 14.38 Z" transform="rotate(-15 8.62 10.25)" fill="black" stroke="black" stroke-width="3.75" stroke-linejoin="round"/>
+</mask>
+<path d="M10 1C8.46 2.57 7.01 4.58 5.5 9.5C4.07 8.94 2.59 8.65 1 9C1.63 11.5 2.5 13.5 4.5 15C3.69 15.54 3 16 3 16.5C3 18 4 19 6.5 19C7 19 7.48 18.51 8 18C8.66 18.13 9.33 18.15 10 18C10.27 18.64 10.82 18.89 11.5 19C12.67 19.26 13.83 19.16 15 19C14.62 17.75 14.44 16.74 14.5 16C16.23 14.28 17.1 11.64 17.5 8.5C15.5 10 14 10.5 12 10.5C12.27 2.02 10.58 1.16 10 1Z" stroke="#CED0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" mask="url(#bulb)"/>
+<g transform="rotate(-15 8.62 10.25)">
+<path d="M7.56 14.38 C7.56 13.38 5.62 12.37 5.62 10.25 A3 3 0 1 1 11.62 10.25 C11.62 12.37 9.69 13.38 9.69 14.38 Z" stroke="#CED0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.69 16.25 L9.56 16.25" stroke="#CED0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

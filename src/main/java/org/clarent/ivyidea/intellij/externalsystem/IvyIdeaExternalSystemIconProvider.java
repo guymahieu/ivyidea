@@ -10,8 +10,6 @@ public class IvyIdeaExternalSystemIconProvider implements ExternalSystemIconProv
     @NotNull
     @Override
     public Icon getReloadIcon() {
-        return IvyIdeaIcons.MAIN_ICON_SMALL != null
-                ? IvyIdeaIcons.MAIN_ICON_SMALL
-                : ExternalSystemIconProvider.super.getReloadIcon();
+        return IvyIdeaIcons.FACET;
     }
 }

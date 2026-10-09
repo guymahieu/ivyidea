@@ -30,7 +30,7 @@ public class ResolveForAllModulesAction extends AbstractResolveAction {
 
     public void actionPerformed(AnActionEvent e) {
         final Project project = PlatformDataKeys.PROJECT.getData(e.getDataContext());
-        ResolveActionHelper.resolveForProject(project, e.getPresentation().getText(), null);
+        ResolveActionHelper.resolveForProject(project, e.getPresentation().getText());
     }
 
 }

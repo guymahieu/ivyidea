@@ -36,7 +36,7 @@ public class ResolveForActiveModuleAction extends AbstractResolveAction {
 
     public void actionPerformed(final AnActionEvent e) {
         final Module module = LangDataKeys.MODULE.getData(e.getDataContext());
-        ResolveActionHelper.resolveForModule(module, e.getPresentation().getText(), null);
+        ResolveActionHelper.resolveForModule(module, e.getPresentation().getText());
     }
 
     public void update(AnActionEvent e) {

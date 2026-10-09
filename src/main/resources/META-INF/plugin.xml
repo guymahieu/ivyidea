@@ -47,5 +47,8 @@
         <cachesInvalidator implementation="org.clarent.ivyidea.intellij.IvyIdeaCachesInvalidator"/>
 
         <stepsBeforeRunProvider implementation="org.clarent.ivyidea.intellij.task.ResolveBeforeRunTaskProvider"/>
+
+        <externalIconProvider key="IvyIdeaSystem" implementationClass="org.clarent.ivyidea.intellij.externalsystem.IvyIdeaExternalSystemIconProvider"/>
+        <postStartupActivity implementation="org.clarent.ivyidea.intellij.IvyIdeaStartupActivity"/>
     </extensions>
 </idea-plugin>

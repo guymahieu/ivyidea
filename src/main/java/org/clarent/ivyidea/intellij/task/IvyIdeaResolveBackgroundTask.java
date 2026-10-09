@@ -26,6 +26,7 @@ import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.exception.ui.IvyIdeaExceptionDialog;
 import org.clarent.ivyidea.exception.ui.LinkBehavior;
+import org.clarent.ivyidea.intellij.externalsystem.IvyIdeaListener;
 import org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +46,8 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     private volatile boolean started;
     @Nullable
     private Consumer<Boolean> doneListener;
+    @Nullable
+    private IvyIdeaListener resolveListener;
 
     /**
      * Implementations should perform the resolve process inside this method.
@@ -87,6 +90,10 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
             /*
                 IntellijProxyURLHandler.setupHttpProxy();
             */
+
+            resolveListener = project.getMessageBus().syncPublisher(IvyIdeaListener.TOPIC);
+            resolveListener.resolveStarted();
+
             // Start the actual resolve process
             doResolve(indicator);
             if (!indicator.isCanceled()) {
@@ -109,6 +116,9 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         // also called when the task was cancelled before it started
         if (started) {
             ResolveIndicator.resolveFinished(project);
+        }
+        if (resolveListener != null) {
+            resolveListener.resolveFinished();
         }
     }
 

@@ -168,7 +168,7 @@ public class IvyIdeaConfigHelper {
     }
 
     @Nullable
-    private static String getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
+    public static String getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
         if (moduleConfiguration.isUseProjectSettings()) {
             return getProjectIvySettingsFile(module.getProject());

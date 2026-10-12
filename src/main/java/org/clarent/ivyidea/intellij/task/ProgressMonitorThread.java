@@ -41,8 +41,8 @@ public class ProgressMonitorThread extends Thread {
     /**
      * Registers the Ivy that is used by the current thread, until {@link #unregister()} is called.
      * <p>
-     * When interrupting, Ivy waits for the thread to end, and stops it if it is still running after the interrupt
-     * timeout of the Ivy settings.
+     * When interrupting, Ivy marks itself as interrupted and interrupts the thread, which then stops at the next
+     * check of Ivy.
      */
     public void register(Ivy ivy) {
         runningIvys.put(Thread.currentThread(), ivy);
@@ -56,8 +56,11 @@ public class ProgressMonitorThread extends Thread {
     public void run() {
         while (indicator.isRunning()) {
             if (!runningIvys.isEmpty() && indicator.isCanceled()) {
+                // each interrupt waits until its thread has stopped, so interrupt them all at the same time
                 for (Map.Entry<Thread, Ivy> runningIvy : runningIvys.entrySet()) {
-                    runningIvy.getValue().interrupt(runningIvy.getKey());
+                    Thread interrupter = new Thread(() -> interrupt(runningIvy.getValue(), runningIvy.getKey()), "Ivy Interrupter");
+                    interrupter.setDaemon(true);
+                    interrupter.start();
                 }
                 return;
             }
@@ -65,6 +68,16 @@ public class ProgressMonitorThread extends Thread {
                 Thread.sleep(500);
             } catch (InterruptedException e1) {
             }
+        }
+    }
+
+    private static void interrupt(Ivy ivy, Thread thread) {
+        try {
+            ivy.interrupt(thread);
+        } catch (UnsupportedOperationException e) {
+            // when the thread is still running after the interrupt timeout of the Ivy settings, Ivy tries to stop it
+            // with Thread.stop, which Java no longer supports; Ivy stays marked as interrupted, so the thread still
+            // stops at the next check of Ivy
         }
     }
 }

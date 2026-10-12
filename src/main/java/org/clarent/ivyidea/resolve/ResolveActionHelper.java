@@ -40,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -88,7 +89,7 @@ public class ResolveActionHelper {
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
 
                 final List<Module> modules = Arrays.asList(IntellijUtils.getAllModulesWithIvyIdeaFacet(project));
-                final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator, getProgressMonitorThread());
+                final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator);
                 final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(myProject)
                         ? modulesResolver.resolveInParallel(modules)
                         : modulesResolver.resolveOneByOne(modules);
@@ -127,14 +128,8 @@ public class ResolveActionHelper {
 
                 progressIndicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
-                progressIndicator.setText2("Resolving for module " + module.getName());
-                final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-                getProgressMonitorThread().register(ivyManager.getIvy(module));
-                try {
-                    resolver.resolve(module);
-                } finally {
-                    getProgressMonitorThread().unregister();
-                }
+                final IntellijDependencyResolver resolver = new ModulesResolver(myProject, ivyManager, progressIndicator)
+                        .resolveOneByOne(Collections.singletonList(module)).get(0);
                 updateIntellijModel(module, resolver.getDependencies());
                 reportProblems(module, resolver.getProblems());
             }

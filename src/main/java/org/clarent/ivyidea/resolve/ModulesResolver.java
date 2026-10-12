@@ -17,14 +17,15 @@
 package org.clarent.ivyidea.resolve;
 
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.util.ProgressIndicatorUtils;
 import com.intellij.openapi.project.Project;
 import org.apache.ivy.Ivy;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
-import org.clarent.ivyidea.intellij.task.ProgressMonitorThread;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.ivy.IvyUtil;
 
@@ -32,8 +33,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -42,50 +46,42 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 class ModulesResolver {
 
+    // how long to wait at a time before checking whether the resolve is cancelled
+    private static final long WAIT_MILLIS = 10;
+
     private final Project project;
     private final IvyManager ivyManager;
     private final ProgressIndicator indicator;
-    private final ProgressMonitorThread progressMonitor;
 
-    ModulesResolver(Project project, IvyManager ivyManager, ProgressIndicator indicator, ProgressMonitorThread progressMonitor) {
+    ModulesResolver(Project project, IvyManager ivyManager, ProgressIndicator indicator) {
         this.project = project;
         this.ivyManager = ivyManager;
         this.indicator = indicator;
-        this.progressMonitor = progressMonitor;
     }
 
     List<IntellijDependencyResolver> resolveOneByOne(List<Module> modules)
             throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-        final List<IntellijDependencyResolver> resolvers = new ArrayList<>();
-        indicator.setIndeterminate(false);
-        for (final Module module : modules) {
-            showProgress(Collections.singleton(module.getName()), resolvers.size(), modules.size());
-            final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
-            progressMonitor.register(ivyManager.getIvy(module));
-            try {
-                resolver.resolve(module);
-            } finally {
-                progressMonitor.unregister();
-            }
-            resolvers.add(resolver);
+        return resolve(modules, 1);
+    }
 
-            if (indicator.isCanceled()) {
-                break;
-            }
-        }
-        return resolvers;
+    List<IntellijDependencyResolver> resolveInParallel(List<Module> modules)
+            throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
+        return resolve(modules, IvyIdeaConfigHelper.getResolveThreads(project));
     }
 
     /**
-     * Resolves each module on a thread of its own, at most the configured number of threads at a time. These are
-     * threads of their own rather than pooled threads, as Ivy waits for an interrupted thread to end when the
-     * resolve is cancelled.
+     * Resolves each module on a thread of its own, at most the given number of threads at a time, while the current
+     * thread waits and stops them when the resolve is cancelled. These are threads of their own rather than pooled
+     * threads, as Ivy interrupts the thread of a cancelled resolve and waits for it to end.
+     *
+     * @throws ProcessCanceledException when the resolve is cancelled, after the threads have ended
      */
-    List<IntellijDependencyResolver> resolveInParallel(List<Module> modules)
+    private List<IntellijDependencyResolver> resolve(List<Module> modules, int maxThreads)
             throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
         final IntellijDependencyResolver[] resolvers = new IntellijDependencyResolver[modules.size()];
         final Throwable[] failures = new Throwable[modules.size()];
-        final Semaphore freeThreads = new Semaphore(IvyIdeaConfigHelper.getResolveThreads(project));
+        final Semaphore freeThreads = new Semaphore(maxThreads);
+        final Map<Thread, Ivy> runningIvys = new ConcurrentHashMap<>();
         final Set<String> resolvingModules = Collections.synchronizedSet(new LinkedHashSet<>());
         final AtomicInteger resolvedModules = new AtomicInteger();
         final AtomicBoolean failed = new AtomicBoolean();
@@ -95,8 +91,8 @@ class ModulesResolver {
         indicator.setIndeterminate(false);
         try {
             for (int i = 0; i < modules.size(); i++) {
-                freeThreads.acquire();
-                if (indicator.isCanceled() || failed.get()) {
+                ProgressIndicatorUtils.awaitWithCheckCanceled(() -> freeThreads.tryAcquire(WAIT_MILLIS, TimeUnit.MILLISECONDS));
+                if (failed.get()) {
                     break;
                 }
 
@@ -107,13 +103,13 @@ class ModulesResolver {
                     showProgress(resolvingModules, resolvedModules.get(), modules.size());
                     try {
                         final Ivy ivy = ivyManager.getIvy(module);
-                        if (IvyUtil.usesNoLockStrategy(ivy) && warnedAboutLocking.compareAndSet(false, true)) {
+                        if (maxThreads > 1 && IvyUtil.usesNoLockStrategy(ivy) && warnedAboutLocking.compareAndSet(false, true)) {
                             ResolveActionHelper.printWarning(project, "Resolving in parallel, but the Ivy cache doesn't lock the files it writes "
                                     + "(no lockStrategy in the Ivy settings). This can corrupt the Ivy cache.");
                         }
-                        progressMonitor.register(ivy);
+                        runningIvys.put(Thread.currentThread(), ivy);
                         if (indicator.isCanceled()) {
-                            // cancelled before the registration, so the monitor might not interrupt this Ivy
+                            // cancelled before the registration, so this Ivy might not be interrupted
                             return;
                         }
                         final IntellijDependencyResolver resolver = new IntellijDependencyResolver(ivyManager);
@@ -123,7 +119,7 @@ class ModulesResolver {
                         failures[index] = t;
                         failed.set(true);
                     } finally {
-                        progressMonitor.unregister();
+                        runningIvys.remove(Thread.currentThread());
                         resolvingModules.remove(module.getName());
                         showProgress(resolvingModules, resolvedModules.incrementAndGet(), modules.size());
                         freeThreads.release();
@@ -133,21 +129,20 @@ class ModulesResolver {
                 threads.add(thread);
                 thread.start();
             }
-            for (Thread thread : threads) {
-                thread.join();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            indicator.cancel();
-            return Collections.emptyList();
+            // the threads give back their permit when they end
+            ProgressIndicatorUtils.awaitWithCheckCanceled(() -> freeThreads.tryAcquire(maxThreads, WAIT_MILLIS, TimeUnit.MILLISECONDS));
+            // a thread that was cancelled before it started resolving ends without a result
+            indicator.checkCanceled();
+        } catch (ProcessCanceledException e) {
+            interrupt(runningIvys);
+            join(threads);
+            throw e;
         }
 
-        if (!indicator.isCanceled()) {
-            // the first failure in module order, as when resolving the modules one by one
-            for (Throwable failure : failures) {
-                if (failure != null) {
-                    rethrow(failure);
-                }
+        // the first failure in module order, as when resolving the modules one by one
+        for (Throwable failure : failures) {
+            if (failure != null) {
+                rethrow(failure);
             }
         }
 
@@ -158,6 +153,37 @@ class ModulesResolver {
             }
         }
         return result;
+    }
+
+    /**
+     * Interrupts the given Ivys all at the same time, as each interrupt waits until its thread has ended.
+     */
+    private static void interrupt(Map<Thread, Ivy> runningIvys) {
+        for (Map.Entry<Thread, Ivy> runningIvy : runningIvys.entrySet()) {
+            final Thread interrupter = new Thread(() -> interrupt(runningIvy.getValue(), runningIvy.getKey()), "IvyIDEA interrupt");
+            interrupter.setDaemon(true);
+            interrupter.start();
+        }
+    }
+
+    private static void interrupt(Ivy ivy, Thread thread) {
+        try {
+            ivy.interrupt(thread);
+        } catch (UnsupportedOperationException e) {
+            // when the thread is still running after the interrupt timeout of the Ivy settings, Ivy tries to stop it
+            // with Thread.stop, which Java no longer supports; Ivy stays marked as interrupted, so the thread still
+            // stops at the next check of Ivy
+        }
+    }
+
+    private static void join(List<Thread> threads) {
+        try {
+            for (Thread thread : threads) {
+                thread.join();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private void showProgress(Set<String> resolvingModules, int resolvedModules, int modules) {

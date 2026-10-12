@@ -41,7 +41,6 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
 
     private IvyIdeaException exception;
     private final Project project;
-    private ProgressMonitorThread monitorThread;
     private volatile boolean started;
     @Nullable
     private Consumer<ResolveResult> doneListener;
@@ -70,15 +69,9 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         this.doneListener = doneListener;
     }
 
-    protected ProgressMonitorThread getProgressMonitorThread() {
-        return monitorThread;
-    }
-
     public final void run(@NotNull final ProgressIndicator indicator) {
         started = true;
         ResolveIndicator.resolveStarted(project);
-        monitorThread = new ProgressMonitorThread(indicator);
-        monitorThread.start();
 
         try {
             // Intercept URL requests and force the intellij proxy to be used

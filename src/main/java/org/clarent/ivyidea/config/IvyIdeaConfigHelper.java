@@ -168,7 +168,7 @@ public class IvyIdeaConfigHelper {
     }
 
     @Nullable
-    private static String getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
+    public static String getIvySettingsFile(Module module) throws IvySettingsNotFoundException {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
         if (moduleConfiguration.isUseProjectSettings()) {
             return getProjectIvySettingsFile(module.getProject());
@@ -231,13 +231,21 @@ public class IvyIdeaConfigHelper {
 
     @NotNull
     public static Properties getIvyProperties(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+        return loadProperties(module, getPropertiesFiles(module));
+    }
+
+    /**
+     * Returns the properties files of the given module, followed by those of the project if the module includes them.
+     */
+    @NotNull
+    public static List<String> getPropertiesFiles(Module module) {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
         final List<String> propertiesFiles = new ArrayList<>(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
         final FacetPropertiesSettings modulePropertiesSettings = moduleConfiguration.getPropertiesSettings();
         if (modulePropertiesSettings.isIncludeProjectLevelPropertiesFiles()) {
             propertiesFiles.addAll(getProjectConfig(module.getProject()).getPropertiesSettings().getPropertyFiles());
         }
-        return loadProperties(module, propertiesFiles);
+        return propertiesFiles;
     }
 
     @NotNull

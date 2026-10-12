@@ -13,6 +13,7 @@
 - "Always attach sources/javadocs" no longer attaches artifacts that IntelliJ can't read as an archive
 - Added an option to ignore artifact types (default: pom). Artifacts of these types are no longer downloaded or reported as "Unrecognized artifact type" after a resolve
 - Added "IvyIDEA: Resolve for All Modules" as a "Before launch" task for run configurations (thanks to Eric Jarosch)
+- IntelliJ now watches the Ivy files, Ivy settings files and properties files of the IvyIDEA modules. After you edit one of them, a button appears in the editor to resolve all modules again, like the one for Maven and Gradle projects. After changes outside IntelliJ, such as a checkout, all modules are resolved automatically. This can be changed in Settings | Build, Execution, Deployment | Build Tools (thanks to Eric Jarosch)
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

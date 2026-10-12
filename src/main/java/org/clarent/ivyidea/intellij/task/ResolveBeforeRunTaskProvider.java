@@ -66,12 +66,12 @@ public class ResolveBeforeRunTaskProvider extends BeforeRunTaskProvider<ResolveB
     @Override
     public boolean executeTask(@NotNull DataContext context, @NotNull RunConfiguration configuration,
                                @NotNull ExecutionEnvironment environment, @NotNull ResolveBeforeRunTask task) {
-        final CompletableFuture<Boolean> resolved = new CompletableFuture<>();
+        final CompletableFuture<ResolveResult> resolved = new CompletableFuture<>();
         // starting a resolve saves the open documents, which must happen on the event dispatch thread
         ApplicationManager.getApplication().invokeAndWait(
                 () -> ResolveActionHelper.resolveForProject(configuration.getProject(), null, resolved::complete));
         try {
-            return resolved.get();
+            return resolved.get() == ResolveResult.SUCCEEDED;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return false;

@@ -32,6 +32,7 @@ import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
+import org.clarent.ivyidea.intellij.task.ResolveResult;
 import org.clarent.ivyidea.ivy.IvyManager;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
@@ -59,10 +60,10 @@ public class ResolveActionHelper {
      *
      * @param project      Mandatory: the Project to resolve for.
      * @param taskText     Optional: the text to show for this tasks' progress.
-     * @param doneListener Optional: called on the event dispatch thread when the resolve is done, with whether it
-     *                     succeeded. It is not called when there is no project to resolve for.
+     * @param doneListener Optional: called on the event dispatch thread when the resolve is done, with how it ended.
+     *                     It is not called when there is no project to resolve for.
      */
-    public static void resolveForProject(Project project, String taskText, @Nullable Consumer<Boolean> doneListener) {
+    public static void resolveForProject(Project project, String taskText, @Nullable Consumer<ResolveResult> doneListener) {
         if (project == null) {
             return;
         }
@@ -71,7 +72,15 @@ public class ResolveActionHelper {
         }
 
         FileDocumentManager.getInstance().saveAllDocuments();
-        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText, doneListener) {
+        final ResolveAllModulesListener listener = project.getMessageBus().syncPublisher(ResolveAllModulesListener.TOPIC);
+        final Consumer<ResolveResult> notifyDone = result -> {
+            listener.resolveFinished(result);
+            if (doneListener != null) {
+                doneListener.accept(result);
+            }
+        };
+        listener.resolveStarted();
+        ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText, notifyDone) {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
 

@@ -44,7 +44,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     private ProgressMonitorThread monitorThread;
     private volatile boolean started;
     @Nullable
-    private Consumer<Boolean> doneListener;
+    private Consumer<ResolveResult> doneListener;
 
     /**
      * Implementations should perform the resolve process inside this method.
@@ -61,10 +61,10 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
     }
 
     /**
-     * @param doneListener called on the event dispatch thread when the task is done: with true when the resolve
-     *                     succeeded and the module libraries are updated, with false when it failed or was cancelled
+     * @param doneListener called on the event dispatch thread when the task is done, with how it ended; a succeeded
+     *                     resolve has updated the module libraries
      */
-    protected IvyIdeaResolveBackgroundTask(Project project, String taskText, @Nullable Consumer<Boolean> doneListener) {
+    protected IvyIdeaResolveBackgroundTask(Project project, String taskText, @Nullable Consumer<ResolveResult> doneListener) {
         super(project, taskText);
         this.project = project;
         this.doneListener = doneListener;
@@ -91,7 +91,7 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
             doResolve(indicator);
             if (!indicator.isCanceled()) {
                 // doResolve updates the module libraries with invokeLater, so this runs after those updates
-                ApplicationManager.getApplication().invokeLater(() -> done(true));
+                ApplicationManager.getApplication().invokeLater(() -> done(ResolveResult.SUCCEEDED));
             }
         } catch (IvyIdeaException e) {
             exception = e;
@@ -118,20 +118,20 @@ public abstract class IvyIdeaResolveBackgroundTask extends IvyIdeaBackgroundTask
         if (exception != null) {
             handle(exception);
         }
-        done(false);
+        done(exception != null ? ResolveResult.FAILED : ResolveResult.CANCELLED);
     }
 
     @Override
     public void onThrowable(@NotNull Throwable error) {
         super.onThrowable(error);
-        done(false);
+        done(ResolveResult.FAILED);
     }
 
-    private void done(boolean success) {
+    private void done(ResolveResult result) {
         if (doneListener != null) {
-            Consumer<Boolean> listener = doneListener;
+            Consumer<ResolveResult> listener = doneListener;
             doneListener = null; // only the first result counts, e.g. when cancelled while finishing
-            listener.accept(success);
+            listener.accept(result);
         }
     }
 

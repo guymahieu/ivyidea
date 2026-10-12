@@ -31,6 +31,7 @@ public interface IvyIdeaIcons {
     public static final Icon FACET = IconLoader.getIcon("/icons/ivyIdea.svg", IvyIdeaIcons.class);
     public static final Icon TOOL_WINDOW = IconLoader.getIcon("/icons/toolWindowIvyIdea.svg", IvyIdeaIcons.class);
     public static final Icon TOOL_WINDOW_RESOLVING = IconLoader.getIcon("/icons/toolWindowIvyIdeaResolving.svg", IvyIdeaIcons.class);
+    public static final Icon LOAD_CHANGES = IconLoader.getIcon("/icons/ivyIdeaLoadChanges.svg", IvyIdeaIcons.class);
 
 //    public static final Icon ERROR_ICON = IconLoader.findIcon("/compiler/error.png");
 

@@ -2,7 +2,8 @@
   "icons": {
     "expui": {
       "toolWindowIvyIdea.svg": "icons/toolWindowIvyIdea.svg",
-      "toolWindowIvyIdeaResolving.svg": "icons/toolWindowIvyIdeaResolving.svg"
+      "toolWindowIvyIdeaResolving.svg": "icons/toolWindowIvyIdeaResolving.svg",
+      "ivyIdeaLoadChanges.svg": "icons/ivyIdeaLoadChanges.svg"
     }
   }
 }

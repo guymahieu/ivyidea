@@ -31,6 +31,7 @@ import org.clarent.ivyidea.ivy.WorkspaceModuleResolver;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.UndefinedPathVariableException;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectService;
 import org.clarent.ivyidea.intellij.facet.config.FacetPropertiesSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
@@ -190,6 +191,7 @@ public class IvyIdeaConfigHelper {
         if (moduleConfiguration.isUseCustomIvySettings()) {
             final String ivySettingsFile = IvyIdeaPaths.expand(module, moduleConfiguration.getIvySettingsFile());
             if (!StringUtils.isBlank(ivySettingsFile)) {
+                checkPathVariables("The ivy settings file given in the module settings for module " + module.getName(), ivySettingsFile, IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
                 if (!ivySettingsFile.startsWith("http://")
                         && !ivySettingsFile.startsWith("https://")
                         && !ivySettingsFile.startsWith("file://")) {
@@ -217,6 +219,7 @@ public class IvyIdeaConfigHelper {
         if (state.isUseCustomIvySettings()) {
             String settingsFile = IvyIdeaPaths.expand(project, state.getIvySettingsFile());
             if (StringUtils.isNotBlank(settingsFile)) {
+                checkPathVariables("The ivy settings file given in the project settings", settingsFile, IvySettingsNotFoundException.ConfigLocation.Project, project.getName());
                 if (!settingsFile.startsWith("http://")
                         && !settingsFile.startsWith("https://")
                         && !settingsFile.startsWith("file://")) {
@@ -234,6 +237,16 @@ public class IvyIdeaConfigHelper {
             }
         } else {
             return null; // use ivy standard
+        }
+    }
+
+    /**
+     * Throws an exception if the given expanded path still contains a path variable, which then isn't defined.
+     */
+    public static void checkPathVariables(String description, String path, IvySettingsNotFoundException.ConfigLocation configLocation, String configName) throws UndefinedPathVariableException {
+        final String undefinedMacro = IvyIdeaPaths.findMacro(path);
+        if (undefinedMacro != null) {
+            throw new UndefinedPathVariableException(description + " uses the path variable " + undefinedMacro + ", which is not defined: " + path, undefinedMacro, configLocation, configName);
         }
     }
 
@@ -276,6 +289,7 @@ public class IvyIdeaConfigHelper {
         final Properties properties = new Properties();
         for (String propertiesFile : CollectionUtils.createReversedList(propertiesFiles)) {
             if (propertiesFile != null) {
+                checkPathVariables("The ivy properties file given in the settings for module " + module.getName(), propertiesFile, IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
                 File result = new File(propertiesFile);
                 if (!result.exists()) {
                     throw new IvySettingsNotFoundException("The ivy properties file given in the module settings for module " + module.getName() + " does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
@@ -320,7 +334,7 @@ public class IvyIdeaConfigHelper {
                     HttpConfigurable.getInstance().prepareURL(settingsFile);
                     s.load(new URL(settingsFile));
                 } else if (settingsFile.startsWith("file://")) {
-                    s.load(new URL(settingsFile));
+                    s.load(IvyIdeaPaths.toUrl(settingsFile));
                 } else {
                     s.load(new File(settingsFile));
                 }

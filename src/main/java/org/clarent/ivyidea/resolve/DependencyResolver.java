@@ -30,6 +30,7 @@ import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.DownloadOptions;
 import org.apache.ivy.core.resolve.IvyNode;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.IvyIdeaPaths;
 import org.clarent.ivyidea.config.model.ArtifactTypeSettings;
 import org.clarent.ivyidea.exception.IvyFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
@@ -43,6 +44,7 @@ import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 import org.clarent.ivyidea.resolve.problem.ResolveProblem;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -79,6 +81,10 @@ class DependencyResolver {
         final File ivyFile = IvyUtil.getIvyFile(module);
         if (ivyFile == null) {
             throw new IvyFileReadException(null, module.getName(), null);
+        }
+        final String undefinedMacro = IvyIdeaPaths.findMacro(ivyFile.getPath());
+        if (undefinedMacro != null) {
+            throw new IvyFileReadException(ivyFile.getPath(), module.getName(), new FileNotFoundException("The path variable " + undefinedMacro + " is not defined"));
         }
 
         final Ivy ivy = ivyManager.getIvy(module);

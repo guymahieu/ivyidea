@@ -108,7 +108,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
         final Facet facet = editorContext.getFacet();
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(editorContext.getModule(), configuration.getPropertiesSettings().getPropertyFiles()));
+            orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(configuration.getPropertiesSettings().getPropertyFiles()));
         }        
     }
 

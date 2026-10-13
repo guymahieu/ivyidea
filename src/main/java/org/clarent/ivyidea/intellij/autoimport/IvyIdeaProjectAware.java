@@ -31,6 +31,7 @@ import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.io.FileUtilRt;
 import com.intellij.util.containers.ContainerUtil;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.IvyIdeaPaths;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.task.ResolveResult;
@@ -100,8 +101,8 @@ final class IvyIdeaProjectAware implements ExternalSystemProjectAware {
     }
 
     private static void addFile(Set<String> settingsFiles, @Nullable String path) {
-        // URLs can't be watched
-        if (!StringUtils.isBlank(path) && !path.contains("://")) {
+        // URLs can't be watched, nor paths with a path variable that isn't defined
+        if (!StringUtils.isBlank(path) && !IvyIdeaPaths.isUrl(path) && IvyIdeaPaths.findMacro(path) == null) {
             settingsFiles.add(FileUtilRt.toSystemIndependentName(new File(path.trim()).getAbsolutePath()));
         }
     }

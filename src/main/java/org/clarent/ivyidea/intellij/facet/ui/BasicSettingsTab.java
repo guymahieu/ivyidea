@@ -32,6 +32,7 @@ import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.config.IvyIdeaPaths;
 import org.clarent.ivyidea.exception.IvySettingsFileReadException;
 import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
+import org.clarent.ivyidea.exception.UndefinedPathVariableException;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTable;
 import org.clarent.ivyidea.intellij.facet.ui.components.ConfigurationSelectionTableModel;
@@ -171,6 +172,8 @@ public class BasicSettingsTab extends FacetEditorTab {
         } catch (ParseException e1) {
             // TODO: provide link to error display dialog with full exception
             lblIvyFileMessage.setText("Error parsing the file. If you use properties or specific ivy settings, configure those first.");
+        } catch (UndefinedPathVariableException e) {
+            lblIvyFileMessage.setText("The path variable " + e.getPathVariable() + " in the ivy settings or a properties file is not defined.");
         } catch (IvySettingsNotFoundException e) {
             lblIvyFileMessage.setText("Could not find the settings file. Configure the settings file here or in the project settings first.");
         } catch (IvySettingsFileReadException e) {
@@ -202,7 +205,10 @@ public class BasicSettingsTab extends FacetEditorTab {
     private String getIvySettingsFileNameForCurrentSettingsInUI() throws IvySettingsNotFoundException {
         if (chkOverrideProjectIvySettings.isSelected()) {
             if (rbnUseCustomIvySettings.isSelected())  {
-                return IvyIdeaPaths.expand(editorContext.getModule(), txtIvySettingsFile.getTextField().getText());
+                final Module module = editorContext.getModule();
+                final String ivySettingsFile = IvyIdeaPaths.expand(module, txtIvySettingsFile.getTextField().getText());
+                IvyIdeaConfigHelper.checkPathVariables("The ivy settings file", ivySettingsFile, IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
+                return ivySettingsFile;
             }
         } else {
             return IvyIdeaConfigHelper.getProjectIvySettingsFile(editorContext.getProject());
@@ -261,9 +267,9 @@ public class BasicSettingsTab extends FacetEditorTab {
         final Facet facet = editorContext.getFacet();
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            txtIvyFile.setText(IvyIdeaPaths.toDisplayed(editorContext.getModule(), configuration.getIvyFile()));
+            txtIvyFile.setText(IvyIdeaPaths.toDisplayed(configuration.getIvyFile()));
             chkOverrideProjectIvySettings.setSelected(!configuration.isUseProjectSettings());
-            txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(editorContext.getModule(), configuration.getIvySettingsFile()));
+            txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(configuration.getIvySettingsFile()));
             chkOnlyResolveSpecificConfigs.setSelected(configuration.isOnlyResolveSelectedConfigs());
             rbnUseCustomIvySettings.setSelected(configuration.isUseCustomIvySettings());
             rbnUseDefaultIvySettings.setSelected(!configuration.isUseCustomIvySettings());

@@ -142,7 +142,7 @@ public class IvyIdeaProjectSettingsPanel {
     }
 
     private void setPropertiesFiles(List<String> fileNames) {
-        orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(project, fileNames));
+        orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(fileNames));
     }
 
     public void apply() {
@@ -179,7 +179,7 @@ public class IvyIdeaProjectSettingsPanel {
         if (config == null) {
             config = new IvyIdeaProjectSettings();
         }
-        txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(project, config.getIvySettingsFile()));
+        txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(config.getIvySettingsFile()));
         chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
         chkResolveTransitively.setSelected(config.isResolveTransitively());
         chkUseCacheOnly.setSelected(config.isResolveCacheOnly());

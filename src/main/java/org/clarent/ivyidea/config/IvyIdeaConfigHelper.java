@@ -42,9 +42,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.*;
 
@@ -294,8 +295,9 @@ public class IvyIdeaConfigHelper {
                 if (!result.exists()) {
                     throw new IvySettingsNotFoundException("The ivy properties file given in the module settings for module " + module.getName() + " does not exist: " + result.getAbsolutePath(), IvySettingsNotFoundException.ConfigLocation.Module, module.getName());
                 }
-                try {
-                    properties.load(new FileInputStream(result));
+                // closing the file right away, so Windows doesn't keep it locked until it is garbage collected
+                try (InputStream in = Files.newInputStream(result.toPath())) {
+                    properties.load(in);
                 } catch (IOException e) {
                     throw new IvySettingsFileReadException(result.getAbsolutePath(), module.getName(), e);
                 }

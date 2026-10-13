@@ -16,7 +16,6 @@
 
 package org.clarent.ivyidea.intellij.ui;
 
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
@@ -27,6 +26,7 @@ import com.intellij.ui.UserActivityWatcher;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.IvyIdeaPaths;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
 import org.clarent.ivyidea.config.model.PropertiesSettings;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
@@ -84,7 +84,7 @@ public class IvyIdeaProjectSettingsPanel {
         this.project = project;
         this.internalState = state;
 
-        txtIvySettingsFile.addBrowseFolderListener("Select Ivy Settings File", null, project, new FileChooserDescriptor(true, false, false, false, false, false));
+        PathMacroFileField.install(txtIvySettingsFile, "Select Ivy Settings File", project);
 
         // a titled border in the form is drawn as a box, unlike the titled separators in the settings of IntelliJ itself
         pnlIvySettings.setBorder(IdeBorderFactory.createTitledBorder("Ivy Settings"));
@@ -138,18 +138,18 @@ public class IvyIdeaProjectSettingsPanel {
     }
 
     private List<String> getPropertiesFiles() {
-        return orderedFileList.getFileNames();
+        return IvyIdeaPaths.toStored(orderedFileList.getFileNames());
     }
 
     private void setPropertiesFiles(List<String> fileNames) {
-        orderedFileList.setFileNames(fileNames);
+        orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(project, fileNames));
     }
 
     public void apply() {
         if (internalState == null) {
             internalState = new IvyIdeaProjectSettings();
         }
-        internalState.setIvySettingsFile(txtIvySettingsFile.getText());
+        internalState.setIvySettingsFile(IvyIdeaPaths.toStored(txtIvySettingsFile.getText()));
         internalState.setValidateIvyFiles(chkValidateIvyFiles.isSelected());
         internalState.setResolveTransitively(chkResolveTransitively.isSelected());
         internalState.setResolveCacheOnly(chkUseCacheOnly.isSelected());
@@ -179,7 +179,7 @@ public class IvyIdeaProjectSettingsPanel {
         if (config == null) {
             config = new IvyIdeaProjectSettings();
         }
-        txtIvySettingsFile.setText(config.getIvySettingsFile());
+        txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(project, config.getIvySettingsFile()));
         chkValidateIvyFiles.setSelected(config.isValidateIvyFiles());
         chkResolveTransitively.setSelected(config.isResolveTransitively());
         chkUseCacheOnly.setSelected(config.isResolveCacheOnly());

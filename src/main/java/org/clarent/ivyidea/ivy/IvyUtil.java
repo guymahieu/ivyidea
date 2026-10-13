@@ -31,6 +31,7 @@ import org.apache.ivy.plugins.resolver.BasicResolver;
 import org.apache.ivy.plugins.resolver.DependencyResolver;
 import org.apache.ivy.plugins.trigger.Trigger;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
+import org.clarent.ivyidea.config.IvyIdeaPaths;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.logging.ConsoleViewMessageLogger;
@@ -69,7 +70,7 @@ public class IvyUtil {
             throw new RuntimeException("Internal error: No IvyIDEA facet configured for module " + module.getName() + ", but an attempt was made to use it as such.");
         }
 
-        String ivyFile = configuration.getIvyFile();
+        String ivyFile = IvyIdeaPaths.expand(module, configuration.getIvyFile());
         if (StringUtils.isBlank(ivyFile)) {
             return null;
         }

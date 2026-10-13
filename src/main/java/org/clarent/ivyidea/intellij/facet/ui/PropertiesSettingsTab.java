@@ -22,6 +22,7 @@ import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.ui.UserActivityListener;
 import com.intellij.ui.UserActivityWatcher;
+import org.clarent.ivyidea.config.IvyIdeaPaths;
 import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.config.ui.propertieseditor.PropertiesEditor;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
@@ -93,7 +94,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
         final Facet facet = editorContext.getFacet();
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            configuration.getPropertiesSettings().setPropertyFiles(orderedFileList.getFileNames());
+            configuration.getPropertiesSettings().setPropertyFiles(IvyIdeaPaths.toStored(orderedFileList.getFileNames()));
         }        
     }
 
@@ -107,7 +108,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
         final Facet facet = editorContext.getFacet();
         if (facet != null) {
             IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            orderedFileList.setFileNames(configuration.getPropertiesSettings().getPropertyFiles());
+            orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(editorContext.getModule(), configuration.getPropertiesSettings().getPropertyFiles()));
         }        
     }
 

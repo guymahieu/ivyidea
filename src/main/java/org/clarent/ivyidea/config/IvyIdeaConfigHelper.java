@@ -110,8 +110,16 @@ public class IvyIdeaConfigHelper {
         return getProjectConfig(project).getArtifactTypeSettings();
     }
 
+    /**
+     * Returns the properties files of the project, with the path macros expanded.
+     */
+    @NotNull
     public static List<String> getPropertiesFiles(Project project) {
-         return getProjectConfig(project).getPropertiesSettings().getPropertyFiles();
+        final List<String> propertiesFiles = new ArrayList<>();
+        for (String propertiesFile : getProjectConfig(project).getPropertiesSettings().getPropertyFiles()) {
+            propertiesFiles.add(IvyIdeaPaths.expand(project, propertiesFile));
+        }
+        return propertiesFiles;
     }
 
     public static boolean isLibraryNameIncludesModule(final Project project) {
@@ -180,7 +188,7 @@ public class IvyIdeaConfigHelper {
     @Nullable
     private static String getModuleIvySettingsFile(Module module, IvyIdeaFacetConfiguration moduleConfiguration) throws IvySettingsNotFoundException {
         if (moduleConfiguration.isUseCustomIvySettings()) {
-            final String ivySettingsFile = StringUtils.trim(moduleConfiguration.getIvySettingsFile());
+            final String ivySettingsFile = IvyIdeaPaths.expand(module, moduleConfiguration.getIvySettingsFile());
             if (!StringUtils.isBlank(ivySettingsFile)) {
                 if (!ivySettingsFile.startsWith("http://")
                         && !ivySettingsFile.startsWith("https://")
@@ -207,7 +215,7 @@ public class IvyIdeaConfigHelper {
         IvyIdeaProjectService component = project.getService(IvyIdeaProjectService.class);
         final IvyIdeaProjectSettings state = component.getState();
         if (state.isUseCustomIvySettings()) {
-            String settingsFile = StringUtils.trim(state.getIvySettingsFile());
+            String settingsFile = IvyIdeaPaths.expand(project, state.getIvySettingsFile());
             if (StringUtils.isNotBlank(settingsFile)) {
                 if (!settingsFile.startsWith("http://")
                         && !settingsFile.startsWith("https://")
@@ -235,15 +243,28 @@ public class IvyIdeaConfigHelper {
     }
 
     /**
-     * Returns the properties files of the given module, followed by those of the project if the module includes them.
+     * Returns the properties files of the given module, followed by those of the project if the module includes them,
+     * with the path macros expanded.
      */
     @NotNull
     public static List<String> getPropertiesFiles(Module module) {
         final IvyIdeaFacetConfiguration moduleConfiguration = getModuleConfiguration(module);
-        final List<String> propertiesFiles = new ArrayList<>(moduleConfiguration.getPropertiesSettings().getPropertyFiles());
         final FacetPropertiesSettings modulePropertiesSettings = moduleConfiguration.getPropertiesSettings();
+        final List<String> propertiesFiles = getPropertiesFiles(module, modulePropertiesSettings.getPropertyFiles());
         if (modulePropertiesSettings.isIncludeProjectLevelPropertiesFiles()) {
-            propertiesFiles.addAll(getProjectConfig(module.getProject()).getPropertiesSettings().getPropertyFiles());
+            propertiesFiles.addAll(getPropertiesFiles(module.getProject()));
+        }
+        return propertiesFiles;
+    }
+
+    /**
+     * Returns the given properties files from the settings of the given module, with the path macros expanded.
+     */
+    @NotNull
+    public static List<String> getPropertiesFiles(Module module, List<String> modulePropertiesFiles) {
+        final List<String> propertiesFiles = new ArrayList<>();
+        for (String propertiesFile : modulePropertiesFiles) {
+            propertiesFiles.add(IvyIdeaPaths.expand(module, propertiesFile));
         }
         return propertiesFiles;
     }

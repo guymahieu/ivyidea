@@ -18,6 +18,7 @@ package org.clarent.ivyidea.intellij.model;
 
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.roots.impl.libraries.LibraryEx;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.util.Disposer;
@@ -94,7 +95,22 @@ class LibraryModels implements Closeable {
 
     private Library.ModifiableModel getForConfiguration(String ivyConfiguration) {
         final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, ivyConfiguration);
-        return libraryModels.computeIfAbsent(libraryName, _libraryName -> getIvyIdeaLibrary(intellijModule, libraryName).getModifiableModel());
+        return libraryModels.computeIfAbsent(libraryName, _libraryName -> getModifiableModel(getIvyIdeaLibrary(intellijModule, libraryName)));
+    }
+
+    /**
+     * Returns the modifiable model of the given library, with the IvyIDEA library type, also for a library that was
+     * created without it.
+     */
+    private static Library.ModifiableModel getModifiableModel(Library library) {
+        final Library.ModifiableModel libraryModel = library.getModifiableModel();
+        if (libraryModel instanceof LibraryEx.ModifiableModelEx) {
+            final LibraryEx.ModifiableModelEx libraryModelEx = (LibraryEx.ModifiableModelEx) libraryModel;
+            if (libraryModelEx.getKind() == null) {
+                libraryModelEx.setKind(IvyIdeaLibraryType.KIND);
+            }
+        }
+        return libraryModel;
     }
 
     private Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel, final String libraryName) {

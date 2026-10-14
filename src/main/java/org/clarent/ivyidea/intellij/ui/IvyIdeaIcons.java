@@ -28,7 +28,8 @@ import javax.swing.*;
 
 public interface IvyIdeaIcons {
 
-    public static final Icon FACET = IconLoader.getIcon("/icons/ivyIdea.svg", IvyIdeaIcons.class);
+    // the icon of the facet, the libraries and the Before launch task
+    public static final Icon IVYIDEA = IconLoader.getIcon("/icons/ivyIdea.svg", IvyIdeaIcons.class);
     public static final Icon TOOL_WINDOW = IconLoader.getIcon("/icons/toolWindowIvyIdea.svg", IvyIdeaIcons.class);
     public static final Icon TOOL_WINDOW_RESOLVING = IconLoader.getIcon("/icons/toolWindowIvyIdeaResolving.svg", IvyIdeaIcons.class);
     public static final Icon LOAD_CHANGES = IconLoader.getIcon("/icons/ivyIdeaLoadChanges.svg", IvyIdeaIcons.class);

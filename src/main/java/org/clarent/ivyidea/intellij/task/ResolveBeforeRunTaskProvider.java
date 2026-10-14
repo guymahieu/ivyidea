@@ -52,7 +52,7 @@ public class ResolveBeforeRunTaskProvider extends BeforeRunTaskProvider<ResolveB
 
     @Override
     public Icon getIcon() {
-        return IvyIdeaIcons.FACET;
+        return IvyIdeaIcons.IVYIDEA;
     }
 
     @Override

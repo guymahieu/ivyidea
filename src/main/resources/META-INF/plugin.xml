@@ -36,6 +36,7 @@
         <toolWindow id="IvyIDEA" icon="/icons/toolWindowIvyIdea.svg" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
 
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
+        <library.type implementation="org.clarent.ivyidea.intellij.model.IvyIdeaLibraryType"/>
         <framework.detector implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetDetector"/>
 
         <projectConfigurable id="IvyIDEA.ProjectSettings"

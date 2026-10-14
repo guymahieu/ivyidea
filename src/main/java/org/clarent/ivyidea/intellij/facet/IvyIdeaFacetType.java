@@ -58,7 +58,7 @@ public class IvyIdeaFacetType extends FacetType<IvyIdeaFacet, IvyIdeaFacetConfig
     }
 
     public javax.swing.Icon getIcon() {
-        return IvyIdeaIcons.FACET;
+        return IvyIdeaIcons.IVYIDEA;
     }
 
 }

@@ -37,6 +37,7 @@
 
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
         <library.type implementation="org.clarent.ivyidea.intellij.model.IvyIdeaLibraryType"/>
+        <fileIconProvider implementation="org.clarent.ivyidea.intellij.ui.IvyFileIconProvider"/>
         <framework.detector implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetDetector"/>
 
         <projectConfigurable id="IvyIDEA.ProjectSettings"

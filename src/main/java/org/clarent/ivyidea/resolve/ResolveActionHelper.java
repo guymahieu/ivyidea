@@ -31,6 +31,7 @@ import org.clarent.ivyidea.exception.IvySettingsNotFoundException;
 import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.clarent.ivyidea.intellij.model.IntellijModuleWrapper;
+import org.clarent.ivyidea.intellij.model.ProjectLibraries;
 import org.clarent.ivyidea.intellij.task.IvyIdeaResolveBackgroundTask;
 import org.clarent.ivyidea.intellij.task.ResolveResult;
 import org.clarent.ivyidea.ivy.IvyManager;
@@ -73,6 +74,7 @@ public class ResolveActionHelper {
         }
 
         FileDocumentManager.getInstance().saveAllDocuments();
+        IvyIdeaConfigHelper.decideUseProjectLibraries(project);
         final ResolveAllModulesListener listener = project.getMessageBus().syncPublisher(ResolveAllModulesListener.TOPIC);
         final Consumer<ResolveResult> notifyDone = result -> {
             listener.resolveFinished(result);
@@ -102,6 +104,9 @@ public class ResolveActionHelper {
                     updateIntellijModel(module, resolver.getDependencies());
                     reportProblems(module, resolver.getProblems());
                 }
+                // after the module updates, which are queued before it
+                ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(
+                        () -> ProjectLibraries.deleteAllUnused(myProject)), myProject.getDisposed());
             }
         });
     }
@@ -122,6 +127,7 @@ public class ResolveActionHelper {
 
         FileDocumentManager.getInstance().saveAllDocuments();
         Project project = module.getProject();
+        IvyIdeaConfigHelper.decideUseProjectLibraries(project);
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
                 clearConsole(myProject);
@@ -141,16 +147,16 @@ public class ResolveActionHelper {
             try (IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(module)) {
                 moduleWrapper.updateDependencies(dependencies);
             }
-        }));
+        }), module.getDisposed());
     }
 
     public static void printWarning(final Project project, final String message) {
         ApplicationManager.getApplication().invokeLater(() ->
-                IntellijUtils.getConsoleView(project).print(message + '\n', ConsoleViewContentType.LOG_WARNING_OUTPUT));
+                IntellijUtils.getConsoleView(project).print(message + '\n', ConsoleViewContentType.LOG_WARNING_OUTPUT), project.getDisposed());
     }
 
     public static void clearConsole(final Project project) {
-        ApplicationManager.getApplication().invokeLater(() -> IntellijUtils.getConsoleView(project).clear());
+        ApplicationManager.getApplication().invokeLater(() -> IntellijUtils.getConsoleView(project).clear(), project.getDisposed());
     }
 
     public static void reportProblems(final Module module, final List<ResolveProblem> problems) {
@@ -181,6 +187,6 @@ public class ResolveActionHelper {
                 // Make sure the tool window becomes visible if there were problems
                 IntellijUtils.getToolWindow(module.getProject()).show(null);
             }
-        });
+        }, module.getDisposed());
     }
 }

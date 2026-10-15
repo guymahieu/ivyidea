@@ -16,10 +16,12 @@
 
 package org.clarent.ivyidea.intellij.ui;
 
+import com.intellij.openapi.project.ExternalStorageConfigurationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.panel.ComponentPanelBuilder;
+import com.intellij.project.ProjectKt;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.UserActivityWatcher;
@@ -56,6 +58,14 @@ public class IvyIdeaProjectSettingsPanel {
     private JComboBox<IvyLogLevel> ivyLogLevelComboBox;
     private JCheckBox includeModuleNameCheckBox;
     private JCheckBox includeConfigurationNameCheckBox;
+    private JRadioButton rbnModuleLibraries;
+    private JRadioButton rbnProjectLibraries;
+    private JCheckBox chkStoreExternally;
+    private JLabel lblStoreExternallyComment;
+    // the value shown by reset(), so a change of the same setting on the Maven or Gradle page isn't undone
+    private boolean storeExternallyShown;
+    // the stored value of Include Module Name, which is always on for project libraries
+    private boolean libraryNameIncludesModule;
     private JPanel pnlIvyLogging;
     private JPanel pnlLibraryNaming;
     private JTextField txtClassesArtifactTypes;
@@ -90,12 +100,41 @@ public class IvyIdeaProjectSettingsPanel {
         pnlIvySettings.setBorder(IdeBorderFactory.createTitledBorder("Ivy Settings"));
         pnlResolveOptions.setBorder(IdeBorderFactory.createTitledBorder("Resolve Options"));
         pnlArtifactTypes.setBorder(IdeBorderFactory.createTitledBorder("Artifact Types"));
-        pnlLibraryNaming.setBorder(IdeBorderFactory.createTitledBorder("Resolved Library Naming"));
+        pnlLibraryNaming.setBorder(IdeBorderFactory.createTitledBorder("Resolved Libraries"));
 
         wireActivityWatchers();
         wireIvySettingsRadioButtons();
         wireResolveInParallel();
+        wireLibraryKind();
         styleAsComment(lblResolveInParallelComment, chkResolveInParallel);
+    }
+
+    private void wireLibraryKind() {
+        final int indent = UIUtil.getCheckBoxTextHorizontalOffset(includeModuleNameCheckBox);
+        chkStoreExternally.setBorder(JBUI.Borders.emptyLeft(indent));
+        styleAsComment(lblStoreExternallyComment, chkStoreExternally);
+        lblStoreExternallyComment.setBorder(JBUI.Borders.emptyLeft(indent + UIUtil.getCheckBoxTextHorizontalOffset(chkStoreExternally)));
+        // IntelliJ only stores files externally for projects with a .idea directory
+        chkStoreExternally.setVisible(ProjectKt.isDirectoryBased(project));
+        lblStoreExternallyComment.setVisible(chkStoreExternally.isVisible());
+        includeModuleNameCheckBox.addItemListener(e -> {
+            if (includeModuleNameCheckBox.isEnabled()) {
+                libraryNameIncludesModule = includeModuleNameCheckBox.isSelected();
+            }
+        });
+        rbnProjectLibraries.addItemListener(e -> updateLibraryKindEnabled());
+    }
+
+    /**
+     * Project libraries need the module name, as their names must be unique in the project, and only their storage
+     * can be chosen.
+     */
+    private void updateLibraryKindEnabled() {
+        final boolean projectLibraries = rbnProjectLibraries.isSelected();
+        includeModuleNameCheckBox.setEnabled(!projectLibraries);
+        includeModuleNameCheckBox.setSelected(projectLibraries || libraryNameIncludesModule);
+        chkStoreExternally.setEnabled(projectLibraries);
+        lblStoreExternallyComment.setEnabled(projectLibraries);
     }
 
     private void wireResolveInParallel() {
@@ -163,8 +202,16 @@ public class IvyIdeaProjectSettingsPanel {
         final PropertiesSettings propertiesSettings = new PropertiesSettings();
         propertiesSettings.setPropertyFiles(getPropertiesFiles());
         internalState.setPropertiesSettings(propertiesSettings);
-        internalState.setLibraryNameIncludesModule(includeModuleNameCheckBox.isSelected());
+        internalState.setLibraryNameIncludesModule(libraryNameIncludesModule);
         internalState.setLibraryNameIncludesConfiguration(includeConfigurationNameCheckBox.isSelected());
+        internalState.setUseProjectLibraries(rbnProjectLibraries.isSelected());
+        // not an IvyIDEA setting: the same setting as Store generated project files externally of Maven and Gradle
+        final ExternalStorageConfigurationManager externalStorage = ExternalStorageConfigurationManager.getInstance(project);
+        if (rbnProjectLibraries.isSelected() && chkStoreExternally.isVisible()
+                && chkStoreExternally.isSelected() != storeExternallyShown) {
+            externalStorage.setEnabled(chkStoreExternally.isSelected());
+            storeExternallyShown = chkStoreExternally.isSelected();
+        }
         final Object selectedLogLevel = ivyLogLevelComboBox.getSelectedItem();
         internalState.setIvyLogLevelThreshold(selectedLogLevel == null ? IvyLogLevel.None.name() : selectedLogLevel.toString());
         internalState.getArtifactTypeSettings().setTypesForCategory(Classes, txtClassesArtifactTypes.getText());
@@ -194,6 +241,14 @@ public class IvyIdeaProjectSettingsPanel {
         setPropertiesFiles(config.getPropertiesSettings().getPropertyFiles());
         includeModuleNameCheckBox.setSelected(config.isLibraryNameIncludesModule());
         includeConfigurationNameCheckBox.setSelected(config.isLibraryNameIncludesConfiguration());
+        libraryNameIncludesModule = config.isLibraryNameIncludesModule();
+        final boolean useProjectLibraries = config.getUseProjectLibraries() != null
+                ? config.getUseProjectLibraries() : IvyIdeaConfigHelper.isUseProjectLibraries(project);
+        rbnModuleLibraries.setSelected(!useProjectLibraries);
+        rbnProjectLibraries.setSelected(useProjectLibraries);
+        storeExternallyShown = ExternalStorageConfigurationManager.getInstance(project).isEnabled();
+        chkStoreExternally.setSelected(storeExternallyShown);
+        updateLibraryKindEnabled();
         ivyLogLevelComboBox.setSelectedItem(IvyLogLevel.fromName(config.getIvyLogLevelThreshold()));
         txtSourcesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Sources));
         txtClassesArtifactTypes.setText(config.getArtifactTypeSettings().getTypesStringForCategory(Classes));

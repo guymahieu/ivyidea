@@ -15,6 +15,7 @@
 - Added "IvyIDEA: Resolve for All Modules" as a "Before launch" task for run configurations (thanks to Eric Jarosch)
 - IntelliJ now watches the Ivy files, Ivy settings files and properties files of the IvyIDEA modules. After you edit one of them, a button appears in the editor to resolve all modules again, like the one for Maven and Gradle projects. After changes outside IntelliJ, such as a checkout, all modules are resolved automatically. This can be changed in Settings | Build, Execution, Deployment | Build Tools (thanks to Eric Jarosch)
 - The paths of the Ivy file and the Ivy settings file can now contain path macros, like `$MODULE_DIR$` and `$PROJECT_DIR$`, and path variables. A relative path is relative to the module directory, or to the project directory in the project settings
+- Added an option to store the resolved libraries as project libraries instead of module libraries. New projects use project libraries by default (thanks to Eric Jarosch)
 
 ## [1.0.19]
 - The action "Resolve for current module" was no longer available. This has been fixed.

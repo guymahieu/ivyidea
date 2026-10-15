@@ -34,6 +34,8 @@ public class IvyIdeaProjectSettings {
     private boolean alwaysAttachJavadocs = true;
     private boolean libraryNameIncludesModule = false;
     private boolean libraryNameIncludesConfiguration = false;
+    // null until decided: see IvyIdeaConfigHelper.isUseProjectLibraries
+    private Boolean useProjectLibraries = null;
     private boolean detectDependenciesOnOtherModules = true;
     private boolean resolveInParallel = false;
     private int resolveThreads = 4;
@@ -130,6 +132,14 @@ public class IvyIdeaProjectSettings {
 
     public void setLibraryNameIncludesConfiguration(final boolean libraryNameIncludesConfiguration) {
         this.libraryNameIncludesConfiguration = libraryNameIncludesConfiguration;
+    }
+
+    public Boolean getUseProjectLibraries() {
+        return useProjectLibraries;
+    }
+
+    public void setUseProjectLibraries(Boolean useProjectLibraries) {
+        this.useProjectLibraries = useProjectLibraries;
     }
 
     public boolean isDetectDependenciesOnOtherModules() {

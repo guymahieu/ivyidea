@@ -17,8 +17,10 @@
 package org.clarent.ivyidea.intellij.model;
 
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
@@ -34,6 +36,10 @@ public class IntellijModuleWrapper implements AutoCloseable {
 
     private final ModifiableRootModel intellijModule;
     private final LibraryModels libraryModels;
+    // decided once, as it may need to look at all modules
+    private final boolean projectLibraries;
+    // the project libraries this module no longer depends on, to delete when no other module uses them either
+    private final List<Library> removedProjectLibraries = new ArrayList<>();
 
     public static IntellijModuleWrapper forModule(Module module) {
         ModifiableRootModel modifiableModel = null;
@@ -50,10 +56,21 @@ public class IntellijModuleWrapper implements AutoCloseable {
 
     private IntellijModuleWrapper(ModifiableRootModel intellijModule) {
         this.intellijModule = intellijModule;
-        this.libraryModels = new LibraryModels(intellijModule);
+        this.projectLibraries = IvyIdeaConfigHelper.isUseProjectLibraries(intellijModule.getProject());
+        this.libraryModels = new LibraryModels(intellijModule, projectLibraries);
     }
 
     public void updateDependencies(Collection<ResolvedDependency> resolvedDependencies) {
+        if (projectLibraries) {
+            // all at once, as each change of the project libraries is a separate change of the project model
+            final Set<String> libraryNames = new HashSet<String>();
+            for (ResolvedDependency resolvedDependency : resolvedDependencies) {
+                if (resolvedDependency instanceof ExternalDependency && ((ExternalDependency) resolvedDependency).getLocalFile() != null) {
+                    libraryNames.add(libraryModels.getLibraryName((ExternalDependency) resolvedDependency));
+                }
+            }
+            ProjectLibraries.createMissing(intellijModule.getProject(), libraryNames);
+        }
         for (ResolvedDependency resolvedDependency : resolvedDependencies) {
             resolvedDependency.addTo(this);
         }
@@ -67,6 +84,7 @@ public class IntellijModuleWrapper implements AutoCloseable {
         } else {
             intellijModule.dispose();
         }
+        ProjectLibraries.deleteUnused(intellijModule.getProject(), removedProjectLibraries);
     }
 
     public String getModuleName() {
@@ -106,21 +124,73 @@ public class IntellijModuleWrapper implements AutoCloseable {
 
         // remove resolved libraries that are no longer used
         Set<String> librariesInUse = new HashSet<String>();
+        Set<String> configurations = new HashSet<String>();
         for (ResolvedDependency dependency : dependenciesToKeep) {
             if (dependency instanceof ExternalDependency) {
                 ExternalDependency externalDependency = (ExternalDependency) dependency;
-                String library = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, externalDependency.getConfigurationName());
+                String library = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, externalDependency.getConfigurationName(), projectLibraries);
                 librariesInUse.add(library);
+                configurations.add(externalDependency.getConfigurationName());
             }
         }
 
+        // the libraries are either module libraries or project libraries, so all libraries of the other kind are
+        // left over from before the setting changed
+        takeOverOrderEntries(configurations);
         final LibraryTable libraryTable = intellijModule.getModuleLibraryTable();
         for (Library library : libraryTable.getLibraries()) {
             final String libraryName = library.getName();
-            if (IvyIdeaConfigHelper.isCreatedLibraryName(libraryName) && !librariesInUse.contains(libraryName)) {
+            if (IvyIdeaConfigHelper.isCreatedLibraryName(libraryName) && (projectLibraries || !librariesInUse.contains(libraryName))) {
                 libraryTable.removeLibrary(library);
             }
         }
+        removedProjectLibraries.addAll(ProjectLibraries.removeDependencies(intellijModule,
+                projectLibraries ? librariesInUse : Collections.emptySet()));
+    }
+
+    /**
+     * Gives the new library entries the position, scope and export flag of the entries of the other kind of library
+     * that they replace, after the setting changed.
+     */
+    private void takeOverOrderEntries(Set<String> configurations) {
+        final Map<String, String> replacedNames = new HashMap<String, String>();
+        final List<OrderEntry> orderEntries = new ArrayList<OrderEntry>(Arrays.asList(intellijModule.getOrderEntries()));
+        for (String configuration : configurations) {
+            final String newName = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, configuration, projectLibraries);
+            final String oldName = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, configuration, !projectLibraries);
+            final LibraryOrderEntry newEntry = findLibraryEntry(orderEntries, newName, projectLibraries);
+            final LibraryOrderEntry oldEntry = findLibraryEntry(orderEntries, oldName, !projectLibraries);
+            if (newEntry != null && oldEntry != null && !replacedNames.containsKey(newName)) {
+                replacedNames.put(newName, oldName);
+                orderEntries.remove(newEntry);
+                orderEntries.add(orderEntries.indexOf(oldEntry), newEntry);
+            }
+        }
+        if (replacedNames.isEmpty()) {
+            return;
+        }
+        intellijModule.rearrangeOrderEntries(orderEntries.toArray(OrderEntry.EMPTY_ARRAY));
+        final List<OrderEntry> rearranged = Arrays.asList(intellijModule.getOrderEntries());
+        for (Map.Entry<String, String> names : replacedNames.entrySet()) {
+            final LibraryOrderEntry newEntry = findLibraryEntry(rearranged, names.getKey(), projectLibraries);
+            final LibraryOrderEntry oldEntry = findLibraryEntry(rearranged, names.getValue(), !projectLibraries);
+            if (newEntry != null && oldEntry != null) {
+                newEntry.setScope(oldEntry.getScope());
+                newEntry.setExported(oldEntry.isExported());
+            }
+        }
+    }
+
+    private static LibraryOrderEntry findLibraryEntry(List<OrderEntry> orderEntries, String libraryName, boolean projectLevel) {
+        for (OrderEntry orderEntry : orderEntries) {
+            if (orderEntry instanceof LibraryOrderEntry) {
+                final LibraryOrderEntry libraryEntry = (LibraryOrderEntry) orderEntry;
+                if (libraryEntry.isModuleLevel() != projectLevel && libraryName.equals(libraryEntry.getLibraryName())) {
+                    return libraryEntry;
+                }
+            }
+        }
+        return null;
     }
 
     private List<String> getDependenciesToRemove(OrderRootType type, Set<String> pathsToKeep) {

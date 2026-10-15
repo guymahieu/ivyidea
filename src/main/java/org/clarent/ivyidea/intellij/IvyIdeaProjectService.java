@@ -19,8 +19,11 @@ package org.clarent.ivyidea.intellij;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.intellij.util.xmlb.SkipDefaultsSerializationFilter;
+import com.intellij.util.xmlb.XmlSerializer;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
+import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -35,6 +38,8 @@ public class IvyIdeaProjectService implements PersistentStateComponent<IvyIdeaPr
     public static final String COMPONENT_NAME = "IvyIDEA.ProjectSettings";
 
     private final IvyIdeaProjectSettings internalState;
+    // whether the project file contained IvyIDEA settings; only remembered, never saved
+    private volatile boolean savedSettingsLoaded;
 
     public IvyIdeaProjectService() {
         this.internalState = new IvyIdeaProjectSettings();
@@ -47,5 +52,18 @@ public class IvyIdeaProjectService implements PersistentStateComponent<IvyIdeaPr
 
     public void loadState(@NotNull IvyIdeaProjectSettings state) {
         XmlSerializerUtil.copyBean(state, this.getState());
+        // IntelliJ also loads the default settings, e.g. when the project file is reloaded without IvyIDEA settings
+        final Element saved = XmlSerializer.serialize(state, new SkipDefaultsSerializationFilter());
+        if (!saved.getContent().isEmpty() || saved.hasAttributes()) {
+            savedSettingsLoaded = true;
+        }
+    }
+
+    /**
+     * Returns whether the IvyIDEA settings were loaded from the project file, which only contains them when they
+     * differ from the defaults, so the project used IvyIDEA before.
+     */
+    public boolean isSavedSettingsLoaded() {
+        return savedSettingsLoaded;
     }
 }

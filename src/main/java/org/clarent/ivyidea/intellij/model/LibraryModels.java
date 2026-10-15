@@ -54,8 +54,11 @@ class LibraryModels implements Closeable {
 
     private ModifiableRootModel intellijModule;
 
-    LibraryModels(ModifiableRootModel intellijModule) {
+    private final boolean projectLibraries;
+
+    LibraryModels(ModifiableRootModel intellijModule, boolean projectLibraries) {
         this.intellijModule = intellijModule;
+        this.projectLibraries = projectLibraries;
     }
 
     public boolean containsRoot(final ExternalDependency externalDependency) {
@@ -89,13 +92,14 @@ class LibraryModels implements Closeable {
     }
 
     private Library.ModifiableModel getForExternalDependency(final ExternalDependency externalDependency) {
-        String resolvedConfiguration = externalDependency.getConfigurationName();
-        return getForConfiguration(isBlank(resolvedConfiguration) ? "default" : resolvedConfiguration);
+        final String libraryName = getLibraryName(externalDependency);
+        return libraryModels.computeIfAbsent(libraryName, _libraryName -> getModifiableModel(getIvyIdeaLibrary(intellijModule, libraryName)));
     }
 
-    private Library.ModifiableModel getForConfiguration(String ivyConfiguration) {
-        final String libraryName = IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule, ivyConfiguration);
-        return libraryModels.computeIfAbsent(libraryName, _libraryName -> getModifiableModel(getIvyIdeaLibrary(intellijModule, libraryName)));
+    String getLibraryName(final ExternalDependency externalDependency) {
+        final String resolvedConfiguration = externalDependency.getConfigurationName();
+        return IvyIdeaConfigHelper.getCreatedLibraryName(intellijModule,
+                isBlank(resolvedConfiguration) ? "default" : resolvedConfiguration, projectLibraries);
     }
 
     /**
@@ -114,6 +118,9 @@ class LibraryModels implements Closeable {
     }
 
     private Library getIvyIdeaLibrary(ModifiableRootModel modifiableRootModel, final String libraryName) {
+        if (projectLibraries) {
+            return ProjectLibraries.getOrCreate(modifiableRootModel, libraryName);
+        }
         final LibraryTable libraryTable = modifiableRootModel.getModuleLibraryTable();
         final Library library = libraryTable.getLibraryByName(libraryName);
         if (library == null) {

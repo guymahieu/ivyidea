@@ -18,9 +18,13 @@ package org.clarent.ivyidea.config;
 
 import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.util.net.HttpConfigurable;
 import org.apache.ivy.core.resolve.ResolveOptions;
 import org.apache.ivy.core.settings.IvySettings;
@@ -35,6 +39,7 @@ import org.clarent.ivyidea.exception.UndefinedPathVariableException;
 import org.clarent.ivyidea.intellij.IvyIdeaProjectService;
 import org.clarent.ivyidea.intellij.facet.config.FacetPropertiesSettings;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
+import org.clarent.ivyidea.intellij.model.ProjectLibraries;
 import org.clarent.ivyidea.logging.IvyLogLevel;
 import org.clarent.ivyidea.util.CollectionUtils;
 import org.clarent.ivyidea.util.StringUtils;
@@ -64,10 +69,12 @@ public class IvyIdeaConfigHelper {
 
     private static final String RESOLVED_LIB_NAME_ROOT = "IvyIDEA";
 
-    public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName) {
+    public static String getCreatedLibraryName(final ModifiableRootModel model, final String configName,
+                                               final boolean projectLibraries) {
         final Project project = model.getProject();
         String libraryName = RESOLVED_LIB_NAME_ROOT;
-        if (isLibraryNameIncludesModule(project)) {
+        // project libraries need the module name, as their names must be unique in the project
+        if (isLibraryNameIncludesModule(project) || projectLibraries) {
             final String moduleName = model.getModule().getName();
             libraryName += "-" + moduleName;
         }
@@ -130,6 +137,55 @@ public class IvyIdeaConfigHelper {
 
     public static boolean isLibraryNameIncludesConfiguration(final Project project) {
         return getProjectConfig(project).isLibraryNameIncludesConfiguration();
+    }
+
+    /**
+     * Returns whether the resolved libraries are project libraries, rather than module libraries in the module
+     * files. IntelliJ stores them in the project directory or outside it, like those of Maven and Gradle projects.
+     * <p>
+     * Until this is decided, new projects use project libraries, and projects that used IvyIDEA before keep using
+     * module libraries: projects that had IvyIDEA settings when they were opened, or whose modules already have
+     * IvyIDEA module libraries. Projects that already have IvyIDEA project libraries keep using them, as the choice
+     * for project libraries isn't saved.
+     */
+    public static boolean isUseProjectLibraries(final Project project) {
+        final Boolean useProjectLibraries = getProjectConfig(project).getUseProjectLibraries();
+        if (useProjectLibraries != null) {
+            return useProjectLibraries;
+        }
+        if (ProjectLibraries.hasIvyIdeaLibraries(project)) {
+            return true;
+        }
+        // the settings for new projects have no modules, and saved settings of their own
+        final boolean usedIvyIdeaBefore = !project.isDefault()
+                && (project.getService(IvyIdeaProjectService.class).isSavedSettingsLoaded() || hasIvyIdeaModuleLibraries(project));
+        return !usedIvyIdeaBefore;
+    }
+
+    /**
+     * Saves that the resolved libraries are module libraries, if that isn't decided yet, so it doesn't change
+     * afterwards, e.g. when the libraries are removed. Called when IvyIDEA changes the libraries anyway.
+     * <p>
+     * Project libraries are only chosen for projects without saved IvyIDEA settings, which keep the IvyIDEA settings
+     * empty this way and get the same choice at the next resolve.
+     */
+    public static void decideUseProjectLibraries(final Project project) {
+        final IvyIdeaProjectSettings settings = getProjectConfig(project);
+        if (settings.getUseProjectLibraries() == null && !isUseProjectLibraries(project)) {
+            settings.setUseProjectLibraries(false);
+        }
+    }
+
+    private static boolean hasIvyIdeaModuleLibraries(final Project project) {
+        for (Module module : ModuleManager.getInstance(project).getModules()) {
+            for (OrderEntry orderEntry : ModuleRootManager.getInstance(module).getOrderEntries()) {
+                if (orderEntry instanceof LibraryOrderEntry && ((LibraryOrderEntry) orderEntry).isModuleLevel()
+                        && isCreatedLibraryName(((LibraryOrderEntry) orderEntry).getLibraryName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static IvyLogLevel getIvyLoggingThreshold(final Project project) {

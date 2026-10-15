@@ -53,6 +53,15 @@ public class ArtifactTypeSettingsTest {
     }
 
     @Test
+    public void testLookupWithDefaultsDoesNotChangeTheSavedSettings() {
+        final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
+        assertThat(typeSettings.getCategoryForType("jar")).isSameAs(Classes);
+        assertThat(typeSettings.getClassesTypes()).isEmpty();
+        assertThat(typeSettings.getSourcesTypes()).isEmpty();
+        assertThat(typeSettings.getJavadocTypes()).isEmpty();
+    }
+
+    @Test
     public void testCorrectCategoryReturnedForType() {
         final ArtifactTypeSettings typeSettings = new ArtifactTypeSettings();
         typeSettings.setTypesForCategory(Classes, "jar");

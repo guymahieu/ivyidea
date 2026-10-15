@@ -67,22 +67,17 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
         if (type == null) {
             return null;
         }
-        if (isConfigurationEmpty()) {
-            fillDefaults();
-        }
-        for (DependencyCategory dependencyCategory : typesPerCategory.keySet()) {
-            final Set<String> types = typesPerCategory.get(dependencyCategory);
-            if (types != null && types.contains(type.trim().toLowerCase())) {
+        // the defaults aren't stored, so a resolve doesn't change the saved settings
+        final boolean useDefaults = isConfigurationEmpty();
+        final String trimmedType = type.trim().toLowerCase();
+        for (DependencyCategory dependencyCategory : DependencyCategory.values()) {
+            final Collection<String> types = useDefaults
+                    ? dependencyCategory.getDefaultTypes() : typesPerCategory.get(dependencyCategory);
+            if (types != null && types.contains(trimmedType)) {
                 return dependencyCategory;
             }
         }
         return null;
-    }
-
-    private void fillDefaults() {
-        for (DependencyCategory category : DependencyCategory.values()) {
-            setTypesForCategory(category, joinArtifactTypes(category.getDefaultTypes()));
-        }
     }
 
     public void setTypesForCategory(@NotNull DependencyCategory category, String types) {

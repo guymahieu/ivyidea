@@ -19,7 +19,7 @@ package org.clarent.ivyidea.intellij;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.util.xmlb.SkipDefaultsSerializationFilter;
+import com.intellij.openapi.util.JDOMUtil;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.clarent.ivyidea.config.model.IvyIdeaProjectSettings;
@@ -53,8 +53,9 @@ public class IvyIdeaProjectService implements PersistentStateComponent<IvyIdeaPr
     public void loadState(@NotNull IvyIdeaProjectSettings state) {
         XmlSerializerUtil.copyBean(state, this.getState());
         // IntelliJ also loads the default settings, e.g. when the project file is reloaded without IvyIDEA settings
-        final Element saved = XmlSerializer.serialize(state, new SkipDefaultsSerializationFilter());
-        if (!saved.getContent().isEmpty() || saved.hasAttributes()) {
+        final Element saved = XmlSerializer.serialize(state);
+        final Element defaults = XmlSerializer.serialize(new IvyIdeaProjectSettings());
+        if (!JDOMUtil.areElementsEqual(saved, defaults)) {
             savedSettingsLoaded = true;
         }
     }

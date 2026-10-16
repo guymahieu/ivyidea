@@ -362,16 +362,22 @@ public class IvyIdeaConfigHelper {
         return properties;
     }
 
+    /**
+     * Creates the configured Ivy settings of the given module for a resolve. A settings URL isn't checked here: the
+     * IvyManager checks it once per resolve.
+     */
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module, IvyManager ivyManager) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final String settingsFile = getIvySettingsFile(module);
         final Properties properties = getIvyProperties(module);
         if (!detectDependenciesOnOtherModulesWhileResolving(module.getProject())) {
-            return createConfiguredIvySettings(module, settingsFile, properties);
+            IvySettings s = new IvySettings();
+            configureIvySettings(s, module, settingsFile, properties, false);
+            return s;
         }
 
         WorkspaceAwareIvySettings s = new WorkspaceAwareIvySettings();
-        configureIvySettings(s, module, settingsFile, properties);
+        configureIvySettings(s, module, settingsFile, properties, false);
         s.setWorkspaceResolver(new WorkspaceModuleResolver(ivyManager));
         return s;
     }
@@ -379,17 +385,36 @@ public class IvyIdeaConfigHelper {
     @NotNull
     public static IvySettings createConfiguredIvySettings(Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
         IvySettings s = new IvySettings();
-        configureIvySettings(s, module, settingsFile, properties);
+        configureIvySettings(s, module, settingsFile, properties, true);
         return s;
     }
 
-    private static void configureIvySettings(IvySettings s, Module module, @Nullable String settingsFile, Properties properties) throws IvySettingsFileReadException {
+    public static boolean isSettingsUrl(@Nullable String settingsFile) {
+        return settingsFile != null && (settingsFile.startsWith("http://") || settingsFile.startsWith("https://"));
+    }
+
+    /**
+     * Checks that the Ivy settings file at the given URL can be read, with the proxy settings and the timeouts of
+     * IntelliJ, as Ivy reads it without timeouts.
+     */
+    public static void checkSettingsUrl(Module module, String settingsUrl) throws IvySettingsFileReadException {
+        try {
+            HttpConfigurable.getInstance().prepareURL(settingsUrl);
+        } catch (IOException e) {
+            throw new IvySettingsFileReadException(settingsUrl, module.getName(), e);
+        }
+    }
+
+    private static void configureIvySettings(IvySettings s, Module module, @Nullable String settingsFile, Properties properties,
+                                             boolean checkSettingsUrl) throws IvySettingsFileReadException {
         injectProperties(s, module, properties); // inject our properties; they may be needed to parse the settings file
 
         try {
             if (!StringUtils.isBlank(settingsFile)) {
-                if (settingsFile.startsWith("http://") || settingsFile.startsWith("https://")) {
-                    HttpConfigurable.getInstance().prepareURL(settingsFile);
+                if (isSettingsUrl(settingsFile)) {
+                    if (checkSettingsUrl) {
+                        checkSettingsUrl(module, settingsFile);
+                    }
                     s.load(new URL(settingsFile));
                 } else if (settingsFile.startsWith("file://")) {
                     s.load(IvyIdeaPaths.toUrl(settingsFile));

@@ -30,7 +30,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Guy Mahieu
@@ -41,6 +43,8 @@ public class IvyManager {
     private final Map<Module, Ivy> configuredIvyInstances = new HashMap<>();
     private final Map<Module, ModuleDescriptor> moduleDescriptors = new HashMap<>();
     private Map<ModuleId, Module> workspaceModules;
+    // the Ivy settings URLs that were checked during this resolve
+    private final Set<String> checkedSettingsUrls = new HashSet<>();
 
     private IvyManager() {
     }
@@ -60,6 +64,7 @@ public class IvyManager {
 
     public synchronized Ivy getIvy(final Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!configuredIvyInstances.containsKey(module)) {
+            checkSettingsUrl(module);
             final IvySettings configuredIvySettings = IvyIdeaConfigHelper.createConfiguredIvySettings(module, this);
             final Ivy ivy = IvyUtil.createConfiguredIvyEngine(module, configuredIvySettings);
 
@@ -86,6 +91,18 @@ public class IvyManager {
         }
 
         return moduleDescriptors.get(module);
+    }
+
+    /**
+     * Checks the Ivy settings URL of the given module once per resolve, as checking it reads the whole file, and the
+     * modules of a project mostly use the same settings.
+     */
+    private void checkSettingsUrl(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
+        final String settingsFile = IvyIdeaConfigHelper.getIvySettingsFile(module);
+        if (IvyIdeaConfigHelper.isSettingsUrl(settingsFile) && !checkedSettingsUrls.contains(settingsFile)) {
+            IvyIdeaConfigHelper.checkSettingsUrl(module, settingsFile);
+            checkedSettingsUrls.add(settingsFile);
+        }
     }
 
     private void loadWorkspaceModules(Project project) throws IvySettingsNotFoundException, IvySettingsFileReadException {

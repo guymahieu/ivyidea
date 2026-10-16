@@ -191,6 +191,10 @@ public class IvyIdeaFacetConfiguration implements PersistentStateComponent<IvyId
         }
 
         public void setFacetPropertiesSettings(FacetPropertiesSettings facetPropertiesSettings) {
+            // IntelliJ loads an empty facetPropertiesSettings option in the module file as null: keep the defaults (#170)
+            if (facetPropertiesSettings == null) {
+                return;
+            }
             this.facetPropertiesSettings = facetPropertiesSettings;
         }
 

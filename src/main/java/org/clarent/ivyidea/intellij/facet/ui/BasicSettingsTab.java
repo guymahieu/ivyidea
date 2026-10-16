@@ -76,6 +76,15 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     private Set<Configuration> selectedConfigurations = new HashSet<Configuration>();
 
+    // the Ivy of the last loaded ivy file, with the settings file and properties it was created with: loading the
+    // settings can take a while, and they don't change while the ivy file is being typed
+    @Nullable
+    private Ivy ivy;
+    @Nullable
+    private String ivySettingsFile;
+    @Nullable
+    private Properties ivyProperties;
+
     public BasicSettingsTab(@NotNull FacetEditorContext editorContext, @NotNull PropertiesSettingsTab propertiesSettingsTab) {
         this.editorContext = editorContext;
         this.propertiesSettingsTab = propertiesSettingsTab;
@@ -196,9 +205,16 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     @NotNull
     private Ivy createIvyEngineForCurrentSettingsInUI() throws IvySettingsNotFoundException, IvySettingsFileReadException {
-        final Module module = this.editorContext.getModule();
-        final IvySettings ivySettings = IvyIdeaConfigHelper.createConfiguredIvySettings(module, this.getIvySettingsFileNameForCurrentSettingsInUI(), getPropertiesForCurrentSettingsInUI());
-        return IvyUtil.createConfiguredIvyEngine(module, ivySettings);
+        final String settingsFile = getIvySettingsFileNameForCurrentSettingsInUI();
+        final Properties properties = getPropertiesForCurrentSettingsInUI();
+        if (ivy == null || !Objects.equals(settingsFile, ivySettingsFile) || !properties.equals(ivyProperties)) {
+            final Module module = this.editorContext.getModule();
+            final IvySettings ivySettings = IvyIdeaConfigHelper.createConfiguredIvySettings(module, settingsFile, properties);
+            ivy = IvyUtil.createConfiguredIvyEngine(module, ivySettings);
+            ivySettingsFile = settingsFile;
+            ivyProperties = properties;
+        }
+        return ivy;
     }
 
     @Nullable

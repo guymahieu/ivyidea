@@ -24,6 +24,7 @@ import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderEntry;
+import com.intellij.openapi.roots.ProjectModelExternalSource;
 import com.intellij.openapi.roots.impl.libraries.LibraryEx;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
@@ -64,6 +65,8 @@ public final class ProjectLibraries {
             final LibraryTable.ModifiableModel tableModel = libraryTable.getModifiableModel();
             library = createLibrary(tableModel, libraryName);
             tableModel.commit();
+        } else {
+            markAsImported(library);
         }
         if (!hasProjectLibraryEntry(model, libraryName)) {
             model.addLibraryEntry(library);
@@ -91,8 +94,23 @@ public final class ProjectLibraries {
     }
 
     private static Library createLibrary(LibraryTable.ModifiableModel tableModel, String libraryName) {
-        return tableModel.createLibrary(libraryName, IvyIdeaLibraryType.KIND,
-                ExternalProjectSystemRegistry.getInstance().getSourceById(EXTERNAL_SOURCE_ID));
+        return tableModel.createLibrary(libraryName, IvyIdeaLibraryType.KIND, getExternalSource());
+    }
+
+    /**
+     * Marks a library that IvyIDEA didn't create, e.g. a module library that was moved to the project level, as
+     * imported from IvyIDEA, so it's stored like the other IvyIDEA project libraries.
+     */
+    private static void markAsImported(Library library) {
+        if (library instanceof LibraryEx && ((LibraryEx) library).getExternalSource() == null) {
+            final LibraryEx.ModifiableModelEx libraryModel = ((LibraryEx) library).getModifiableModel();
+            libraryModel.setExternalSource(getExternalSource());
+            libraryModel.commit();
+        }
+    }
+
+    private static ProjectModelExternalSource getExternalSource() {
+        return ExternalProjectSystemRegistry.getInstance().getSourceById(EXTERNAL_SOURCE_ID);
     }
 
     // by name: an entry to a library created after the model was taken doesn't resolve in the model

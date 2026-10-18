@@ -139,7 +139,12 @@ public class IvyUtil {
 
         // we should now call the Ivy#postConfigure() method, but it is private :-(
         // so we have to execute the same code ourselves
-        postConfigure(ivy);
+        ivy.pushContext();
+        try {
+            postConfigure(ivy);
+        } finally {
+            ivy.popContext();
+        }
 
         registerConsoleLogger(ivy, module);
         return ivy;

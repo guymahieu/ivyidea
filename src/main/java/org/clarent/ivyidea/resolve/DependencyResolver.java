@@ -88,11 +88,17 @@ class DependencyResolver {
         }
 
         final Ivy ivy = ivyManager.getIvy(module);
+        // the resolve and the downloads of the sources and javadocs in the context of this Ivy: Ivy#resolve sets it
+        // itself, but the downloads would otherwise use a default Ivy, which logs elsewhere and doesn't stop when
+        // this Ivy is interrupted
+        ivy.pushContext();
         try {
             final ResolveReport resolveReport = ivy.resolve(ivyFile.toURI().toURL(), IvyIdeaConfigHelper.createResolveOptions(module));
             extractDependencies(ivy, resolveReport, module, ivyManager);
         } catch (ParseException | IOException e) {
             throw new IvyFileReadException(ivyFile.getAbsolutePath(), module.getName(), e);
+        } finally {
+            ivy.popContext();
         }
     }
 

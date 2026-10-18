@@ -19,6 +19,7 @@ package org.clarent.ivyidea.intellij.model;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleOrderEntry;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.OrderRootType;
@@ -27,6 +28,7 @@ import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.util.io.FileUtil;
 import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 import org.clarent.ivyidea.resolve.dependency.ExternalDependency;
+import org.clarent.ivyidea.resolve.dependency.InternalDependency;
 import org.clarent.ivyidea.resolve.dependency.ResolvedDependency;
 
 import java.io.File;
@@ -40,6 +42,8 @@ public class IntellijModuleWrapper implements AutoCloseable {
     private final boolean projectLibraries;
     // the project libraries this module no longer depends on, to delete when no other module uses them either
     private final List<Library> removedProjectLibraries = new ArrayList<>();
+    // the IvyIDEA modules of the project that a resolve can add module dependencies on
+    private Collection<Module> workspaceModules = Collections.emptySet();
 
     public static IntellijModuleWrapper forModule(Module module) {
         ModifiableRootModel modifiableModel = null;
@@ -58,6 +62,15 @@ public class IntellijModuleWrapper implements AutoCloseable {
         this.intellijModule = intellijModule;
         this.projectLibraries = IvyIdeaConfigHelper.isUseProjectLibraries(intellijModule.getProject());
         this.libraryModels = new LibraryModels(intellijModule, projectLibraries);
+    }
+
+    /**
+     * Updates the dependencies of the module to the given ones. Module dependencies on the given IvyIDEA modules of
+     * the project that aren't in the given dependencies are removed.
+     */
+    public void updateDependencies(Collection<ResolvedDependency> resolvedDependencies, Collection<Module> workspaceModules) {
+        this.workspaceModules = workspaceModules;
+        updateDependencies(resolvedDependencies);
     }
 
     public void updateDependencies(Collection<ResolvedDependency> resolvedDependencies) {
@@ -146,6 +159,29 @@ public class IntellijModuleWrapper implements AutoCloseable {
         }
         removedProjectLibraries.addAll(ProjectLibraries.removeDependencies(intellijModule,
                 projectLibraries ? librariesInUse : Collections.emptySet()));
+        removeModuleDependenciesNotInList(dependenciesToKeep);
+    }
+
+    /**
+     * Removes the module dependencies on IvyIDEA modules of the project that are no longer resolved: the ivy files
+     * decide on the dependencies between them. Module dependencies on other modules, like the ones the user added,
+     * are kept.
+     */
+    private void removeModuleDependenciesNotInList(Collection<ResolvedDependency> dependenciesToKeep) {
+        final Set<Module> modulesToKeep = new HashSet<>();
+        for (ResolvedDependency dependency : dependenciesToKeep) {
+            if (dependency instanceof InternalDependency) {
+                modulesToKeep.add(((InternalDependency) dependency).getModule());
+            }
+        }
+        for (OrderEntry orderEntry : intellijModule.getOrderEntries()) {
+            if (orderEntry instanceof ModuleOrderEntry) {
+                final Module dependency = ((ModuleOrderEntry) orderEntry).getModule();
+                if (dependency != null && workspaceModules.contains(dependency) && !modulesToKeep.contains(dependency)) {
+                    intellijModule.removeOrderEntry(orderEntry);
+                }
+            }
+        }
     }
 
     /**

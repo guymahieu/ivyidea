@@ -41,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -101,7 +102,7 @@ public class ResolveActionHelper {
 
                 for (IntellijDependencyResolver resolver : resolvers) {
                     Module module = resolver.getModule();
-                    updateIntellijModel(module, resolver.getDependencies());
+                    updateIntellijModel(module, resolver.getDependencies(), ivyManager.getWorkspaceModules());
                     reportProblems(module, resolver.getProblems());
                 }
                 // after the module updates, which are queued before it
@@ -136,16 +137,16 @@ public class ResolveActionHelper {
                 final IvyManager ivyManager = IvyManager.forProject(myProject);
                 final IntellijDependencyResolver resolver = new ModulesResolver(myProject, ivyManager, progressIndicator)
                         .resolveOneByOne(Collections.singletonList(module)).get(0);
-                updateIntellijModel(module, resolver.getDependencies());
+                updateIntellijModel(module, resolver.getDependencies(), ivyManager.getWorkspaceModules());
                 reportProblems(module, resolver.getProblems());
             }
         });
     }
 
-    public static void updateIntellijModel(final Module module, final List<ResolvedDependency> dependencies) {
+    public static void updateIntellijModel(final Module module, final List<ResolvedDependency> dependencies, final Collection<Module> workspaceModules) {
         ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
             try (IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(module)) {
-                moduleWrapper.updateDependencies(dependencies);
+                moduleWrapper.updateDependencies(dependencies, workspaceModules);
             }
         }), module.getDisposed());
     }

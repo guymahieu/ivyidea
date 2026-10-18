@@ -29,6 +29,8 @@ import org.clarent.ivyidea.intellij.IntellijUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -114,6 +116,14 @@ public class IvyManager {
             }
         }
         workspaceModules = modules;
+    }
+
+    /**
+     * Returns the workspace modules: the IvyIDEA modules of the project whose ivy file could be parsed, if
+     * dependencies on other modules are detected.
+     */
+    public Collection<Module> getWorkspaceModules() {
+        return workspaceModules == null ? Collections.emptySet() : new HashSet<>(workspaceModules.values());
     }
 
     /**

@@ -35,6 +35,10 @@ public class InternalDependency implements ResolvedDependency {
         this.module = module;
     }
 
+    public Module getModule() {
+        return module;
+    }
+
     public void addTo(IntellijModuleWrapper intellijModuleWrapper) {
         if (!intellijModuleWrapper.alreadyHasDependencyOnModule(module)) {
             LOGGER.fine("Registering module dependency from " + intellijModuleWrapper.getModuleName() + " on module " + module.getName());

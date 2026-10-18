@@ -90,6 +90,7 @@ public final class ProjectLibraries {
         }
     }
 
+    @SuppressWarnings("UnstableApiUsage") // the only way to mark the libraries as imported
     private static Library createLibrary(LibraryTable.ModifiableModel tableModel, String libraryName) {
         return tableModel.createLibrary(libraryName, IvyIdeaLibraryType.KIND,
                 ExternalProjectSystemRegistry.getInstance().getSourceById(EXTERNAL_SOURCE_ID));
@@ -119,7 +120,7 @@ public final class ProjectLibraries {
             if (orderEntry instanceof LibraryOrderEntry) {
                 final LibraryOrderEntry libraryEntry = (LibraryOrderEntry) orderEntry;
                 final Library library = libraryEntry.getLibrary();
-                if (!libraryEntry.isModuleLevel() && library != null && isIvyIdeaLibrary(library)
+                if (!libraryEntry.isModuleLevel() && isIvyIdeaLibrary(library)
                         && !librariesInUse.contains(library.getName())) {
                     model.removeOrderEntry(libraryEntry);
                     removed.add(library);
@@ -157,6 +158,7 @@ public final class ProjectLibraries {
      * Deletes all IvyIDEA project libraries that no module depends on, e.g. those of removed modules. Nothing is
      * deleted while modules are unloaded, as their dependencies aren't known.
      */
+    @SuppressWarnings("UnstableApiUsage") // the only way to know about unloaded modules
     public static void deleteAllUnused(Project project) {
         final ModuleManager moduleManager = ModuleManager.getInstance(project);
         if (!moduleManager.getUnloadedModuleDescriptions().isEmpty()) {

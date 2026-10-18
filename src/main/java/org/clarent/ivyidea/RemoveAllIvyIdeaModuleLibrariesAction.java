@@ -60,10 +60,10 @@ public class RemoveAllIvyIdeaModuleLibrariesAction extends AnAction {
                         try (IntellijModuleWrapper moduleWrapper = IntellijModuleWrapper.forModule(module)) {
                             moduleWrapper.updateDependencies(Collections.emptyList());
                         }
-                    }), ModalityState.NON_MODAL);
+                    }), ModalityState.nonModal());
                 }
                 ApplicationManager.getApplication().invokeAndWait(() -> ApplicationManager.getApplication().runWriteAction(
-                        () -> ProjectLibraries.deleteAllUnused(project)), ModalityState.NON_MODAL);
+                        () -> ProjectLibraries.deleteAllUnused(project)), ModalityState.nonModal());
             }
         });
     }

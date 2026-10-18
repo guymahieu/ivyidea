@@ -27,6 +27,7 @@ import org.clarent.ivyidea.config.ui.orderedfilelist.OrderedFileList;
 import org.clarent.ivyidea.config.ui.propertieseditor.PropertiesEditor;
 import org.clarent.ivyidea.intellij.facet.config.IvyIdeaFacetConfiguration;
 import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,6 +75,7 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
         return "Properties (optional)";
     }
 
+    @NotNull
     public JComponent createComponent() {
         return pnlRoot;
     }
@@ -92,10 +94,8 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
 
     public void apply() throws ConfigurationException {
         final Facet facet = editorContext.getFacet();
-        if (facet != null) {
-            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            configuration.getPropertiesSettings().setPropertyFiles(IvyIdeaPaths.toStored(orderedFileList.getFileNames()));
-        }        
+        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+        configuration.getPropertiesSettings().setPropertyFiles(IvyIdeaPaths.toStored(orderedFileList.getFileNames()));
     }
 
     @Override
@@ -106,10 +106,8 @@ public class PropertiesSettingsTab extends FacetEditorTab  {
 
     public void reset() {
         final Facet facet = editorContext.getFacet();
-        if (facet != null) {
-            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(configuration.getPropertiesSettings().getPropertyFiles()));
-        }        
+        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+        orderedFileList.setFileNames(IvyIdeaPaths.toDisplayed(configuration.getPropertiesSettings().getPropertyFiles()));
     }
 
     public void disposeUIResources() {

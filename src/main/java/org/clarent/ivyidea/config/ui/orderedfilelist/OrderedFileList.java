@@ -45,7 +45,7 @@ public class OrderedFileList {
     private JButton btnRemove;
     private JButton btnDown;
     private JButton btnAdd;
-    private JList lstFileNames;
+    private JList<String> lstFileNames;
     private boolean modified;
 
     public OrderedFileList(Project project) {

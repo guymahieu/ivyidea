@@ -24,8 +24,8 @@ package org.clarent.ivyidea.exception;
  */
 public class IvySettingsFileReadException extends IvyIdeaException {
 
-    private String fileName;
-    private String moduleName;
+    private final String fileName;
+    private final String moduleName;
 
     public IvySettingsFileReadException(String fileName, String moduleName, Throwable cause) {
         super(cause);

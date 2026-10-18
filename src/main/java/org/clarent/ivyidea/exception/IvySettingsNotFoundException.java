@@ -29,8 +29,8 @@ public class IvySettingsNotFoundException extends IvyIdeaException {
         Module
     }
 
-    private ConfigLocation configLocation;
-    private String configName;
+    private final ConfigLocation configLocation;
+    private final String configName;
 
     public IvySettingsNotFoundException(String message, ConfigLocation configLocation, String configName) {
         super(message);

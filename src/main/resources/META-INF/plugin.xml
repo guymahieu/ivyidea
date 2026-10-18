@@ -33,7 +33,7 @@
 
         <project.converterProvider implementation="org.clarent.ivyidea.intellij.facet.config.IvyIdeaLegacyFacetConfigConverterProvider" id="IvyIDEA.FacetConverterProvider"/>
 
-        <toolWindow id="IvyIDEA" icon="/icons/toolWindowIvyIdea.svg" anchor="bottom" canCloseContents="false" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
+        <toolWindow id="IvyIDEA" icon="/icons/toolWindowIvyIdea.svg" anchor="bottom" canCloseContents="false" doNotActivateOnStart="true" factoryClass="org.clarent.ivyidea.intellij.IvyIdeaConsoleToolWindowFactory"/>
 
         <facetType implementation="org.clarent.ivyidea.intellij.facet.IvyIdeaFacetType"/>
         <library.type implementation="org.clarent.ivyidea.intellij.model.IvyIdeaLibraryType"/>

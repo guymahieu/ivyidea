@@ -39,6 +39,7 @@ public class IvyIdeaFacetDetector extends FacetBasedFrameworkDetector<IvyIdeaFac
         super("IvyIDEA");
     }
 
+    @NotNull
     public FacetType<IvyIdeaFacet, IvyIdeaFacetConfiguration> getFacetType() {
         return IvyIdeaFacetType.getInstance();
     }
@@ -57,7 +58,7 @@ public class IvyIdeaFacetDetector extends FacetBasedFrameworkDetector<IvyIdeaFac
     protected IvyIdeaFacetConfiguration createConfiguration(Collection<? extends VirtualFile> files) {
         final IvyIdeaFacetConfiguration result = super.createConfiguration(files);
 
-        if (!files.isEmpty()) {
+        if (result != null && !files.isEmpty()) {
             VirtualFile ivyFile = files.iterator().next();
             result.setIvyFile(ivyFile.getPath());
         }

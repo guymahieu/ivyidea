@@ -35,7 +35,7 @@ public class IvyIdeaExceptionDialog extends DialogWrapper {
 
     private JPanel rootPanel;
     private JTextArea txtMessage;
-    private LinkLabel lblLink;
+    private LinkLabel<Object> lblLink;
 
     /**
      * Shows a standard IvyIDEA exception dialog without a hyperlink.
@@ -77,22 +77,22 @@ public class IvyIdeaExceptionDialog extends DialogWrapper {
     }
 
     public void setMessageFromThrowable(@NotNull Throwable exception) {
-        String message = exception.getMessage() + '\n';
+        final StringBuilder message = new StringBuilder(exception.getMessage()).append('\n');
         Throwable cause = exception.getCause();
         int maxDepth = 20;
         int currDepth = 0;
         while (currDepth++ <= maxDepth && cause != null) {
-            message += "\nCaused by: " + cause.getMessage();
+            message.append("\nCaused by: ").append(cause.getMessage());
             cause = cause.getCause();
         }
         if (cause != null) {
-            message += "\nMore causes skipped.";
+            message.append("\nMore causes skipped.");
         }
-        setMessage(message);
+        setMessage(message.toString());
     }
 
     public void setLinkBehavior(@Nullable LinkBehavior linkBehavior) {
-        if (linkBehavior == null || linkBehavior.getLinkText() == null || linkBehavior.getLinkText().trim().length() == 0) {
+        if (linkBehavior == null || linkBehavior.getLinkText() == null || linkBehavior.getLinkText().trim().isEmpty()) {
             lblLink.setText("");
             lblLink.setListener(null, null);
             lblLink.setVisible(false);
@@ -108,7 +108,7 @@ public class IvyIdeaExceptionDialog extends DialogWrapper {
     }
 
     @Override
-    protected Action[] createActions() {
+    protected Action @NotNull [] createActions() {
         return new Action[]{getOKAction()};
     }
 }

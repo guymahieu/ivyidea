@@ -86,14 +86,14 @@ public class ResolveActionHelper {
         listener.resolveStarted();
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText, notifyDone) {
             public void doResolve(@NotNull ProgressIndicator indicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                clearConsole(myProject);
+                clearConsole(project);
 
                 indicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
+                final IvyManager ivyManager = IvyManager.forProject(project);
 
                 final List<Module> modules = Arrays.asList(IntellijUtils.getAllModulesWithIvyIdeaFacet(project));
-                final ModulesResolver modulesResolver = new ModulesResolver(myProject, ivyManager, indicator);
-                final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(myProject)
+                final ModulesResolver modulesResolver = new ModulesResolver(project, ivyManager, indicator);
+                final List<IntellijDependencyResolver> resolvers = IvyIdeaConfigHelper.isResolveInParallel(project)
                         ? modulesResolver.resolveInParallel(modules)
                         : modulesResolver.resolveOneByOne(modules);
                 if (indicator.isCanceled()) {
@@ -107,7 +107,7 @@ public class ResolveActionHelper {
                 }
                 // after the module updates, which are queued before it
                 ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(
-                        () -> ProjectLibraries.deleteAllUnused(myProject)), myProject.getDisposed());
+                        () -> ProjectLibraries.deleteAllUnused(project)), project.getDisposed());
             }
         });
     }
@@ -131,11 +131,11 @@ public class ResolveActionHelper {
         IvyIdeaConfigHelper.decideUseProjectLibraries(project);
         ProgressManager.getInstance().run(new IvyIdeaResolveBackgroundTask(project, taskText) {
             public void doResolve(@NotNull ProgressIndicator progressIndicator) throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
-                clearConsole(myProject);
+                clearConsole(project);
 
                 progressIndicator.setText2("Loading IvyIDEA modules");
-                final IvyManager ivyManager = IvyManager.forProject(myProject);
-                final IntellijDependencyResolver resolver = new ModulesResolver(myProject, ivyManager, progressIndicator)
+                final IvyManager ivyManager = IvyManager.forProject(project);
+                final IntellijDependencyResolver resolver = new ModulesResolver(project, ivyManager, progressIndicator)
                         .resolveOneByOne(Collections.singletonList(module)).get(0);
                 updateIntellijModel(module, resolver.getDependencies(), ivyManager.getWorkspaceModules());
                 reportProblems(module, resolver.getProblems());

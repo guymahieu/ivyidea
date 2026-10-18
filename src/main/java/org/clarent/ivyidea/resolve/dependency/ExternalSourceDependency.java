@@ -17,8 +17,6 @@
 package org.clarent.ivyidea.resolve.dependency;
 
 import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.ivy.core.module.descriptor.Artifact;
 
 import java.io.File;

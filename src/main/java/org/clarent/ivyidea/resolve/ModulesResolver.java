@@ -187,10 +187,7 @@ class ModulesResolver {
     }
 
     private void showProgress(Set<String> resolvingModules, int resolvedModules, int modules) {
-        final String resolving;
-        synchronized (resolvingModules) {
-            resolving = String.join(", ", resolvingModules);
-        }
+        final String resolving = String.join(", ", resolvingModules.toArray(new String[0]));
         indicator.setFraction((double) resolvedModules / modules);
         indicator.setText("Resolved " + resolvedModules + " of " + modules + " modules");
         indicator.setText2("Resolving " + resolving);

@@ -73,6 +73,7 @@ public final class PathMacroFileField {
 
         @NotNull
         @Override
+        @SuppressWarnings("UnstableApiUsage") // the only way to let the file chooser expand path macros
         protected String expandPath(@NotNull String path) {
             final String expanded = pathExpander.apply(path);
             return expanded == null ? path : expanded;

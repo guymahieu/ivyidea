@@ -52,7 +52,7 @@ class LibraryModels implements Closeable {
 
     private final Map<Library.ModifiableModel, Map<OrderRootType, Set<String>>> rootPaths = new HashMap<>();
 
-    private ModifiableRootModel intellijModule;
+    private final ModifiableRootModel intellijModule;
 
     private final boolean projectLibraries;
 

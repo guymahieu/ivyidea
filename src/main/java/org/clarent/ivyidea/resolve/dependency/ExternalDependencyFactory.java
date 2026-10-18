@@ -30,7 +30,7 @@ import java.io.File;
  */
 public class ExternalDependencyFactory {
 
-    private static ExternalDependencyFactory instance = new ExternalDependencyFactory();
+    private static final ExternalDependencyFactory instance = new ExternalDependencyFactory();
 
     public static ExternalDependencyFactory getInstance() {
         return instance;

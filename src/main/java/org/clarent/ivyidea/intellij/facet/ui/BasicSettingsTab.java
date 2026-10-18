@@ -69,7 +69,7 @@ public class BasicSettingsTab extends FacetEditorTab {
     private JLabel lblIvyFileMessage;
     private JRadioButton rbnUseDefaultIvySettings;
     private JRadioButton rbnUseCustomIvySettings;
-    private FacetEditorContext editorContext;
+    private final FacetEditorContext editorContext;
     private final PropertiesSettingsTab propertiesSettingsTab;
     private boolean modified;
     private boolean foundConfigsBefore = false;
@@ -102,7 +102,7 @@ public class BasicSettingsTab extends FacetEditorTab {
         PathMacroFileField.install(txtIvySettingsFile, "Select ivy settings file", editorContext.getModule());
 
         txtIvyFile.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-            public void textChanged(DocumentEvent e) {
+            public void textChanged(@NotNull DocumentEvent e) {
                 reloadIvyFile();
             }
         });
@@ -157,7 +157,7 @@ public class BasicSettingsTab extends FacetEditorTab {
             allConfigurations = loadConfigurations();
             chkOnlyResolveSpecificConfigs.setEnabled(allConfigurations != null);
             if (allConfigurations != null) {
-                LOGGER.info("Detected configs in file " + txtIvyFile.getText() + ": " + allConfigurations.toString());
+                LOGGER.info("Detected configs in file " + txtIvyFile.getText() + ": " + allConfigurations);
                 tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, getNames(selectedConfigurations)));
                 lblIvyFileMessage.setText("");
                 foundConfigsBefore = true;
@@ -249,6 +249,7 @@ public class BasicSettingsTab extends FacetEditorTab {
         return "General";
     }
 
+    @NotNull
     public JComponent createComponent() {
         return pnlRoot;
     }
@@ -259,15 +260,13 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     public void apply() throws ConfigurationException {
         final Facet facet = editorContext.getFacet();
-        if (facet != null) {
-            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            configuration.setUseProjectSettings(!chkOverrideProjectIvySettings.isSelected());
-            configuration.setUseCustomIvySettings(rbnUseCustomIvySettings.isSelected());
-            configuration.setIvySettingsFile(IvyIdeaPaths.toStored(txtIvySettingsFile.getText()));
-            configuration.setOnlyResolveSelectedConfigs(chkOnlyResolveSpecificConfigs.isSelected());
-            configuration.setConfigsToResolve(getNames(tblConfigurationSelection.getSelectedConfigurations()));
-            configuration.setIvyFile(IvyIdeaPaths.toStored(txtIvyFile.getText()));
-        }
+        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+        configuration.setUseProjectSettings(!chkOverrideProjectIvySettings.isSelected());
+        configuration.setUseCustomIvySettings(rbnUseCustomIvySettings.isSelected());
+        configuration.setIvySettingsFile(IvyIdeaPaths.toStored(txtIvySettingsFile.getText()));
+        configuration.setOnlyResolveSelectedConfigs(chkOnlyResolveSpecificConfigs.isSelected());
+        configuration.setConfigsToResolve(getNames(tblConfigurationSelection.getSelectedConfigurations()));
+        configuration.setIvyFile(IvyIdeaPaths.toStored(txtIvyFile.getText()));
     }
 
     @NotNull
@@ -281,39 +280,37 @@ public class BasicSettingsTab extends FacetEditorTab {
 
     public void reset() {
         final Facet facet = editorContext.getFacet();
-        if (facet != null) {
-            IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
-            txtIvyFile.setText(IvyIdeaPaths.toDisplayed(configuration.getIvyFile()));
-            chkOverrideProjectIvySettings.setSelected(!configuration.isUseProjectSettings());
-            txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(configuration.getIvySettingsFile()));
-            chkOnlyResolveSpecificConfigs.setSelected(configuration.isOnlyResolveSelectedConfigs());
-            rbnUseCustomIvySettings.setSelected(configuration.isUseCustomIvySettings());
-            rbnUseDefaultIvySettings.setSelected(!configuration.isUseCustomIvySettings());
-            Set<Configuration> allConfigurations;
-            try {
-                allConfigurations = loadConfigurations();
-            } catch (ParseException e) {
-                allConfigurations = null;
-            } catch ( IvySettingsNotFoundException e ) {
-                allConfigurations = null;
-            } catch ( IvySettingsFileReadException e ) {
-                allConfigurations = null;
-            }
-            if (StringUtils.isNotBlank(configuration.getIvyFile())) {
-                if (allConfigurations != null) {
-                    tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, configuration.getConfigsToResolve()));
-                } else {
-                    tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel());
-                }
-                selectedConfigurations = tblConfigurationSelection.getSelectedConfigurations();
-                updateConfigurationsTable();
+        IvyIdeaFacetConfiguration configuration = (IvyIdeaFacetConfiguration) facet.getConfiguration();
+        txtIvyFile.setText(IvyIdeaPaths.toDisplayed(configuration.getIvyFile()));
+        chkOverrideProjectIvySettings.setSelected(!configuration.isUseProjectSettings());
+        txtIvySettingsFile.setText(IvyIdeaPaths.toDisplayed(configuration.getIvySettingsFile()));
+        chkOnlyResolveSpecificConfigs.setSelected(configuration.isOnlyResolveSelectedConfigs());
+        rbnUseCustomIvySettings.setSelected(configuration.isUseCustomIvySettings());
+        rbnUseDefaultIvySettings.setSelected(!configuration.isUseCustomIvySettings());
+        Set<Configuration> allConfigurations;
+        try {
+            allConfigurations = loadConfigurations();
+        } catch (ParseException e) {
+            allConfigurations = null;
+        } catch ( IvySettingsNotFoundException e ) {
+            allConfigurations = null;
+        } catch ( IvySettingsFileReadException e ) {
+            allConfigurations = null;
+        }
+        if (StringUtils.isNotBlank(configuration.getIvyFile())) {
+            if (allConfigurations != null) {
+                tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel(allConfigurations, configuration.getConfigsToResolve()));
             } else {
                 tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel());
-                selectedConfigurations = new HashSet<Configuration>();
-                tblConfigurationSelection.setEditable(false);
             }
-            updateUI();
+            selectedConfigurations = tblConfigurationSelection.getSelectedConfigurations();
+            updateConfigurationsTable();
+        } else {
+            tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel());
+            selectedConfigurations = new HashSet<Configuration>();
+            tblConfigurationSelection.setEditable(false);
         }
+        updateUI();
     }
 
     public void disposeUIResources() {

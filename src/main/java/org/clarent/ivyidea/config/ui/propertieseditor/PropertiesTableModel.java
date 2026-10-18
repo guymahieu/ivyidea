@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class PropertiesTableModel extends AbstractTableModel {
 
-    private List<Property> data;
+    private final List<Property> data;
 
     public PropertiesTableModel() {
         this.data = new ArrayList<Property>();

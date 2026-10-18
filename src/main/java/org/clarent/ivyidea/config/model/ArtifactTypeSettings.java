@@ -54,9 +54,9 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
      * Artifact types that are expected in a resolve but have no meaning in IntelliJ. They are not downloaded and
      * not reported as unrecognized.
      */
-    public static final List<String> DEFAULT_IGNORED_TYPES = asList("pom");
+    public static final List<String> DEFAULT_IGNORED_TYPES = Collections.singletonList("pom");
 
-    private Map<DependencyCategory, Set<String>> typesPerCategory = new HashMap<DependencyCategory, Set<String>>();
+    private final Map<DependencyCategory, Set<String>> typesPerCategory = new HashMap<DependencyCategory, Set<String>>();
 
     // null if never configured, so settings saved before this option existed also get the defaults
     @Nullable
@@ -119,7 +119,7 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
         boolean configFound = false;
         for (DependencyCategory dependencyCategory : DependencyCategory.values()) {
             final Set<String> types = typesPerCategory.get(dependencyCategory);
-            configFound = types != null && types.size() > 0;
+            configFound = types != null && !types.isEmpty();
             if (configFound) {
                 break;
             }
@@ -133,7 +133,7 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
             final String[] types = artifactTypesString.split(",");
             for (String type : types) {
                 final String typeToAdd = type.trim().toLowerCase();
-                if (typeToAdd.length() > 0) {
+                if (!typeToAdd.isEmpty()) {
                     result.add(typeToAdd);
                 }
             }
@@ -158,10 +158,7 @@ public class ArtifactTypeSettings implements PersistentStateComponent<ArtifactTy
         return this;
     }
 
-    public void loadState(ArtifactTypeSettings state) {
-        if (state == null) {
-            state = new ArtifactTypeSettings();
-        }
+    public void loadState(@NotNull ArtifactTypeSettings state) {
         XmlSerializerUtil.copyBean(state, this);
     }
 

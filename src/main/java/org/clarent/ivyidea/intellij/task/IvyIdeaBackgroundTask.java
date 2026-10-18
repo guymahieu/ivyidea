@@ -30,7 +30,7 @@ import org.clarent.ivyidea.config.IvyIdeaConfigHelper;
 public abstract class IvyIdeaBackgroundTask extends Task.Backgroundable {
 
     private static class IvyIdeaPerformInBackgroundOption implements PerformInBackgroundOption {
-        private Project project;
+        private final Project project;
 
         public IvyIdeaPerformInBackgroundOption(Project project) {
             this.project = project;
@@ -38,12 +38,6 @@ public abstract class IvyIdeaBackgroundTask extends Task.Backgroundable {
 
         public boolean shouldStartInBackground() {
             return IvyIdeaConfigHelper.getResolveInBackground(project);
-        }
-
-        public void processSentToBackground() {
-        }
-
-        public void processRestoredToForeground() {
         }
     }
 

@@ -17,7 +17,6 @@
 package org.clarent.ivyidea.intellij;
 
 import com.intellij.execution.ui.ConsoleView;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -36,14 +35,8 @@ public class IvyIdeaConsoleToolWindowFactory implements ToolWindowFactory, DumbA
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        ConsoleView console = ServiceManager.getService(project, IvyIdeaConsoleService.class).getConsoleView();
-        Content content = ServiceManager.getService(ContentFactory.class).createContent(console.getComponent(), "Console", true);
+        ConsoleView console = project.getService(IvyIdeaConsoleService.class).getConsoleView();
+        Content content = ContentFactory.getInstance().createContent(console.getComponent(), "Console", true);
         toolWindow.getContentManager().addContent(content);
-    }
-
-    @Override
-    public boolean isDoNotActivateOnStart() {
-        // Start with ivyidea toolwindow closed
-        return true;
     }
 }

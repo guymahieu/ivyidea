@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-19
+
 ### Fixed
 
 - Fixed a freeze when installing or updating the plugin while a project with IvyIDEA modules is open
@@ -74,7 +76,8 @@
 - Fixed compatibility issue with IntelliJ 11
 - Upgraded internal Apache Ivy to 2.4.0 (including dependencies)
 
-[Unreleased]: https://github.com/guymahieu/ivyidea/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/guymahieu/ivyidea/compare/1.1.1...HEAD
+[1.1.1]: https://github.com/guymahieu/ivyidea/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/guymahieu/ivyidea/compare/1.0.19...1.1.0
 [1.0.19]: https://github.com/guymahieu/ivyidea/compare/1.0.18...1.0.19
 [1.0.18]: https://github.com/guymahieu/ivyidea/compare/1.0.17...1.0.18

@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed a freeze when installing or updating the plugin while a project with IvyIDEA modules is open
+
 ## [1.1.0] - 2026-10-19
 
 ### Added

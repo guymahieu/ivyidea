@@ -21,6 +21,7 @@ import com.intellij.facet.FacetManager;
 import com.intellij.facet.FacetManagerListener;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.externalSystem.autoimport.ExternalSystemProjectTracker;
@@ -71,12 +72,12 @@ public final class IvyIdeaAutoImport implements Disposable {
         project.getMessageBus().connect(this).subscribe(ModuleListener.TOPIC, new ModuleListener() {
             @Override
             public void modulesAdded(@NotNull Project project, @NotNull List<? extends Module> modules) {
-                updateRegistration();
+                scheduleUpdate();
             }
 
             @Override
             public void moduleRemoved(@NotNull Project project, @NotNull Module module) {
-                updateRegistration();
+                scheduleUpdate();
             }
         });
         project.getMessageBus().connect(this).subscribe(FacetManager.FACETS_TOPIC, new FacetManagerListener() {
@@ -90,20 +91,29 @@ public final class IvyIdeaAutoImport implements Disposable {
                 facetAddedOrRemoved(facet);
             }
         });
-        updateRegistration();
+        scheduleUpdate();
     }
 
     private void facetAddedOrRemoved(Facet<?> facet) {
         if (IvyIdeaFacetType.ID.equals(facet.getTypeId())) {
-            updateRegistration();
+            scheduleUpdate();
         }
     }
 
     /**
-     * Registers the project with the tracker while it has IvyIDEA modules, and tells the tracker when the files to
-     * watch may have changed.
+     * Updates the registration on the event dispatch thread, after the current write action: the module and facet
+     * events come in a write action, and the startup activity runs on a background thread, where waiting for a read
+     * action while another thread holds a lock that the write action needs can hang the IDE.
      */
-    private synchronized void updateRegistration() {
+    private void scheduleUpdate() {
+        ApplicationManager.getApplication().invokeLater(this::updateRegistration, project.getDisposed());
+    }
+
+    /**
+     * Registers the project with the tracker while it has IvyIDEA modules, and tells the tracker when the files to
+     * watch may have changed. Only on the event dispatch thread.
+     */
+    private void updateRegistration() {
         boolean hasIvyIdeaModules = ReadAction.compute(() -> IntellijUtils.getAllModulesWithIvyIdeaFacet(project).length > 0);
         if (hasIvyIdeaModules && registration == null) {
             registration = Disposer.newDisposable(this, "IvyIDEA auto-import");

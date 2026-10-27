@@ -59,11 +59,19 @@ class ModulesResolver {
         this.indicator = indicator;
     }
 
+    /**
+     * Resolves the given modules one by one. The modules that are removed from the project while resolving are
+     * skipped, so the result can have fewer resolvers than there are modules.
+     */
     List<IntellijDependencyResolver> resolveOneByOne(List<Module> modules)
             throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
         return resolve(modules, 1);
     }
 
+    /**
+     * Resolves the given modules in parallel. The modules that are removed from the project while resolving are
+     * skipped, so the result can have fewer resolvers than there are modules.
+     */
     List<IntellijDependencyResolver> resolveInParallel(List<Module> modules)
             throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
         return resolve(modules, IvyIdeaConfigHelper.getResolveThreads(project));
@@ -73,6 +81,9 @@ class ModulesResolver {
      * Resolves each module on a thread of its own, at most the given number of threads at a time, while the current
      * thread waits and stops them when the resolve is cancelled. These are threads of their own rather than pooled
      * threads, as Ivy interrupts the thread of a cancelled resolve and waits for it to end.
+     * <p>
+     * A module that is removed from the project before or while it's resolved is skipped with a warning in the
+     * console, so the result can have fewer resolvers than there are modules.
      *
      * @throws ProcessCanceledException when the resolve is cancelled, after the threads have ended
      */
@@ -104,6 +115,7 @@ class ModulesResolver {
                     try {
                         if (module.isDisposed()) {
                             // removed from the project since the resolve started, so there is nothing to resolve
+                            printSkippedWarning(module);
                             return;
                         }
                         final Ivy ivy = ivyManager.getIvy(module);
@@ -121,7 +133,9 @@ class ModulesResolver {
                         resolvers[index] = resolver;
                     } catch (Throwable t) {
                         // a module removed from the project while resolving has nothing to update, so it doesn't fail the others
-                        if (!module.isDisposed()) {
+                        if (module.isDisposed()) {
+                            printSkippedWarning(module);
+                        } else {
                             failures[index] = t;
                             failed.set(true);
                         }
@@ -191,6 +205,10 @@ class ModulesResolver {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    private void printSkippedWarning(Module module) {
+        ResolveActionHelper.printWarning(project, "Module '" + module.getName() + "' was removed from the project while resolving, skipped");
     }
 
     private void showProgress(Set<String> resolvingModules, int resolvedModules, int modules) {

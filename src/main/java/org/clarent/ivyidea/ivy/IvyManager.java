@@ -78,18 +78,16 @@ public class IvyManager {
     @Nullable
     public synchronized ModuleDescriptor getModuleDescriptor(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!moduleDescriptors.containsKey(module)) {
-            final File ivyFile = IvyUtil.getIvyFile(module);
-            if (ivyFile != null) {
-                try {
-                    final ModuleDescriptor descriptor = IvyUtil.parseIvyFile(ivyFile, getIvy(module));
-                    moduleDescriptors.put(module, descriptor);
-                } catch (RuntimeException e) {
-                    // ignore
-                    moduleDescriptors.put(module, null);
+            ModuleDescriptor descriptor = null;
+            try {
+                final File ivyFile = IvyUtil.getIvyFile(module);
+                if (ivyFile != null) {
+                    descriptor = IvyUtil.parseIvyFile(ivyFile, getIvy(module));
                 }
-            } else {
-                moduleDescriptors.put(module, null);
+            } catch (RuntimeException e) {
+                // ignore, like a module that was removed from the project while loading it
             }
+            moduleDescriptors.put(module, descriptor);
         }
 
         return moduleDescriptors.get(module);
@@ -110,6 +108,10 @@ public class IvyManager {
     private void loadWorkspaceModules(Project project) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final Map<ModuleId, Module> modules = new HashMap<>();
         for (Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
+            if (module.isDisposed()) {
+                // removed from the project while loading the other modules
+                continue;
+            }
             final ModuleDescriptor descriptor = getModuleDescriptor(module);
             if (descriptor != null) {
                 modules.put(descriptor.getModuleRevisionId().getModuleId(), module);

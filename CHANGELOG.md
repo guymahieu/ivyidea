@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed "Resolve for All Modules" failing for all modules when one of them is removed from the project while resolving, for instance when a checkout changes the modules of the project
+
 ## [1.1.1] - 2026-10-19
 
 ### Fixed

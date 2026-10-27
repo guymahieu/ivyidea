@@ -102,6 +102,10 @@ class ModulesResolver {
                     resolvingModules.add(module.getName());
                     showProgress(resolvingModules, resolvedModules.get(), modules.size());
                     try {
+                        if (module.isDisposed()) {
+                            // removed from the project since the resolve started, so there is nothing to resolve
+                            return;
+                        }
                         final Ivy ivy = ivyManager.getIvy(module);
                         if (maxThreads > 1 && IvyUtil.usesNoLockStrategy(ivy) && warnedAboutLocking.compareAndSet(false, true)) {
                             ResolveActionHelper.printWarning(project, "Resolving in parallel, but the Ivy cache doesn't lock the files it writes "
@@ -116,8 +120,11 @@ class ModulesResolver {
                         resolver.resolve(module);
                         resolvers[index] = resolver;
                     } catch (Throwable t) {
-                        failures[index] = t;
-                        failed.set(true);
+                        // a module removed from the project while resolving has nothing to update, so it doesn't fail the others
+                        if (!module.isDisposed()) {
+                            failures[index] = t;
+                            failed.set(true);
+                        }
                     } finally {
                         runningIvys.remove(Thread.currentThread());
                         resolvingModules.remove(module.getName());

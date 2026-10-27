@@ -135,8 +135,13 @@ public class ResolveActionHelper {
 
                 progressIndicator.setText2("Loading IvyIDEA modules");
                 final IvyManager ivyManager = IvyManager.forProject(project);
-                final IntellijDependencyResolver resolver = new ModulesResolver(project, ivyManager, progressIndicator)
-                        .resolveOneByOne(Collections.singletonList(module)).get(0);
+                final List<IntellijDependencyResolver> resolvers = new ModulesResolver(project, ivyManager, progressIndicator)
+                        .resolveOneByOne(Collections.singletonList(module));
+                if (resolvers.isEmpty()) {
+                    // the module was removed from the project while resolving
+                    return;
+                }
+                final IntellijDependencyResolver resolver = resolvers.get(0);
                 updateIntellijModel(module, resolver.getDependencies(), ivyManager.getWorkspaceModules());
                 reportProblems(module, resolver.getProblems());
             }

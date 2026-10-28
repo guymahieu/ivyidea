@@ -7,6 +7,7 @@
 ### Fixed
 
 - Fixed "Resolve for All Modules" failing when a module is removed from the project while resolving (thanks to Stijn Vranckx)
+- Fixed the selected configurations in the IvyIDEA facet being lost when switching to another module without applying
 
 ## [1.1.1] - 2026-10-19
 

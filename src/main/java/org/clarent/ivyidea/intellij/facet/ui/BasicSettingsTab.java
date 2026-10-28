@@ -152,6 +152,10 @@ public class BasicSettingsTab extends FacetEditorTab {
     }
 
     public void reloadIvyFile() {
+        // the configurations selected in the table, also when they're not applied yet
+        if (foundConfigsBefore) {
+            selectedConfigurations = tblConfigurationSelection.getSelectedConfigurations();
+        }
         final Set<Configuration> allConfigurations;
         try {
             allConfigurations = loadConfigurations();
@@ -171,9 +175,6 @@ public class BasicSettingsTab extends FacetEditorTab {
                     lblIvyFileMessage.setText("Please enter the name of an existing ivy file.");
                 } else {
                     lblIvyFileMessage.setText("Warning: No configurations could be found in the given ivy file");
-                }
-                if (foundConfigsBefore) {
-                    selectedConfigurations = tblConfigurationSelection.getSelectedConfigurations();
                 }
                 tblConfigurationSelection.setModel(new ConfigurationSelectionTableModel());
                 foundConfigsBefore = false;

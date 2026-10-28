@@ -6,7 +6,7 @@
 
 ### Fixed
 
-- Fixed "Resolve for All Modules" failing when a module is removed from the project while resolving
+- Fixed "Resolve for All Modules" failing when a module is removed from the project while resolving (thanks to Stijn Vranckx)
 
 ## [1.1.1] - 2026-10-19
 

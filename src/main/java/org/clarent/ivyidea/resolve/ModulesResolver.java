@@ -60,8 +60,9 @@ class ModulesResolver {
     }
 
     /**
-     * Resolves the given modules one by one. The modules that are removed from the project while resolving are
-     * skipped, so the result can have fewer resolvers than there are modules.
+     * Resolves the given modules one by one.
+     *
+     * @return the resolvers of the given modules in module order, without the modules that are disposed
      */
     List<IntellijDependencyResolver> resolveOneByOne(List<Module> modules)
             throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
@@ -69,8 +70,9 @@ class ModulesResolver {
     }
 
     /**
-     * Resolves the given modules in parallel. The modules that are removed from the project while resolving are
-     * skipped, so the result can have fewer resolvers than there are modules.
+     * Resolves the given modules in parallel.
+     *
+     * @return the resolvers of the given modules in module order, without the modules that are disposed
      */
     List<IntellijDependencyResolver> resolveInParallel(List<Module> modules)
             throws IvySettingsNotFoundException, IvyFileReadException, IvySettingsFileReadException {
@@ -82,9 +84,9 @@ class ModulesResolver {
      * thread waits and stops them when the resolve is cancelled. These are threads of their own rather than pooled
      * threads, as Ivy interrupts the thread of a cancelled resolve and waits for it to end.
      * <p>
-     * A module that is removed from the project before or while it's resolved is skipped with a warning in the
-     * console, so the result can have fewer resolvers than there are modules.
+     * A disposed module is skipped with a warning in the console.
      *
+     * @return the resolvers of the given modules in module order, without the modules that are disposed
      * @throws ProcessCanceledException when the resolve is cancelled, after the threads have ended
      */
     private List<IntellijDependencyResolver> resolve(List<Module> modules, int maxThreads)
@@ -114,7 +116,6 @@ class ModulesResolver {
                     showProgress(resolvingModules, resolvedModules.get(), modules.size());
                     try {
                         if (module.isDisposed()) {
-                            // removed from the project since the resolve started, so there is nothing to resolve
                             printSkippedWarning(module);
                             return;
                         }
@@ -132,7 +133,7 @@ class ModulesResolver {
                         resolver.resolve(module);
                         resolvers[index] = resolver;
                     } catch (Throwable t) {
-                        // a module removed from the project while resolving has nothing to update, so it doesn't fail the others
+                        // a disposed module is skipped rather than failing the resolve
                         if (module.isDisposed()) {
                             printSkippedWarning(module);
                         } else {
@@ -208,7 +209,7 @@ class ModulesResolver {
     }
 
     private void printSkippedWarning(Module module) {
-        ResolveActionHelper.printWarning(project, "Module '" + module.getName() + "' was removed from the project while resolving, skipped");
+        ResolveActionHelper.printWarning(project, "Skipped module '" + module.getName() + "': it was removed from the project or unloaded while resolving");
     }
 
     private void showProgress(Set<String> resolvingModules, int resolvedModules, int modules) {

@@ -138,7 +138,7 @@ public class ResolveActionHelper {
                 final List<IntellijDependencyResolver> resolvers = new ModulesResolver(project, ivyManager, progressIndicator)
                         .resolveOneByOne(Collections.singletonList(module));
                 if (resolvers.isEmpty()) {
-                    // the module was removed from the project while resolving
+                    // the module is disposed, so it was skipped
                     return;
                 }
                 final IntellijDependencyResolver resolver = resolvers.get(0);

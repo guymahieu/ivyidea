@@ -53,8 +53,8 @@ public class IvyManager {
 
     /**
      * Creates the IvyManager for resolving modules of the given project. When dependencies on other modules are
-     * detected, this loads the IvyIDEA modules of the project whose ivy file can be parsed, each with the Ivy
-     * settings of the module itself.
+     * detected, this loads the IvyIDEA modules of the project that are not disposed and whose ivy file can be
+     * parsed, each with the Ivy settings of the module itself.
      */
     public static IvyManager forProject(Project project) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         final IvyManager ivyManager = new IvyManager();
@@ -75,6 +75,10 @@ public class IvyManager {
         return configuredIvyInstances.get(module);
     }
 
+    /**
+     * Returns the module descriptor parsed from the ivy file of the given module, or {@code null} if the module has
+     * no ivy file, its ivy file can't be parsed, or the module is disposed. The result is cached.
+     */
     @Nullable
     public synchronized ModuleDescriptor getModuleDescriptor(Module module) throws IvySettingsNotFoundException, IvySettingsFileReadException {
         if (!moduleDescriptors.containsKey(module)) {
@@ -85,7 +89,7 @@ public class IvyManager {
                     descriptor = IvyUtil.parseIvyFile(ivyFile, getIvy(module));
                 }
             } catch (RuntimeException e) {
-                // ignore, like a module that was removed from the project while loading it
+                // no descriptor
             }
             moduleDescriptors.put(module, descriptor);
         }
@@ -109,7 +113,6 @@ public class IvyManager {
         final Map<ModuleId, Module> modules = new HashMap<>();
         for (Module module : IntellijUtils.getAllModulesWithIvyIdeaFacet(project)) {
             if (module.isDisposed()) {
-                // removed from the project while loading the other modules
                 continue;
             }
             final ModuleDescriptor descriptor = getModuleDescriptor(module);
